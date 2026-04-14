@@ -2,6 +2,8 @@ import { SidebarProvider, SidebarTrigger } from "../components/ui/sidebar";
 import { AppSidebar } from "../app-sidebar";
 import SettingPage from "../SettingPage";
 import ProfilePage from "../ProfilePage";
+import HelpPage from "../HelpPage";
+import ManageRolePage from "./ManageRolePage";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { Bell, Moon, Sun, Globe } from "lucide-react";
 import { Button } from "../components/ui/button";
@@ -75,6 +77,20 @@ function AdminDashboard({ onLogout, username }: AdminDashboardProps) {
                       </BreadcrumbPage>
                     </BreadcrumbItem>
                   )}
+                  {location.pathname === '/help' && (
+                    <BreadcrumbItem>
+                      <BreadcrumbPage style={{ fontFamily: 'Geometrica, sans-serif' }}>
+                        Help
+                      </BreadcrumbPage>
+                    </BreadcrumbItem>
+                  )}
+                  {location.pathname === '/manage-role' && (
+                    <BreadcrumbItem>
+                      <BreadcrumbPage style={{ fontFamily: 'Geometrica, sans-serif' }}>
+                        Manage Role
+                      </BreadcrumbPage>
+                    </BreadcrumbItem>
+                  )}
                 </BreadcrumbList>
               </Breadcrumb>
             </div>
@@ -128,6 +144,8 @@ function AdminDashboard({ onLogout, username }: AdminDashboardProps) {
               } />
               <Route path="/settings" element={<SettingPage />} />
               <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/help" element={<HelpPage username={username} role="admin" />} />
+              <Route path="/manage-role" element={<ManageRolePage />} />
               <Route path="/dashboard" element={
                 <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
                   <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4" style={{ fontFamily: 'Geometrica, sans-serif' }}>
