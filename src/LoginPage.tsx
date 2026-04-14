@@ -5,9 +5,9 @@ import { Separator } from "./components/ui/separator";
 
 // Mock user database - in production, this would be from backend
 const users = {
-  employee: { password: "employee123", role: "employee" as const },
-  manager: { password: "manager123", role: "manager" as const },
-  admin: { password: "admin123", role: "admin" as const },
+  "tarin.chon@1moby.com": { password: "123", role: "employee" as const },
+  "sam.frea@1moby.com": { password: "456", role: "manager" as const },
+  "jadi.vort@1moby.com": { password: "789", role: "admin" as const },
 };
 
 interface LoginPageProps {
@@ -37,8 +37,18 @@ function LoginPage({ onLogin }: LoginPageProps) {
       return;
     }
 
-    // Login successful - redirect to appropriate dashboard
-    onLogin(user.role, username);
+    // Login successful - extract username before @ if email and capitalize properly
+    let displayName = username.includes('@') 
+      ? username.split('@')[0] 
+      : username;
+    
+    // Capitalize first letter and letter after dot (e.g., tarin.chon -> Tarin.Chon)
+    displayName = displayName
+      .split('.')
+      .map(part => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
+      .join('.');
+    
+    onLogin(user.role, displayName);
   };
 
   return (

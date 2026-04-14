@@ -1,5 +1,6 @@
-import { StrictMode, useState } from 'react'
+import { StrictMode, useState, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
+import { BrowserRouter, useNavigate, useLocation } from 'react-router-dom'
 import './index.css'
 import LoginPage from './LoginPage.tsx'
 import LoadingPage from './LoadingPage.tsx'
@@ -16,20 +17,32 @@ function Main() {
   const [isLoading, setIsLoading] = useState(true);
   const [userRole, setUserRole] = useState<UserRole>(null);
   const [username, setUsername] = useState("");
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLoadingComplete = () => {
     setIsLoading(false);
+    navigate('/');
   };
 
   const handleLogin = (role: 'employee' | 'manager' | 'admin', user: string) => {
     setUserRole(role);
     setUsername(user);
+    navigate('/dashboard');
   };
 
   const handleLogout = () => {
     setUserRole(null);
     setUsername("");
+    navigate('/');
   };
+
+  // Redirect to login if not authenticated and trying to access dashboard
+  useEffect(() => {
+    if (!isLoading && !userRole && location.pathname !== '/') {
+      navigate('/');
+    }
+  }, [isLoading, userRole, location.pathname, navigate]);
 
   // Show loading screen
   if (isLoading) {
@@ -55,7 +68,8 @@ function Main() {
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Main />
-
+    <BrowserRouter>
+      <Main />
+    </BrowserRouter>
   </StrictMode>,
 )
