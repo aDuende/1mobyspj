@@ -147,7 +147,7 @@ export default function MyIDPLearningPage() {
             <CardContent className="p-6">
               <div className="flex items-center gap-4">
                 {/* Course Image */}
-                <div className="w-24 h-24 bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden">
+                <div className="w-40 h-24 bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden">
                   <img 
                     src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%231e293b' width='100' height='100'/%3E%3Ctext x='50' y='50' font-size='12' fill='white' text-anchor='middle' dominant-baseline='middle'%3EIDP Plan%3C/text%3E%3C/svg%3E"
                     alt="Course thumbnail"
@@ -155,25 +155,27 @@ export default function MyIDPLearningPage() {
                   />
                 </div>
 
-                {/* Course Info */}
-                <div className="flex-1 min-w-0">
-                  <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">IDP Plan</div>
-                  <h3 className="text-base font-medium text-gray-900 dark:text-white mb-3">
-                    What Is Design Thinking? An Overview
+                {/* Course Title */}
+                <div className="min-w-0 w-48">
+                  <div className="text-xs text-gray-500 dark:text-gray-400 mb-1 text-left">IDP Plan</div>
+                  <h3 className="text-base font-medium text-gray-900 dark:text-white">
+                    What Is Design Thinking?
                   </h3>
-                  <div className="grid grid-cols-3 gap-4 text-sm">
-                    <div>
-                      <div className="text-gray-500 dark:text-gray-400 mb-1">Course</div>
-                      <div className="font-medium text-gray-900 dark:text-white">12Hours</div>
-                    </div>
-                    <div>
-                      <div className="text-gray-500 dark:text-gray-400 mb-1">Complete</div>
-                      <div className="font-medium text-gray-900 dark:text-white">20%</div>
-                    </div>
-                    <div>
-                      <div className="text-gray-500 dark:text-gray-400 mb-1">Duration</div>
-                      <div className="font-medium text-gray-900 dark:text-white">2 Days</div>
-                    </div>
+                </div>
+
+                {/* Stats */}
+                <div className="flex flex-1 justify-around text-sm">
+                  <div>
+                    <div className="text-gray-500 dark:text-gray-400 mb-1">Course</div>
+                    <div className="font-medium text-gray-900 dark:text-white">12Hours</div>
+                  </div>
+                  <div>
+                    <div className="text-gray-500 dark:text-gray-400 mb-1">Complete</div>
+                    <div className="font-medium text-gray-900 dark:text-white">20%</div>
+                  </div>
+                  <div>
+                    <div className="text-gray-500 dark:text-gray-400 mb-1">Duration</div>
+                    <div className="font-medium text-gray-900 dark:text-white">2 Days</div>
                   </div>
                 </div>
 
@@ -234,12 +236,14 @@ export default function MyIDPLearningPage() {
                 <div className="absolute right-6 text-white text-2xl font-bold tracking-wider" style={{ fontFamily: 'sans-serif' }}>
                   JUUT
                 </div>
+                {/* BACKEND tag */}
+                
               </div>
-              <CardContent className="p-4 pt-6">
-                <div className="inline-block bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs px-2 py-1 rounded mb-2">
+              <CardContent className="relative p-1 pt-6">
+                <div className="absolute -top-2 left-0 inline-block w-fit bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs px-2 py-1 rounded">
                   BACKEND
                 </div>
-                <p className="text-sm text-gray-900 dark:text-white">What is JWT and Why Should You Use JWT</p>
+                <p className="text-sm text-gray-900 dark:text-white text-left">What is JWT and Why Should You Use JWT</p>
               </CardContent>
             </Card>
 
@@ -255,11 +259,11 @@ export default function MyIDPLearningPage() {
                 </svg>
                 <div className="absolute bottom-2 left-2 text-white text-xl font-bold">React + TypeScript</div>
               </div>
-              <CardContent className="p-4">
-                <div className="inline-block bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs px-2 py-1 rounded mb-2">
+              <CardContent className="relative p-1 pt-6">
+                <div className="absolute -top-2 left-0 inline-block w-fit bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs px-2 py-1 rounded">
                   FRONTEND
                 </div>
-                <p className="text-sm text-gray-900 dark:text-white">TypeScript in React - COMPLETE Tutorial (Crash Course)</p>
+                <p className="text-sm text-gray-900 dark:text-white text-left">TypeScript in React - COMPLETE Tutorial (Crash Course)</p>
               </CardContent>
             </Card>
 
@@ -272,11 +276,11 @@ export default function MyIDPLearningPage() {
                   <text x="50" y="68" fontSize="14" fontWeight="bold" fill="white" textAnchor="middle">14</text>
                 </svg>
               </div>
-              <CardContent className="p-4">
-                <div className="inline-block bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs px-2 py-1 rounded mb-2">
+              <CardContent className="relative p-1 pt-6">
+                <div className="absolute -top-2 left-0 inline-block w-fit bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs px-2 py-1 rounded">
                   BACKEND
                 </div>
-                <p className="text-sm text-gray-900 dark:text-white">Learn PostgreSQL Tutorial - Full Course for Beginners</p>
+                <p className="text-sm text-gray-900 dark:text-white text-left">Learn PostgreSQL Tutorial - Full Course for Beginners</p>
               </CardContent>
             </Card>
 
@@ -292,11 +296,11 @@ export default function MyIDPLearningPage() {
                 </svg>
                 <div className="absolute bottom-2 left-2 text-white text-xl font-bold">React + TypeScript</div>
               </div>
-              <CardContent className="p-4">
-                <div className="inline-block bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs px-2 py-1 rounded mb-2">
+              <CardContent className="relative p-1 pt-6">
+                <div className="absolute -top-2 left-0 inline-block w-fit bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs px-2 py-1 rounded">
                   FRONTEND
                 </div>
-                <p className="text-sm text-gray-900 dark:text-white">TypeScript in React - COMPLETE Tutorial (Crash Course)</p>
+                <p className="text-sm text-gray-900 dark:text-white text-left">TypeScript in React - COMPLETE Tutorial (Crash Course)</p>
               </CardContent>
             </Card>
 
@@ -309,11 +313,11 @@ export default function MyIDPLearningPage() {
                   <text x="50" y="68" fontSize="14" fontWeight="bold" fill="white" textAnchor="middle">14</text>
                 </svg>
               </div>
-              <CardContent className="p-4">
-                <div className="inline-block bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs px-2 py-1 rounded mb-2">
+              <CardContent className="relative p-1 pt-6">
+                <div className="absolute -top-2 left-0 inline-block w-fit bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs px-2 py-1 rounded">
                   BACKEND
                 </div>
-                <p className="text-sm text-gray-900 dark:text-white">Learn PostgreSQL Tutorial - Full Course for Beginners</p>
+                <p className="text-sm text-gray-900 dark:text-white text-left">Learn PostgreSQL Tutorial - Full Course for Beginners</p>
               </CardContent>
             </Card>
           </div>
