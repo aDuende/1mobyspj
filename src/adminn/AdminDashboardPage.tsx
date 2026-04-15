@@ -4,6 +4,7 @@ import SettingPage from "../SettingPage";
 import ProfilePage from "../ProfilePage";
 import HelpPage from "../HelpPage";
 import ManageRolePage from "./ManageRolePage";
+import AnnouncementPage from "./AnnouncementPage";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { Bell, Moon, Sun, Globe } from "lucide-react";
 import { Button } from "../components/ui/button";
@@ -91,6 +92,13 @@ function AdminDashboard({ onLogout, username }: AdminDashboardProps) {
                       </BreadcrumbPage>
                     </BreadcrumbItem>
                   )}
+                  {location.pathname === '/announcement' && (
+                    <BreadcrumbItem>
+                      <BreadcrumbPage style={{ fontFamily: 'Geometrica, sans-serif' }}>
+                        Announcement
+                      </BreadcrumbPage>
+                    </BreadcrumbItem>
+                  )}
                 </BreadcrumbList>
               </Breadcrumb>
             </div>
@@ -146,6 +154,7 @@ function AdminDashboard({ onLogout, username }: AdminDashboardProps) {
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/help" element={<HelpPage username={username} role="admin" />} />
               <Route path="/manage-role" element={<ManageRolePage />} />
+              <Route path="/announcement" element={<AnnouncementPage />} />
               <Route path="/dashboard" element={
                 <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
                   <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4" style={{ fontFamily: 'Geometrica, sans-serif' }}>

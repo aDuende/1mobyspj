@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 
@@ -13,12 +13,29 @@ interface User {
   competencyScore?: string;
 }
 
-// Mock data
-const initialUsers: User[] = [];
+const API_URL = 'http://localhost:3000/api';
 
 function ManageRolePage() {
-  const [users, setUsers] = useState<User[]>(initialUsers);
+  const [users, setUsers] = useState<User[]>([]);
+  const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
+
+  // Fetch users from backend
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch(`${API_URL}/users`);
+      const data = await response.json();
+      setUsers(data);
+    } catch (error) {
+      console.error('Error fetching users:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const totalUsers = users.length;
   const unassignedRole = users.filter(u => !u.role || u.role === "").length;
@@ -30,12 +47,33 @@ function ManageRolePage() {
     user.department.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const handleResetPassword = (userId: number) => {
-    console.log("Reset password for user:", userId);
+  const handleResetPassword = async (userId: number) => {
+    try {
+      // You can implement password reset API later
+      console.log("Reset password for user:", userId);
+      alert('Password reset functionality will be implemented');
+    } catch (error) {
+      console.error('Error resetting password:', error);
+    }
   };
 
-  const handleRemoveUser = (userId: number) => {
-    setUsers(users.filter(u => u.id !== userId));
+  const handleRemoveUser = async (userId: number) => {
+    if (!confirm('Are you sure you want to remove this user?')) return;
+    
+    try {
+      const response = await fetch(`${API_URL}/users/${userId}`, {
+        method: 'DELETE'
+      });
+      
+      if (response.ok) {
+        setUsers(users.filter(u => u.id !== userId));
+      } else {
+        alert('Failed to delete user');
+      }
+    } catch (error) {
+      console.error('Error removing user:', error);
+      alert('Error removing user');
+    }
   };
 
   const getRoleBadgeColor = (role: string) => {
@@ -43,11 +81,21 @@ function ManageRolePage() {
     return "bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400";
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-full p-6 bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+        <p className="text-gray-600 dark:text-gray-400" style={{ fontFamily: 'Geometrica, sans-serif' }}>
+          Loading users...
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-full p-6 bg-gray-50 dark:bg-gray-900">
       <div className="max-w-7xl mx-auto space-y-6">
         {/* Header with All User and Stats Cards */}
-        <div className="flex items-start justify-between gap-6">
+        <div className="flex items-center justify-between gap-16">
           <div>
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white" style={{ fontFamily: 'Geometrica, sans-serif' }}>
               All User

@@ -3,6 +3,7 @@ import { AppSidebar } from "../app-sidebar";
 import SettingPage from "../SettingPage";
 import ProfilePage from "../ProfilePage";
 import HelpPage from "../HelpPage";
+import MyIDPLearningPage from "../MyIDPLearningPage";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { Bell, Moon, Sun, Globe } from "lucide-react";
 import { Button } from "../components/ui/button";
@@ -76,6 +77,13 @@ function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
                       </BreadcrumbPage>
                     </BreadcrumbItem>
                   )}
+                  {location.pathname === '/my-idp-learning' && (
+                    <BreadcrumbItem>
+                      <BreadcrumbPage style={{ fontFamily: 'Geometrica, sans-serif' }}>
+                        My IDP & Learning
+                      </BreadcrumbPage>
+                    </BreadcrumbItem>
+                  )}
                 </BreadcrumbList>
               </Breadcrumb>
             </div>
@@ -117,6 +125,7 @@ function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
           
           <div className="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-900 w-full">
             <Routes>
+              <Route path="/my-idp-learning" element={<MyIDPLearningPage />} />
               <Route path="/settings" element={<SettingPage />} />
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/help" element={<HelpPage username={username} role="employee" />} />
