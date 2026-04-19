@@ -5,7 +5,6 @@ import { Heart, MessageCircle, Share, ChevronUp, ChevronDown, Bookmark, Users } 
 export default function ShortLearningPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
-  const [isHovering, setIsHovering] = useState(false);
 
   const shortCourses = [
     {
@@ -120,13 +119,7 @@ export default function ShortLearningPage() {
     <div className="w-full h-screen bg-black overflow-hidden relative">
       {/* Reel Container */}
       <div className="w-full h-full flex items-center justify-center">
-        <div 
-          className={`relative w-full max-w-md h-full md:max-h-screen md:h-screen md:rounded-2xl overflow-hidden bg-black shadow-2xl transition-all duration-300 ${
-            isHovering ? 'scale-105 shadow-2xl shadow-purple-500/50' : 'scale-100'
-          }`}
-          onMouseEnter={() => setIsHovering(true)}
-          onMouseLeave={() => setIsHovering(false)}
-        >
+        <div className="relative w-full max-w-md h-full md:max-h-screen md:h-screen md:rounded-2xl overflow-hidden bg-black shadow-2xl">
           {/* Video/Background */}
           <div className={`absolute inset-0 ${currentCourse.thumbnail} flex items-center justify-center`}>
             {/* YouTube Embed */}
