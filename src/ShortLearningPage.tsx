@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { Button } from "./components/ui/button";
-import { Clock, Users, Heart, MessageCircle, Share, ChevronUp, ChevronDown } from "lucide-react";
+import { Heart, MessageCircle, Share, ChevronUp, ChevronDown, Bookmark, Users } from "lucide-react";
 
 export default function ShortLearningPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
+  const [isHovering, setIsHovering] = useState(false);
 
   const shortCourses = [
     {
@@ -119,7 +120,13 @@ export default function ShortLearningPage() {
     <div className="w-full h-screen bg-black overflow-hidden relative">
       {/* Reel Container */}
       <div className="w-full h-full flex items-center justify-center">
-        <div className="relative w-full max-w-md h-full md:max-h-screen md:h-screen md:rounded-2xl overflow-hidden bg-black shadow-2xl">
+        <div 
+          className={`relative w-full max-w-md h-full md:max-h-screen md:h-screen md:rounded-2xl overflow-hidden bg-black shadow-2xl transition-all duration-300 ${
+            isHovering ? 'scale-105 shadow-2xl shadow-purple-500/50' : 'scale-100'
+          }`}
+          onMouseEnter={() => setIsHovering(true)}
+          onMouseLeave={() => setIsHovering(false)}
+        >
           {/* Video/Background */}
           <div className={`absolute inset-0 ${currentCourse.thumbnail} flex items-center justify-center`}>
             {/* YouTube Embed */}
@@ -140,10 +147,17 @@ export default function ShortLearningPage() {
           {/* Gradient Overlay */}
           <div className="absolute inset-0 bg-linear-to-t from-black via-transparent to-transparent pointer-events-none" />
 
+          {/* Content - Top - Course Counter & Play Button */}
+          <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-20">
+            <div className="text-white text-sm font-medium">
+              {currentIndex + 1} / {shortCourses.length}
+            </div>
+          </div>
+
           {/* Content - Bottom */}
           <div className="absolute bottom-0 left-0 right-0 p-4 text-white z-10">
             {/* Course Info */}
-            <div className="space-y-4">
+            <div className="space-y-3">
               {/* Category Badge */}
               <div>
                 <span className="inline-block bg-white/20 backdrop-blur-sm text-white text-xs px-3 py-1 rounded-full font-medium">
@@ -153,13 +167,13 @@ export default function ShortLearningPage() {
 
               {/* Title */}
               <div>
-                <h2 className="text-2xl font-bold">{currentCourse.title}</h2>
-                <p className="text-sm text-gray-300 mt-1">{currentCourse.description}</p>
+                <h2 className="text-xl font-bold line-clamp-2">{currentCourse.title}</h2>
+                <p className="text-xs text-gray-300 mt-1 line-clamp-2">{currentCourse.description}</p>
               </div>
 
               {/* Instructor & Stats */}
-              <div className="flex items-center gap-3 text-sm">
-                <div className="w-8 h-8 rounded-full bg-linear-to-br from-blue-600 to-purple-600 flex items-center justify-center text-xs font-bold">
+              <div className="flex items-center gap-2 text-xs">
+                <div className="w-8 h-8 rounded-full bg-linear-to-br from-blue-600 to-purple-600 flex items-center justify-center text-xs font-bold shrink-0">
                   {currentCourse.instructor.charAt(0)}
                 </div>
                 <div>
@@ -174,38 +188,38 @@ export default function ShortLearningPage() {
           </div>
 
           {/* Right Sidebar - Interactions */}
-          <div className="absolute right-4 bottom-32 flex flex-col gap-6 z-20">
+          <div className="absolute right-4 top-1/2 -translate-y-1/2 flex flex-col gap-6 z-20">
             {/* Like Button */}
-            <button className="flex flex-col items-center gap-1 text-white hover:text-red-500 transition">
-              <div className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20">
-                <Heart className="w-6 h-6" />
+            <button className="flex flex-col items-center gap-1 text-white hover:text-red-500 transition-all duration-200 group">
+              <div className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-red-500/30 transition-all duration-200 transform group-hover:scale-110 active:scale-90">
+                <Heart className="w-6 h-6 group-hover:fill-red-500 transition-all duration-200" />
               </div>
-              <span className="text-xs">1.2K</span>
+              <span className="text-xs font-semibold">10.2K</span>
             </button>
 
             {/* Comment Button */}
-            <button className="flex flex-col items-center gap-1 text-white hover:text-blue-400 transition">
-              <div className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20">
-                <MessageCircle className="w-6 h-6" />
+            <button className="flex flex-col items-center gap-1 text-white hover:text-blue-400 transition-all duration-200 group">
+              <div className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-blue-500/30 transition-all duration-200 transform group-hover:scale-110 active:scale-90">
+                <MessageCircle className="w-6 h-6 transition-all duration-200" />
               </div>
-              <span className="text-xs">256</span>
+              <span className="text-xs font-semibold">25</span>
             </button>
 
             {/* Share Button */}
-            <button className="flex flex-col items-center gap-1 text-white hover:text-green-400 transition">
-              <div className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20">
-                <Share className="w-6 h-6" />
+            <button className="flex flex-col items-center gap-1 text-white hover:text-green-400 transition-all duration-200 group">
+              <div className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-green-500/30 transition-all duration-200 transform group-hover:scale-110 active:scale-90">
+                <Share className="w-6 h-6 transition-all duration-200" />
               </div>
-              <span className="text-xs">89</span>
+              <span className="text-xs font-semibold">634</span>
             </button>
 
-            {/* Duration */}
-            <div className="flex flex-col items-center gap-1 text-white">
-              <div className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center">
-                <Clock className="w-6 h-6" />
+            {/* Bookmark Button */}
+            <button className="flex flex-col items-center gap-1 text-white hover:text-yellow-400 transition-all duration-200 group">
+              <div className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-yellow-500/30 transition-all duration-200 transform group-hover:scale-110 active:scale-90">
+                <Bookmark className="w-6 h-6 group-hover:fill-yellow-400 transition-all duration-200" />
               </div>
-              <span className="text-xs">{currentCourse.duration}</span>
-            </div>
+              <span className="text-xs font-semibold"></span>
+            </button>
           </div>
 
           {/* Top - Course Counter */}
@@ -223,17 +237,17 @@ export default function ShortLearningPage() {
             </Button>
           </div>
 
-          {/* Navigation - Top & Bottom */}
+          {/* Navigation - Arrows */}
           <button
             onClick={handlePrev}
-            className="absolute top-4 right-4 z-20 text-white hover:bg-white/20 p-2 rounded-full transition"
+            className="absolute top-1/2 -translate-y-1/2 left-4 z-20 text-white hover:bg-white/30 p-2 rounded-full transition-all duration-200 transform hover:scale-110 active:scale-95"
           >
             <ChevronUp className="w-6 h-6" />
           </button>
 
           <button
             onClick={handleNext}
-            className="absolute bottom-4 right-4 z-20 text-white hover:bg-white/20 p-2 rounded-full transition"
+            className="absolute top-1/2 -translate-y-1/2 left-4 bottom-4 z-20 text-white hover:bg-white/30 p-2 rounded-full transition-all duration-200 transform hover:scale-110 active:scale-95"
           >
             <ChevronDown className="w-6 h-6" />
           </button>
