@@ -1,19 +1,10 @@
-import { useState } from "react";
-import { Card, CardContent } from "./components/ui/card";
+import { useState, useEffect } from "react";
 import { Button } from "./components/ui/button";
-import { Clock, Users } from "lucide-react";
+import { Clock, Users, Heart, MessageCircle, Share, ChevronUp, ChevronDown } from "lucide-react";
 
 export default function ShortLearningPage() {
-  const [selectedCourse, setSelectedCourse] = useState<null | {
-    id: string;
-    title: string;
-    description: string;
-    duration: string;
-    category: string;
-    videoUrl: string;
-    instructor?: string;
-    participants?: number;
-  }>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(true);
 
   const shortCourses = [
     {
@@ -25,6 +16,7 @@ export default function ShortLearningPage() {
       videoUrl: "https://www.youtube.com/embed/7Q17ubqLfaM",
       instructor: "Sarah Johnson",
       participants: 1240,
+      thumbnail: "bg-linear-to-br from-purple-600 to-blue-500",
     },
     {
       id: "git-basics",
@@ -35,6 +27,7 @@ export default function ShortLearningPage() {
       videoUrl: "https://www.youtube.com/embed/BwuLxPH8IDs",
       instructor: "Mike Chen",
       participants: 856,
+      thumbnail: "bg-linear-to-br from-green-600 to-emerald-500",
     },
     {
       id: "public-speaking",
@@ -45,6 +38,7 @@ export default function ShortLearningPage() {
       videoUrl: "https://www.youtube.com/embed/q7p3k8fJqYQ",
       instructor: "Emma Williams",
       participants: 2103,
+      thumbnail: "bg-linear-to-br from-red-600 to-pink-500",
     },
     {
       id: "api-basics",
@@ -55,6 +49,7 @@ export default function ShortLearningPage() {
       videoUrl: "https://www.youtube.com/embed/7Q17ubqLfaM",
       instructor: "Alex Kumar",
       participants: 1567,
+      thumbnail: "bg-linear-to-br from-blue-600 to-cyan-500",
     },
     {
       id: "time-management",
@@ -65,6 +60,7 @@ export default function ShortLearningPage() {
       videoUrl: "https://www.youtube.com/embed/BwuLxPH8IDs",
       instructor: "David Brown",
       participants: 3421,
+      thumbnail: "bg-linear-to-br from-yellow-600 to-orange-500",
     },
     {
       id: "docker-intro",
@@ -75,170 +71,187 @@ export default function ShortLearningPage() {
       videoUrl: "https://www.youtube.com/embed/q7p3k8fJqYQ",
       instructor: "Lisa Zhang",
       participants: 945,
+      thumbnail: "bg-linear-to-br from-gray-700 to-gray-900",
     },
   ];
 
-  const categories = [
-    { name: "All", color: "bg-gray-100 text-gray-700" },
-    { name: "DEVELOPMENT", color: "bg-blue-100 text-blue-700" },
-    { name: "SOFT SKILLS", color: "bg-purple-100 text-purple-700" },
-    { name: "SKILLS", color: "bg-green-100 text-green-700" },
-  ];
+  const currentCourse = shortCourses[currentIndex];
 
-  const getCategoryColor = (category: string) => {
-    const categoryObj = categories.find((c) => c.name === category);
-    return categoryObj ? categoryObj.color : "bg-gray-100 text-gray-700";
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % shortCourses.length);
   };
 
+  const handlePrev = () => {
+    setCurrentIndex((prev) => (prev - 1 + shortCourses.length) % shortCourses.length);
+  };
+
+  // Handle keyboard scroll
+  useEffect(() => {
+    const handleWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      if (e.deltaY > 0) {
+        handleNext();
+      } else {
+        handlePrev();
+      }
+    };
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        handleNext();
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        handlePrev();
+      }
+    };
+
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [currentIndex]);
+
   return (
-    <div className="flex-1 overflow-auto bg-gray-50 dark:bg-gray-900">
-      <div className="p-6 space-y-6">
-        {/* Header */}
-        <div className="flex items-start justify-between">
-          <div>
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-              Short Learning
-            </h2>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5 text-left">
-              Quick bite-sized learning sessions for busy professionals
-            </p>
+    <div className="w-full h-screen bg-black overflow-hidden relative">
+      {/* Reel Container */}
+      <div className="w-full h-full flex items-center justify-center">
+        <div className="relative w-full max-w-md h-full md:max-h-screen md:h-screen md:rounded-2xl overflow-hidden bg-black shadow-2xl">
+          {/* Video/Background */}
+          <div className={`absolute inset-0 ${currentCourse.thumbnail} flex items-center justify-center`}>
+            {/* YouTube Embed */}
+            <div className="w-full h-full">
+              <iframe
+                width="100%"
+                height="100%"
+                src={`${currentCourse.videoUrl}?autoplay=1&controls=0&modestbranding=1&rel=0&fs=0`}
+                title={currentCourse.title}
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="w-full h-full"
+              />
+            </div>
           </div>
-        </div>
 
-        {/* Filter Section */}
-        <div className="flex items-center gap-3 overflow-x-auto pb-2">
-          {categories.map((category) => (
-            <Button
-              key={category.name}
-              variant="outline"
-              size="sm"
-              className={`whitespace-nowrap ${category.color}`}
-            >
-              {category.name}
-            </Button>
-          ))}
-        </div>
+          {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-linear-to-t from-black via-transparent to-transparent pointer-events-none" />
 
-        {/* Courses Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {shortCourses.map((course) => (
-            <Card
-              key={course.id}
-              className="bg-white dark:bg-gray-800 overflow-hidden hover:shadow-lg cursor-pointer transition-shadow"
-              onClick={() => setSelectedCourse(course)}
-            >
-              {/* Video Thumbnail */}
-              <div className="relative h-40 bg-linear-to-br from-gray-700 to-gray-900 flex items-center justify-center overflow-hidden">
-                <svg
-                  className="w-12 h-12 text-white opacity-70"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
-                  <path d="M8 5v14l11-7z" />
-                </svg>
-                <div className="absolute top-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded flex items-center gap-1">
-                  <Clock className="w-3 h-3" />
-                  {course.duration}
-                </div>
+          {/* Content - Bottom */}
+          <div className="absolute bottom-0 left-0 right-0 p-4 text-white z-10">
+            {/* Course Info */}
+            <div className="space-y-4">
+              {/* Category Badge */}
+              <div>
+                <span className="inline-block bg-white/20 backdrop-blur-sm text-white text-xs px-3 py-1 rounded-full font-medium">
+                  {currentCourse.category}
+                </span>
               </div>
 
-              <CardContent className="p-4 space-y-3">
-                {/* Category Badge */}
+              {/* Title */}
+              <div>
+                <h2 className="text-2xl font-bold">{currentCourse.title}</h2>
+                <p className="text-sm text-gray-300 mt-1">{currentCourse.description}</p>
+              </div>
+
+              {/* Instructor & Stats */}
+              <div className="flex items-center gap-3 text-sm">
+                <div className="w-8 h-8 rounded-full bg-linear-to-br from-blue-600 to-purple-600 flex items-center justify-center text-xs font-bold">
+                  {currentCourse.instructor.charAt(0)}
+                </div>
                 <div>
-                  <span
-                    className={`inline-block text-xs px-2 py-1 rounded font-medium ${getCategoryColor(
-                      course.category
-                    )}`}
-                  >
-                    {course.category}
-                  </span>
+                  <p className="font-medium">{currentCourse.instructor}</p>
+                  <p className="text-xs text-gray-400">
+                    <Users className="w-3 h-3 inline mr-1" />
+                    {currentCourse.participants.toLocaleString()} learning
+                  </p>
                 </div>
+              </div>
+            </div>
+          </div>
 
-                {/* Title */}
-                <h3 className="font-semibold text-gray-900 dark:text-white line-clamp-2">
-                  {course.title}
-                </h3>
+          {/* Right Sidebar - Interactions */}
+          <div className="absolute right-4 bottom-32 flex flex-col gap-6 z-20">
+            {/* Like Button */}
+            <button className="flex flex-col items-center gap-1 text-white hover:text-red-500 transition">
+              <div className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20">
+                <Heart className="w-6 h-6" />
+              </div>
+              <span className="text-xs">1.2K</span>
+            </button>
 
-                {/* Description */}
-                <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
-                  {course.description}
-                </p>
+            {/* Comment Button */}
+            <button className="flex flex-col items-center gap-1 text-white hover:text-blue-400 transition">
+              <div className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20">
+                <MessageCircle className="w-6 h-6" />
+              </div>
+              <span className="text-xs">256</span>
+            </button>
 
-                {/* Instructor & Participants */}
-                <div className="pt-2 border-t border-gray-200 dark:border-gray-700 space-y-2">
-                  <div className="text-xs text-gray-600 dark:text-gray-400">
-                    {course.instructor && (
-                      <p className="font-medium">Instructor: {course.instructor}</p>
-                    )}
-                    {course.participants && (
-                      <p className="flex items-center gap-1">
-                        <Users className="w-3 h-3" />
-                        {course.participants.toLocaleString()} learning
-                      </p>
-                    )}
-                  </div>
-                </div>
+            {/* Share Button */}
+            <button className="flex flex-col items-center gap-1 text-white hover:text-green-400 transition">
+              <div className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20">
+                <Share className="w-6 h-6" />
+              </div>
+              <span className="text-xs">89</span>
+            </button>
 
-                {/* Watch Button */}
-                <Button className="w-full mt-2" onClick={() => setSelectedCourse(course)}>
-                  Watch Now
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
+            {/* Duration */}
+            <div className="flex flex-col items-center gap-1 text-white">
+              <div className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center">
+                <Clock className="w-6 h-6" />
+              </div>
+              <span className="text-xs">{currentCourse.duration}</span>
+            </div>
+          </div>
+
+          {/* Top - Course Counter */}
+          <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-20">
+            <div className="text-white text-sm font-medium">
+              {currentIndex + 1} / {shortCourses.length}
+            </div>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-white hover:bg-white/20"
+              onClick={() => setIsPlaying(!isPlaying)}
+            >
+              {isPlaying ? "⏸" : "▶"}
+            </Button>
+          </div>
+
+          {/* Navigation - Top & Bottom */}
+          <button
+            onClick={handlePrev}
+            className="absolute top-4 right-4 z-20 text-white hover:bg-white/20 p-2 rounded-full transition"
+          >
+            <ChevronUp className="w-6 h-6" />
+          </button>
+
+          <button
+            onClick={handleNext}
+            className="absolute bottom-4 right-4 z-20 text-white hover:bg-white/20 p-2 rounded-full transition"
+          >
+            <ChevronDown className="w-6 h-6" />
+          </button>
         </div>
       </div>
 
-      {/* Video Modal */}
-      {selectedCourse && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div
-            className="absolute inset-0 bg-black/50"
-            onClick={() => setSelectedCourse(null)}
-          />
-          <div className="relative z-10 w-full max-w-4xl bg-white dark:bg-gray-900 rounded shadow-lg overflow-hidden">
-            <div className="flex items-center justify-between p-3 border-b border-gray-200 dark:border-gray-700">
-              <div>
-                <div className="text-lg font-semibold text-gray-900 dark:text-white">
-                  {selectedCourse.title}
-                </div>
-                <div className="flex items-center gap-4 mt-1 text-sm text-gray-600 dark:text-gray-400">
-                  <span className="flex items-center gap-1">
-                    <Clock className="w-4 h-4" />
-                    {selectedCourse.duration}
-                  </span>
-                  {selectedCourse.instructor && (
-                    <span>By {selectedCourse.instructor}</span>
-                  )}
-                </div>
-              </div>
-              <Button variant="ghost" onClick={() => setSelectedCourse(null)}>
-                Close
-              </Button>
-            </div>
-            <div className="p-4">
-              {selectedCourse.videoUrl.includes("youtube") ||
-              selectedCourse.videoUrl.includes("youtu.be") ? (
-                <div className="aspect-video w-full">
-                  <iframe
-                    className="w-full h-full"
-                    src={selectedCourse.videoUrl}
-                    title={selectedCourse.title}
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
-                </div>
-              ) : (
-                <video className="w-full rounded" controls>
-                  <source src={selectedCourse.videoUrl} />
-                  Your browser does not support the video tag.
-                </video>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Progress Bar */}
+      <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/20 z-10">
+        <div
+          className="h-full bg-white transition-all duration-300"
+          style={{ width: `${((currentIndex + 1) / shortCourses.length) * 100}%` }}
+        />
+      </div>
+
+      {/* Mobile hint */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white text-xs text-center pointer-events-none md:hidden">
+        Swipe up or down to browse
+      </div>
     </div>
   );
 }
