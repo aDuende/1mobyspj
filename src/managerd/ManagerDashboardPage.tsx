@@ -3,6 +3,7 @@ import { AppSidebar } from "../app-sidebar";
 import SettingPage from "../SettingPage";
 import ProfilePage from "../ProfilePage";
 import HelpPage from "../HelpPage";
+import ShortLearningPage from "../ShortLearningPage";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { Bell, Moon, Sun, Globe } from "lucide-react";
 import { Button } from "../components/ui/button";
@@ -117,6 +118,7 @@ function ManagerDashboard({ onLogout, username }: ManagerDashboardProps) {
           
           <div className="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-900 p-6">
             <Routes>
+              <Route path="/short-learning" element={<ShortLearningPage />} />
               <Route path="/settings" element={<SettingPage />} />
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/help" element={<HelpPage username={username} role="manager" />} />

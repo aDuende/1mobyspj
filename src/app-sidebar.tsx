@@ -6,6 +6,7 @@ import {
   ClipboardCheck,
   UserCircle,
   BookOpen,
+  Zap,
   Users,
   Settings,
   HelpCircle,
@@ -59,6 +60,11 @@ const generalItems = [
     title: "My IDP & Learning",
     url: "/my-idp-learning",
     icon: BookOpen,
+  },
+  {
+    title: "Short Learning",
+    url: "/short-learning",
+    icon: Zap,
   },
 ]
 
