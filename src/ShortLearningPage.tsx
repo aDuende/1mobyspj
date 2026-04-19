@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "./components/ui/button";
 import { Heart, MessageCircle, Share, ChevronUp, ChevronDown, Bookmark, Users } from "lucide-react";
 
 export default function ShortLearningPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
+  const lastScrollTimeRef = useRef(0);
 
   const shortCourses = [
     {
@@ -77,43 +78,53 @@ export default function ShortLearningPage() {
 
   const currentCourse = shortCourses[currentIndex];
 
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % shortCourses.length);
-  };
-
-  const handlePrev = () => {
-    setCurrentIndex((prev) => (prev - 1 + shortCourses.length) % shortCourses.length);
-  };
-
   // Handle keyboard scroll
   useEffect(() => {
+    const SCROLL_DEBOUNCE = 600; // milliseconds
+    
     const handleWheel = (e: WheelEvent) => {
-      e.preventDefault();
+      const now = Date.now();
+      
+      // Debounce: only process if enough time has passed since last scroll
+      if (now - lastScrollTimeRef.current < SCROLL_DEBOUNCE) {
+        return;
+      }
+      
+      lastScrollTimeRef.current = now;
+      
       if (e.deltaY > 0) {
-        handleNext();
-      } else {
-        handlePrev();
+        setCurrentIndex((prev) => (prev + 1) % 6);
+      } else if (e.deltaY < 0) {
+        setCurrentIndex((prev) => (prev - 1 + 6) % 6);
       }
     };
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "ArrowDown") {
         e.preventDefault();
-        handleNext();
+        const now = Date.now();
+        if (now - lastScrollTimeRef.current >= 600) {
+          lastScrollTimeRef.current = now;
+          setCurrentIndex((prev) => (prev + 1) % 6);
+        }
       } else if (e.key === "ArrowUp") {
         e.preventDefault();
-        handlePrev();
+        const now = Date.now();
+        if (now - lastScrollTimeRef.current >= 600) {
+          lastScrollTimeRef.current = now;
+          setCurrentIndex((prev) => (prev - 1 + 6) % 6);
+        }
       }
     };
 
-    window.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("wheel", handleWheel, { passive: true });
     window.addEventListener("keydown", handleKeyDown);
 
     return () => {
       window.removeEventListener("wheel", handleWheel);
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [currentIndex]);
+  }, []);
 
   return (
     <div className="w-full h-screen bg-black overflow-hidden relative">
@@ -145,6 +156,14 @@ export default function ShortLearningPage() {
             <div className="text-white text-sm font-medium">
               {currentIndex + 1} / {shortCourses.length}
             </div>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-white hover:bg-white/20"
+              onClick={() => setIsPlaying(!isPlaying)}
+            >
+              {isPlaying ? "⏸" : "▶"}
+            </Button>
           </div>
 
           {/* Content - Bottom */}
@@ -216,34 +235,23 @@ export default function ShortLearningPage() {
           </div>
 
           {/* Top - Course Counter */}
-          <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-20">
-            <div className="text-white text-sm font-medium">
-              {currentIndex + 1} / {shortCourses.length}
-            </div>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="text-white hover:bg-white/20"
-              onClick={() => setIsPlaying(!isPlaying)}
+          <div className="absolute bottom-20 left-4 right-4 flex items-center justify-between z-20">
+            {/* Navigation - Previous Clip */}
+            <button
+              onClick={() => setCurrentIndex((prev) => (prev - 1 + 6) % 6)}
+              className="text-white hover:bg-white/30 p-2 rounded-full transition-all duration-200 transform hover:scale-110 active:scale-95"
             >
-              {isPlaying ? "⏸" : "▶"}
-            </Button>
+              <ChevronUp className="w-6 h-6" />
+            </button>
+
+            {/* Navigation - Next Clip */}
+            <button
+              onClick={() => setCurrentIndex((prev) => (prev + 1) % 6)}
+              className="text-white hover:bg-white/30 p-2 rounded-full transition-all duration-200 transform hover:scale-110 active:scale-95"
+            >
+              <ChevronDown className="w-6 h-6" />
+            </button>
           </div>
-
-          {/* Navigation - Arrows */}
-          <button
-            onClick={handlePrev}
-            className="absolute top-1/2 -translate-y-1/2 left-4 z-20 text-white hover:bg-white/30 p-2 rounded-full transition-all duration-200 transform hover:scale-110 active:scale-95"
-          >
-            <ChevronUp className="w-6 h-6" />
-          </button>
-
-          <button
-            onClick={handleNext}
-            className="absolute top-1/2 -translate-y-1/2 left-4 bottom-4 z-20 text-white hover:bg-white/30 p-2 rounded-full transition-all duration-200 transform hover:scale-110 active:scale-95"
-          >
-            <ChevronDown className="w-6 h-6" />
-          </button>
         </div>
       </div>
 
