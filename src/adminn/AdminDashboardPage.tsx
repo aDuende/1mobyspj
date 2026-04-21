@@ -3,7 +3,6 @@ import { AppSidebar } from "../app-sidebar";
 import SettingPage from "../SettingPage";
 import ProfilePage from "../ProfilePage";
 import HelpPage from "../HelpPage";
-import ShortLearningPage from "../ShortLearningPage";
 import ManageRolePage from "./ManageRolePage";
 import AnnouncementPage from "./AnnouncementPage";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
@@ -141,7 +140,6 @@ function AdminDashboard({ onLogout, username }: AdminDashboardProps) {
           
           <div className="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-900 p-6">
             <Routes>
-              <Route path="/short-learning" element={<ShortLearningPage />} />
               <Route path="/home" element={
                 <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
                   <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4" style={{ fontFamily: 'Geometrica, sans-serif' }}>
