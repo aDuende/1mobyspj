@@ -8,8 +8,18 @@ export default function MyIDPLearningPage() {
     id: string;
     title: string;
     description: string;
+    fullDescription: string;
     category: string;
     videoUrl: string;
+    rating: number;
+    reviews: number;
+    instructor: string;
+    duration: string;
+    lessons: number;
+    modules: number;
+    isFree: boolean;
+    tags: string[];
+    highlights: string[];
   }>(null);
 
   const courses = [
@@ -17,23 +27,67 @@ export default function MyIDPLearningPage() {
       id: "jwt",
       title: "What is JWT and Why Should You Use JWT",
       description: "What is JWT and Why Should You Use JWT",
+      fullDescription: "Learn about JWT (JSON Web Tokens) and why it's essential for modern web development. This course covers the fundamentals of token-based authentication and how to implement it securely.",
       category: "BACKEND",
-      // demo YouTube video (placeholder)
       videoUrl: "https://www.youtube.com/embed/7Q17ubqLfaM",
+      rating: 4.8,
+      reviews: 1250,
+      instructor: "Expert Instructor",
+      duration: "3-4 hours",
+      lessons: 28,
+      modules: 5,
+      isFree: true,
+      tags: ["Backend", "Security", "Authentication"],
+      highlights: [
+        "Understand JWT structure and how it works",
+        "Implement secure token-based authentication",
+        "Learn best practices for JWT implementation",
+        "Practical examples with real-world scenarios",
+      ],
     },
     {
       id: "react-ts",
       title: "TypeScript in React - COMPLETE Tutorial (Crash Course)",
       description: "TypeScript in React - COMPLETE Tutorial (Crash Course)",
+      fullDescription: "Master TypeScript in React with this comprehensive guide. Learn how to use TypeScript to build type-safe React applications with improved developer experience and fewer runtime errors.",
       category: "FRONTEND",
       videoUrl: "https://www.youtube.com/embed/BwuLxPH8IDs",
+      rating: 4.9,
+      reviews: 2540,
+      instructor: "React Expert",
+      duration: "4-5 hours",
+      lessons: 45,
+      modules: 8,
+      isFree: true,
+      tags: ["Frontend", "React", "TypeScript"],
+      highlights: [
+        "TypeScript basics for React developers",
+        "Type annotations for components and props",
+        "Advanced TypeScript patterns in React",
+        "Building production-ready React apps",
+      ],
     },
     {
       id: "postgres",
       title: "Learn PostgreSQL Tutorial - Full Course for Beginners",
       description: "Learn PostgreSQL Tutorial - Full Course for Beginners",
+      fullDescription: "Complete guide to PostgreSQL database management system. Learn SQL queries, database design, and advanced features to become proficient with one of the most powerful open-source databases.",
       category: "BACKEND",
       videoUrl: "https://www.youtube.com/embed/q7p3k8fJqYQ",
+      rating: 4.7,
+      reviews: 1890,
+      instructor: "Database Expert",
+      duration: "5-6 hours",
+      lessons: 52,
+      modules: 10,
+      isFree: true,
+      tags: ["Backend", "Database", "SQL"],
+      highlights: [
+        "PostgreSQL installation and setup",
+        "SQL fundamentals and advanced queries",
+        "Database design and optimization",
+        "Real-world database projects",
+      ],
     },
   ];
 
@@ -254,34 +308,180 @@ export default function MyIDPLearningPage() {
             ))}
           </div>
         </div>
-        {/* Video Modal */}
+        {/* Course Details Modal */}
         {selectedCourse && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto">
             <div className="absolute inset-0 bg-black/50" onClick={() => setSelectedCourse(null)} />
-            <div className="relative z-10 w-full max-w-4xl bg-white dark:bg-gray-900 rounded shadow-lg overflow-hidden">
-              <div className="flex items-center justify-between p-3 border-b border-gray-200 dark:border-gray-700">
-                <div className="text-lg font-semibold text-gray-900 dark:text-white">{selectedCourse.title}</div>
-                <Button variant="ghost" onClick={() => setSelectedCourse(null)}>Close</Button>
-              </div>
-              <div className="p-4">
-                {/* Use iframe for YouTube links, otherwise fallback to video tag */}
-                {selectedCourse.videoUrl.includes('youtube') || selectedCourse.videoUrl.includes('youtu.be') ? (
-                  <div className="aspect-video w-full">
-                    <iframe
-                      className="w-full h-full"
-                      src={selectedCourse.videoUrl}
-                      title={selectedCourse.title}
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    />
+            <div className="relative z-10 w-full max-w-5xl bg-white dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden my-8">
+              {/* Close Button */}
+              <Button 
+                variant="ghost" 
+                onClick={() => setSelectedCourse(null)}
+                className="absolute top-4 right-4 z-20"
+              >
+                ✕
+              </Button>
+
+              {/* Main Content */}
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 p-6">
+                {/* Left Column - Video & Description */}
+                <div className="lg:col-span-2 space-y-6">
+                  {/* Introduction Video */}
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Introduction Video</h3>
+                    {selectedCourse.videoUrl.includes('youtube') || selectedCourse.videoUrl.includes('youtu.be') ? (
+                      <div className="aspect-video w-full rounded-lg overflow-hidden bg-gray-800">
+                        <iframe
+                          className="w-full h-full"
+                          src={selectedCourse.videoUrl}
+                          title={selectedCourse.title}
+                          frameBorder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                        />
+                      </div>
+                    ) : (
+                      <video className="w-full rounded-lg" controls>
+                        <source src={selectedCourse.videoUrl} />
+                        Your browser does not support the video tag.
+                      </video>
+                    )}
                   </div>
-                ) : (
-                  <video className="w-full rounded" controls>
-                    <source src={selectedCourse.videoUrl} />
-                    Your browser does not support the video tag.
-                  </video>
-                )}
+
+                  {/* Course Title & Rating */}
+                  <div>
+                    <div className="flex items-start justify-between mb-3">
+                      <div>
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="inline-block bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400 text-xs px-3 py-1 rounded-full font-medium">
+                            {selectedCourse.isFree ? "FREE" : "PREMIUM"}
+                          </span>
+                          <span className="inline-block bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 text-xs px-3 py-1 rounded-full">
+                            {selectedCourse.category}
+                          </span>
+                        </div>
+                        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{selectedCourse.title}</h2>
+                      </div>
+                    </div>
+
+                    {/* Rating */}
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className="flex items-center gap-1">
+                        <div className="flex text-yellow-400">
+                          {[...Array(5)].map((_, i) => (
+                            <span key={i}>★</span>
+                          ))}
+                        </div>
+                        <span className="font-semibold text-gray-900 dark:text-white">{selectedCourse.rating}</span>
+                        <span className="text-gray-500 dark:text-gray-400">({selectedCourse.reviews.toLocaleString()} reviews)</span>
+                      </div>
+                    </div>
+
+                    {/* Instructor */}
+                    <div className="flex items-center gap-3 mb-6 pb-6 border-b border-gray-200 dark:border-gray-700">
+                      <div className="w-10 h-10 bg-linear-to-br from-purple-500 to-blue-500 rounded-full flex items-center justify-center text-white font-bold">
+                        {selectedCourse.instructor.charAt(0)}
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">Instructor</p>
+                        <p className="font-medium text-gray-900 dark:text-white">{selectedCourse.instructor}</p>
+                      </div>
+                    </div>
+
+                    {/* Description */}
+                    <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+                      {selectedCourse.fullDescription}
+                    </p>
+                  </div>
+
+                  {/* What You'll Learn */}
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">What You'll Learn</h3>
+                    <ul className="space-y-3">
+                      {selectedCourse.highlights.map((highlight, idx) => (
+                        <li key={idx} className="flex items-start gap-3">
+                          <div className="shrink-0 w-5 h-5 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mt-0.5">
+                            <span className="text-green-600 dark:text-green-400 text-sm">✓</span>
+                          </div>
+                          <span className="text-gray-700 dark:text-gray-300">{highlight}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                {/* Right Column - Course Info Card */}
+                <div className="lg:col-span-1">
+                  <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 space-y-6 sticky top-6">
+                    {/* Course Stats */}
+                    <div className="space-y-4">
+                      <div className="flex items-center gap-4">
+                        <div className="shrink-0 w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
+                          <span className="text-2xl">⏱️</span>
+                        </div>
+                        <div>
+                          <p className="text-xs text-gray-500 dark:text-gray-400">Duration</p>
+                          <p className="font-semibold text-gray-900 dark:text-white">{selectedCourse.duration}</p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-4">
+                        <div className="shrink-0 w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center">
+                          <span className="text-2xl">📚</span>
+                        </div>
+                        <div>
+                          <p className="text-xs text-gray-500 dark:text-gray-400">Lessons</p>
+                          <p className="font-semibold text-gray-900 dark:text-white">{selectedCourse.lessons} lessons</p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-4">
+                        <div className="shrink-0 w-12 h-12 bg-orange-100 dark:bg-orange-900/30 rounded-lg flex items-center justify-center">
+                          <span className="text-2xl">📦</span>
+                        </div>
+                        <div>
+                          <p className="text-xs text-gray-500 dark:text-gray-400">Modules</p>
+                          <p className="font-semibold text-gray-900 dark:text-white">{selectedCourse.modules} modules</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Divider */}
+                    <div className="border-t border-gray-200 dark:border-gray-700" />
+
+                    {/* Tags */}
+                    <div>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mb-3 font-medium">Skills</p>
+                      <div className="flex flex-wrap gap-2">
+                        {selectedCourse.tags.map((tag, idx) => (
+                          <span
+                            key={idx}
+                            className="inline-block bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 text-xs px-3 py-1 rounded-full"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Divider */}
+                    <div className="border-t border-gray-200 dark:border-gray-700" />
+
+                    {/* Action Buttons */}
+                    <div className="space-y-2">
+                      <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-6">
+                        Start Learning
+                      </Button>
+                      <Button 
+                        variant="outline" 
+                        onClick={() => setSelectedCourse(null)}
+                        className="w-full"
+                      >
+                        Close
+                      </Button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
