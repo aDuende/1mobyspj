@@ -1,42 +1,8 @@
-import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "./components/ui/card";
 import { Button } from "./components/ui/button";
 import { Filter } from "lucide-react";
 
 export default function MyIDPLearningPage() {
-  const [selectedCourse, setSelectedCourse] = useState<null | {
-    id: string;
-    title: string;
-    description: string;
-    category: string;
-    videoUrl: string;
-  }>(null);
-
-  const courses = [
-    {
-      id: "jwt",
-      title: "What is JWT and Why Should You Use JWT",
-      description: "What is JWT and Why Should You Use JWT",
-      category: "BACKEND",
-      // demo YouTube video (placeholder)
-      videoUrl: "https://www.youtube.com/embed/7Q17ubqLfaM",
-    },
-    {
-      id: "react-ts",
-      title: "TypeScript in React - COMPLETE Tutorial (Crash Course)",
-      description: "TypeScript in React - COMPLETE Tutorial (Crash Course)",
-      category: "FRONTEND",
-      videoUrl: "https://www.youtube.com/embed/BwuLxPH8IDs",
-    },
-    {
-      id: "postgres",
-      title: "Learn PostgreSQL Tutorial - Full Course for Beginners",
-      description: "Learn PostgreSQL Tutorial - Full Course for Beginners",
-      category: "BACKEND",
-      videoUrl: "https://www.youtube.com/embed/q7p3k8fJqYQ",
-    },
-  ];
-
   return (
     <div className="flex-1 overflow-auto bg-gray-50 dark:bg-gray-900">
       <div className="p-6 space-y-6">
@@ -61,7 +27,7 @@ export default function MyIDPLearningPage() {
             </CardHeader>
             <CardContent className="space-y-6">
               {/* Chart Area */}
-              <div className="relative h-48 bg-linear-to-br from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20 rounded-lg p-4">
+              <div className="relative h-48 bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20 rounded-lg p-4">
                 <svg viewBox="0 0 400 150" className="w-full h-full">
                   {/* Grid lines */}
                   <line x1="0" y1="140" x2="400" y2="140" stroke="#e5e7eb" strokeWidth="1" />
@@ -88,7 +54,7 @@ export default function MyIDPLearningPage() {
                   <circle cx="50" cy="100" r="5" fill="#a855f7" />
                   <circle cx="150" cy="80" r="5" fill="#3b82f6" />
                   <circle cx="250" cy="60" r="5" fill="#3b82f6" />
-                  <circle cx="350" cy="30" r="5" stroke="#9ca3af" strokeWidth="2" fill="white" />
+                  <circle cx="350" cy="30" r="5" fill="#e5e7eb" stroke="#9ca3af" strokeWidth="2" fill="white" />
                   
                   {/* X-axis labels */}
                   <text x="50" y="155" fontSize="12" fill="#9ca3af" textAnchor="middle">Jan</text>
@@ -181,7 +147,7 @@ export default function MyIDPLearningPage() {
             <CardContent className="p-6">
               <div className="flex items-center gap-4">
                 {/* Course Image */}
-                <div className="w-40 h-24 bg-linear-to-br from-gray-800 to-gray-900 rounded-lg flex items-center justify-center shrink-0 overflow-hidden">
+                <div className="w-40 h-24 bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden">
                   <img 
                     src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%231e293b' width='100' height='100'/%3E%3Ctext x='50' y='50' font-size='12' fill='white' text-anchor='middle' dominant-baseline='middle'%3EIDP Plan%3C/text%3E%3C/svg%3E"
                     alt="Course thumbnail"
@@ -231,61 +197,131 @@ export default function MyIDPLearningPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
-            {courses.map((c) => (
-              <Card
-                key={c.id}
-                className="bg-white dark:bg-gray-800 overflow-hidden p-2 cursor-pointer hover:shadow-lg"
-                onClick={() => setSelectedCourse(c)}
-              >
-                <div className="relative h-32 flex items-center justify-center rounded-lg">
-                  {/* Simple visual variants based on category */}
-                  <div
-                    className={`absolute inset-0 rounded-lg ${c.category === 'FRONTEND' ? 'bg-linear-to-br from-purple-600 to-blue-500' : 'bg-linear-to-br from-gray-400 to-gray-600'}`}
-                  />
-                  <div className="relative z-10 text-white text-xl font-bold">{c.title.split('-')[0]}</div>
+            {/* JWT Course */}
+            <Card className="bg-white dark:bg-gray-800 overflow-hidden p-2">
+              <div className="relative h-32 bg-black flex items-center justify-center px-6 rounded-lg">
+                {/* Colorful pinwheel icon */}
+                <svg className="w-20 h-20" viewBox="0 0 100 100">
+                  {/* Center circle */}
+                  <circle cx="50" cy="50" r="8" fill="#000" stroke="#fff" strokeWidth="2"/>
+                  
+                  {/* Colorful petals - arranged in a circle */}
+                  {[
+                    { angle: 0, color: '#ffffff' },
+                    { angle: 45, color: '#ff69b4' },
+                    { angle: 90, color: '#ff1493' },
+                    { angle: 135, color: '#a855f7' },
+                    { angle: 180, color: '#8b5cf6' },
+                    { angle: 225, color: '#3b82f6' },
+                    { angle: 270, color: '#06b6d4' },
+                    { angle: 315, color: '#10b981' },
+                  ].map((petal, i) => {
+                    const rad = (petal.angle * Math.PI) / 180;
+                    const x1 = 50;
+                    const y1 = 50;
+                    const x2 = 50 + Math.cos(rad) * 35;
+                    const y2 = 50 + Math.sin(rad) * 35;
+                    return (
+                      <g key={i}>
+                        <path
+                          d={`M ${x1} ${y1} L ${x2} ${y2} L ${50 + Math.cos(rad + 0.3) * 25} ${50 + Math.sin(rad + 0.3) * 25} Z`}
+                          fill={petal.color}
+                        />
+                      </g>
+                    );
+                  })}
+                </svg>
+                
+                {/* JUUT Text */}
+                <div className="absolute right-6 text-white text-2xl font-bold tracking-wider" style={{ fontFamily: 'sans-serif' }}>
+                  JUUT
                 </div>
-                <CardContent className="relative p-1 pt-6">
-                  <div className="absolute -top-2 left-0 inline-block w-fit bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs px-2 py-1 rounded">
-                    {c.category}
-                  </div>
-                  <p className="text-sm text-gray-900 dark:text-white text-left">{c.description}</p>
-                </CardContent>
-              </Card>
-            ))}
+                {/* BACKEND tag */}
+                
+              </div>
+              <CardContent className="relative p-1 pt-6">
+                <div className="absolute -top-2 left-0 inline-block w-fit bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs px-2 py-1 rounded">
+                  BACKEND
+                </div>
+                <p className="text-sm text-gray-900 dark:text-white text-left">What is JWT and Why Should You Use JWT</p>
+              </CardContent>
+            </Card>
+
+            {/* TypeScript React Course */}
+            <Card className="bg-white dark:bg-gray-800 overflow-hidden p-2">
+              <div className="relative h-32 bg-gradient-to-br from-purple-600 to-blue-500 flex items-center justify-center rounded-lg">
+                <svg className="w-16 h-16 text-white" viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="30" stroke="currentColor" strokeWidth="3" fill="none" />
+                  <circle cx="50" cy="35" r="3" fill="currentColor" />
+                  <circle cx="35" cy="55" r="3" fill="currentColor" />
+                  <circle cx="65" cy="55" r="3" fill="currentColor" />
+                  <path d="M 50 35 L 35 55 L 65 55 Z" stroke="currentColor" strokeWidth="2" fill="none" />
+                </svg>
+                <div className="absolute bottom-2 left-2 text-white text-xl font-bold">React + TypeScript</div>
+              </div>
+              <CardContent className="relative p-1 pt-6">
+                <div className="absolute -top-2 left-0 inline-block w-fit bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs px-2 py-1 rounded">
+                  FRONTEND
+                </div>
+                <p className="text-sm text-gray-900 dark:text-white text-left">TypeScript in React - COMPLETE Tutorial (Crash Course)</p>
+              </CardContent>
+            </Card>
+
+            {/* PostgreSQL Course */}
+            <Card className="bg-white dark:bg-gray-800 overflow-hidden p-2">
+              <div className="relative h-32 bg-gradient-to-br from-gray-400 to-gray-600 flex items-center justify-center rounded-lg">
+                <svg className="w-20 h-20 text-white" viewBox="0 0 100 100">
+                  <path d="M 30 25 Q 50 15 70 25 Q 75 30 75 40 Q 75 55 70 60 Q 50 70 30 60 Q 25 55 25 40 Q 25 30 30 25 Z" fill="currentColor" opacity="0.6" />
+                  <path d="M 30 45 Q 50 35 70 45 Q 75 50 75 60 Q 75 75 70 80 Q 50 90 30 80 Q 25 75 25 60 Q 25 50 30 45 Z" fill="currentColor" />
+                  <text x="50" y="68" fontSize="14" fontWeight="bold" fill="white" textAnchor="middle">14</text>
+                </svg>
+              </div>
+              <CardContent className="relative p-1 pt-6">
+                <div className="absolute -top-2 left-0 inline-block w-fit bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs px-2 py-1 rounded">
+                  BACKEND
+                </div>
+                <p className="text-sm text-gray-900 dark:text-white text-left">Learn PostgreSQL Tutorial - Full Course for Beginners</p>
+              </CardContent>
+            </Card>
+
+            {/* TypeScript React Course (Duplicate) */}
+            <Card className="bg-white dark:bg-gray-800 overflow-hidden p-2">
+              <div className="relative h-32 bg-gradient-to-br from-purple-600 to-blue-500 flex items-center justify-center rounded-lg">
+                <svg className="w-16 h-16 text-white" viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="30" stroke="currentColor" strokeWidth="3" fill="none" />
+                  <circle cx="50" cy="35" r="3" fill="currentColor" />
+                  <circle cx="35" cy="55" r="3" fill="currentColor" />
+                  <circle cx="65" cy="55" r="3" fill="currentColor" />
+                  <path d="M 50 35 L 35 55 L 65 55 Z" stroke="currentColor" strokeWidth="2" fill="none" />
+                </svg>
+                <div className="absolute bottom-2 left-2 text-white text-xl font-bold">React + TypeScript</div>
+              </div>
+              <CardContent className="relative p-1 pt-6">
+                <div className="absolute -top-2 left-0 inline-block w-fit bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs px-2 py-1 rounded">
+                  FRONTEND
+                </div>
+                <p className="text-sm text-gray-900 dark:text-white text-left">TypeScript in React - COMPLETE Tutorial (Crash Course)</p>
+              </CardContent>
+            </Card>
+
+            {/* PostgreSQL Course (Duplicate) */}
+            <Card className="bg-white dark:bg-gray-800 overflow-hidden p-2">
+              <div className="relative h-32 bg-gradient-to-br from-gray-400 to-gray-600 flex items-center justify-center rounded-lg">
+                <svg className="w-20 h-20 text-white" viewBox="0 0 100 100">
+                  <path d="M 30 25 Q 50 15 70 25 Q 75 30 75 40 Q 75 55 70 60 Q 50 70 30 60 Q 25 55 25 40 Q 25 30 30 25 Z" fill="currentColor" opacity="0.6" />
+                  <path d="M 30 45 Q 50 35 70 45 Q 75 50 75 60 Q 75 75 70 80 Q 50 90 30 80 Q 25 75 25 60 Q 25 50 30 45 Z" fill="currentColor" />
+                  <text x="50" y="68" fontSize="14" fontWeight="bold" fill="white" textAnchor="middle">14</text>
+                </svg>
+              </div>
+              <CardContent className="relative p-1 pt-6">
+                <div className="absolute -top-2 left-0 inline-block w-fit bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs px-2 py-1 rounded">
+                  BACKEND
+                </div>
+                <p className="text-sm text-gray-900 dark:text-white text-left">Learn PostgreSQL Tutorial - Full Course for Beginners</p>
+              </CardContent>
+            </Card>
           </div>
         </div>
-        {/* Video Modal */}
-        {selectedCourse && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div className="absolute inset-0 bg-black/50" onClick={() => setSelectedCourse(null)} />
-            <div className="relative z-10 w-full max-w-4xl bg-white dark:bg-gray-900 rounded shadow-lg overflow-hidden">
-              <div className="flex items-center justify-between p-3 border-b border-gray-200 dark:border-gray-700">
-                <div className="text-lg font-semibold text-gray-900 dark:text-white">{selectedCourse.title}</div>
-                <Button variant="ghost" onClick={() => setSelectedCourse(null)}>Close</Button>
-              </div>
-              <div className="p-4">
-                {/* Use iframe for YouTube links, otherwise fallback to video tag */}
-                {selectedCourse.videoUrl.includes('youtube') || selectedCourse.videoUrl.includes('youtu.be') ? (
-                  <div className="aspect-video w-full">
-                    <iframe
-                      className="w-full h-full"
-                      src={selectedCourse.videoUrl}
-                      title={selectedCourse.title}
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    />
-                  </div>
-                ) : (
-                  <video className="w-full rounded" controls>
-                    <source src={selectedCourse.videoUrl} />
-                    Your browser does not support the video tag.
-                  </video>
-                )}
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );
