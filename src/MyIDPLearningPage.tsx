@@ -22,6 +22,16 @@ export default function MyIDPLearningPage() {
     highlights: string[];
   }>(null);
 
+  const [selectedReel, setSelectedReel] = useState<null | {
+    id: string;
+    title: string;
+    description: string;
+    category: string;
+    duration: string;
+    views: string;
+    videoUrl: string;
+  }>(null);
+
   const courses = [
     {
       id: "jwt",
@@ -88,6 +98,69 @@ export default function MyIDPLearningPage() {
         "Database design and optimization",
         "Real-world database projects",
       ],
+    },
+  ];
+
+  const shortLearningReels = [
+    {
+      id: "reel-1",
+      title: "5 min: Git Basics",
+      description: "Learn the essentials of Git in just 5 minutes",
+      category: "BACKEND",
+      duration: "5 min",
+      views: "12.5K",
+      thumbnail: "https://via.placeholder.com/300x300?text=Git+Basics",
+      videoUrl: "https://www.youtube.com/embed/USjZcfj8yxE",
+    },
+    {
+      id: "reel-2",
+      title: "CSS Flexbox Tips",
+      description: "Quick CSS Flexbox tips for better layouts",
+      category: "FRONTEND",
+      duration: "3 min",
+      views: "45.2K",
+      thumbnail: "https://via.placeholder.com/300x300?text=CSS+Flexbox",
+      videoUrl: "https://www.youtube.com/embed/JJSoEo8JSnc",
+    },
+    {
+      id: "reel-3",
+      title: "REST API Design",
+      description: "Best practices for designing REST APIs",
+      category: "BACKEND",
+      duration: "4 min",
+      views: "28.7K",
+      thumbnail: "https://via.placeholder.com/300x300?text=REST+API",
+      videoUrl: "https://www.youtube.com/embed/SLwpqD8n3d0",
+    },
+    {
+      id: "reel-4",
+      title: "React Hooks Tutorial",
+      description: "Understanding React Hooks in 4 minutes",
+      category: "FRONTEND",
+      duration: "4 min",
+      views: "89.3K",
+      thumbnail: "https://via.placeholder.com/300x300?text=React+Hooks",
+      videoUrl: "https://www.youtube.com/embed/TNhaISOUy6Q",
+    },
+    {
+      id: "reel-5",
+      title: "Database Indexing",
+      description: "Why database indexes matter for performance",
+      category: "BACKEND",
+      duration: "6 min",
+      views: "15.8K",
+      thumbnail: "https://via.placeholder.com/300x300?text=DB+Indexing",
+      videoUrl: "https://www.youtube.com/embed/fsG1XaZxSDE",
+    },
+    {
+      id: "reel-6",
+      title: "TypeScript Types",
+      description: "Essential TypeScript types explained",
+      category: "FRONTEND",
+      duration: "5 min",
+      views: "34.1K",
+      thumbnail: "https://via.placeholder.com/300x300?text=TS+Types",
+      videoUrl: "https://www.youtube.com/embed/U6s2pdxebSo",
     },
   ];
 
@@ -308,6 +381,49 @@ export default function MyIDPLearningPage() {
             ))}
           </div>
         </div>
+
+        {/* Short Learning Reels Section */}
+        <div>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Short Learning - Reels</h2>
+            <Button variant="outline" size="sm" className="gap-2">
+              <Filter className="w-4 h-4" />
+              All Topics
+            </Button>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3">
+            {shortLearningReels.map((reel) => (
+              <Card
+                key={reel.id}
+                className="bg-white dark:bg-gray-800 overflow-hidden cursor-pointer hover:shadow-lg transition-shadow group"
+                onClick={() => setSelectedReel(reel)}
+              >
+                {/* Thumbnail */}
+                <div className="relative w-full aspect-square bg-linear-to-br from-gray-300 to-gray-400 overflow-hidden">
+                  <div className={`absolute inset-0 ${reel.category === 'FRONTEND' ? 'bg-linear-to-br from-purple-600 to-blue-500' : 'bg-linear-to-br from-gray-400 to-gray-600'} flex items-center justify-center`}>
+                    <span className="text-white text-3xl group-hover:scale-110 transition-transform">▶</span>
+                  </div>
+                  {/* Duration Badge */}
+                  <div className="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
+                    {reel.duration}
+                  </div>
+                </div>
+
+                {/* Content */}
+                <CardContent className="p-3">
+                  <h3 className="text-sm font-medium text-gray-900 dark:text-white mb-1 line-clamp-2">
+                    {reel.title}
+                  </h3>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">{reel.views} views</p>
+                  <div className="inline-block bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs px-2 py-0.5 rounded">
+                    {reel.category}
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
         {/* Course Details Modal */}
         {selectedCourse && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto">
@@ -481,6 +597,69 @@ export default function MyIDPLearningPage() {
                       </Button>
                     </div>
                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Short Learning Reel Modal */}
+        {selectedReel && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto">
+            <div className="absolute inset-0 bg-black/50" onClick={() => setSelectedReel(null)} />
+            <div className="relative z-10 w-full max-w-2xl bg-white dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden my-8">
+              {/* Close Button */}
+              <Button 
+                variant="ghost" 
+                onClick={() => setSelectedReel(null)}
+                className="absolute top-4 right-4 z-20"
+              >
+                ✕
+              </Button>
+
+              <div className="p-6 space-y-4">
+                {/* Video */}
+                <div>
+                  {selectedReel.videoUrl.includes('youtube') || selectedReel.videoUrl.includes('youtu.be') ? (
+                    <div className="aspect-video w-full rounded-lg overflow-hidden bg-gray-800">
+                      <iframe
+                        className="w-full h-full"
+                        src={selectedReel.videoUrl}
+                        title={selectedReel.title}
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      />
+                    </div>
+                  ) : (
+                    <video className="w-full rounded-lg" controls>
+                      <source src={selectedReel.videoUrl} />
+                      Your browser does not support the video tag.
+                    </video>
+                  )}
+                </div>
+
+                {/* Title and Info */}
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="inline-block bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 text-xs px-3 py-1 rounded-full font-medium">
+                      {selectedReel.category}
+                    </span>
+                    <span className="text-xs text-gray-500 dark:text-gray-400">• {selectedReel.duration}</span>
+                    <span className="text-xs text-gray-500 dark:text-gray-400">• {selectedReel.views} views</span>
+                  </div>
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{selectedReel.title}</h2>
+                  <p className="text-gray-700 dark:text-gray-300">{selectedReel.description}</p>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
+                  <Button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white">
+                    Add to Watchlist
+                  </Button>
+                  <Button variant="outline" onClick={() => setSelectedReel(null)}>
+                    Close
+                  </Button>
                 </div>
               </div>
             </div>
