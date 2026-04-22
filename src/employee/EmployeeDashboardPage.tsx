@@ -12,8 +12,10 @@ import { useState } from "react";
 import {
   Breadcrumb,
   BreadcrumbItem,
+  BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
+  BreadcrumbSeparator,
 } from "../components/ui/breadcrumb";
 
 // Dashboard Content Component
@@ -512,6 +514,25 @@ function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
                       </BreadcrumbPage>
                     </BreadcrumbItem>
                   )}
+                  {location.pathname === '/help/history' && (
+                    <>
+                      <BreadcrumbItem>
+                        <BreadcrumbLink 
+                          onClick={() => navigate('/help')}
+                          className="cursor-pointer"
+                          style={{ fontFamily: 'Geometrica, sans-serif' }}
+                        >
+                          Help
+                        </BreadcrumbLink>
+                      </BreadcrumbItem>
+                      <BreadcrumbSeparator />
+                      <BreadcrumbItem>
+                        <BreadcrumbPage style={{ fontFamily: 'Geometrica, sans-serif' }}>
+                          History
+                        </BreadcrumbPage>
+                      </BreadcrumbItem>
+                    </>
+                  )}
                   {location.pathname === '/my-idp-learning' && (
                     <BreadcrumbItem>
                       <BreadcrumbPage style={{ fontFamily: 'Geometrica, sans-serif' }}>
@@ -564,6 +585,7 @@ function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
               <Route path="/settings" element={<SettingPage />} />
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/help" element={<HelpPage username={username} role="employee" />} />
+              <Route path="/help/history" element={<HelpPage username={username} role="employee" />} />
               <Route path="/dashboard" element={<DashboardContent username={username} />} />
             </Routes>
           </div>
