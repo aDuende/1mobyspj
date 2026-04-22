@@ -102,6 +102,19 @@
 
   --ring: oklch(0.708 0 0);
 
+  /* 1Moby Brand Palette */
+  --moby-blue: #006bff;
+  --moby-orange: #fc4c02;
+  --moby-yellow: #ffa400;
+  --moby-navy: #1d1f2a;
+  --moby-gray-1: #bbbbbb;
+  --moby-gray-2: #d4d4d4;
+  --moby-gray-3: #eeeeee;
+
+  /* Dynamic Selection Color */
+  --moby-selection: #006bff;
+  --moby-selection-bg: rgba(0, 107, 255, 0.15);
+
   --chart-1: oklch(0.87 0 0);
 
   --chart-2: oklch(0.556 0 0);
@@ -129,6 +142,17 @@
   --sidebar-border: oklch(0.922 0 0);
 
   --sidebar-ring: oklch(0.708 0 0);
+}
+
+/* Brand-specific Selection Effect */
+::selection {
+  background-color: var(--moby-selection-bg);
+  color: var(--moby-selection);
+}
+
+::-moz-selection {
+  background-color: var(--moby-selection-bg);
+  color: var(--moby-selection);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -253,6 +277,9 @@ code {
 }
 
 .dark {
+  --text: var(--muted-foreground);
+  --text-h: var(--foreground);
+  --bg: var(--background);
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
