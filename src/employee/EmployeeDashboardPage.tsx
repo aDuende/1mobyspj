@@ -3,6 +3,7 @@ import { AppSidebar } from "../app-sidebar";
 import LanguageSelector from "../components/LanguageSelector";
 import AppearanceSelector from "../components/AppearanceSelector";
 import AlertSelector from "../components/AlertSelector";
+import ExperiencePoints from "../components/ExperiencePoints";
 import SettingPage from "../SettingPage";
 import ProfilePage from "../ProfilePage";
 import HelpPage from "../HelpPage";
@@ -820,6 +821,7 @@ function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
               </Breadcrumb>
             </div>
             <div className="flex items-center gap-2">
+              <ExperiencePoints points={120} />
               <AlertSelector />
               <AppearanceSelector
                 isDarkMode={isDarkMode}
