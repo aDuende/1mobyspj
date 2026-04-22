@@ -210,8 +210,8 @@ function AdminDashboard({ onLogout, username }: AdminDashboardProps) {
                         className="text-gray-600 dark:text-gray-400"
                         style={{ fontFamily: "Geometrica, sans-serif" }}
                       >
-                        Manage the entire LMS system, users, courses, and
-                        settings.
+                        Manage the entire ConteX Skills platform, users,
+                        courses, and settings.
                       </p>
                     </div>
                   }

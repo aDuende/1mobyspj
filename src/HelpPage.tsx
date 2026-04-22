@@ -146,7 +146,7 @@ function HelpPage({ username, role }: HelpPageProps) {
             >
               {role === "admin"
                 ? "View and manage help requests from users"
-                : "Submit help requests about system issues or LMS problems"}
+                : "Submit help requests about system issues or platform problems"}
             </p>
           </div>
           <Button
@@ -195,7 +195,7 @@ function HelpPage({ username, role }: HelpPageProps) {
                   <Input
                     id="subject"
                     type="text"
-                    placeholder="e.g., System crash, Cannot open LMS"
+                    placeholder="e.g., System crash, Cannot open platform"
                     value={subject}
                     onChange={(e) => setSubject(e.target.value)}
                     required
