@@ -189,12 +189,13 @@ function ChartTooltipContent({
   return (
     <div
       className={cn(
-        "grid min-w-32 items-start gap-1.5 rounded-lg border border-border/50 bg-background px-2.5 py-1.5 text-xs shadow-xl",
+        "grid min-w-32 items-start gap-1 rounded-xl border border-white/20 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl px-3.5 py-2.5 text-xs shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] ring-1 ring-white/40 dark:ring-white/5",
         className,
       )}
+      style={{ fontFamily: '"Geometrica", sans-serif' }}
     >
       {!nestLabel ? tooltipLabel : null}
-      <div className="grid gap-1.5">
+      <div className="grid gap-1">
         {payload
           .filter((item) => item.type !== "none")
           .map((item, index) => {
@@ -222,7 +223,7 @@ function ChartTooltipContent({
                           className={cn(
                             "shrink-0 rounded-full bg-(--color-bg)",
                             {
-                              "h-2.5 w-2.5": indicator === "dot",
+                              "h-2 w-2": indicator === "dot",
                               "w-1": indicator === "line",
                               "w-0 border-[1.5px] border-dashed bg-transparent":
                                 indicator === "dashed",
@@ -244,14 +245,14 @@ function ChartTooltipContent({
                         nestLabel ? "items-end" : "items-center",
                       )}
                     >
-                      <div className="grid gap-1.5">
+                      <div className="grid gap-1">
                         {nestLabel ? tooltipLabel : null}
-                        <span className="text-muted-foreground">
+                        <span className="text-[11px] text-gray-500 dark:text-gray-400 font-normal">
                           {itemConfig?.label ?? item.name}
                         </span>
                       </div>
                       {item.value != null && (
-                        <span className="font-mono font-medium text-foreground tabular-nums">
+                        <span className="font-mono text-[13px] font-medium text-[#08060d] dark:text-white tabular-nums">
                           {typeof item.value === "number"
                             ? item.value.toLocaleString()
                             : String(item.value)}

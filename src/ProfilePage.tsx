@@ -39,7 +39,7 @@ export default function ProfilePage() {
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Join Date
               </label>
-              <p className="text-gray-900 dark:text-white">January 15, 2024</p>
+              <p className="text-gray-900 dark:text-white">January 15, 2027</p>
             </div>
           </div>
         </div>

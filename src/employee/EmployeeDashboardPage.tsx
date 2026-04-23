@@ -20,6 +20,11 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { Card } from "../components/ui/card";
+import {
+  ContributionGraph,
+  type ContributionData,
+} from "../components/smoothui/contribution-graph";
+import BackToTop from "../components/smoothui/back-to-top";
 import { useState, useEffect, useRef } from "react";
 import {
   Breadcrumb,
@@ -47,7 +52,7 @@ const radarChartData = [
 const radarChartConfig = {
   actual: {
     label: "Actual",
-    color: "#f97316",
+    color: "#fc4c02",
   },
   expected: {
     label: "Target",
@@ -59,6 +64,43 @@ import efficientLearnerIcon from "../assets/Award.png";
 import keepUpIcon from "../assets/Flame.png";
 import BookOpenPng from "../assets/BookOpen.png";
 import BriefcasePng from "../assets/Briefcase.png";
+
+// Mock contribution data for the current year
+const generateMockContributions = (): ContributionData[] => {
+  const data: ContributionData[] = [];
+  const year = new Date().getFullYear();
+  const startDate = new Date(year, 0, 1);
+  const endDate = new Date(year, 11, 31);
+  const current = new Date(startDate);
+
+  while (current <= endDate) {
+    const dayOfWeek = current.getDay();
+    // Higher activity on weekdays
+    const isWeekday = dayOfWeek > 0 && dayOfWeek < 6;
+    const baseChance = isWeekday ? 0.7 : 0.3;
+    const hasActivity = Math.random() < baseChance;
+
+    if (hasActivity) {
+      const count = Math.floor(Math.random() * 12) + 1;
+      let level = 0;
+      if (count >= 9) level = 4;
+      else if (count >= 6) level = 3;
+      else if (count >= 3) level = 2;
+      else level = 1;
+
+      data.push({
+        date: current.toISOString().split("T")[0],
+        count,
+        level,
+      });
+    }
+
+    current.setDate(current.getDate() + 1);
+  }
+  return data;
+};
+
+const mockContributions = generateMockContributions();
 
 // Dashboard Content Component
 function DashboardContent({ username }: { username: string }) {
@@ -109,11 +151,11 @@ function DashboardContent({ username }: { username: string }) {
       {/* Top Row: Welcome & Metrics */}
       <div className="flex flex-col xl:flex-row gap-3 items-stretch">
         {/* Welcome Banner */}
-        <Card className="relative overflow-hidden w-full xl:w-[400px] h-[140px] shrink-0 group rounded-2xl bg-white dark:bg-gray-800 border-none shadow-none p-0">
+        <div className="relative overflow-hidden w-full xl:w-[400px] h-[140px] shrink-0 group rounded-lg border-none shadow-none p-0">
           <img
             src="/src/assets/dashboard_banner.png"
             alt="Sunrise"
-            className="absolute inset-0 w-full h-full object-cover opacity-100 transition-transform duration-700 group-hover:scale-105"
+            className="absolute inset-0 w-full h-full object-cover rounded-lg opacity-100 transition-transform duration-700 group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-linear-to-r from-white/15 via-white/5 to-transparent"></div>
           <div className="relative p-6 h-full flex flex-col justify-start pt-6 text-left">
@@ -133,7 +175,7 @@ function DashboardContent({ username }: { username: string }) {
               Good Morning, {username}!
             </p>
           </div>
-        </Card>
+        </div>
 
         {/* Metrics Group */}
         <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
@@ -221,7 +263,7 @@ function DashboardContent({ username }: { username: string }) {
           <div className="flex items-baseline justify-between mb-2 relative z-20">
             <div className="flex items-center gap-3">
               <h2
-                className="!text-[18px] font-normal !text-[#08060d] dark:!text-white leading-tight"
+                className="!text-[18px] font-medium !text-[#08060d] dark:!text-white leading-tight"
                 style={{ fontFamily: '"Geometrica", sans-serif' }}
               >
                 Competency Overview
@@ -372,19 +414,38 @@ function DashboardContent({ username }: { username: string }) {
 
                 <div className="flex flex-wrap gap-5 justify-start px-1">
                   <div className="flex items-center gap-2">
-                    <div className="w-2.5 h-2.5 rounded-full bg-orange-500"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#fc4c02]"></div>
                     <span className="text-[12px] font-normal text-gray-500 dark:text-gray-400">
                       Actual
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="w-2.5 h-2.5 rounded-full bg-blue-500"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#3b82f6]"></div>
                     <span className="text-[12px] font-normal text-gray-500 dark:text-gray-400">
                       Target
                     </span>
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+
+          {/* Activity Heatmap */}
+          <div className="-mt-10 relative z-10 text-left w-full">
+            <h3
+              className="!text-[18px] font-medium !text-[#08060d] dark:!text-white mb-2 leading-tight text-left"
+              style={{ fontFamily: '"Geometrica", sans-serif' }}
+            >
+              Activity
+            </h3>
+            <div className="w-full overflow-hidden">
+              <ContributionGraph
+                data={mockContributions}
+                year={new Date().getFullYear()}
+                showLegend={true}
+                showTooltips={true}
+                className="w-full"
+              />
             </div>
           </div>
         </Card>
@@ -394,12 +455,12 @@ function DashboardContent({ username }: { username: string }) {
           <div className="flex flex-col gap-4 items-start">
             <section className="w-full text-left">
               <h3
-                className="text-[14px] font-bold text-gray-800 dark:text-white mb-3 text-left"
+                className="!text-[18px] font-medium !text-[#08060d] dark:!text-white mb-2.5 text-left leading-tight"
                 style={{ fontFamily: '"Geometrica", sans-serif' }}
               >
                 Top Strengths
               </h3>
-              <div className="w-full rounded-2xl bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] p-3 space-y-2.5">
+              <div className="w-full rounded-2xl bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer p-3 space-y-2.5">
                 {[
                   "Strategic Leadership Workshop",
                   "Team Communication",
@@ -432,12 +493,12 @@ function DashboardContent({ username }: { username: string }) {
 
             <section className="w-full text-left">
               <h3
-                className="text-[14px] font-bold text-gray-800 dark:text-white mb-3 text-left"
+                className="!text-[18px] font-medium !text-[#08060d] dark:!text-white mb-2.5 text-left leading-tight"
                 style={{ fontFamily: '"Geometrica", sans-serif' }}
               >
                 Areas to Improve
               </h3>
-              <div className="w-full rounded-2xl bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] p-3 space-y-2.5">
+              <div className="w-full rounded-2xl bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer p-3 space-y-2.5">
                 {[
                   "Project Management",
                   "Conflict Resolution",
@@ -471,15 +532,15 @@ function DashboardContent({ username }: { username: string }) {
         <Card className="col-span-12 md:col-span-6 xl:col-span-4 p-4 rounded-lg bg-white dark:bg-gray-800 border-none shadow-none h-full">
           <div className="flex flex-col gap-3.5">
             <h3
-              className="text-[14px] font-bold text-gray-800 dark:text-white mb-1.5 text-left"
+              className="!text-[18px] font-medium !text-[#08060d] dark:!text-white mb-2.5 text-left leading-tight"
               style={{ fontFamily: '"Geometrica", sans-serif' }}
             >
               Engagement Overview
             </h3>
             <div className="space-y-2.5">
               {/* Points */}
-              <div className="flex items-center justify-between p-3 bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] rounded-2xl">
-                <div className="flex items-center gap-4 text-left">
+              <div className="flex items-center p-3 bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer rounded-2xl relative">
+                <div className="flex items-center gap-4 text-left pr-12">
                   <div className="w-9 h-9 flex items-center justify-center shrink-0">
                     <div className="relative flex items-center justify-center">
                       <div className="w-7 h-7 rounded-full bg-linear-to-br from-yellow-300 via-orange-400 to-yellow-500 shadow-[0_0_10px_rgba(245,158,11,0.25)]">
@@ -504,7 +565,7 @@ function DashboardContent({ username }: { username: string }) {
                   </div>
                 </div>
                 <span
-                  className="text-2xl font-semibold text-[#2ecc71] pr-2"
+                  className="text-2xl font-semibold text-[#2ecc71] absolute right-2.5 top-1/2 -translate-y-1/2"
                   style={{ fontFamily: '"Geometrica", sans-serif' }}
                 >
                   +20
@@ -512,7 +573,7 @@ function DashboardContent({ username }: { username: string }) {
               </div>
 
               {/* Efficient Learner */}
-              <div className="flex items-center gap-4 p-3 bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] rounded-2xl">
+              <div className="flex items-center gap-4 p-3 bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer rounded-2xl">
                 <div className="w-9 h-9 flex items-center justify-center shrink-0">
                   <img
                     src={efficientLearnerIcon}
@@ -537,7 +598,7 @@ function DashboardContent({ username }: { username: string }) {
               </div>
 
               {/* Streak */}
-              <div className="p-3 bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] rounded-2xl relative overflow-hidden h-[74px]">
+              <div className="p-3 bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 rounded-2xl relative overflow-hidden h-[74px] cursor-pointer group">
                 <div className="flex items-center gap-4 text-left">
                   <div className="w-9 h-9 flex items-center justify-center shrink-0">
                     <img
@@ -568,12 +629,279 @@ function DashboardContent({ username }: { username: string }) {
                   </div>
                 </div>
                 <button
-                  className="w-8 h-8 flex items-center justify-center bg-[#5fa5ff] hover:bg-[#4d94ff] text-white rounded-full shadow-md transition-all active:scale-90 absolute bottom-2.5 right-2.5"
+                  className="w-8 h-8 flex items-center justify-center bg-[#006bff] dark:bg-blue-600 hover:bg-[#0056cc] group-hover:bg-[#0056cc] text-white rounded-full shadow-sm transition-all active:scale-95 absolute bottom-2.5 right-2.5 cursor-pointer"
                   title="Start Course"
                 >
-                  <ArrowRight className="w-4 h-4 text-white" />
+                  <ArrowRight className="w-4 h-4 text-white transition-transform duration-300 group-hover:translate-x-1" />
                 </button>
               </div>
+            </div>
+          </div>
+        </Card>
+      </div>
+
+      {/* Bottom Row: Progress and Recommended */}
+      <div className="grid grid-cols-12 gap-4 items-stretch">
+        {/* Learning Progress */}
+        <Card className="col-span-12 xl:col-span-5 pt-4 pb-0 px-0 rounded-lg bg-white dark:bg-gray-800 border-none shadow-none relative overflow-hidden">
+          <h2
+            className="!text-[18px] font-medium !text-[#08060d] dark:!text-white !mb-[-4px] px-4 text-left leading-none"
+            style={{ fontFamily: '"Geometrica", sans-serif' }}
+          >
+            Learning Progress
+          </h2>
+          <div className="relative">
+            <div className="space-y-4 max-h-[360px] overflow-y-auto px-4 -mt-2 pt-2 pb-10 no-scrollbar">
+              {[
+                {
+                  title: "Project Management Basics",
+                  date: "2027-06-15",
+                  progress: 60,
+                  status: "Resume Course",
+                },
+                {
+                  title: "Mentoring Junior Devs",
+                  date: "2027-07-01",
+                  progress: 0,
+                  status: "Start Course",
+                },
+                {
+                  title: "Leadership Fundamentals",
+                  date: "2027-07-10",
+                  progress: 85,
+                  status: "Resume Course",
+                },
+                {
+                  title: "Agile Methodology",
+                  date: "2027-08-01",
+                  progress: 30,
+                  status: "Resume Course",
+                },
+                {
+                  title: "Communication Skills",
+                  date: "2027-08-15",
+                  progress: 45,
+                  status: "Resume Course",
+                },
+              ].map((course, i) => (
+                <div
+                  key={i}
+                  className="p-5 rounded-[24px] bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer flex flex-col gap-4 group"
+                >
+                  <div className="flex items-start justify-between gap-4 text-left">
+                    <div className="flex flex-col items-start gap-2.5 flex-1">
+                      {/* Course Badge */}
+                      <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-700/50 text-slate-800 dark:text-slate-200 text-[12px] font-semibold tracking-wide">
+                        <svg
+                          className="w-3.5 h-3.5"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                        >
+                          <circle cx="8.5" cy="8.5" r="5.2" />
+                          <circle cx="15.5" cy="8.5" r="5.2" />
+                          <circle cx="8.5" cy="15.5" r="5.2" />
+                          <circle cx="15.5" cy="15.5" r="5.2" />
+                        </svg>
+                        Course
+                      </div>
+
+                      {/* Title & Description */}
+                      <div>
+                        <h3
+                          className="text-[14px] font-semibold text-gray-800 dark:text-white leading-tight mt-1"
+                          style={{ fontFamily: '"Geometrica", sans-serif' }}
+                        >
+                          {course.title}
+                        </h3>
+                        <p
+                          className="text-[11px] text-gray-500 dark:text-gray-400 font-normal mt-1"
+                          style={{ fontFamily: '"Geometrica", sans-serif' }}
+                        >
+                          Due {course.date}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Hover Action Label */}
+                    <div className="absolute top-6 right-6 flex items-center gap-1.5 text-[#006bff] opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-2 group-hover:translate-x-0 shrink-0 pointer-events-none group-hover:pointer-events-auto">
+                      <div className="relative group/text">
+                        <span
+                          className="text-[12px] font-bold relative z-10"
+                          style={{ fontFamily: '"Geometrica", sans-serif' }}
+                        >
+                          {course.status}
+                        </span>
+                        {/* Animated Underline */}
+                        <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#006bff] transition-all duration-300 group-hover:w-full rounded-full"></div>
+                      </div>
+                      <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+                    </div>
+                  </div>
+
+                  {/* Progress Bar */}
+                  <div className="flex items-center gap-3">
+                    <div className="flex-1 bg-gray-200/50 dark:bg-gray-700/50 rounded-full h-3 overflow-hidden shadow-[inset_0_1.5px_4px_rgba(0,0,0,0.1)]">
+                      <div
+                        className="bg-linear-to-r from-blue-400 to-blue-600 h-full rounded-full transition-all duration-1000 shadow-[0_0_8px_rgba(59,130,246,0.2)]"
+                        style={{ width: `${course.progress}%` }}
+                      ></div>
+                    </div>
+                    <span
+                      className="text-[14px] font-medium text-gray-800 dark:text-gray-200 shrink-0 min-w-[36px] text-right"
+                      style={{ fontFamily: '"Geometrica", sans-serif' }}
+                    >
+                      {course.progress}%
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+            {/* Fade Overlay */}
+            <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-white dark:from-gray-800 to-transparent pointer-events-none z-10" />
+          </div>
+        </Card>
+
+        {/* Recommended for You */}
+        <Card className="col-span-12 md:col-span-6 xl:col-span-3 pt-4 pb-0 px-0 rounded-lg bg-white dark:bg-gray-800 border-none shadow-none relative overflow-hidden">
+          <h2
+            className="!text-[18px] font-medium !text-[#08060d] dark:!text-white !mb-[-4px] px-4 text-left leading-none"
+            style={{ fontFamily: '"Geometrica", sans-serif' }}
+          >
+            Recommended for You
+          </h2>
+          <div className="relative">
+            <div className="space-y-2 max-h-[360px] overflow-y-auto px-4 -mt-2 pt-2 pb-10 no-scrollbar">
+              {[
+                {
+                  title: "Advanced Project Planning",
+                  date: "2027-06-15",
+                  duration: "2 hours 30 minutes",
+                },
+                {
+                  title: "Effective Team Collaboration",
+                  date: "2027-06-20",
+                  duration: "1 hour 15 minutes",
+                },
+                {
+                  title: "Data-Driven Decision Making",
+                  date: "2027-06-25",
+                  duration: "3 hours 45 minutes",
+                },
+              ].map((rec, i) => (
+                <div
+                  key={i}
+                  className="flex flex-col items-start gap-2 p-3.5 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer group text-left relative min-h-[110px]"
+                >
+                  <div className="flex flex-col items-start gap-1.5 text-left pr-8 flex-1">
+                    {/* Course Badge */}
+                    <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-700/50 text-slate-800 dark:text-slate-200 text-[12px] font-semibold tracking-wide">
+                      <svg
+                        className="w-3.5 h-3.5"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                      >
+                        <circle cx="8.5" cy="8.5" r="5.2" />
+                        <circle cx="15.5" cy="8.5" r="5.2" />
+                        <circle cx="8.5" cy="15.5" r="5.2" />
+                        <circle cx="15.5" cy="15.5" r="5.2" />
+                      </svg>
+                      Course
+                    </div>
+
+                    <div>
+                      <p
+                        className="text-[14px] font-semibold text-gray-800 dark:text-gray-200 transition-colors leading-tight"
+                        style={{ fontFamily: '"Geometrica", sans-serif' }}
+                      >
+                        {rec.title}
+                      </p>
+                      <p
+                        className="text-[11px] text-gray-500 dark:text-gray-400 font-normal mt-1 leading-tight"
+                        style={{ fontFamily: '"Geometrica", sans-serif' }}
+                      >
+                        Due {rec.date}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Bottom Row: Duration & Action Button */}
+                  <div className="flex items-center justify-between w-full mt-auto">
+                    <div className="flex items-start gap-1.5 text-gray-700 dark:text-gray-300">
+                      <Clock className="w-5 h-5 opacity-80 shrink-0 mt-0.5" />
+                      <div className="flex flex-col">
+                        <span
+                          className="text-[12px] font-normal leading-[1.2]"
+                          style={{ fontFamily: '"Geometrica", sans-serif' }}
+                        >
+                          {rec.duration.split(" minutes")[0]}
+                        </span>
+                        <span
+                          className="text-[12px] font-normal leading-[1.2]"
+                          style={{ fontFamily: '"Geometrica", sans-serif' }}
+                        >
+                          minutes
+                        </span>
+                      </div>
+                    </div>
+
+                    <button className="w-8 h-8 rounded-full bg-[#006bff] dark:bg-blue-600 flex items-center justify-center active:scale-95 hover:bg-[#0056cc] group-hover:bg-[#0056cc] transition-all shrink-0 cursor-pointer shadow-sm">
+                      <ArrowRight className="w-4 h-4 text-white transition-transform duration-300 group-hover:translate-x-1" />
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+            {/* Fade Overlay */}
+            <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-white dark:from-gray-800 to-transparent pointer-events-none z-10" />
+          </div>
+        </Card>
+
+        {/* Fox - Gamification */}
+        <Card className="col-span-12 md:col-span-6 xl:col-span-4 p-0 overflow-hidden rounded-lg bg-[#fcfcfd] dark:bg-gray-800/90 border-none shadow-none transition-all duration-300">
+          <div className="relative h-64 overflow-hidden group">
+            <div className="absolute inset-x-0 top-0 pt-4 px-4 z-20 flex items-center justify-between">
+              <h2
+                className="!text-[18px] font-bold !text-[#08060d] dark:!text-white"
+                style={{ fontFamily: '"Geometrica", sans-serif' }}
+              >
+                Your Fox
+              </h2>
+              <span
+                className="px-3 py-1 rounded-full text-[12px] font-normal bg-white/90 dark:bg-gray-800/90 text-gray-900 dark:text-white shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] border border-gray-200/40 cursor-default"
+                style={{ fontFamily: '"Geometrica", sans-serif' }}
+              >
+                Lucy Lv.2
+              </span>
+            </div>
+
+            <img
+              src="/src/assets/dashboard_fox.png"
+              alt="Lucy the Fox"
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            />
+            <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#fcfcfd] via-[#fcfcfd]/50 to-transparent z-10"></div>
+          </div>
+
+          <div className="px-4 pb-6 pt-0">
+            <div className="flex items-center gap-4">
+              <span
+                className="text-[11px] font-normal text-gray-900 dark:text-white shrink-0"
+                style={{ fontFamily: '"Geometrica", sans-serif' }}
+              >
+                EXP
+              </span>
+              <div className="flex-1 bg-gray-200/50 dark:bg-gray-700/50 shadow-[inset_0_1.5px_4px_rgba(0,0,0,0.1)] rounded-full h-3 overflow-hidden">
+                <div
+                  className="bg-linear-to-r from-orange-400 via-yellow-400 to-orange-500 h-full rounded-full transition-all duration-1000 shadow-[0_0_10px_rgba(251,146,60,0.3)]"
+                  style={{ width: "60%" }}
+                ></div>
+              </div>
+              <span
+                className="text-[11px] font-normal text-gray-900 dark:text-white shrink-0"
+                style={{ fontFamily: '"Geometrica", sans-serif' }}
+              >
+                60/100
+              </span>
             </div>
           </div>
         </Card>
@@ -633,11 +961,11 @@ function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
         <main className="flex-1 overflow-hidden w-full h-full relative bg-gray-50 dark:bg-gray-900">
           <header
             className={`
-                absolute top-0 left-0 right-0 z-50 transition-all duration-200 flex items-center justify-between px-6 py-4 shrink-0
+                absolute top-0 left-0 right-0 z-50 transition-all duration-500 flex items-center justify-between px-6 py-4 shrink-0
                 ${
                   isScrolled
-                    ? "bg-white dark:bg-gray-800 border-b border-gray-200/50 dark:border-transparent"
-                    : "bg-transparent border-b border-transparent shadow-none"
+                    ? "bg-[#fcfcfd]/80 dark:bg-[#0c0e12]/80 backdrop-blur-xl backdrop-saturate-150 surface-glass border-none"
+                    : "bg-transparent border-none shadow-none"
                 }
               `}
           >
@@ -731,6 +1059,7 @@ function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
             </div>
           </div>
         </main>
+        <BackToTop />
       </div>
     </SidebarProvider>
   );

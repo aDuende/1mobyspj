@@ -2,6 +2,6 @@
 
 # ConteX Skills 🚀✨
 
-© 2026 1MOBY×STAY, Inc.
+© 2027 1MOBY×STAY, Inc.
 
 </div>
