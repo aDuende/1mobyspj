@@ -940,6 +940,27 @@ function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
     };
   }, []);
 
+  // Update document title based on current route
+  useEffect(() => {
+    const pageTitles: Record<string, string> = {
+      "/dashboard": "Dashboard",
+      "/assessment": "Assessment",
+      "/competency-profile": "Competency",
+      "/my-idp-learning": "Learning",
+      "/short-learning": "Short Learning",
+      "/team-profile": "Team Profile",
+      "/settings": "Settings",
+      "/profile": "Profile",
+      "/help": "Help",
+      "/home": "Admin Home",
+      "/manage-role": "Manage Role",
+      "/announcement": "Announcement",
+    };
+
+    const currentPage = pageTitles[location.pathname] || "Dashboard";
+    document.title = `${currentPage} | Moby Skills`;
+  }, [location.pathname]);
+
   const handleNavigate = (path: string) => {
     navigate(path);
   };
@@ -1048,7 +1069,7 @@ function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
                 <Route path="/settings" element={<SettingPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route
-                  path="/help"
+                  path="/help/*"
                   element={<HelpPage username={username} role="employee" />}
                 />
                 <Route

@@ -1,355 +1,552 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "./components/ui/button";
-import { Input } from "./components/ui/input";
-import { Separator } from "./components/ui/separator";
-import { AlertCircle, CheckCircle, Clock, History } from "lucide-react";
+import HistoryViewDetailsPage from "./HistoryViewDetailsPage";
 
-interface HelpRequest {
-  id: number;
-  user: string;
-  role: string;
+interface Complaint {
+  id: string;
   subject: string;
-  description: string;
-  status: "pending" | "resolved";
-  timestamp: string;
-  createdAt: number; // Unix timestamp for automatic archiving
-  archived?: boolean;
+  details: string;
+  date: string;
+  status: "Pending" | "In Progress" | "Resolved" | "Closed";
+  fileCount: number;
 }
 
 interface HelpPageProps {
-  username: string;
-  role: "employee" | "manager" | "admin";
+  username?: string;
+  role?: string;
 }
 
-// Load requests from localStorage
-const loadRequestsFromStorage = (): HelpRequest[] => {
-  try {
-    const stored = localStorage.getItem("helpRequests");
-    return stored ? JSON.parse(stored) : [];
-  } catch {
-    return [];
-  }
-};
+function HelpPage(props: HelpPageProps) {
+  void props;
+  const location = useLocation();
+  const navigate = useNavigate();
 
-// Save requests to localStorage
-const saveRequestsToStorage = (requests: HelpRequest[]) => {
-  localStorage.setItem("helpRequests", JSON.stringify(requests));
-};
+  const activeTab =
+    location.pathname === "/help/history" ? "history" : "submit";
 
-// Check if request is older than 1 minute (for testing)
-// const isOlderThan1Minute = (createdAt: number): boolean => {
-//   const oneMinuteInMs = 1 * 60 * 1000;
-//   return Date.now() - createdAt > oneMinuteInMs;
-// };
-
-// Check if request is older than 30 days
-const isOlderThan30Days = (createdAt: number): boolean => {
-  const thirtyDaysInMs = 30 * 24 * 60 * 60 * 1000;
-  return Date.now() - createdAt > thirtyDaysInMs;
-};
-
-function HelpPage({ username, role }: HelpPageProps) {
+  const [selectedComplaint, setSelectedComplaint] = useState<Complaint | null>(
+    null,
+  );
   const [subject, setSubject] = useState("");
-  const [description, setDescription] = useState("");
-  const [requests, setRequests] = useState<HelpRequest[]>(() => {
-    const loadedRequests = loadRequestsFromStorage();
+  const [details, setDetails] = useState("");
+  const [files, setFiles] = useState<File[]>([]);
+  const [isDragging, setIsDragging] = useState(false);
+  const [statusFilter, setStatusFilter] = useState<
+    "All" | "Pending" | "In Progress" | "Resolved"
+  >("All");
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-    // Auto-archive requests older than 30 days
-    const updatedRequests = loadedRequests.map((req) => ({
-      ...req,
-      archived: isOlderThan30Days(req.createdAt),
-    }));
+  const [complaints] = useState<Complaint[]>([
+    {
+      id: "CMP-2024-001",
+      subject: "Technical Issue",
+      details:
+        "Unable to access the performance review module. Getting error 404.",
+      date: "2024-04-15",
+      status: "Resolved",
+      fileCount: 2,
+    },
+    {
+      id: "CMP-2024-002",
+      subject: "Leave Request",
+      details:
+        "My annual leave request for May 2024 is still pending approval for 2 weeks.",
+      date: "2024-04-10",
+      status: "In Progress",
+      fileCount: 0,
+    },
+    {
+      id: "CMP-2024-003",
+      subject: "Account Problem",
+      details:
+        "Cannot reset my password. The email verification link is not working.",
+      date: "2024-04-05",
+      status: "Pending",
+      fileCount: 1,
+    },
+  ]);
 
-    // Persist if any changes were made
-    if (JSON.stringify(loadedRequests) !== JSON.stringify(updatedRequests)) {
-      saveRequestsToStorage(updatedRequests);
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+
+    const droppedFiles = Array.from(e.dataTransfer.files).filter((file) =>
+      file.type.startsWith("image/"),
+    );
+
+    setFiles((prev) => [...prev, ...droppedFiles]);
+  };
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const selectedFiles = Array.from(e.target.files).filter((file) =>
+        file.type.startsWith("image/"),
+      );
+      setFiles((prev) => [...prev, ...selectedFiles]);
     }
+  };
 
-    return updatedRequests;
-  });
-  const [submitSuccess, setSubmitSuccess] = useState(false);
-  const [showHistory, setShowHistory] = useState(false);
+  const handleRemoveFile = (index: number) => {
+    setFiles((prev) => prev.filter((_, i) => i !== index));
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const newRequest: HelpRequest = {
-      id: Date.now(),
-      user: username,
-      role: role === "employee" ? "Employee" : "Manager",
+    if (!subject || !details) {
+      alert("Please fill in all required fields");
+      return;
+    }
+
+    console.log({
       subject,
-      description,
-      status: "pending",
-      timestamp: new Date().toLocaleString("en-US", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: true,
-      }),
-      createdAt: Date.now(),
-      archived: false,
-    };
+      details,
+      files,
+    });
 
-    const updatedRequests = [newRequest, ...requests];
-    setRequests(updatedRequests);
-    saveRequestsToStorage(updatedRequests);
     setSubject("");
-    setDescription("");
-    setSubmitSuccess(true);
+    setDetails("");
+    setFiles([]);
 
-    setTimeout(() => setSubmitSuccess(false), 3000);
-  };
-
-  const handleStatusChange = (id: number) => {
-    const updatedRequests = requests.map((req) =>
-      req.id === id
-        ? {
-            ...req,
-            status:
-              req.status === "pending"
-                ? ("resolved" as const)
-                : ("pending" as const),
-          }
-        : req,
+    alert(
+      "Your complaint has been submitted. We will get back to you as soon as possible.",
     );
-    setRequests(updatedRequests);
-    saveRequestsToStorage(updatedRequests);
   };
 
-  // Filter active (non-archived) requests
-  const activeRequests = requests.filter(
-    (req) => !req.archived && (role === "admin" || req.user === username),
-  );
+  const handleClickUpload = () => {
+    fileInputRef.current?.click();
+  };
 
-  // Filter archived requests
-  const archivedRequests = requests.filter(
-    (req) => req.archived && (role === "admin" || req.user === username),
-  );
+  const getStatusColor = (status: Complaint["status"]) => {
+    switch (status) {
+      case "Pending":
+        return "bg-yellow-100 text-yellow-800";
+      case "In Progress":
+        return "bg-blue-100 text-blue-800";
+      case "Resolved":
+        return "bg-green-100 text-green-800";
+      case "Closed":
+        return "bg-gray-100 text-gray-800";
+      default:
+        return "bg-gray-100 text-gray-800";
+    }
+  };
+
+  if (selectedComplaint) {
+    return (
+      <HistoryViewDetailsPage
+        complaint={selectedComplaint}
+        onBack={() => setSelectedComplaint(null)}
+      />
+    );
+  }
 
   return (
-    <div className="min-h-full p-6">
-      <div className="max-w-6xl mx-auto space-y-6">
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h1
-              className="text-3xl font-bold text-gray-900 dark:text-white"
-              style={{ fontFamily: "Geometrica, sans-serif" }}
+    <div className="min-h-screen bg-gray-50 p-8">
+      <div className="max-w-4xl mx-auto relative">
+        {/* History Icon */}
+        {activeTab === "submit" && (
+          <div className="absolute top-0 right-0">
+            <button
+              onClick={() => navigate("/help/history")}
+              className="p-3 rounded-lg font-semibold transition-colors bg-white text-gray-600 hover:bg-gray-100 border border-gray-300"
+              title="View Complaint History"
             >
-              Help & Support
-            </h1>
-            <p
-              className="text-gray-600 dark:text-gray-400 mt-2"
-              style={{ fontFamily: "Geometrica, sans-serif" }}
-            >
-              {role === "admin"
-                ? "View and manage help requests from users"
-                : "Submit help requests about system issues or platform problems"}
-            </p>
-          </div>
-          <Button
-            onClick={() => setShowHistory(!showHistory)}
-            variant="outline"
-            className="flex items-center gap-2"
-            style={{ fontFamily: "Geometrica, sans-serif" }}
-          >
-            <History className="w-4 h-4" />
-            {showHistory ? "Show Active" : "Show History"}
-          </Button>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Submit Help Request Form - For Employee & Manager */}
-          {role !== "admin" && !showHistory && (
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-              <h2
-                className="text-xl font-semibold text-gray-900 dark:text-white mb-4"
-                style={{ fontFamily: "Geometrica, sans-serif" }}
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
               >
-                Submit Help Request
-              </h2>
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+            </button>
+          </div>
+        )}
 
-              {submitSuccess && (
-                <div className="mb-4 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg flex items-center gap-2">
-                  <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400" />
-                  <p
-                    className="text-sm text-green-600 dark:text-green-400"
-                    style={{ fontFamily: "Geometrica, sans-serif" }}
-                  >
-                    Help request submitted successfully!
-                  </p>
-                </div>
-              )}
+        {activeTab === "history" && (
+          <div className="absolute top-0 right-0">
+            <button
+              onClick={() => navigate("/help")}
+              className="p-3 rounded-lg font-semibold transition-colors bg-white text-blue-600 hover:bg-gray-100 border-2 border-blue-600"
+              title="Back to Submit Complaint"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+            </button>
+          </div>
+        )}
 
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="space-y-2">
-                  <label
-                    htmlFor="subject"
-                    className="text-sm font-medium text-gray-700 dark:text-gray-300"
-                    style={{ fontFamily: "Geometrica, sans-serif" }}
-                  >
-                    Subject
-                  </label>
-                  <Input
-                    id="subject"
-                    type="text"
-                    placeholder="e.g., System crash, Cannot open platform"
+        {/* Submit New Complaint Tab */}
+        {activeTab === "submit" && (
+          <div>
+            <div className="mb-8">
+              <h1 className="text-4xl font-bold text-gray-900 mb-3 text-left">
+                How can we help you?
+              </h1>
+              <p className="text-gray-500 text-base text-left">
+                Please fill out the information below, and we will get back to
+                you as soon as possible.
+              </p>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Complaint Subject */}
+              <div>
+                <label className="block text-s text-left font-bold text-gray-900 mb-2">
+                  Complaint Subject <span className="text-red-500">*</span>
+                </label>
+                <div className="relative">
+                  <select
                     value={subject}
                     onChange={(e) => setSubject(e.target.value)}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-500 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     required
-                    className="w-full"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <label
-                    htmlFor="description"
-                    className="text-sm font-medium text-gray-700 dark:text-gray-300"
-                    style={{ fontFamily: "Geometrica, sans-serif" }}
                   >
-                    Description
-                  </label>
-                  <textarea
-                    id="description"
-                    placeholder="Describe the issue in detail..."
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    required
-                    rows={6}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    style={{ fontFamily: "Geometrica, sans-serif" }}
+                    <option value="">--- Select Subject ---</option>
+                    <option value="technical">Technical Issue</option>
+                    <option value="account">Account Problem</option>
+                    <option value="performance">Performance Review</option>
+                    <option value="leave">Leave Request</option>
+                    <option value="training">Training & Development</option>
+                    <option value="benefits">Benefits & Compensation</option>
+                    <option value="workplace">Workplace Environment</option>
+                    <option value="other">Other</option>
+                  </select>
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4">
+                    <svg
+                      className="h-5 w-5 text-blue-400"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              {/* Details */}
+              <div>
+                <label className="block text-s text-left font-bold text-gray-900 mb-2">
+                  Details <span className="text-red-500">*</span>
+                </label>
+                <textarea
+                  value={details}
+                  onChange={(e) => setDetails(e.target.value)}
+                  placeholder="Describe the issue you encountered..."
+                  className="w-full px-4 py-3 border bg-white border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-gray-400"
+                  rows={6}
+                  required
+                />
+              </div>
+
+              {/* Attach Images */}
+              <div>
+                <label className="block text-s font-bold text-gray-900 mb-2 text-left">
+                  Attach images (optional)
+                </label>
+                <div
+                  onDragOver={handleDragOver}
+                  onDragLeave={handleDragLeave}
+                  onDrop={handleDrop}
+                  onClick={handleClickUpload}
+                  className={`bg-white border-2 border-dashed rounded-lg p-12 text-center cursor-pointer transition-colors ${
+                    isDragging
+                      ? "border-blue-400 bg-blue-50"
+                      : "border-gray-300 bg-gray-50 hover:bg-gray-100"
+                  }`}
+                >
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    onChange={handleFileSelect}
+                    className="hidden"
                   />
+                  <div className="flex flex-col items-center">
+                    <svg
+                      className="w-16 h-16 text-blue-300 mb-3"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={1.5}
+                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                      />
+                    </svg>
+                    <p className="text-sm text-gray-400">
+                      Click to upload or drag and drop files here
+                    </p>
+                  </div>
                 </div>
 
+                {/* Display selected files */}
+                {files.length > 0 && (
+                  <div className="mt-4 space-y-2">
+                    {files.map((file, index) => (
+                      <div
+                        key={index}
+                        className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200"
+                      >
+                        <div className="flex items-center space-x-3">
+                          <svg
+                            className="w-5 h-5 text-gray-400"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                            />
+                          </svg>
+                          <span className="text-sm text-gray-700">
+                            {file.name}
+                          </span>
+                          <span className="text-xs text-gray-400">
+                            ({(file.size / 1024).toFixed(1)} KB)
+                          </span>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveFile(index)}
+                          className="text-red-500 hover:text-red-700"
+                        >
+                          <svg
+                            className="w-5 h-5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M6 18L18 6M6 6l12 12"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Submit Button */}
+              <div className="pt-4">
                 <Button
                   type="submit"
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white"
-                  style={{ fontFamily: "Geometrica, sans-serif" }}
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors"
                 >
-                  Submit Request
+                  Submit Complaint
                 </Button>
-              </form>
-            </div>
-          )}
-
-          {/* Help Requests List */}
-          <div
-            className={`bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 ${role === "admin" || showHistory ? "lg:col-span-2" : ""}`}
-          >
-            <div className="flex items-center justify-between mb-4">
-              <h2
-                className="text-xl font-semibold text-gray-900 dark:text-white"
-                style={{ fontFamily: "Geometrica, sans-serif" }}
-              >
-                {showHistory
-                  ? role === "admin"
-                    ? "Archived Requests (30+ days old)"
-                    : "Your Archived Requests"
-                  : role === "admin"
-                    ? "All Help Requests"
-                    : "Your Requests"}
-              </h2>
-              {!showHistory && (
-                <span
-                  className="text-sm text-gray-500 dark:text-gray-400"
-                  style={{ fontFamily: "Geometrica, sans-serif" }}
-                >
-                  Automatically archived after 30 days
-                </span>
-              )}
-            </div>
-
-            <div className="space-y-4">
-              {(showHistory ? archivedRequests : activeRequests).map(
-                (request) => (
-                  <div
-                    key={request.id}
-                    className={`border border-gray-200 dark:border-gray-700 rounded-lg p-4 space-y-3 ${showHistory ? "opacity-75" : ""}`}
-                  >
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-1">
-                          <h3
-                            className="font-semibold text-gray-900 dark:text-white"
-                            style={{ fontFamily: "Geometrica, sans-serif" }}
-                          >
-                            {request.subject}
-                          </h3>
-                          {showHistory && (
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 text-xs rounded-full">
-                              Archived
-                            </span>
-                          )}
-                          {request.status === "pending" ? (
-                            <span className="px-2 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 text-xs rounded-full flex items-center gap-1">
-                              <Clock className="w-3 h-3" />
-                              Pending
-                            </span>
-                          ) : (
-                            <span className="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs rounded-full flex items-center gap-1">
-                              <CheckCircle className="w-3 h-3" />
-                              Resolved
-                            </span>
-                          )}
-                        </div>
-                        <p
-                          className="text-sm text-gray-600 dark:text-gray-400"
-                          style={{ fontFamily: "Geometrica, sans-serif" }}
-                        >
-                          {role === "admin" &&
-                            `${request.user} (${request.role}) • `}
-                          {request.timestamp}
-                        </p>
-                      </div>
-                    </div>
-
-                    <Separator />
-
-                    <p
-                      className="text-gray-700 dark:text-gray-300"
-                      style={{ fontFamily: "Geometrica, sans-serif" }}
-                    >
-                      {request.description}
-                    </p>
-
-                    {role === "admin" && !showHistory && (
-                      <Button
-                        onClick={() => handleStatusChange(request.id)}
-                        variant={
-                          request.status === "pending" ? "default" : "outline"
-                        }
-                        size="sm"
-                        className="mt-2"
-                        style={{ fontFamily: "Geometrica, sans-serif" }}
-                      >
-                        {request.status === "pending"
-                          ? "Mark as Resolved"
-                          : "Mark as Pending"}
-                      </Button>
-                    )}
-                  </div>
-                ),
-              )}
-
-              {(showHistory ? archivedRequests : activeRequests).length ===
-                0 && (
-                <div className="text-center py-12">
-                  <AlertCircle className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-                  <p
-                    className="text-gray-500 dark:text-gray-400"
-                    style={{ fontFamily: "Geometrica, sans-serif" }}
-                  >
-                    {showHistory
-                      ? "No archived requests"
-                      : "No help requests yet"}
-                  </p>
-                </div>
-              )}
-            </div>
+              </div>
+            </form>
           </div>
-        </div>
+        )}
+
+        {/* My History Tab */}
+        {activeTab === "history" && (
+          <div>
+            <div className="mb-8">
+              <h1 className="text-4xl font-bold text-gray-900 mb-3 text-left">
+                My Complaint History
+              </h1>
+              <p className="text-gray-500 text-base text-left">
+                Track the status of your submitted complaints and requests.
+              </p>
+            </div>
+
+            {/* Filter Buttons */}
+            <div className="mb-6 flex gap-2 flex-wrap">
+              <button
+                onClick={() => setStatusFilter("All")}
+                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                  statusFilter === "All"
+                    ? "bg-blue-600 text-white"
+                    : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
+                }`}
+              >
+                All
+              </button>
+              <button
+                onClick={() => setStatusFilter("Resolved")}
+                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                  statusFilter === "Resolved"
+                    ? "bg-green-600 text-white"
+                    : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
+                }`}
+              >
+                Resolved
+              </button>
+              <button
+                onClick={() => setStatusFilter("Pending")}
+                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                  statusFilter === "Pending"
+                    ? "bg-yellow-600 text-white"
+                    : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
+                }`}
+              >
+                Pending
+              </button>
+              <button
+                onClick={() => setStatusFilter("In Progress")}
+                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                  statusFilter === "In Progress"
+                    ? "bg-blue-600 text-white"
+                    : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
+                }`}
+              >
+                In Progress
+              </button>
+            </div>
+
+            {complaints.length === 0 ? (
+              <div className="text-center py-12">
+                <svg
+                  className="mx-auto h-16 w-16 text-gray-300 mb-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.5}
+                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                  />
+                </svg>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                  No complaints yet
+                </h3>
+                <p className="text-gray-500">
+                  You haven't submitted any complaints. Click "Submit New
+                  Complaint" to get started.
+                </p>
+              </div>
+            ) : (
+              <div>
+                <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                  Recent
+                </h2>
+                {complaints.filter(
+                  (complaint) =>
+                    statusFilter === "All" || complaint.status === statusFilter,
+                ).length === 0 ? (
+                  <div className="text-center py-12 bg-white rounded-lg border border-gray-200">
+                    <svg
+                      className="mx-auto h-12 w-12 text-gray-300 mb-3"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={1.5}
+                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                      />
+                    </svg>
+                    <h3 className="text-base font-semibold text-gray-900 mb-1">
+                      No{" "}
+                      {statusFilter === "All" ? "" : statusFilter.toLowerCase()}{" "}
+                      complaints found
+                    </h3>
+                    <p className="text-sm text-gray-500">
+                      Try selecting a different filter to view other complaints.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    {complaints
+                      .filter(
+                        (complaint) =>
+                          statusFilter === "All" ||
+                          complaint.status === statusFilter,
+                      )
+                      .map((complaint) => (
+                        <div
+                          key={complaint.id}
+                          onClick={() => setSelectedComplaint(complaint)}
+                          className="border border-gray-200 rounded-lg p-5 hover:shadow-md transition-shadow cursor-pointer"
+                        >
+                          <div className="flex items-center justify-between">
+                            <div className="flex-1 min-w-0 pr-4">
+                              <h3 className="text-base font-semibold text-gray-900 mb-1">
+                                {complaint.subject}
+                              </h3>
+                              <p className="text-sm text-gray-400 truncate">
+                                {complaint.details.length > 45
+                                  ? `${complaint.details.substring(0, 45)}...`
+                                  : complaint.details}
+                              </p>
+                            </div>
+                            <div className="flex items-center gap-3 flex-shrink-0">
+                              <span className="text-sm text-gray-900">
+                                {new Date(complaint.date).toLocaleDateString(
+                                  "en-GB",
+                                  {
+                                    day: "numeric",
+                                    month: "short",
+                                  },
+                                )}
+                              </span>
+                              <span
+                                className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(
+                                  complaint.status,
+                                )}`}
+                              >
+                                {complaint.status}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
