@@ -25,6 +25,7 @@ function HelpPage() {
   const [files, setFiles] = useState<File[]>([]);
   const [isDragging, setIsDragging] = useState(false);
   const [statusFilter, setStatusFilter] = useState<"All" | "Pending" | "In Progress" | "Resolved">("All");
+  const [searchQuery, setSearchQuery] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
   
   // Sync activeTab with URL
@@ -139,6 +140,29 @@ function HelpPage() {
         return "bg-gray-100 text-gray-800";
     }
   };
+
+  const getStatusDotColor = (status: Complaint["status"]) => {
+    switch (status) {
+      case "Pending":
+        return "bg-orange-500";
+      case "In Progress":
+        return "bg-blue-500";
+      case "Resolved":
+        return "bg-green-500";
+      case "Closed":
+        return "bg-gray-500";
+      default:
+        return "bg-gray-500";
+    }
+  };
+
+  const filteredComplaints = complaints.filter(complaint => {
+    const matchesFilter = statusFilter === "All" || complaint.status === statusFilter;
+    const matchesSearch = complaint.subject.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         complaint.details.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         complaint.id.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesFilter && matchesSearch;
+  });
 
   // If a complaint is selected, show the details page
   if (selectedComplaint) {
@@ -391,48 +415,74 @@ function HelpPage() {
               </p>
             </div>
 
-            {/* Filter Buttons */}
-            <div className="mb-6 flex gap-2 flex-wrap">
-              <button
-                onClick={() => setStatusFilter("All")}
-                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                  statusFilter === "All"
-                    ? "bg-blue-600 text-white"
-                    : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
-                }`}
-              >
-                All
-              </button>
-              <button
-                onClick={() => setStatusFilter("Resolved")}
-                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                  statusFilter === "Resolved"
-                    ? "bg-green-600 text-white"
-                    : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
-                }`}
-              >
-                Resolved
-              </button>
-              <button
-                onClick={() => setStatusFilter("Pending")}
-                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                  statusFilter === "Pending"
-                    ? "bg-yellow-600 text-white"
-                    : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
-                }`}
-              >
-                Pending
-              </button>
-              <button
-                onClick={() => setStatusFilter("In Progress")}
-                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                  statusFilter === "In Progress"
-                    ? "bg-blue-600 text-white"
-                    : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
-                }`}
-              >
-                In Progress
-              </button>
+            {/* Filter Buttons and Search */}
+            <div className="mb-6 flex gap-3 items-center">
+              <div className="flex gap-2 flex-wrap">
+                <button
+                  onClick={() => setStatusFilter("All")}
+                  className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                    statusFilter === "All"
+                      ? "bg-gray-900 text-white"
+                      : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
+                  }`}
+                >
+                  All
+                </button>
+                <button
+                  onClick={() => setStatusFilter("Resolved")}
+                  className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                    statusFilter === "Resolved"
+                      ? "bg-gray-900 text-white"
+                      : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
+                  }`}
+                >
+                  Resolved
+                </button>
+                <button
+                  onClick={() => setStatusFilter("In Progress")}
+                  className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                    statusFilter === "In Progress"
+                      ? "bg-gray-900 text-white"
+                      : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
+                  }`}
+                >
+                  In Progress
+                </button>
+                <button
+                  onClick={() => setStatusFilter("Pending")}
+                  className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                    statusFilter === "Pending"
+                      ? "bg-gray-900 text-white"
+                      : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
+                  }`}
+                >
+                  Pending
+                </button>
+              </div>
+              <div className="flex-1 max-w-md ml-auto">
+                <div className="relative">
+                  <input
+                    type="text"
+                    placeholder="Search complaints..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-gray-400"
+                  />
+                  <svg
+                    className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    />
+                  </svg>
+                </div>
+              </div>
             </div>
 
             {complaints.length === 0 ? (
@@ -459,8 +509,8 @@ function HelpPage() {
               </div>
             ) : (
               <div>
-                <h2 className="text-xl font-semibold text-gray-900 mb-4">Recent</h2>
-                {complaints.filter(complaint => statusFilter === "All" || complaint.status === statusFilter).length === 0 ? (
+                <h2 className="text-base font-semibold text-gray-500 uppercase text-left  tracking-wide mb-4">RECENT</h2>
+                {filteredComplaints.length === 0 ? (
                   <div className="text-center py-12 bg-white rounded-lg border border-gray-200">
                     <svg
                       className="mx-auto h-12 w-12 text-gray-300 mb-3"
@@ -484,38 +534,46 @@ function HelpPage() {
                   </div>
                 ) : (
                   <div className="space-y-3">
-                  {complaints
-                    .filter(complaint => statusFilter === "All" || complaint.status === statusFilter)
-                    .map((complaint) => (
+                  {filteredComplaints.map((complaint) => (
                     <div
                       key={complaint.id}
                       onClick={() => setSelectedComplaint(complaint)}
-                      className="border border-gray-200 rounded-lg p-5 hover:shadow-md transition-shadow cursor-pointer"
+                      className="bg-white border border-gray-200 rounded-lg p-5 hover:shadow-md hover:border-gray-300 transition-all duration-200 cursor-pointer"
                     >
-                      <div className="flex items-center justify-between">
-                        <div className="flex-1 min-w-0 pr-4">
+                      <div className="flex gap-4 items-center">
+                        {/* Status Dot */}
+                        <div className="flex-shrink-0">
+                          <div className={`w-3 h-3 rounded-full ${getStatusDotColor(complaint.status)}`} />
+                        </div>
+                        
+                        {/* Content */}
+                        <div className="flex-1 min-w-0">
                           <h3 className="text-base font-semibold text-gray-900 mb-1">
                             {complaint.subject}
                           </h3>
-                          <p className="text-sm text-gray-400 truncate">
-                            {complaint.details.length > 45 
-                              ? `${complaint.details.substring(0, 45)}...` 
-                              : complaint.details}
+                          <p className="text-sm text-gray-600">
+                            {complaint.details}
                           </p>
                         </div>
-                        <div className="flex items-center gap-3 flex-shrink-0">
-                          <span className="text-sm text-gray-900">
+                        
+                        {/* Right Side Info */}
+                        <div className="flex flex-col items-end gap-2 flex-shrink-0">
+                          <span className="text-sm text-gray-600">
                             {new Date(complaint.date).toLocaleDateString("en-GB", {
                               day: "numeric",
-                              month: "short"
+                              month: "short",
+                              year: "numeric"
                             })}
                           </span>
                           <span
-                            className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(
+                            className={`px-3 py-1 rounded-md text-xs font-semibold ${getStatusColor(
                               complaint.status
                             )}`}
                           >
                             {complaint.status}
+                          </span>
+                          <span className="text-xs text-gray-500">
+                            {complaint.id}
                           </span>
                         </div>
                       </div>
