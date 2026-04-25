@@ -17,7 +17,8 @@ const mockAnnouncements: Announcement[] = [
   {
     id: 1,
     topic: "Increase Salary",
-    details: "Request for salary adjustment based on performance evaluation, increased...",
+    details:
+      "Request for salary adjustment based on performance evaluation, increased...",
     department: "Tech",
     role: "Engineer",
     date: "Feb 25",
@@ -25,7 +26,8 @@ const mockAnnouncements: Announcement[] = [
   {
     id: 2,
     topic: "New Policy Update",
-    details: "Please be informed that certain policies have been updated to ensure better...",
+    details:
+      "Please be informed that certain policies have been updated to ensure better...",
     department: "BU",
     role: "Team Lead",
     date: "Feb 22",
@@ -33,7 +35,8 @@ const mockAnnouncements: Announcement[] = [
   {
     id: 3,
     topic: "System Maintenance",
-    details: "The system will undergo scheduled maintenance to improve performance...",
+    details:
+      "The system will undergo scheduled maintenance to improve performance...",
     department: "HR",
     role: "Engineer",
     date: "Feb 12",
@@ -41,7 +44,8 @@ const mockAnnouncements: Announcement[] = [
   {
     id: 4,
     topic: "New Feature Launch",
-    details: "We are excited to introduce new features designed to enhance your experi...",
+    details:
+      "We are excited to introduce new features designed to enhance your experi...",
     department: "Tech",
     role: "Director",
     date: "Jan 29",
@@ -76,7 +80,9 @@ export default function AnnouncementPage() {
   const [announcements] = useState<Announcement[]>(mockAnnouncements);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedRole, setSelectedRole] = useState("");
-  const [selectedAnnouncements, setSelectedAnnouncements] = useState<number[]>([]);
+  const [selectedAnnouncements, setSelectedAnnouncements] = useState<number[]>(
+    [],
+  );
   const [showComposeModal, setShowComposeModal] = useState(false);
   const [newAnnouncement, setNewAnnouncement] = useState({
     topic: "",
@@ -97,7 +103,9 @@ export default function AnnouncementPage() {
     if (checked) {
       setSelectedAnnouncements([...selectedAnnouncements, id]);
     } else {
-      setSelectedAnnouncements(selectedAnnouncements.filter((aid) => aid !== id));
+      setSelectedAnnouncements(
+        selectedAnnouncements.filter((aid) => aid !== id),
+      );
     }
   };
 
@@ -135,10 +143,7 @@ export default function AnnouncementPage() {
       {/* Header with Compose and Filters */}
       <div className="flex justify-between items-center gap-4">
         {/* Compose Button */}
-        <Button
-          onClick={() => setShowComposeModal(true)}
-          className="gap-2"
-        >
+        <Button onClick={() => setShowComposeModal(true)} className="gap-2">
           <PenLine size={16} />
           Compose
         </Button>
@@ -146,7 +151,10 @@ export default function AnnouncementPage() {
         {/* Search and Filter */}
         <div className="flex gap-4">
           <div className="relative w-64">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+            <Search
+              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+              size={18}
+            />
             <Input
               placeholder="Search"
               value={searchTerm}
@@ -177,23 +185,33 @@ export default function AnnouncementPage() {
             <CardContent>
               <form onSubmit={handleComposeSubmit} className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium mb-2">Topic</label>
+                  <label className="block text-sm font-medium mb-2">
+                    Topic
+                  </label>
                   <Input
                     value={newAnnouncement.topic}
                     onChange={(e) =>
-                      setNewAnnouncement({ ...newAnnouncement, topic: e.target.value })
+                      setNewAnnouncement({
+                        ...newAnnouncement,
+                        topic: e.target.value,
+                      })
                     }
                     placeholder="Enter announcement topic"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-2">Details</label>
+                  <label className="block text-sm font-medium mb-2">
+                    Details
+                  </label>
                   <textarea
                     className="w-full min-h-[100px] p-2 border rounded-md"
                     value={newAnnouncement.details}
                     onChange={(e) =>
-                      setNewAnnouncement({ ...newAnnouncement, details: e.target.value })
+                      setNewAnnouncement({
+                        ...newAnnouncement,
+                        details: e.target.value,
+                      })
                     }
                     placeholder="Enter announcement details"
                     required
@@ -201,12 +219,17 @@ export default function AnnouncementPage() {
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium mb-2">Department</label>
+                    <label className="block text-sm font-medium mb-2">
+                      Department
+                    </label>
                     <select
                       className="w-full p-2 border rounded-md"
                       value={newAnnouncement.department}
                       onChange={(e) =>
-                        setNewAnnouncement({ ...newAnnouncement, department: e.target.value })
+                        setNewAnnouncement({
+                          ...newAnnouncement,
+                          department: e.target.value,
+                        })
                       }
                       required
                     >
@@ -217,12 +240,17 @@ export default function AnnouncementPage() {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-2">Target Role</label>
+                    <label className="block text-sm font-medium mb-2">
+                      Target Role
+                    </label>
                     <select
                       className="w-full p-2 border rounded-md"
                       value={newAnnouncement.role}
                       onChange={(e) =>
-                        setNewAnnouncement({ ...newAnnouncement, role: e.target.value })
+                        setNewAnnouncement({
+                          ...newAnnouncement,
+                          role: e.target.value,
+                        })
                       }
                       required
                     >
@@ -258,13 +286,17 @@ export default function AnnouncementPage() {
                 <th className="p-4 text-left">
                   <input
                     type="checkbox"
-                    checked={selectedAnnouncements.length === announcements.length}
+                    checked={
+                      selectedAnnouncements.length === announcements.length
+                    }
                     onChange={(e) => handleSelectAll(e.target.checked)}
                   />
                 </th>
                 <th className="p-4 text-left font-semibold text-sm">TOPIC</th>
                 <th className="p-4 text-left font-semibold text-sm">Details</th>
-                <th className="p-4 text-left font-semibold text-sm">DEPARTMENT</th>
+                <th className="p-4 text-left font-semibold text-sm">
+                  DEPARTMENT
+                </th>
                 <th className="p-4 text-left font-semibold text-sm">ROLE</th>
                 <th className="p-4 text-left font-semibold text-sm">DATE</th>
               </tr>
@@ -276,7 +308,9 @@ export default function AnnouncementPage() {
                     <input
                       type="checkbox"
                       checked={selectedAnnouncements.includes(announcement.id)}
-                      onChange={(e) => handleSelectOne(announcement.id, e.target.checked)}
+                      onChange={(e) =>
+                        handleSelectOne(announcement.id, e.target.checked)
+                      }
                     />
                   </td>
                   <td className="p-4 font-medium">{announcement.topic}</td>
@@ -287,7 +321,7 @@ export default function AnnouncementPage() {
                   <td className="p-4">
                     <span
                       className={`px-3 py-1 rounded-full text-xs font-medium ${getRoleBadgeColor(
-                        announcement.role
+                        announcement.role,
                       )}`}
                     >
                       {announcement.role}

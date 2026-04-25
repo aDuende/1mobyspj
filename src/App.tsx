@@ -1,6 +1,5 @@
-import React from 'react'
+import React from "react";
 function App() {
-
   return (
     <>
       <div className="App">
@@ -10,7 +9,7 @@ function App() {
         <p className="text-red-500">Hello world</p>
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
