@@ -10,8 +10,10 @@ import { useState } from "react";
 import {
   Breadcrumb,
   BreadcrumbItem,
+  BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
+  BreadcrumbSeparator,
 } from "../components/ui/breadcrumb";
 
 interface ManagerDashboardProps {
@@ -76,6 +78,25 @@ function ManagerDashboard({ onLogout, username }: ManagerDashboardProps) {
                       </BreadcrumbPage>
                     </BreadcrumbItem>
                   )}
+                  {location.pathname === '/help/history' && (
+                    <>
+                      <BreadcrumbItem>
+                        <BreadcrumbLink 
+                          onClick={() => navigate('/help')}
+                          className="cursor-pointer"
+                          style={{ fontFamily: 'Geometrica, sans-serif' }}
+                        >
+                          Help
+                        </BreadcrumbLink>
+                      </BreadcrumbItem>
+                      <BreadcrumbSeparator />
+                      <BreadcrumbItem>
+                        <BreadcrumbPage style={{ fontFamily: 'Geometrica, sans-serif' }}>
+                          History
+                        </BreadcrumbPage>
+                      </BreadcrumbItem>
+                    </>
+                  )}
                 </BreadcrumbList>
               </Breadcrumb>
             </div>
@@ -120,6 +141,7 @@ function ManagerDashboard({ onLogout, username }: ManagerDashboardProps) {
               <Route path="/settings" element={<SettingPage />} />
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/help" element={<HelpPage username={username} role="manager" />} />
+              <Route path="/help/history" element={<HelpPage username={username} role="manager" />} />
               <Route path="/dashboard" element={
                 <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
                   <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4" style={{ fontFamily: 'Geometrica, sans-serif' }}>
