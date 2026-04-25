@@ -1,6 +1,39 @@
 import { useState, useEffect } from "react";
 import { Button } from "./components/ui/button";
 import { Input } from "./components/ui/input";
+import bgImage from "./assets/8-bit-pixel-forest-landscape-and-mountains-palms-vector.jpg";
+
+const PixelCat = () => {
+  return (
+    <svg width="48" height="48" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+      {/* Pixel cat design */}
+      {/* Ears */}
+      <rect x="2" y="2" width="2" height="2" fill="#FF9500" />
+      <rect x="12" y="2" width="2" height="2" fill="#FF9500" />
+      {/* Head outline */}
+      <rect x="4" y="4" width="2" height="2" fill="#FF9500" />
+      <rect x="10" y="4" width="2" height="2" fill="#FF9500" />
+      <rect x="2" y="6" width="2" height="2" fill="#FF9500" />
+      <rect x="12" y="6" width="2" height="2" fill="#FF9500" />
+      <rect x="2" y="8" width="2" height="2" fill="#FF9500" />
+      <rect x="12" y="8" width="2" height="2" fill="#FF9500" />
+      <rect x="4" y="10" width="2" height="2" fill="#FF9500" />
+      <rect x="10" y="10" width="2" height="2" fill="#FF9500" />
+      <rect x="6" y="12" width="4" height="2" fill="#FF9500" />
+      {/* Head fill */}
+      <rect x="4" y="6" width="8" height="2" fill="#FFB84D" />
+      <rect x="4" y="8" width="8" height="2" fill="#FFB84D" />
+      {/* Eyes */}
+      <rect x="5" y="6" width="1" height="1" fill="#000000" />
+      <rect x="10" y="6" width="1" height="1" fill="#000000" />
+      {/* Nose */}
+      <rect x="7" y="8" width="2" height="1" fill="#000000" />
+      {/* Whiskers */}
+      <rect x="1" y="7" width="1" height="1" fill="#000000" />
+      <rect x="14" y="7" width="1" height="1" fill="#000000" />
+    </svg>
+  );
+};
 
 export default function SettingPage() {
   const [activeTab, setActiveTab] = useState<"security" | "notifications" | "privacy" | "pet">("security");
@@ -391,18 +424,21 @@ export default function SettingPage() {
                 <h2 className="text-xl font-bold text-gray-900 mb-6 text-left">
                   Pet Preview
                 </h2>
-                <div className="relative h-32 bg-gradient-to-b from-sky-100 to-green-100 rounded-lg overflow-hidden">
-                  {/* Ground */}
-                  <div className="absolute bottom-0 left-0 right-0 h-8 bg-green-200"></div>
-                  {/* Sun */}
-                  <div className="absolute top-4 right-8 w-12 h-12 bg-yellow-300 rounded-full"></div>
+                <div 
+                  className="relative h-32 rounded-lg overflow-hidden"
+                  style={{
+                    backgroundImage: `url(${bgImage})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                  }}
+                >
                   {/* Pet */}
                   {petEnabled && (
                     <div
-                      className="absolute bottom-8 text-4xl transition-all duration-300"
+                      className="absolute bottom-12 transition-all duration-300"
                       style={{ left: `${petPosition}%` }}
                     >
-                      🐱
+                      <PixelCat />
                     </div>
                   )}
                   {!petEnabled && (

@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import defaultBanner from './assets/8-bit-pixel-forest-landscape-and-mountains-palms-vector.jpg';
 
 export default function ProfilePage() {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -36,8 +37,7 @@ export default function ProfilePage() {
       <div 
         className="w-full h-52 relative z-0"
         style={{
-          backgroundColor: bannerImage ? 'transparent' : '#000',
-          backgroundImage: bannerImage ? `url(${bannerImage})` : 'none',
+          backgroundImage: bannerImage ? `url(${bannerImage})` : `url(${defaultBanner})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
@@ -132,7 +132,7 @@ export default function ProfilePage() {
             {/* About Me */}
             <div>
               <h2 className="text-xl font-bold text-gray-900 mb-4 text-left">About Me</h2>
-              <p className="text-gray-700 leading-relaxed">
+              <p className="text-gray-700 leading-relaxed text-left">
                 Passionate Fullstack Developer with expertise in building scalable web applications. 
                 Focused on creating efficient, user-friendly solutions using modern technologies. 
                 Strong believer in continuous learning and collaborative problem-solving.
