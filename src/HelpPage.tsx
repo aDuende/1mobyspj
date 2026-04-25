@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "./components/ui/button";
 import HistoryViewDetailsPage from "./HistoryViewDetailsPage";
