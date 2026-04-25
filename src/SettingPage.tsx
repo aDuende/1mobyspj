@@ -2,36 +2,35 @@ import { useState, useEffect } from "react";
 import { Button } from "./components/ui/button";
 import { Input } from "./components/ui/input";
 import bgImage from "./assets/8-bit-pixel-forest-landscape-and-mountains-palms-vector.jpg";
+import catWalkSprite from "./assets/white cat walk pixel.PNG";
+
+const CAT_FRAME_WIDTH = 80;  // width of ONE frame
+const CAT_HEIGHT = 80;       // height of the sprite (one row)
+const TOTAL_FRAMES = 5;      // using first row of sprite sheet
 
 const PixelCat = () => {
   return (
-    <svg width="48" height="48" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-      {/* Pixel cat design */}
-      {/* Ears */}
-      <rect x="2" y="2" width="2" height="2" fill="#FF9500" />
-      <rect x="12" y="2" width="2" height="2" fill="#FF9500" />
-      {/* Head outline */}
-      <rect x="4" y="4" width="2" height="2" fill="#FF9500" />
-      <rect x="10" y="4" width="2" height="2" fill="#FF9500" />
-      <rect x="2" y="6" width="2" height="2" fill="#FF9500" />
-      <rect x="12" y="6" width="2" height="2" fill="#FF9500" />
-      <rect x="2" y="8" width="2" height="2" fill="#FF9500" />
-      <rect x="12" y="8" width="2" height="2" fill="#FF9500" />
-      <rect x="4" y="10" width="2" height="2" fill="#FF9500" />
-      <rect x="10" y="10" width="2" height="2" fill="#FF9500" />
-      <rect x="6" y="12" width="4" height="2" fill="#FF9500" />
-      {/* Head fill */}
-      <rect x="4" y="6" width="8" height="2" fill="#FFB84D" />
-      <rect x="4" y="8" width="8" height="2" fill="#FFB84D" />
-      {/* Eyes */}
-      <rect x="5" y="6" width="1" height="1" fill="#000000" />
-      <rect x="10" y="6" width="1" height="1" fill="#000000" />
-      {/* Nose */}
-      <rect x="7" y="8" width="2" height="1" fill="#000000" />
-      {/* Whiskers */}
-      <rect x="1" y="7" width="1" height="1" fill="#000000" />
-      <rect x="14" y="7" width="1" height="1" fill="#000000" />
-    </svg>
+    <>
+      <style>{`
+        .cat-sprite {
+          width: ${CAT_FRAME_WIDTH}px;
+          height: ${CAT_HEIGHT}px;
+          background-image: url('${catWalkSprite}');
+          background-size: ${CAT_FRAME_WIDTH * TOTAL_FRAMES}px auto;
+          background-repeat: no-repeat;
+          background-position-y: 0px;
+          image-rendering: pixelated;
+          animation: walk-cycle 0.5s steps(${TOTAL_FRAMES}) infinite;
+        }
+
+        @keyframes walk-cycle {
+          from { background-position-x: 0px; }
+          to   { background-position-x: -${CAT_FRAME_WIDTH * TOTAL_FRAMES}px; }
+        }
+      `}</style>
+
+      <div className="cat-sprite" />
+    </>
   );
 };
 
@@ -425,25 +424,27 @@ export default function SettingPage() {
                   Pet Preview
                 </h2>
                 <div 
-                  className="relative h-32 rounded-lg overflow-hidden"
+                  className="relative h-48 rounded-lg overflow-hidden"
                   style={{
                     backgroundImage: `url(${bgImage})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
+                    backgroundSize: 'auto 100%',
+                    backgroundPosition: 'center bottom',
+                    backgroundRepeat: 'repeat-x',
+                    imageRendering: 'pixelated',
                   }}
                 >
                   {/* Pet */}
                   {petEnabled && (
                     <div
-                      className="absolute bottom-12 transition-all duration-300"
+                      className="absolute bottom-2 transition-all duration-300"
                       style={{ left: `${petPosition}%` }}
                     >
                       <PixelCat />
                     </div>
                   )}
                   {!petEnabled && (
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <p className="text-gray-400 font-semibold">Pet is disabled</p>
+                    <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40">
+                      <p className="text-white font-semibold">Pet is disabled</p>
                     </div>
                   )}
                 </div>
