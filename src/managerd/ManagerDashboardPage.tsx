@@ -12,8 +12,10 @@ import { useState, useEffect, useRef } from "react";
 import {
   Breadcrumb,
   BreadcrumbItem,
+  BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
+  BreadcrumbSeparator,
 } from "../components/ui/breadcrumb";
 
 interface ManagerDashboardProps {
@@ -115,6 +117,25 @@ function ManagerDashboard({ onLogout, username }: ManagerDashboardProps) {
                         Help
                       </BreadcrumbPage>
                     </BreadcrumbItem>
+                  )}
+                  {location.pathname === '/help/history' && (
+                    <>
+                      <BreadcrumbItem>
+                        <BreadcrumbLink 
+                          onClick={() => navigate('/help')}
+                          className="cursor-pointer"
+                          style={{ fontFamily: 'Geometrica, sans-serif' }}
+                        >
+                          Help
+                        </BreadcrumbLink>
+                      </BreadcrumbItem>
+                      <BreadcrumbSeparator />
+                      <BreadcrumbItem>
+                        <BreadcrumbPage style={{ fontFamily: 'Geometrica, sans-serif' }}>
+                          History
+                        </BreadcrumbPage>
+                      </BreadcrumbItem>
+                    </>
                   )}
                 </BreadcrumbList>
               </Breadcrumb>

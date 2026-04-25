@@ -29,8 +29,10 @@ import { useState, useEffect, useRef } from "react";
 import {
   Breadcrumb,
   BreadcrumbItem,
+  BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
+  BreadcrumbSeparator,
 } from "../components/ui/breadcrumb";
 import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from "recharts";
 import {
@@ -1030,7 +1032,26 @@ function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
                       </BreadcrumbPage>
                     </BreadcrumbItem>
                   )}
-                  {location.pathname === "/my-idp-learning" && (
+                  {location.pathname === '/help/history' && (
+                    <>
+                      <BreadcrumbItem>
+                        <BreadcrumbLink 
+                          onClick={() => navigate('/help')}
+                          className="cursor-pointer"
+                          style={{ fontFamily: 'Geometrica, sans-serif' }}
+                        >
+                          Help
+                        </BreadcrumbLink>
+                      </BreadcrumbItem>
+                      <BreadcrumbSeparator />
+                      <BreadcrumbItem>
+                        <BreadcrumbPage style={{ fontFamily: 'Geometrica, sans-serif' }}>
+                          History
+                        </BreadcrumbPage>
+                      </BreadcrumbItem>
+                    </>
+                  )}
+                  {location.pathname === '/my-idp-learning' && (
                     <BreadcrumbItem>
                       <BreadcrumbPage
                         style={{ fontFamily: "Geometrica, sans-serif" }}
