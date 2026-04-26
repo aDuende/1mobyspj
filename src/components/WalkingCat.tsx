@@ -1,8 +1,8 @@
 import catWalkSprite from "../assets/white cat walk pixel.PNG";
 
-const CAT_FRAME_WIDTH = 80;  // width of ONE frame
-const CAT_HEIGHT = 80;       // height of the sprite (one row)
-const TOTAL_FRAMES = 5;      // using first row of sprite sheet
+const CAT_FRAME_WIDTH = 80; // width of ONE frame
+const CAT_HEIGHT = 80; // height of the sprite (one row)
+const TOTAL_FRAMES = 5; // using first row of sprite sheet
 
 export default function WalkingCat() {
   return (

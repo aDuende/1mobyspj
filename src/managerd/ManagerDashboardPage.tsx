@@ -118,20 +118,22 @@ function ManagerDashboard({ onLogout, username }: ManagerDashboardProps) {
                       </BreadcrumbPage>
                     </BreadcrumbItem>
                   )}
-                  {location.pathname === '/help/history' && (
+                  {location.pathname === "/help/history" && (
                     <>
                       <BreadcrumbItem>
-                        <BreadcrumbLink 
-                          onClick={() => navigate('/help')}
+                        <BreadcrumbLink
+                          onClick={() => navigate("/help")}
                           className="cursor-pointer"
-                          style={{ fontFamily: 'Geometrica, sans-serif' }}
+                          style={{ fontFamily: "Geometrica, sans-serif" }}
                         >
                           Help
                         </BreadcrumbLink>
                       </BreadcrumbItem>
                       <BreadcrumbSeparator />
                       <BreadcrumbItem>
-                        <BreadcrumbPage style={{ fontFamily: 'Geometrica, sans-serif' }}>
+                        <BreadcrumbPage
+                          style={{ fontFamily: "Geometrica, sans-serif" }}
+                        >
                           History
                         </BreadcrumbPage>
                       </BreadcrumbItem>
