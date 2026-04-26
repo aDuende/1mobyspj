@@ -2,24 +2,14 @@ import { useState, useRef, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "./components/ui/button";
 import HistoryViewDetailsPage from "./HistoryViewDetailsPage";
+import { complaintsStore, type Complaint } from "./lib/complaintsStore";
 
-interface Complaint {
-  id: string;
-  subject: string;
-  details: string;
-  date: string;
-  status: "Pending" | "In Progress" | "Resolved" | "Closed";
-  fileCount: number;
-  attachments?: string[];
-  response?: string;
-  responseDate?: string;
-  respondedBy?: string;
-  resolvedDate?: string;
-  responseTime?: string;
-  category?: string;
+interface HelpPageProps {
+  username: string;
+  role: "employee" | "manager" | "admin";
 }
 
-function HelpPage() {
+function HelpPage({ username, role }: HelpPageProps) {
   const location = useLocation();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<"submit" | "history">(
@@ -37,7 +27,8 @@ function HelpPage() {
   >("All");
   const [searchQuery, setSearchQuery] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
-
+  const [complaints, setComplaints] = useState<Complaint[]>([]);
+  
   // Sync activeTab with URL
   useEffect(() => {
     if (location.pathname === "/help/history") {
@@ -46,44 +37,12 @@ function HelpPage() {
       setActiveTab("submit");
     }
   }, [location.pathname]);
-
-  // Mock complaint history - in production, this would come from backend
-  const [complaints] = useState<Complaint[]>([
-    {
-      id: "CMP-2024-001",
-      subject: "Technical issue",
-      details:
-        "Unable to access the performance review module after the latest platform update. The page returns a 403 error when navigating from the dashboard. Issue started on 14 Apr 2024 following the v3.2 deployment. Both Chrome and Edge browsers were affected.",
-      date: "2024-04-15",
-      status: "Resolved",
-      fileCount: 2,
-      category: "Technical",
-      resolvedDate: "2024-04-17",
-      responseTime: "2 days",
-      respondedBy: "Admin",
-    },
-    {
-      id: "CMP-2024-002",
-      subject: "Leave request delay",
-      details:
-        "My annual leave request for May 2024 is still pending approval for 2 weeks.",
-      date: "2024-04-10",
-      status: "In Progress",
-      fileCount: 0,
-      category: "HR",
-      respondedBy: "Admin",
-    },
-    {
-      id: "CMP-2024-003",
-      subject: "Account problem",
-      details:
-        "Cannot reset my password. The email verification link is not arriving.",
-      date: "2024-04-05",
-      status: "Pending",
-      fileCount: 1,
-      category: "Account",
-    },
-  ]);
+  
+  // Load user's complaints from store
+  useEffect(() => {
+    const userComplaints = complaintsStore.getByUser(username);
+    setComplaints(userComplaints);
+  }, [username]);
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
@@ -127,12 +86,32 @@ function HelpPage() {
       return;
     }
 
-    // Handle form submission here
-    console.log({
-      subject,
+    // Get the text label from the select value
+    const subjectLabels: Record<string, string> = {
+      "technical": "Technical Issue",
+      "account": "Account Problem",
+      "performance": "Performance Review",
+      "leave": "Leave Request",
+      "training": "Training & Development",
+      "benefits": "Benefits & Compensation",
+      "workplace": "Workplace Environment",
+      "other": "Other"
+    };
+
+    // Add complaint to store
+    const newComplaint = complaintsStore.add({
+      subject: subjectLabels[subject] || subject,
       details,
-      files,
+      date: new Date().toISOString().split('T')[0],
+      status: "Pending",
+      fileCount: files.length,
+      category: subjectLabels[subject] || "Other",
+      submittedBy: username,
+      submittedByRole: role
     });
+
+    // Update local state
+    setComplaints(prev => [newComplaint, ...prev]);
 
     // Reset form
     setSubject("");

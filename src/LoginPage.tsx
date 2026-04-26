@@ -74,13 +74,13 @@ function LoginPage({ onLogin }: LoginPageProps) {
               </svg>
             </div>
             <h1
-              className="text-3xl font-bold text-gray-900 dark:text-white"
+              className="text-3xl font-bold text-black"
               style={{ fontFamily: "Geometrica, sans-serif" }}
             >
               Welcome Back
             </h1>
             <p
-              className="text-gray-500 dark:text-gray-400"
+              className="text-black"
               style={{ fontFamily: "Geometrica, sans-serif" }}
             >
               Sign in to 1Moby LMS
@@ -92,7 +92,7 @@ function LoginPage({ onLogin }: LoginPageProps) {
             <div className="space-y-2">
               <label
                 htmlFor="username"
-                className="text-sm font-medium text-gray-700 dark:text-gray-300"
+                className="text-sm font-medium text-black"
                 style={{ fontFamily: "Geometrica, sans-serif" }}
               >
                 Username or Email
@@ -112,14 +112,14 @@ function LoginPage({ onLogin }: LoginPageProps) {
               <div className="flex items-center justify-between">
                 <label
                   htmlFor="password"
-                  className="text-sm font-medium text-gray-700 dark:text-gray-300"
+                  className="text-sm font-medium text-black"
                   style={{ fontFamily: "Geometrica, sans-serif" }}
                 >
                   Password
                 </label>
                 <a
                   href="#"
-                  className="text-sm text-purple-600 hover:text-purple-700 dark:text-purple-400 dark:hover:text-purple-300 font-medium transition-colors"
+                  className="text-sm text-purple-600 hover:text-purple-700 font-medium transition-colors"
                   style={{ fontFamily: "Geometrica, sans-serif" }}
                 >
                   Forgot?
@@ -137,9 +137,9 @@ function LoginPage({ onLogin }: LoginPageProps) {
             </div>
 
             {error && (
-              <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+              <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
                 <p
-                  className="text-sm text-red-600 dark:text-red-400"
+                  className="text-sm text-red-600"
                   style={{ fontFamily: "Geometrica, sans-serif" }}
                 >
                   {error}
@@ -155,7 +155,7 @@ function LoginPage({ onLogin }: LoginPageProps) {
               />
               <label
                 htmlFor="remember"
-                className="text-sm text-gray-600 dark:text-gray-400"
+                className="text-sm text-black"
                 style={{ fontFamily: "Geometrica, sans-serif" }}
               >
                 Remember me for 30 days
@@ -175,7 +175,7 @@ function LoginPage({ onLogin }: LoginPageProps) {
           <div className="relative">
             <Separator />
             <span
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-gray-800 px-3 text-sm text-gray-500 dark:text-gray-400"
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-3 text-sm text-black"
               style={{ fontFamily: "Geometrica, sans-serif" }}
             >
               or continue with
@@ -227,13 +227,13 @@ function LoginPage({ onLogin }: LoginPageProps) {
 
           {/* Sign Up Link */}
           <p
-            className="text-center text-sm text-gray-600 dark:text-gray-400"
+            className="text-center text-sm text-black"
             style={{ fontFamily: "Geometrica, sans-serif" }}
           >
             Don't have an account?{" "}
             <a
               href="#"
-              className="text-purple-600 hover:text-purple-700 dark:text-purple-400 dark:hover:text-purple-300 font-medium transition-colors"
+              className="text-purple-600 hover:text-purple-700 font-medium transition-colors"
               style={{ fontFamily: "Geometrica, sans-serif" }}
             >
               Sign up
@@ -243,7 +243,7 @@ function LoginPage({ onLogin }: LoginPageProps) {
 
         {/* Footer */}
         <p
-          className="text-center text-xs text-gray-500 dark:text-gray-400 mt-6"
+          className="text-center text-xs text-black mt-6"
           style={{ fontFamily: "Geometrica, sans-serif" }}
         >
           © 2026 1Moby LMS. All rights reserved.

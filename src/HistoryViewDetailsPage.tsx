@@ -1,24 +1,11 @@
 import { Button } from "./components/ui/button";
-
-interface Complaint {
-  id: string;
-  subject: string;
-  details: string;
-  date: string;
-  status: "Pending" | "In Progress" | "Resolved" | "Closed";
-  fileCount: number;
-  attachments?: string[];
-  response?: string;
-  responseDate?: string;
-  respondedBy?: string;
-  resolvedDate?: string;
-  responseTime?: string;
-  category?: string;
-}
+import { useState } from "react";
+import { complaintsStore, type Complaint } from "./lib/complaintsStore";
 
 interface HistoryViewDetailsPageProps {
   complaint: Complaint;
   onBack: () => void;
+  isAdmin?: boolean;
 }
 
 interface TimelineEvent {
@@ -28,10 +15,25 @@ interface TimelineEvent {
   status: "completed" | "in-progress";
 }
 
-function HistoryViewDetailsPage({
-  complaint,
-  onBack,
-}: HistoryViewDetailsPageProps) {
+function HistoryViewDetailsPage({ complaint, onBack, isAdmin = false }: HistoryViewDetailsPageProps) {
+  const [response, setResponse] = useState(complaint.response || "");
+  const [isEditingResponse, setIsEditingResponse] = useState(false);
+
+  const handleSaveResponse = () => {
+    complaintsStore.update(complaint.id, {
+      response,
+      responseDate: new Date().toISOString().split('T')[0],
+      respondedBy: "Admin"
+    });
+    setIsEditingResponse(false);
+    alert("Response saved successfully!");
+  };
+
+  const handleStatusChange = (newStatus: Complaint["status"]) => {
+    complaintsStore.update(complaint.id, { status: newStatus });
+    alert(`Status updated to ${newStatus}`);
+    onBack(); // Go back to refresh the list
+  };
   const getStatusColor = (status: Complaint["status"]) => {
     switch (status) {
       case "Pending":
@@ -119,7 +121,7 @@ function HistoryViewDetailsPage({
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
             {complaint.subject}
           </h1>
-          <div className="flex gap-2">
+          <div className="flex gap-2 flex-wrap items-center">
             <span className="px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-700 border border-gray-300">
               {complaint.category || "Technical"}
             </span>
@@ -128,6 +130,11 @@ function HistoryViewDetailsPage({
             >
               {complaint.status}
             </span>
+            {isAdmin && (
+              <span className="px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-700 border border-blue-300">
+                By: {complaint.submittedBy} ({complaint.submittedByRole})
+              </span>
+            )}
           </div>
         </div>
 
@@ -258,10 +265,8 @@ function HistoryViewDetailsPage({
         </div>
 
         {/* Activity Timeline */}
-        <div>
-          <h2 className="text-xs text-gray-500 uppercase tracking-wide mb-6 text-left">
-            ACTIVITY TIMELINE
-          </h2>
+        <div className="mb-8 pb-8 border-b border-gray-200">
+          <h2 className="text-xs text-gray-500 uppercase tracking-wide mb-6 text-left">ACTIVITY TIMELINE</h2>
           <div className="space-y-6">
             {timelineEvents.map((event, index) => (
               <div key={index} className="flex gap-4">
@@ -286,6 +291,87 @@ function HistoryViewDetailsPage({
             ))}
           </div>
         </div>
+
+        {/* Admin Response Section */}
+        {isAdmin && (
+          <div className="mb-8 pb-8 border-b border-gray-200">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xs text-gray-500 uppercase tracking-wide text-left">ADMIN RESPONSE</h2>
+              {!isEditingResponse && (
+                <Button
+                  onClick={() => setIsEditingResponse(true)}
+                  className="text-sm bg-blue-600 hover:bg-blue-700 text-white"
+                >
+                  {complaint.response ? "Edit Response" : "Add Response"}
+                </Button>
+              )}
+            </div>
+            {isEditingResponse ? (
+              <div className="space-y-4">
+                <textarea
+                  value={response}
+                  onChange={(e) => setResponse(e.target.value)}
+                  placeholder="Enter your response to this complaint..."
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  rows={6}
+                />
+                <div className="flex gap-2">
+                  <Button
+                    onClick={handleSaveResponse}
+                    className="bg-blue-600 hover:bg-blue-700 text-white"
+                  >
+                    Save Response
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      setIsEditingResponse(false);
+                      setResponse(complaint.response || "");
+                    }}
+                    className="bg-gray-200 hover:bg-gray-300 text-gray-700"
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                <p className="text-gray-700 text-left">
+                  {complaint.response || "No response yet."}
+                </p>
+                {complaint.responseDate && (
+                  <p className="text-sm text-gray-500 mt-2 text-left">
+                    Responded on {new Date(complaint.responseDate).toLocaleDateString("en-GB", {
+                      day: "numeric",
+                      month: "short",
+                      year: "numeric"
+                    })} by {complaint.respondedBy}
+                  </p>
+                )}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Status Update Section for Admin */}
+        {isAdmin && complaint.status !== "Resolved" && (
+          <div className="mb-8 pb-8 border-b border-gray-200">
+            <h2 className="text-xs text-gray-500 uppercase tracking-wide mb-4 text-left">UPDATE STATUS</h2>
+            <div className="flex gap-2 flex-wrap">
+              <button
+                onClick={() => handleStatusChange("In Progress")}
+                className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium transition-colors"
+              >
+                In Progress
+              </button>
+              <button
+                onClick={() => handleStatusChange("Resolved")}
+                className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg font-medium transition-colors"
+              >
+                Resolved
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
