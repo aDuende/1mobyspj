@@ -6,7 +6,7 @@ import AlertSelector from "../components/AlertSelector";
 import ExperiencePoints from "../components/ExperiencePoints";
 import SettingPage from "../SettingPage";
 import ProfilePage from "../ProfilePage";
-import HelpPage from "../HelpPage";
+import AdminHelpPage from "./AdminHelpPage";
 import ManageRolePage from "./ManageRolePage";
 import AnnouncementPage from "./AnnouncementPage";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
@@ -190,10 +190,7 @@ function AdminDashboard({ onLogout, username }: AdminDashboardProps) {
                 />
                 <Route path="/settings" element={<SettingPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
-                <Route
-                  path="/help"
-                  element={<HelpPage username={username} role="admin" />}
-                />
+                <Route path="/help" element={<AdminHelpPage />} />
                 <Route path="/manage-role" element={<ManageRolePage />} />
                 <Route path="/announcement" element={<AnnouncementPage />} />
                 <Route
