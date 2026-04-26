@@ -7,7 +7,7 @@ function AdminHelpPage() {
   const [complaints, setComplaints] = useState<Complaint[]>([]);
   const [statusFilter, setStatusFilter] = useState<"All" | "Pending" | "In Progress" | "Resolved">("All");
   const [searchQuery, setSearchQuery] = useState("");
-  const [userFilter, setUserFilter] = useState<"All" | string>("All");
+  const [subjectFilter, setSubjectFilter] = useState<"All" | string>("All");
 
   // Load all complaints from store
   useEffect(() => {
@@ -69,17 +69,26 @@ function AdminHelpPage() {
     }
   };
 
-  // Get unique users for filter
-  const uniqueUsers = Array.from(new Set(complaints.map(c => c.submittedBy)));
+  // All available subject categories
+  const allSubjects = [
+    "Technical Issue",
+    "Account Problem",
+    "Performance Review",
+    "Leave Request",
+    "Training & Development",
+    "Benefits & Compensation",
+    "Workplace Environment",
+    "Other"
+  ];
 
   const filteredComplaints = complaints.filter(complaint => {
     const matchesStatusFilter = statusFilter === "All" || complaint.status === statusFilter;
-    const matchesUserFilter = userFilter === "All" || complaint.submittedBy === userFilter;
+    const matchesSubjectFilter = subjectFilter === "All" || complaint.category === subjectFilter || complaint.subject === subjectFilter;
     const matchesSearch = complaint.subject.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          complaint.details.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          complaint.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          complaint.submittedBy.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesStatusFilter && matchesUserFilter && matchesSearch;
+    return matchesStatusFilter && matchesSubjectFilter && matchesSearch;
   });
 
   // If a complaint is selected, show the details page
@@ -183,16 +192,16 @@ function AdminHelpPage() {
             </button>
           </div>
 
-          {/* User Filter and Search */}
+          {/* Subject Filter and Search */}
           <div className="flex gap-3 items-center">
             <select
-              value={userFilter}
-              onChange={(e) => setUserFilter(e.target.value)}
+              value={subjectFilter}
+              onChange={(e) => setSubjectFilter(e.target.value)}
               className="px-4 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              <option value="All">All Users</option>
-              {uniqueUsers.map(user => (
-                <option key={user} value={user}>{user}</option>
+              <option value="All">All Subjects</option>
+              {allSubjects.map(subject => (
+                <option key={subject} value={subject}>{subject}</option>
               ))}
             </select>
 
