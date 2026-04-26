@@ -1,9 +1,309 @@
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "./components/ui/card";
-import { Button } from "./components/ui/button";
-import { Filter } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { Card } from "./components/ui/card";
+import { Area, AreaChart, XAxis } from "recharts";
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "./components/ui/chart";
+
+import {
+  Clapperboard,
+  MoreVertical,
+  ChevronRight,
+  ChevronLeft,
+  ChevronUp,
+  ChevronDown,
+  Play,
+  X,
+  Terminal,
+  AppWindow,
+  Check,
+  Settings2,
+  Flame,
+  Clock,
+  ArrowRight,
+} from "lucide-react";
+const AnimatedNumber = ({
+  value,
+  decimals = 0,
+  prefix = "",
+  suffix = "",
+}: {
+  value: number;
+  decimals?: number;
+  prefix?: string;
+  suffix?: string;
+}) => {
+  const [displayValue, setDisplayValue] = useState(0);
+
+  useEffect(() => {
+    const start = displayValue;
+    const end = value;
+    if (start === end) return;
+
+    const duration = 600;
+    const startTime = performance.now();
+
+    const animate = (now: number) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const easedProgress = progress * (2 - progress);
+      const current = start + (end - start) * easedProgress;
+      setDisplayValue(current);
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
+    };
+    requestAnimationFrame(animate);
+  }, [value]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  return (
+    <>
+      {prefix}
+      {displayValue.toFixed(decimals)}
+      {suffix}
+    </>
+  );
+};
+
+interface SyncTooltipProps extends React.ComponentProps<
+  typeof ChartTooltipContent
+> {
+  currentData: {
+    chartData: Array<{ label: string; [key: string]: unknown }>;
+  };
+  onIndexChange: (index: number | null) => void;
+}
+
+const SyncTooltip = ({
+  active,
+  payload,
+  label,
+  currentData,
+  onIndexChange,
+  ...props
+}: SyncTooltipProps) => {
+  useEffect(() => {
+    if (active && payload?.length) {
+      const index = currentData.chartData.findIndex(
+        (d: { label: string }) => d.label === label,
+      );
+      if (index !== -1) onIndexChange(index);
+    } else {
+      onIndexChange(null);
+    }
+  }, [active, label, payload, currentData, onIndexChange]);
+
+  const order = ["frontend", "backend", "database", "aidata"];
+  const sortedPayload = payload
+    ? [...payload].sort((a, b) => {
+        const keyA = String(a?.dataKey || "");
+        const keyB = String(b?.dataKey || "");
+        return order.indexOf(keyA) - order.indexOf(keyB);
+      })
+    : payload;
+
+  return (
+    <ChartTooltipContent
+      active={active}
+      payload={sortedPayload}
+      label={label}
+      {...props}
+      indicator="dot"
+      className="border-none ring-0 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)]"
+    />
+  );
+};
+
+const courses = [
+  {
+    id: "jwt",
+    title: "What is JWT and Why Should You Use JWT",
+    description: "What is JWT and Why Should You Use JWT",
+    fullDescription:
+      "Learn about JWT (JSON Web Tokens) and why it's essential for modern web development. This course covers the fundamentals of token-based authentication and how to implement it securely.",
+    category: "BACKEND",
+    videoUrl: "https://www.youtube.com/embed/7Q17ubqLfaM",
+    thumbnail: "https://i.ytimg.com/vi/7Q17ubqLfaM/hqdefault.jpg",
+    rating: 4.8,
+    reviews: 1250,
+    instructor: "Expert Instructor",
+    duration: "15 mins",
+    lessons: 24,
+    modules: 5,
+    isFree: true,
+    tags: ["Backend", "Security", "Authentication"],
+    highlights: [
+      "Understand token-based authentication",
+      "Implement JWT in Node.js applications",
+      "Secure API endpoints",
+      "Handle token expiration and refresh",
+    ],
+  },
+  {
+    id: "react-ts",
+    title: "TypeScript in React - COMPLETE Tutorial (Crash Course)",
+    description: "TypeScript in React - COMPLETE Tutorial (Crash Course)",
+    fullDescription:
+      "Master TypeScript in React with this comprehensive guide. Learn how to use TypeScript to build type-safe React applications with improved developer experience and fewer runtime errors.",
+    category: "FRONTEND",
+    videoUrl: "https://www.youtube.com/embed/BwuLxPH8IDs",
+    thumbnail: "https://i.ytimg.com/vi/BwuLxPH8IDs/hqdefault.jpg",
+    rating: 4.9,
+    reviews: 2540,
+    instructor: "React Expert",
+    duration: "3h 15m",
+    lessons: 45,
+    modules: 8,
+    isFree: true,
+    tags: ["Frontend", "React", "TypeScript"],
+    highlights: [
+      "TypeScript basics for React developers",
+      "Type annotations for components and props",
+      "Advanced TypeScript patterns in React",
+      "Building production-ready React apps",
+    ],
+  },
+  {
+    id: "postgres",
+    title: "Learn PostgreSQL Tutorial - Full Course for Beginners",
+    description: "Learn PostgreSQL Tutorial - Full Course for Beginners",
+    fullDescription:
+      "Complete guide to PostgreSQL database management system. Learn SQL queries, database design, and advanced features to become proficient with one of the most powerful open-source databases.",
+    category: "BACKEND",
+    videoUrl: "https://www.youtube.com/embed/qw--VYLpxG4",
+    thumbnail: "https://i.ytimg.com/vi/qw--VYLpxG4/hqdefault.jpg",
+    rating: 4.7,
+    reviews: 1890,
+    instructor: "Database Expert",
+    duration: "4 hours",
+    lessons: 52,
+    modules: 10,
+    isFree: true,
+    tags: ["Backend", "Database", "SQL"],
+    highlights: [
+      "PostgreSQL installation and setup",
+      "SQL fundamentals and advanced queries",
+      "Database design and optimization",
+      "Real-world database projects",
+    ],
+  },
+];
+
+const shortLearningReels = [
+  {
+    id: "reel-1",
+    title: "Learn Git In 15 Minutes",
+    description: "Learn the essentials of Git in just 15 minutes",
+    category: "BACKEND",
+    author: "@ColtSteeleCode",
+    authorUrl: "https://www.youtube.com/@ColtSteeleCode",
+    duration: "15 min",
+    durationSeconds: 900,
+    views: "12.5K",
+    thumbnail: "https://i.ytimg.com/vi/USjZcfj8yxE/hqdefault.jpg",
+    videoUrl: "https://www.youtube.com/embed/USjZcfj8yxE",
+    aspectRatio: "16:9" as const,
+    icon: Terminal,
+  },
+  {
+    id: "reel-2",
+    title: "Flexbox CSS In 20 Minutes",
+    description: "Quick CSS Flexbox tips for better layouts",
+    category: "FRONTEND",
+    author: "@TraversyMedia",
+    authorUrl: "https://www.youtube.com/@TraversyMedia",
+    duration: "20 min",
+    durationSeconds: 1200,
+    views: "45.2K",
+    thumbnail: "https://i.ytimg.com/vi/JJSoEo8JSnc/hqdefault.jpg",
+    videoUrl: "https://www.youtube.com/embed/JJSoEo8JSnc",
+    aspectRatio: "16:9" as const,
+    icon: AppWindow,
+  },
+  {
+    id: "reel-3",
+    title: "What is a REST API?",
+    description: "Best practices for designing REST APIs",
+    category: "BACKEND",
+    author: "@programmingwithmosh",
+    authorUrl: "https://www.youtube.com/@programmingwithmosh",
+    duration: "12 min",
+    durationSeconds: 720,
+    views: "28.7K",
+    thumbnail: "https://i.ytimg.com/vi/SLwpqD8n3d0/hqdefault.jpg",
+    videoUrl: "https://www.youtube.com/embed/SLwpqD8n3d0",
+    aspectRatio: "16:9" as const,
+    icon: Terminal,
+  },
+  {
+    id: "reel-4",
+    title: "10 React Hooks Explained",
+    description: "Understanding React Hooks in 10 minutes",
+    category: "FRONTEND",
+    author: "@Fireship",
+    authorUrl: "https://www.youtube.com/@Fireship",
+    duration: "10 min",
+    durationSeconds: 600,
+    views: "89.3K",
+    thumbnail: "https://i.ytimg.com/vi/TNhaISOUy6Q/hqdefault.jpg",
+    videoUrl: "https://www.youtube.com/embed/TNhaISOUy6Q",
+    aspectRatio: "16:9" as const,
+    icon: AppWindow,
+  },
+  {
+    id: "reel-5",
+    title: "TypeScript Origins: The Documentary",
+    description: "The story of TypeScript",
+    category: "FRONTEND",
+    author: "@OfferZenOrigins",
+    authorUrl: "https://www.youtube.com/@OfferZenOrigins",
+    duration: "25 min",
+    durationSeconds: 1500,
+    views: "34.1K",
+    thumbnail: "https://i.ytimg.com/vi/U6s2pdxebSo/hqdefault.jpg",
+    videoUrl: "https://www.youtube.com/embed/U6s2pdxebSo",
+    aspectRatio: "16:9" as const,
+    icon: Terminal,
+  },
+  {
+    id: "reel-6",
+    title:
+      "If You Are Using Next.js You Need To Enable This Development Feature",
+    description: "Must-enable development feature for Next.js users",
+    category: "FRONTEND",
+    author: "@WebDevSimplified",
+    authorUrl: "https://www.youtube.com/@WebDevSimplified",
+    duration: "1 min",
+    durationSeconds: 60,
+    views: "213.9K",
+    thumbnail: "https://i.ytimg.com/vi/1jpqBfptng0/hqdefault.jpg",
+    videoUrl: "https://www.youtube.com/embed/1jpqBfptng0",
+    aspectRatio: "9:16" as const,
+    icon: AppWindow,
+  },
+  {
+    id: "reel-7",
+    title: "The super basics of Docker in under a minute",
+    description: "Docker containers explained in under 60 seconds",
+    category: "BACKEND",
+    author: "@WebDevSimplified",
+    authorUrl: "https://www.youtube.com/@WebDevSimplified",
+    duration: "1 min",
+    durationSeconds: 60,
+    views: "438.4K",
+    thumbnail: "https://i.ytimg.com/vi/6OA9AjzX4k4/hqdefault.jpg",
+    videoUrl: "https://www.youtube.com/embed/6OA9AjzX4k4",
+    aspectRatio: "9:16" as const,
+    icon: Terminal,
+  },
+];
 
 export default function MyIDPLearningPage() {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [selectedCourse, setSelectedCourse] = useState<null | {
     id: string;
     title: string;
@@ -22,349 +322,975 @@ export default function MyIDPLearningPage() {
     highlights: string[];
   }>(null);
 
-  const [selectedReel, setSelectedReel] = useState<null | {
-    id: string;
-    title: string;
-    description: string;
-    category: string;
-    duration: string;
-    views: string;
-    videoUrl: string;
-  }>(null);
+  const [selectedReel, setSelectedReel] = useState<
+    null | (typeof shortLearningReels)[0]
+  >(null);
+  const [activeReelId, setActiveReelId] = useState<string | null>(null);
 
-  const courses = [
-    {
-      id: "jwt",
-      title: "What is JWT and Why Should You Use JWT",
-      description: "What is JWT and Why Should You Use JWT",
-      fullDescription:
-        "Learn about JWT (JSON Web Tokens) and why it's essential for modern web development. This course covers the fundamentals of token-based authentication and how to implement it securely.",
-      category: "BACKEND",
-      videoUrl: "https://www.youtube.com/embed/7Q17ubqLfaM",
-      rating: 4.8,
-      reviews: 1250,
-      instructor: "Expert Instructor",
-      duration: "3-4 hours",
-      lessons: 28,
-      modules: 5,
-      isFree: true,
-      tags: ["Backend", "Security", "Authentication"],
-      highlights: [
-        "Understand JWT structure and how it works",
-        "Implement secure token-based authentication",
-        "Learn best practices for JWT implementation",
-        "Practical examples with real-world scenarios",
-      ],
-    },
-    {
-      id: "react-ts",
-      title: "TypeScript in React - COMPLETE Tutorial (Crash Course)",
-      description: "TypeScript in React - COMPLETE Tutorial (Crash Course)",
-      fullDescription:
-        "Master TypeScript in React with this comprehensive guide. Learn how to use TypeScript to build type-safe React applications with improved developer experience and fewer runtime errors.",
-      category: "FRONTEND",
-      videoUrl: "https://www.youtube.com/embed/BwuLxPH8IDs",
-      rating: 4.9,
-      reviews: 2540,
-      instructor: "React Expert",
-      duration: "4-5 hours",
-      lessons: 45,
-      modules: 8,
-      isFree: true,
-      tags: ["Frontend", "React", "TypeScript"],
-      highlights: [
-        "TypeScript basics for React developers",
-        "Type annotations for components and props",
-        "Advanced TypeScript patterns in React",
-        "Building production-ready React apps",
-      ],
-    },
-    {
-      id: "postgres",
-      title: "Learn PostgreSQL Tutorial - Full Course for Beginners",
-      description: "Learn PostgreSQL Tutorial - Full Course for Beginners",
-      fullDescription:
-        "Complete guide to PostgreSQL database management system. Learn SQL queries, database design, and advanced features to become proficient with one of the most powerful open-source databases.",
-      category: "BACKEND",
-      videoUrl: "https://www.youtube.com/embed/q7p3k8fJqYQ",
-      rating: 4.7,
-      reviews: 1890,
-      instructor: "Database Expert",
-      duration: "5-6 hours",
-      lessons: 52,
-      modules: 10,
-      isFree: true,
-      tags: ["Backend", "Database", "SQL"],
-      highlights: [
-        "PostgreSQL installation and setup",
-        "SQL fundamentals and advanced queries",
-        "Database design and optimization",
-        "Real-world database projects",
-      ],
-    },
-  ];
+  useEffect(() => {
+    const brandColors = [
+      { main: "#006BFF", bg: "rgba(0, 107, 255, 0.15)" },
+      { main: "#FC4C02", bg: "rgba(252, 76, 2, 0.15)" },
+      { main: "#FFA400", bg: "rgba(255, 164, 0, 0.15)" },
+    ];
 
-  const shortLearningReels = [
-    {
-      id: "reel-1",
-      title: "5 min: Git Basics",
-      description: "Learn the essentials of Git in just 5 minutes",
-      category: "BACKEND",
-      duration: "5 min",
-      views: "12.5K",
-      thumbnail: "https://via.placeholder.com/300x300?text=Git+Basics",
-      videoUrl: "https://www.youtube.com/embed/USjZcfj8yxE",
-    },
-    {
-      id: "reel-2",
-      title: "CSS Flexbox Tips",
-      description: "Quick CSS Flexbox tips for better layouts",
-      category: "FRONTEND",
-      duration: "3 min",
-      views: "45.2K",
-      thumbnail: "https://via.placeholder.com/300x300?text=CSS+Flexbox",
-      videoUrl: "https://www.youtube.com/embed/JJSoEo8JSnc",
-    },
-    {
-      id: "reel-3",
-      title: "REST API Design",
-      description: "Best practices for designing REST APIs",
-      category: "BACKEND",
-      duration: "4 min",
-      views: "28.7K",
-      thumbnail: "https://via.placeholder.com/300x300?text=REST+API",
-      videoUrl: "https://www.youtube.com/embed/SLwpqD8n3d0",
-    },
-    {
-      id: "reel-4",
-      title: "React Hooks Tutorial",
-      description: "Understanding React Hooks in 4 minutes",
-      category: "FRONTEND",
-      duration: "4 min",
-      views: "89.3K",
-      thumbnail: "https://via.placeholder.com/300x300?text=React+Hooks",
-      videoUrl: "https://www.youtube.com/embed/TNhaISOUy6Q",
-    },
-    {
-      id: "reel-5",
-      title: "Database Indexing",
-      description: "Why database indexes matter for performance",
-      category: "BACKEND",
-      duration: "6 min",
-      views: "15.8K",
-      thumbnail: "https://via.placeholder.com/300x300?text=DB+Indexing",
-      videoUrl: "https://www.youtube.com/embed/fsG1XaZxSDE",
-    },
-    {
-      id: "reel-6",
-      title: "TypeScript Types",
-      description: "Essential TypeScript types explained",
-      category: "FRONTEND",
-      duration: "5 min",
-      views: "34.1K",
-      thumbnail: "https://via.placeholder.com/300x300?text=TS+Types",
-      videoUrl: "https://www.youtube.com/embed/U6s2pdxebSo",
-    },
-  ];
+    const handleSelection = () => {
+      const randomColor =
+        brandColors[Math.floor(Math.random() * brandColors.length)];
+      document.documentElement.style.setProperty(
+        "--moby-selection",
+        randomColor.main,
+      );
+      document.documentElement.style.setProperty(
+        "--moby-selection-bg",
+        randomColor.bg,
+      );
+    };
+
+    window.addEventListener("selectstart", handleSelection);
+    return () => window.removeEventListener("selectstart", handleSelection);
+  }, []);
+
+  const [hoveredReelId, setHoveredReelId] = useState<string | null>(null);
+  const [hoveredCourseId, setHoveredCourseId] = useState<string | null>(null);
+
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const reelsCarouselRef = useRef<HTMLDivElement>(null);
+  const coursesCarouselRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+  const [designThinkingProgress, setDesignThinkingProgress] = useState(0);
+  const [activeDataIndex, setActiveDataIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDesignThinkingProgress(20);
+    }, 100);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const [canCoursesScrollLeft, setCanCoursesScrollLeft] = useState(false);
+  const [canCoursesScrollRight, setCanCoursesScrollRight] = useState(true);
+  const [reelsFilter, setReelsFilter] = useState("ALL");
+  const [isReelsFilterOpen, setIsReelsFilterOpen] = useState(false);
+  const reelsFilterRef = useRef<HTMLDivElement>(null);
+
+  // Learning Timeline dropdown
+  const [timelineMonth, setTimelineMonth] = useState("Month");
+  const [isTimelineOpen, setIsTimelineOpen] = useState(false);
+  const timelineRef = useRef<HTMLDivElement>(null);
+
+  // Progress filter dropdown
+  const [progressFilter, setProgressFilter] = useState("All Courses");
+  const [isProgressFilterOpen, setIsProgressFilterOpen] = useState(false);
+  const progressFilterRef = useRef<HTMLDivElement>(null);
+
+  // Course filter dropdown
+  const [courseFilter, setCourseFilter] = useState("All Topics");
+  const [isCourseFilterOpen, setIsCourseFilterOpen] = useState(false);
+  const courseFilterRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        reelsFilterRef.current &&
+        !reelsFilterRef.current.contains(e.target as Node)
+      ) {
+        setIsReelsFilterOpen(false);
+      }
+      if (
+        timelineRef.current &&
+        !timelineRef.current.contains(e.target as Node)
+      ) {
+        setIsTimelineOpen(false);
+      }
+      if (
+        progressFilterRef.current &&
+        !progressFilterRef.current.contains(e.target as Node)
+      ) {
+        setIsProgressFilterOpen(false);
+      }
+      if (
+        courseFilterRef.current &&
+        !courseFilterRef.current.contains(e.target as Node)
+      ) {
+        setIsCourseFilterOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const filteredReels =
+    reelsFilter === "ALL"
+      ? shortLearningReels
+      : shortLearningReels.filter((r) => r.category === reelsFilter);
+
+  const handleReelsScroll = () => {
+    if (reelsCarouselRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = reelsCarouselRef.current;
+
+      setCanScrollLeft(scrollLeft > 20);
+      setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 20);
+    }
+  };
+
+  const handleCoursesScroll = () => {
+    if (coursesCarouselRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } =
+        coursesCarouselRef.current;
+      setCanCoursesScrollLeft(scrollLeft > 20);
+      setCanCoursesScrollRight(scrollLeft + clientWidth < scrollWidth - 20);
+    }
+  };
+
+  useEffect(() => {
+    handleReelsScroll();
+    handleCoursesScroll();
+    window.addEventListener("resize", handleReelsScroll);
+    window.addEventListener("resize", handleCoursesScroll);
+    return () => {
+      window.removeEventListener("resize", handleReelsScroll);
+      window.removeEventListener("resize", handleCoursesScroll);
+    };
+  }, []);
+
+  const reelRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
+
+  useEffect(() => {
+    if (selectedReel) {
+      setTimeout(() => {
+        const el = reelRefs.current[selectedReel.id];
+        if (el) {
+          el.scrollIntoView({ behavior: "auto", block: "center" });
+        }
+      }, 50);
+    }
+  }, [selectedReel]);
+
+  useEffect(() => {
+    if (selectedReel) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const id = entry.target.getAttribute("data-reel-id");
+              if (id) {
+                setActiveReelId((prev) => {
+                  if (prev !== id) {
+                    return id;
+                  }
+                  return prev;
+                });
+              }
+            }
+          });
+        },
+        { threshold: 0.6 },
+      );
+
+      Object.values(reelRefs.current).forEach((ref) => {
+        if (ref) observer.observe(ref);
+      });
+
+      return () => observer.disconnect();
+    }
+  }, [selectedReel]);
+
+  const isScrollingRef = useRef(false);
+  const handleWheel = (e: React.WheelEvent) => {
+    if (isScrollingRef.current) return;
+
+    if (Math.abs(e.deltaY) > 30) {
+      isScrollingRef.current = true;
+      if (e.deltaY > 0) {
+        handleScrollToNext();
+      } else {
+        handleScrollToPrev();
+      }
+
+      setTimeout(() => {
+        isScrollingRef.current = false;
+      }, 800);
+    }
+  };
+
+  const handleScrollToNext = () => {
+    if (!activeReelId) return;
+    const currentIndex = filteredReels.findIndex((r) => r.id === activeReelId);
+    if (currentIndex < filteredReels.length - 1) {
+      const nextId = filteredReels[currentIndex + 1].id;
+      const targetEl = reelRefs.current[nextId];
+      if (targetEl) {
+        targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+  };
+
+  const handleScrollToPrev = () => {
+    if (!activeReelId) return;
+    const currentIndex = filteredReels.findIndex((r) => r.id === activeReelId);
+    if (currentIndex > 0) {
+      const prevId = filteredReels[currentIndex - 1].id;
+      const targetEl = reelRefs.current[prevId];
+      if (targetEl) {
+        targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (document.getElementById("yt-iframe-api")) return;
+    const tag = document.createElement("script");
+    tag.id = "yt-iframe-api";
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.head.appendChild(tag);
+  }, []);
+
+  useEffect(() => {
+    if (!activeReelId || !selectedReel) return;
+
+    const iframeId = `iframe-${activeReelId}`;
+    let player: YT.Player | null = null;
+    let cancelled = false;
+
+    const createPlayer = () => {
+      if (cancelled) return;
+      const iframe = document.getElementById(iframeId);
+      if (!iframe) return;
+
+      player = new YT.Player(iframeId, {
+        events: {
+          onStateChange: (event: YT.OnStateChangeEvent) => {
+            if (cancelled) return;
+            // YT.PlayerState.ENDED === 0
+            if (event.data === 0) {
+              const currentIndex = filteredReels.findIndex(
+                (r) => r.id === activeReelId,
+              );
+              if (currentIndex < filteredReels.length - 1) {
+                const nextId = filteredReels[currentIndex + 1].id;
+                const targetEl = reelRefs.current[nextId];
+                if (targetEl) {
+                  targetEl.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                  });
+                }
+              }
+            }
+          },
+        },
+      });
+    };
+
+    const waitForYT = () => {
+      if (cancelled) return;
+      if (window.YT && window.YT.Player) {
+        setTimeout(createPlayer, 500);
+      } else {
+        setTimeout(waitForYT, 200);
+      }
+    };
+
+    waitForYT();
+
+    return () => {
+      cancelled = true;
+      if (player && typeof player.destroy === "function") {
+        try {
+          player.destroy();
+        } catch {
+          //
+        }
+      }
+    };
+  }, [activeReelId, filteredReels, selectedReel]);
+
+  useEffect(() => {
+    if (location.pathname.startsWith("/my-idp-learning/course/")) {
+      const courseId = location.pathname.split("/").pop();
+      const course = courses.find((c) => c.id === courseId);
+      if (course && !selectedCourse) {
+        setTimeout(() => setSelectedCourse(course), 0);
+      }
+    } else {
+      if (selectedCourse) setTimeout(() => setSelectedCourse(null), 0);
+    }
+  }, [location.pathname]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  if (selectedCourse) {
+    return (
+      <div className="flex-1 bg-[#f8fafc] dark:bg-[#08060d] h-screen overflow-hidden">
+        {/* Course Details */}
+      </div>
+    );
+  }
 
   return (
-    <div className="flex-1 overflow-auto bg-gray-50 dark:bg-gray-900">
-      <div className="p-6 space-y-6">
+    <div className="flex-1 overflow-auto bg-[#f8fafc] dark:bg-transparent">
+      <div className="p-6">
         {/* Header */}
-        <div className="flex items-start justify-between">
-          <div>
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-              My IDP & Learning
-            </h2>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5 text-left">
-              Growing Area.
-            </p>
-          </div>
-          <Button variant="link" className="text-blue-500 hover:text-blue-600">
-            My Certificated
-          </Button>
+        <div className="flex items-baseline justify-end mb-6">
+          <button
+            className="group flex items-center gap-2 px-4 py-2 rounded-full border border-transparent bg-transparent hover:bg-white dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:border-gray-200/60 dark:hover:border-transparent hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] transition-all duration-300 active:scale-[0.96] cursor-pointer"
+            style={{ fontFamily: '"Geometrica", sans-serif' }}
+          >
+            <span className="text-[12px] font-normal">My Certificated</span>
+            <ChevronRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+          </button>
         </div>
 
         {/* Learning Timeline and My Learning Path */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-12 gap-4 items-stretch mb-8">
           {/* Learning Timeline */}
-          <Card className="bg-white dark:bg-gray-800">
-            <CardHeader className="flex flex-row items-center justify-between">
-              <CardTitle>Learning Timeline</CardTitle>
-              <Button variant="outline" size="sm">
-                Month
-              </Button>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {/* Chart Area */}
-              <div className="relative h-48 bg-linear-to-br from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20 rounded-lg p-4">
-                <svg viewBox="0 0 400 150" className="w-full h-full">
-                  {/* Grid lines */}
-                  <line
-                    x1="0"
-                    y1="140"
-                    x2="400"
-                    y2="140"
-                    stroke="#e5e7eb"
-                    strokeWidth="1"
+          <Card className="col-span-12 xl:col-span-7 p-4 rounded-lg bg-white dark:bg-gray-800 border-none shadow-none">
+            <div className="flex items-baseline justify-between mb-4">
+              <h2
+                className="!text-[18px] font-medium !text-[#08060d] dark:!text-white leading-tight"
+                style={{ fontFamily: '"Geometrica", sans-serif' }}
+              >
+                Learning Timeline
+              </h2>
+              <div className="relative" ref={timelineRef}>
+                <button
+                  onClick={() => setIsTimelineOpen(!isTimelineOpen)}
+                  className={`
+                    group flex items-center gap-2 px-4 py-2 rounded-full border
+                    transition-all duration-300 active:scale-[0.96] cursor-pointer text-[12px] font-normal
+                    ${
+                      isTimelineOpen
+                        ? "bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl border-gray-200/50 dark:border-transparent shadow-xl translate-y-[-1px] text-gray-700 dark:text-gray-300"
+                        : "bg-transparent hover:bg-white dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white border-transparent hover:border-gray-200/60 dark:hover:border-transparent hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)]"
+                    }
+                  `}
+                  style={{ fontFamily: '"Geometrica", sans-serif' }}
+                >
+                  {timelineMonth}
+                  <ChevronDown
+                    className={`w-3.5 h-3.5 transition-transform duration-300 ${isTimelineOpen ? "rotate-180 text-[#FC4C02]" : ""}`}
                   />
+                </button>
 
-                  {/* Gradient area under the line */}
-                  <defs>
-                    <linearGradient
-                      id="lineGradient"
-                      x1="0%"
-                      y1="0%"
-                      x2="100%"
-                      y2="0%"
-                    >
-                      <stop offset="0%" stopColor="#a855f7" />
-                      <stop offset="100%" stopColor="#3b82f6" />
-                    </linearGradient>
-                    <linearGradient
-                      id="areaGradient"
-                      x1="0%"
-                      y1="0%"
-                      x2="0%"
-                      y2="100%"
-                    >
-                      <stop offset="0%" stopColor="#a855f7" stopOpacity="0.3" />
-                      <stop
-                        offset="100%"
-                        stopColor="#3b82f6"
-                        stopOpacity="0.1"
-                      />
-                    </linearGradient>
-                  </defs>
-
-                  {/* Area fill */}
-                  <path
-                    d="M 50 100 L 150 80 L 250 60 L 350 30 L 350 140 L 50 140 Z"
-                    fill="url(#areaGradient)"
-                  />
-
-                  {/* Line */}
-                  <path
-                    d="M 50 100 L 150 80 L 250 60 L 350 30"
-                    stroke="url(#lineGradient)"
-                    strokeWidth="3"
-                    fill="none"
-                  />
-
-                  {/* Data points */}
-                  <circle cx="50" cy="100" r="5" fill="#a855f7" />
-                  <circle cx="150" cy="80" r="5" fill="#3b82f6" />
-                  <circle cx="250" cy="60" r="5" fill="#3b82f6" />
-                  <circle
-                    cx="350"
-                    cy="30"
-                    r="5"
-                    stroke="#9ca3af"
-                    strokeWidth="2"
-                    fill="white"
-                  />
-
-                  {/* X-axis labels */}
-                  <text
-                    x="50"
-                    y="155"
-                    fontSize="12"
-                    fill="#9ca3af"
-                    textAnchor="middle"
-                  >
-                    Jan
-                  </text>
-                  <text
-                    x="150"
-                    y="155"
-                    fontSize="12"
-                    fill="#9ca3af"
-                    textAnchor="middle"
-                  >
-                    Feb
-                  </text>
-                  <text
-                    x="250"
-                    y="155"
-                    fontSize="12"
-                    fill="#9ca3af"
-                    textAnchor="middle"
-                  >
-                    March
-                  </text>
-                  <text
-                    x="350"
-                    y="155"
-                    fontSize="12"
-                    fill="#9ca3af"
-                    textAnchor="middle"
-                  >
-                    April
-                  </text>
-                </svg>
+                <div
+                  className={`
+                    absolute top-full right-0 mt-2 w-40
+                    bg-white dark:bg-gray-800 rounded-xl p-1.5 z-50
+                    transition-all duration-300 origin-top-right shadow-[0_30px_60px_-12px_rgba(0,0,0,0.15)]
+                    ${
+                      isTimelineOpen
+                        ? "opacity-100 scale-100 translate-y-0"
+                        : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
+                    }
+                  `}
+                >
+                  <div className="flex flex-col gap-1">
+                    {["Month", "Quarter", "Year"].map((opt) => (
+                      <button
+                        key={opt}
+                        onClick={() => {
+                          setTimelineMonth(opt);
+                          setActiveDataIndex(null);
+                          setIsTimelineOpen(false);
+                        }}
+                        className={`
+                          flex items-center gap-3 w-full px-3 py-1.5 rounded-lg text-[12px] font-normal
+                          transition-all duration-200 cursor-pointer
+                          ${
+                            timelineMonth === opt
+                              ? "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
+                              : "text-gray-700 dark:text-gray-300 hover:bg-gray-100/60 dark:hover:bg-gray-700/60 hover:text-gray-900 dark:hover:text-white"
+                          }
+                        `}
+                        style={{ fontFamily: '"Geometrica", sans-serif' }}
+                      >
+                        <span className="flex-1 text-left">{opt}</span>
+                        {timelineMonth === opt && (
+                          <Check className="w-4 h-4 text-orange-600" />
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                </div>
               </div>
+            </div>
 
-              {/* Skill Distribution */}
-              <div>
-                <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
-                  Skill Distribution
-                </h3>
-                <div className="space-y-3">
-                  {[
-                    { skill: "Frontend", percentage: 40, color: "bg-blue-500" },
+            {/* Chart Area */}
+            {(() => {
+              const chartDataConfig = {
+                Month: {
+                  chartData: [
+                    {
+                      label: "Oct 1",
+                      frontend: 5,
+                      backend: 8,
+                      database: 2,
+                      aidata: 1,
+                    },
+                    {
+                      label: "Oct 4",
+                      frontend: 15,
+                      backend: 5,
+                      database: 4,
+                      aidata: 2,
+                    },
+                    {
+                      label: "Oct 8",
+                      frontend: 8,
+                      backend: 12,
+                      database: 3,
+                      aidata: 1,
+                    },
+                    {
+                      label: "Oct 12",
+                      frontend: 20,
+                      backend: 10,
+                      database: 6,
+                      aidata: 3,
+                    },
+                    {
+                      label: "Oct 15",
+                      frontend: 12,
+                      backend: 20,
+                      database: 5,
+                      aidata: 2,
+                    },
+                    {
+                      label: "Oct 18",
+                      frontend: 25,
+                      backend: 15,
+                      database: 8,
+                      aidata: 4,
+                    },
+                    {
+                      label: "Oct 22",
+                      frontend: 18,
+                      backend: 25,
+                      database: 7,
+                      aidata: 3,
+                    },
+                    {
+                      label: "Oct 25",
+                      frontend: 35,
+                      backend: 20,
+                      database: 10,
+                      aidata: 5,
+                    },
+                    {
+                      label: "Oct 28",
+                      frontend: 25,
+                      backend: 35,
+                      database: 12,
+                      aidata: 4,
+                    },
+                    {
+                      label: "Oct 31",
+                      frontend: 40,
+                      backend: 40,
+                      database: 15,
+                      aidata: 5,
+                    },
+                  ],
+                  skills: [
+                    {
+                      skill: "Frontend",
+                      percentage: 40,
+                      gradient: "from-blue-400 to-blue-600",
+                      glow: "rgba(59,130,246,0.2)",
+                    },
                     {
                       skill: "Backend",
                       percentage: 40,
-                      color: "bg-yellow-500",
+                      gradient: "from-orange-400 to-orange-600",
+                      glow: "rgba(251,146,60,0.2)",
                     },
                     {
                       skill: "Database",
                       percentage: 15,
-                      color: "bg-green-500",
+                      gradient: "from-emerald-400 to-emerald-600",
+                      glow: "rgba(52,211,153,0.2)",
                     },
-                    { skill: "AI/Data", percentage: 5, color: "bg-red-400" },
-                  ].map((item) => (
-                    <div key={item.skill} className="flex items-center gap-3">
-                      <span className="text-sm text-gray-600 dark:text-gray-400 w-20">
-                        {item.skill}
-                      </span>
-                      <div className="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-6 overflow-hidden">
-                        <div
-                          className={`${item.color} h-full rounded-full transition-all`}
-                          style={{ width: `${item.percentage}%` }}
+                    {
+                      skill: "AI/Data",
+                      percentage: 5,
+                      gradient: "from-rose-400 to-rose-600",
+                      glow: "rgba(251,113,133,0.2)",
+                    },
+                  ],
+                },
+                Quarter: {
+                  chartData: [
+                    {
+                      label: "Week 1",
+                      frontend: 10,
+                      backend: 20,
+                      database: 5,
+                      aidata: 2,
+                    },
+                    {
+                      label: "Week 3",
+                      frontend: 25,
+                      backend: 15,
+                      database: 8,
+                      aidata: 4,
+                    },
+                    {
+                      label: "Week 5",
+                      frontend: 15,
+                      backend: 35,
+                      database: 10,
+                      aidata: 3,
+                    },
+                    {
+                      label: "Week 7",
+                      frontend: 40,
+                      backend: 25,
+                      database: 15,
+                      aidata: 7,
+                    },
+                    {
+                      label: "Week 9",
+                      frontend: 30,
+                      backend: 50,
+                      database: 12,
+                      aidata: 5,
+                    },
+                    {
+                      label: "Week 12",
+                      frontend: 50,
+                      backend: 55,
+                      database: 20,
+                      aidata: 10,
+                    },
+                  ],
+                  skills: [
+                    {
+                      skill: "Frontend",
+                      percentage: 50,
+                      gradient: "from-blue-400 to-blue-600",
+                      glow: "rgba(59,130,246,0.2)",
+                    },
+                    {
+                      skill: "Backend",
+                      percentage: 55,
+                      gradient: "from-orange-400 to-orange-600",
+                      glow: "rgba(251,146,60,0.2)",
+                    },
+                    {
+                      skill: "Database",
+                      percentage: 20,
+                      gradient: "from-emerald-400 to-emerald-600",
+                      glow: "rgba(52,211,153,0.2)",
+                    },
+                    {
+                      skill: "AI/Data",
+                      percentage: 10,
+                      gradient: "from-rose-400 to-rose-600",
+                      glow: "rgba(251,113,133,0.2)",
+                    },
+                  ],
+                },
+                Year: {
+                  chartData: [
+                    {
+                      label: "Jan",
+                      frontend: 20,
+                      backend: 30,
+                      database: 10,
+                      aidata: 3,
+                    },
+                    {
+                      label: "Feb",
+                      frontend: 40,
+                      backend: 25,
+                      database: 15,
+                      aidata: 6,
+                    },
+                    {
+                      label: "Mar",
+                      frontend: 30,
+                      backend: 50,
+                      database: 12,
+                      aidata: 5,
+                    },
+                    {
+                      label: "Apr",
+                      frontend: 55,
+                      backend: 40,
+                      database: 25,
+                      aidata: 12,
+                    },
+                    {
+                      label: "May",
+                      frontend: 45,
+                      backend: 65,
+                      database: 20,
+                      aidata: 10,
+                    },
+                    {
+                      label: "Jun",
+                      frontend: 70,
+                      backend: 55,
+                      database: 35,
+                      aidata: 18,
+                    },
+                    {
+                      label: "Jul",
+                      frontend: 60,
+                      backend: 80,
+                      database: 30,
+                      aidata: 15,
+                    },
+                    {
+                      label: "Aug",
+                      frontend: 80,
+                      backend: 85,
+                      database: 45,
+                      aidata: 25,
+                    },
+                    {
+                      label: "Sep",
+                      frontend: 75,
+                      backend: 90,
+                      database: 50,
+                      aidata: 30,
+                    },
+                    {
+                      label: "Oct",
+                      frontend: 85,
+                      backend: 95,
+                      database: 60,
+                      aidata: 35,
+                    },
+                    {
+                      label: "Nov",
+                      frontend: 90,
+                      backend: 110,
+                      database: 70,
+                      aidata: 40,
+                    },
+                    {
+                      label: "Dec",
+                      frontend: 110,
+                      backend: 120,
+                      database: 80,
+                      aidata: 50,
+                    },
+                  ],
+                  skills: [
+                    {
+                      skill: "Frontend",
+                      percentage: 80,
+                      gradient: "from-blue-400 to-blue-600",
+                      glow: "rgba(59,130,246,0.2)",
+                    },
+                    {
+                      skill: "Backend",
+                      percentage: 85,
+                      gradient: "from-orange-400 to-orange-600",
+                      glow: "rgba(251,146,60,0.2)",
+                    },
+                    {
+                      skill: "Database",
+                      percentage: 45,
+                      gradient: "from-emerald-400 to-emerald-600",
+                      glow: "rgba(52,211,153,0.2)",
+                    },
+                    {
+                      skill: "AI/Data",
+                      percentage: 25,
+                      gradient: "from-rose-400 to-rose-600",
+                      glow: "rgba(251,113,133,0.2)",
+                    },
+                  ],
+                },
+              };
+
+              const currentData =
+                chartDataConfig[
+                  timelineMonth as keyof typeof chartDataConfig
+                ] || chartDataConfig["Month"];
+
+              const chartConfig = {
+                frontend: { label: "Frontend", color: "#3b82f6" },
+                backend: { label: "Backend", color: "#f97316" },
+                database: { label: "Database", color: "#10b981" },
+                aidata: { label: "AI/Data", color: "#f43f5e" },
+              };
+
+              return (
+                <>
+                  <div className="relative h-44 px-0 mb-2 w-full overflow-visible">
+                    <ChartContainer
+                      config={chartConfig}
+                      className="h-full w-full [&_.recharts-tooltip-cursor]:!hidden [&_*]:!border-none [&_*]:!outline-none [&_*]:!ring-0"
+                    >
+                      <AreaChart
+                        data={currentData.chartData}
+                        margin={{ top: 10, right: -8, left: -8, bottom: -10 }}
+                      >
+                        <defs>
+                          <linearGradient
+                            id="fillFrontend"
+                            x1="0"
+                            y1="0"
+                            x2="0"
+                            y2="1"
+                          >
+                            <stop
+                              offset="5%"
+                              stopColor={chartConfig.frontend.color}
+                              stopOpacity={0.8}
+                            />
+                            <stop
+                              offset="95%"
+                              stopColor={chartConfig.frontend.color}
+                              stopOpacity={0.1}
+                            />
+                          </linearGradient>
+                          <linearGradient
+                            id="fillBackend"
+                            x1="0"
+                            y1="0"
+                            x2="0"
+                            y2="1"
+                          >
+                            <stop
+                              offset="5%"
+                              stopColor={chartConfig.backend.color}
+                              stopOpacity={0.8}
+                            />
+                            <stop
+                              offset="95%"
+                              stopColor={chartConfig.backend.color}
+                              stopOpacity={0.1}
+                            />
+                          </linearGradient>
+                          <linearGradient
+                            id="fillDatabase"
+                            x1="0"
+                            y1="0"
+                            x2="0"
+                            y2="1"
+                          >
+                            <stop
+                              offset="5%"
+                              stopColor={chartConfig.database.color}
+                              stopOpacity={0.8}
+                            />
+                            <stop
+                              offset="95%"
+                              stopColor={chartConfig.database.color}
+                              stopOpacity={0.1}
+                            />
+                          </linearGradient>
+                          <linearGradient
+                            id="fillAidata"
+                            x1="0"
+                            y1="0"
+                            x2="0"
+                            y2="1"
+                          >
+                            <stop
+                              offset="5%"
+                              stopColor={chartConfig.aidata.color}
+                              stopOpacity={0.8}
+                            />
+                            <stop
+                              offset="95%"
+                              stopColor={chartConfig.aidata.color}
+                              stopOpacity={0.1}
+                            />
+                          </linearGradient>
+                        </defs>
+
+                        <XAxis
+                          dataKey="label"
+                          tickLine={false}
+                          axisLine={false}
+                          stroke="none"
+                          padding={{ left: 20, right: 20 }}
+                          tickMargin={4}
+                          tick={{
+                            fill: "#9ca3af",
+                            fontSize: 11,
+                            fontFamily: '"Geometrica", sans-serif',
+                          }}
                         />
-                      </div>
-                      <span className="text-sm text-gray-600 dark:text-gray-400 w-10 text-right">
-                        {item.percentage}%
-                      </span>
+                        <ChartTooltip
+                          cursor={<></>}
+                          content={
+                            <SyncTooltip
+                              currentData={currentData}
+                              onIndexChange={setActiveDataIndex}
+                            />
+                          }
+                        />
+                        <Area
+                          dataKey="aidata"
+                          type="natural"
+                          fill="url(#fillAidata)"
+                          stroke={chartConfig.aidata.color}
+                          stackId="a"
+                        />
+                        <Area
+                          dataKey="database"
+                          type="natural"
+                          fill="url(#fillDatabase)"
+                          stroke={chartConfig.database.color}
+                          stackId="a"
+                        />
+                        <Area
+                          dataKey="backend"
+                          type="natural"
+                          fill="url(#fillBackend)"
+                          stroke={chartConfig.backend.color}
+                          stackId="a"
+                        />
+                        <Area
+                          dataKey="frontend"
+                          type="natural"
+                          fill="url(#fillFrontend)"
+                          stroke={chartConfig.frontend.color}
+                          stackId="a"
+                        />
+                      </AreaChart>
+                    </ChartContainer>
+                  </div>
+
+                  {/* Skill Distribution */}
+                  <div>
+                    <h3
+                      className="!text-[14px] font-semibold !text-[#08060d] dark:!text-white leading-tight text-left mb-2"
+                      style={{ fontFamily: '"Geometrica", sans-serif' }}
+                    >
+                      Skill Distribution
+                      {activeDataIndex !== null && (
+                        <span className="ml-1.5 font-normal text-gray-400 text-[11px]">
+                          • {currentData.chartData[activeDataIndex].label}
+                        </span>
+                      )}
+                    </h3>
+                    <div className="space-y-2">
+                      {(() => {
+                        const activePoint =
+                          activeDataIndex !== null
+                            ? currentData.chartData[activeDataIndex]
+                            : null;
+
+                        const getPercentage = (
+                          skill: string,
+                          defaultVal: number,
+                        ) => {
+                          if (!activePoint) return defaultVal;
+                          const key = skill.toLowerCase().replace("/", "");
+                          return (
+                            (activePoint[
+                              key as keyof typeof activePoint
+                            ] as number) || 0
+                          );
+                        };
+
+                        return currentData.skills.map((item) => (
+                          <div
+                            key={item.skill}
+                            className="flex items-center gap-3"
+                          >
+                            <span
+                              className="text-[11px] font-normal text-gray-500 dark:text-gray-400 w-16 text-left"
+                              style={{ fontFamily: '"Geometrica", sans-serif' }}
+                            >
+                              {item.skill}
+                            </span>
+                            <div className="flex-1 bg-gray-200/50 dark:bg-gray-700/50 rounded-full h-3 overflow-hidden">
+                              <div
+                                className={`bg-linear-to-r ${item.gradient} h-full rounded-full transition-all duration-700`}
+                                style={{
+                                  width: `${getPercentage(item.skill, item.percentage)}%`,
+                                  boxShadow: `0 0 8px ${item.glow}`,
+                                }}
+                              />
+                            </div>
+                            <span
+                              className="text-[14px] font-medium text-gray-800 dark:text-gray-200 w-10 text-right shrink-0"
+                              style={{ fontFamily: '"Geometrica", sans-serif' }}
+                            >
+                              <AnimatedNumber
+                                value={getPercentage(
+                                  item.skill,
+                                  item.percentage,
+                                )}
+                              />
+                              %
+                            </span>
+                          </div>
+                        ));
+                      })()}
                     </div>
-                  ))}
-                </div>
-              </div>
-            </CardContent>
+                  </div>
+                </>
+              );
+            })()}
           </Card>
 
           {/* My Learning Path */}
-          <Card className="bg-white dark:bg-gray-800">
-            <CardHeader>
-              <CardTitle>My Learning Path</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
+          <Card className="col-span-12 xl:col-span-5 p-4 rounded-lg bg-white dark:bg-gray-800 border-none shadow-none">
+            <h2
+              className="!text-[18px] font-medium !text-[#08060d] dark:!text-white leading-tight text-left mb-4"
+              style={{ fontFamily: '"Geometrica", sans-serif' }}
+            >
+              My Learning Path
+            </h2>
+            <div className="space-y-4">
               {/* Functional Path */}
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
+              <div className="p-4 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer group">
+                <div className="flex items-center justify-between mb-3">
+                  <span
+                    className="text-[14px] font-semibold text-gray-800 dark:text-white"
+                    style={{ fontFamily: '"Geometrica", sans-serif' }}
+                  >
                     Functional
                   </span>
-                  <span className="text-xs text-blue-500">Standard</span>
+                  <div className="relative h-[26px] overflow-hidden group/btn">
+                    <div className="flex flex-col transition-all duration-300 ease-in-out group-hover:translate-y-[-26px]">
+                      {/* Status Label */}
+                      <div className="h-[26px] flex items-center justify-end">
+                        <span
+                          className="text-[11px] font-medium text-[#006bff]"
+                          style={{ fontFamily: '"Geometrica", sans-serif' }}
+                        >
+                          Standard
+                        </span>
+                      </div>
+                      {/* Action Label */}
+                      <div className="h-[26px] flex items-center justify-end gap-1.5 text-[#006bff] whitespace-nowrap pr-1.5">
+                        <div className="relative group/text">
+                          <span
+                            className="text-[12px] font-bold relative z-10"
+                            style={{ fontFamily: '"Geometrica", sans-serif' }}
+                          >
+                            Resume Course
+                          </span>
+                          <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#006bff] transition-all duration-300 delay-100 group-hover:w-full rounded-full"></div>
+                        </div>
+                        <ArrowRight className="w-4 h-4 transition-transform duration-300 delay-100 group-hover:translate-x-1" />
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-900 dark:text-white">
-                      Fullstack Dev Course
-                    </span>
-                    <span className="inline-flex items-center gap-1 text-xs">
-                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                <div className="flex items-center justify-between">
+                  <span
+                    className="text-[11px] font-normal text-gray-600 dark:text-gray-300"
+                    style={{ fontFamily: '"Geometrica", sans-serif' }}
+                  >
+                    Full-Stack Developer Course
+                  </span>
+                  <div className="flex items-center gap-1.5">
+                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                    <span
+                      className="text-[11px] font-normal text-gray-500 dark:text-gray-400"
+                      style={{ fontFamily: '"Geometrica", sans-serif' }}
+                    >
                       In Progress
                     </span>
                   </div>
@@ -372,482 +1298,896 @@ export default function MyIDPLearningPage() {
               </div>
 
               {/* Core Path */}
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
+              <div className="p-4 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer group">
+                <div className="flex items-center justify-between mb-3">
+                  <span
+                    className="text-[14px] font-semibold text-gray-800 dark:text-white"
+                    style={{ fontFamily: '"Geometrica", sans-serif' }}
+                  >
                     Core
                   </span>
-                  <span className="text-xs text-orange-500">
-                    Lower Than Expected Level
-                  </span>
+                  <div className="relative h-[26px] overflow-hidden group/btn">
+                    <div className="flex flex-col transition-all duration-300 ease-in-out group-hover:translate-y-[-26px]">
+                      {/* Status Label */}
+                      <div className="h-[26px] flex items-center justify-end">
+                        <span
+                          className="text-[11px] font-medium text-[#fc4c02]"
+                          style={{ fontFamily: '"Geometrica", sans-serif' }}
+                        >
+                          Lower Than Expected Level
+                        </span>
+                      </div>
+                      {/* Action Label */}
+                      <div className="h-[26px] flex items-center justify-end gap-1.5 text-[#fc4c02] whitespace-nowrap pr-1.5">
+                        <div className="relative group/text">
+                          <span
+                            className="text-[12px] font-bold relative z-10"
+                            style={{ fontFamily: '"Geometrica", sans-serif' }}
+                          >
+                            Start Course
+                          </span>
+                          <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#fc4c02] transition-all duration-300 delay-100 group-hover:w-full rounded-full"></div>
+                        </div>
+                        <ArrowRight className="w-4 h-4 transition-transform duration-300 delay-100 group-hover:translate-x-1" />
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-900 dark:text-white">
-                      Design Thinking
-                    </span>
-                    <span className="inline-flex items-center gap-1 text-xs text-gray-500">
-                      <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                <div className="flex items-center justify-between">
+                  <span
+                    className="text-[11px] font-normal text-gray-600 dark:text-gray-300"
+                    style={{ fontFamily: '"Geometrica", sans-serif' }}
+                  >
+                    Design Thinking
+                  </span>
+                  <div className="flex items-center gap-1.5">
+                    <div className="w-2 h-2 bg-rose-500 rounded-full"></div>
+                    <span
+                      className="text-[11px] font-normal text-gray-500 dark:text-gray-400"
+                      style={{ fontFamily: '"Geometrica", sans-serif' }}
+                    >
                       Not Started
                     </span>
                   </div>
                 </div>
               </div>
-            </CardContent>
+            </div>
           </Card>
         </div>
 
-        {/* In progress Section */}
-        <div>
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
-              In progress
-            </h2>
-            <Button variant="outline" size="sm" className="gap-2">
-              <Filter className="w-4 h-4" />
-              Upcoming + IDP
-            </Button>
-          </div>
-
-          <Card className="bg-white dark:bg-gray-800">
-            <CardContent className="p-6">
-              <div className="flex items-center gap-4">
-                {/* Course Image */}
-                <div className="w-40 h-24 bg-linear-to-br from-gray-800 to-gray-900 rounded-lg flex items-center justify-center shrink-0 overflow-hidden">
-                  <img
-                    src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%231e293b' width='100' height='100'/%3E%3Ctext x='50' y='50' font-size='12' fill='white' text-anchor='middle' dominant-baseline='middle'%3EIDP Plan%3C/text%3E%3C/svg%3E"
-                    alt="Course thumbnail"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-
-                {/* Course Title */}
-                <div className="min-w-0 w-48">
-                  <div className="text-xs text-gray-500 dark:text-gray-400 mb-1 text-left">
-                    IDP Plan
-                  </div>
-                  <h3 className="text-base font-medium text-gray-900 dark:text-white">
-                    What Is Design Thinking?
-                  </h3>
-                </div>
-
-                {/* Stats */}
-                <div className="flex flex-1 justify-around text-sm">
-                  <div>
-                    <div className="text-gray-500 dark:text-gray-400 mb-1">
-                      Course
-                    </div>
-                    <div className="font-medium text-gray-900 dark:text-white">
-                      12Hours
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-gray-500 dark:text-gray-400 mb-1">
-                      Complete
-                    </div>
-                    <div className="font-medium text-gray-900 dark:text-white">
-                      20%
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-gray-500 dark:text-gray-400 mb-1">
-                      Duration
-                    </div>
-                    <div className="font-medium text-gray-900 dark:text-white">
-                      2 Days
-                    </div>
-                  </div>
-                </div>
-
-                {/* Start Button */}
-                <Button variant="outline" className="self-center">
-                  Start
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* New Course Section */}
-        <div>
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
-              New Course
-            </h2>
-            <Button variant="outline" size="sm" className="gap-2">
-              <Filter className="w-4 h-4" />
-              Tech • Web • PDF
-            </Button>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
-            {courses.map((c) => (
-              <Card
-                key={c.id}
-                className="bg-white dark:bg-gray-800 overflow-hidden p-2 cursor-pointer hover:shadow-lg"
-                onClick={() => setSelectedCourse(c)}
+        {/* In Progress Section */}
+        <div className="relative z-0 mb-8">
+          <div className="flex items-center justify-between mb-3 px-1">
+            <div className="flex items-center gap-2">
+              <Play className="w-5 h-5 text-[#08060d] dark:text-white relative -top-[3px] fill-current" />
+              <h2
+                className="!text-[18px] font-medium !text-[#08060d] dark:!text-white leading-none"
+                style={{ fontFamily: '"Geometrica", sans-serif' }}
               >
-                <div className="relative h-32 flex items-center justify-center rounded-lg">
-                  {/* Simple visual variants based on category */}
-                  <div
-                    className={`absolute inset-0 rounded-lg ${c.category === "FRONTEND" ? "bg-linear-to-br from-purple-600 to-blue-500" : "bg-linear-to-br from-gray-400 to-gray-600"}`}
-                  />
-                  <div className="relative z-10 text-white text-xl font-bold">
-                    {c.title.split("-")[0]}
-                  </div>
-                </div>
-                <CardContent className="relative p-1 pt-6">
-                  <div className="absolute -top-2 left-0 inline-block w-fit bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs px-2 py-1 rounded">
-                    {c.category}
-                  </div>
-                  <p className="text-sm text-gray-900 dark:text-white text-left">
-                    {c.description}
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-
-        {/* Short Learning Reels Section */}
-        <div>
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
-              Short Learning - Reels
-            </h2>
-            <Button variant="outline" size="sm" className="gap-2">
-              <Filter className="w-4 h-4" />
-              All Topics
-            </Button>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3">
-            {shortLearningReels.map((reel) => (
-              <Card
-                key={reel.id}
-                className="bg-white dark:bg-gray-800 overflow-hidden cursor-pointer hover:shadow-lg transition-shadow group"
-                onClick={() => setSelectedReel(reel)}
+                In progress
+              </h2>
+            </div>
+            <div className="relative -top-[3px]" ref={progressFilterRef}>
+              <button
+                onClick={() => setIsProgressFilterOpen(!isProgressFilterOpen)}
+                className={`
+                  group flex items-center justify-center gap-2 h-10 rounded-full border
+                  transition-all duration-300 active:scale-[0.96] cursor-pointer
+                  ${
+                    isProgressFilterOpen
+                      ? "bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl border-gray-200/50 dark:border-transparent shadow-xl translate-y-[-1px] text-gray-700 dark:text-gray-300 px-4"
+                      : "bg-transparent hover:bg-white dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white border-transparent hover:border-gray-200/60 dark:hover:border-transparent hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] w-10 md:w-auto md:px-4"
+                  }
+                `}
               >
-                {/* Thumbnail */}
-                <div className="relative w-full aspect-square bg-linear-to-br from-gray-300 to-gray-400 overflow-hidden">
-                  <div
-                    className={`absolute inset-0 ${reel.category === "FRONTEND" ? "bg-linear-to-br from-purple-600 to-blue-500" : "bg-linear-to-br from-gray-400 to-gray-600"} flex items-center justify-center`}
-                  >
-                    <span className="text-white text-3xl group-hover:scale-110 transition-transform">
-                      ▶
-                    </span>
-                  </div>
-                  {/* Duration Badge */}
-                  <div className="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
-                    {reel.duration}
-                  </div>
-                </div>
+                <span
+                  className="hidden md:inline text-[12px] font-normal"
+                  style={{ fontFamily: '"Geometrica", sans-serif' }}
+                >
+                  Filters
+                </span>
+                <Settings2
+                  className={`w-5 h-5 transition-transform duration-300 ${isProgressFilterOpen ? "scale-110 text-[#FC4C02]" : ""}`}
+                />
+              </button>
 
-                {/* Content */}
-                <CardContent className="p-3">
-                  <h3 className="text-sm font-medium text-gray-900 dark:text-white mb-1 line-clamp-2">
-                    {reel.title}
-                  </h3>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">
-                    {reel.views} views
-                  </p>
-                  <div className="inline-block bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs px-2 py-0.5 rounded">
-                    {reel.category}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-        {/* Course Details Modal */}
-        {selectedCourse && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto">
-            <div
-              className="absolute inset-0 bg-black/50"
-              onClick={() => setSelectedCourse(null)}
-            />
-            <div className="relative z-10 w-full max-w-5xl bg-white dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden my-8">
-              {/* Close Button */}
-              <Button
-                variant="ghost"
-                onClick={() => setSelectedCourse(null)}
-                className="absolute top-4 right-4 z-20"
+              <div
+                className={`
+                  absolute top-full right-0 mt-2 w-44
+                  bg-white dark:bg-gray-800 rounded-xl p-1.5 z-50
+                  transition-all duration-300 origin-top-right shadow-[0_30px_60px_-12px_rgba(0,0,0,0.15)]
+                  ${
+                    isProgressFilterOpen
+                      ? "opacity-100 scale-100 translate-y-0"
+                      : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
+                  }
+                `}
               >
-                ✕
-              </Button>
-
-              {/* Main Content */}
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 p-6">
-                {/* Left Column - Video & Description */}
-                <div className="lg:col-span-2 space-y-6">
-                  {/* Introduction Video */}
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                      Introduction Video
-                    </h3>
-                    {selectedCourse.videoUrl.includes("youtube") ||
-                    selectedCourse.videoUrl.includes("youtu.be") ? (
-                      <div className="aspect-video w-full rounded-lg overflow-hidden bg-gray-800">
-                        <iframe
-                          className="w-full h-full"
-                          src={selectedCourse.videoUrl}
-                          title={selectedCourse.title}
-                          frameBorder="0"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          allowFullScreen
-                        />
-                      </div>
-                    ) : (
-                      <video className="w-full rounded-lg" controls>
-                        <source src={selectedCourse.videoUrl} />
-                        Your browser does not support the video tag.
-                      </video>
-                    )}
-                  </div>
-
-                  {/* Course Title & Rating */}
-                  <div>
-                    <div className="flex items-start justify-between mb-3">
-                      <div>
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className="inline-block bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400 text-xs px-3 py-1 rounded-full font-medium">
-                            {selectedCourse.isFree ? "FREE" : "PREMIUM"}
-                          </span>
-                          <span className="inline-block bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 text-xs px-3 py-1 rounded-full">
-                            {selectedCourse.category}
-                          </span>
-                        </div>
-                        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-                          {selectedCourse.title}
-                        </h2>
-                      </div>
-                    </div>
-
-                    {/* Rating */}
-                    <div className="flex items-center gap-4 mb-4">
-                      <div className="flex items-center gap-1">
-                        <div className="flex text-yellow-400">
-                          {[...Array(5)].map((_, i) => (
-                            <span key={i}>★</span>
-                          ))}
-                        </div>
-                        <span className="font-semibold text-gray-900 dark:text-white">
-                          {selectedCourse.rating}
-                        </span>
-                        <span className="text-gray-500 dark:text-gray-400">
-                          ({selectedCourse.reviews.toLocaleString()} reviews)
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Instructor */}
-                    <div className="flex items-center gap-3 mb-6 pb-6 border-b border-gray-200 dark:border-gray-700">
-                      <div className="w-10 h-10 bg-linear-to-br from-purple-500 to-blue-500 rounded-full flex items-center justify-center text-white font-bold">
-                        {selectedCourse.instructor.charAt(0)}
-                      </div>
-                      <div>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">
-                          Instructor
-                        </p>
-                        <p className="font-medium text-gray-900 dark:text-white">
-                          {selectedCourse.instructor}
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Description */}
-                    <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
-                      {selectedCourse.fullDescription}
-                    </p>
-                  </div>
-
-                  {/* What You'll Learn */}
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                      What You'll Learn
-                    </h3>
-                    <ul className="space-y-3">
-                      {selectedCourse.highlights.map((highlight, idx) => (
-                        <li key={idx} className="flex items-start gap-3">
-                          <div className="shrink-0 w-5 h-5 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mt-0.5">
-                            <span className="text-green-600 dark:text-green-400 text-sm">
-                              ✓
-                            </span>
-                          </div>
-                          <span className="text-gray-700 dark:text-gray-300">
-                            {highlight}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-
-                {/* Right Column - Course Info Card */}
-                <div className="lg:col-span-1">
-                  <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 space-y-6 sticky top-6">
-                    {/* Course Stats */}
-                    <div className="space-y-4">
-                      <div className="flex items-center gap-4">
-                        <div className="shrink-0 w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
-                          <span className="text-2xl">⏱️</span>
-                        </div>
-                        <div>
-                          <p className="text-xs text-gray-500 dark:text-gray-400">
-                            Duration
-                          </p>
-                          <p className="font-semibold text-gray-900 dark:text-white">
-                            {selectedCourse.duration}
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center gap-4">
-                        <div className="shrink-0 w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center">
-                          <span className="text-2xl">📚</span>
-                        </div>
-                        <div>
-                          <p className="text-xs text-gray-500 dark:text-gray-400">
-                            Lessons
-                          </p>
-                          <p className="font-semibold text-gray-900 dark:text-white">
-                            {selectedCourse.lessons} lessons
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center gap-4">
-                        <div className="shrink-0 w-12 h-12 bg-orange-100 dark:bg-orange-900/30 rounded-lg flex items-center justify-center">
-                          <span className="text-2xl">📦</span>
-                        </div>
-                        <div>
-                          <p className="text-xs text-gray-500 dark:text-gray-400">
-                            Modules
-                          </p>
-                          <p className="font-semibold text-gray-900 dark:text-white">
-                            {selectedCourse.modules} modules
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Divider */}
-                    <div className="border-t border-gray-200 dark:border-gray-700" />
-
-                    {/* Tags */}
-                    <div>
-                      <p className="text-xs text-gray-500 dark:text-gray-400 mb-3 font-medium">
-                        Skills
-                      </p>
-                      <div className="flex flex-wrap gap-2">
-                        {selectedCourse.tags.map((tag, idx) => (
-                          <span
-                            key={idx}
-                            className="inline-block bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 text-xs px-3 py-1 rounded-full"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Divider */}
-                    <div className="border-t border-gray-200 dark:border-gray-700" />
-
-                    {/* Action Buttons */}
-                    <div className="space-y-2">
-                      <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-6">
-                        Start Learning
-                      </Button>
-                      <Button
-                        variant="outline"
-                        onClick={() => setSelectedCourse(null)}
-                        className="w-full"
-                      >
-                        Close
-                      </Button>
-                    </div>
-                  </div>
+                <div className="flex flex-col gap-1">
+                  {[
+                    { id: "All Courses", label: "All Courses" },
+                    { id: "In Progress", label: "In Progress" },
+                    { id: "Completed", label: "Completed" },
+                  ].map((cat) => (
+                    <button
+                      key={cat.id}
+                      onClick={() => {
+                        setProgressFilter(cat.id);
+                        setIsProgressFilterOpen(false);
+                      }}
+                      className={`
+                        flex items-center gap-3 w-full px-3 py-1.5 rounded-lg text-[12px] font-normal
+                        transition-all duration-200 cursor-pointer
+                        ${
+                          progressFilter === cat.id
+                            ? "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
+                            : "text-gray-700 dark:text-gray-300 hover:bg-gray-100/60 dark:hover:bg-gray-700/60 hover:text-gray-900 dark:hover:text-white"
+                        }
+                      `}
+                      style={{ fontFamily: '"Geometrica", sans-serif' }}
+                    >
+                      <span className="flex-1 text-left">{cat.label}</span>
+                      {progressFilter === cat.id && (
+                        <Check className="w-4 h-4 text-orange-600" />
+                      )}
+                    </button>
+                  ))}
                 </div>
               </div>
             </div>
           </div>
-        )}
+
+          <div className="p-4 rounded-[24px] bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer group max-w-[580px]">
+            <div className="flex items-start gap-6 text-left">
+              {/* Course Image */}
+              <div className="w-[180px] md:w-[237px] h-[133px] rounded-xl shrink-0 overflow-hidden relative bg-gray-100 dark:bg-gray-700 aspect-video">
+                <img
+                  src="/src/assets/IDP-roadmap.png"
+                  alt="Design Thinking Course"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              {/* Course Info */}
+              <div className="flex-1 min-w-0">
+                <div className="flex flex-col items-start gap-1.5 w-full">
+                  <div className="flex items-center justify-between w-full">
+                    <div className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-700/50 text-slate-800 dark:text-slate-200 text-[11px] font-semibold tracking-wide shrink-0">
+                      <svg
+                        className="w-3.5 h-3.5"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                      >
+                        <circle cx="8.5" cy="8.5" r="5.2" />
+                        <circle cx="15.5" cy="8.5" r="5.2" />
+                        <circle cx="8.5" cy="15.5" r="5.2" />
+                        <circle cx="15.5" cy="15.5" r="5.2" />
+                      </svg>
+                      Course
+                    </div>
+
+                    <div className="flex items-center gap-1.5 text-[#006bff] opacity-0 group-hover:opacity-100 transition-all duration-300 shrink-0 pointer-events-none group-hover:pointer-events-auto">
+                      <div className="relative group/text">
+                        <span
+                          className="text-[12px] font-bold relative z-10"
+                          style={{ fontFamily: '"Geometrica", sans-serif' }}
+                        >
+                          Resume Course
+                        </span>
+                        <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#006bff] transition-all duration-300 delay-100 group-hover:w-full rounded-full"></div>
+                      </div>
+                      <ArrowRight className="w-4 h-4 transition-transform duration-300 delay-100 group-hover:translate-x-1" />
+                    </div>
+                  </div>
+
+                  <h3
+                    className="text-[14px] font-semibold text-gray-800 dark:text-white leading-tight truncate w-full"
+                    style={{ fontFamily: '"Geometrica", sans-serif' }}
+                  >
+                    What Is Design Thinking?
+                  </h3>
+                </div>
+
+                <div className="flex items-center gap-6 mt-1.5">
+                  <div className="flex flex-col gap-0">
+                    <span
+                      className="text-[11px] text-gray-500 dark:text-gray-400 font-normal leading-tight"
+                      style={{ fontFamily: '"Geometrica", sans-serif' }}
+                    >
+                      Course
+                    </span>
+                    <span
+                      className="text-[14px] font-semibold text-gray-800 dark:text-white leading-tight"
+                      style={{ fontFamily: '"Geometrica", sans-serif' }}
+                    >
+                      12 Hours
+                    </span>
+                  </div>
+                  <div className="flex flex-col gap-0">
+                    <span
+                      className="text-[11px] text-gray-500 dark:text-gray-400 font-normal leading-tight"
+                      style={{ fontFamily: '"Geometrica", sans-serif' }}
+                    >
+                      Complete
+                    </span>
+                    <span
+                      className="text-[14px] font-semibold text-gray-800 dark:text-white leading-tight"
+                      style={{ fontFamily: '"Geometrica", sans-serif' }}
+                    >
+                      20%
+                    </span>
+                  </div>
+                  <div className="flex flex-col gap-0">
+                    <span
+                      className="text-[11px] text-gray-500 dark:text-gray-400 font-normal leading-tight"
+                      style={{ fontFamily: '"Geometrica", sans-serif' }}
+                    >
+                      Duration
+                    </span>
+                    <span
+                      className="text-[14px] font-semibold text-gray-800 dark:text-white leading-tight"
+                      style={{ fontFamily: '"Geometrica", sans-serif' }}
+                    >
+                      2 Days
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3 mt-1.5">
+                  <div className="flex-1 bg-gray-200/50 dark:bg-gray-700/50 rounded-full h-2.5 overflow-hidden shadow-[inset_0_1.5px_4px_rgba(0,0,0,0.1)]">
+                    <div
+                      className="bg-linear-to-r from-blue-400 to-blue-600 h-full rounded-full transition-all duration-1000 shadow-[0_0_8px_rgba(59,130,246,0.2)]"
+                      style={{ width: `${designThinkingProgress}%` }}
+                    ></div>
+                  </div>
+                  <span
+                    className="text-[14px] font-medium text-gray-800 dark:text-gray-200 shrink-0 min-w-[36px] text-right"
+                    style={{ fontFamily: '"Geometrica", sans-serif' }}
+                  >
+                    <AnimatedNumber value={designThinkingProgress} />%
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* New Course Section */}
+        <div className="relative z-0 mb-8">
+          <div className="flex items-center justify-between mb-3 px-1">
+            <div className="flex items-center gap-2">
+              <Flame className="w-6 h-6 text-[#08060d] dark:text-white relative -top-[6px] fill-current" />
+              <h2
+                className="!text-[18px] font-medium !text-[#08060d] dark:!text-white leading-none"
+                style={{ fontFamily: '"Geometrica", sans-serif' }}
+              >
+                New Course
+              </h2>
+            </div>
+            <div className="relative -top-[3px]" ref={courseFilterRef}>
+              <button
+                onClick={() => setIsCourseFilterOpen(!isCourseFilterOpen)}
+                className={`
+                  group flex items-center justify-center gap-2 h-10 rounded-full border
+                  transition-all duration-300 active:scale-[0.96] cursor-pointer
+                  ${
+                    isCourseFilterOpen
+                      ? "bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl border-gray-200/50 dark:border-transparent shadow-xl translate-y-[-1px] text-gray-700 dark:text-gray-300 px-4"
+                      : "bg-transparent hover:bg-white dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white border-transparent hover:border-gray-200/60 dark:hover:border-transparent hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] w-10 md:w-auto md:px-4"
+                  }
+                `}
+              >
+                <span
+                  className="hidden md:inline text-[12px] font-normal"
+                  style={{ fontFamily: '"Geometrica", sans-serif' }}
+                >
+                  Filters
+                </span>
+                <Settings2
+                  className={`w-5 h-5 transition-transform duration-300 ${isCourseFilterOpen ? "scale-110 text-[#FC4C02]" : ""}`}
+                />
+              </button>
+
+              <div
+                className={`
+                  absolute top-full right-0 mt-2 w-44
+                  bg-white dark:bg-gray-800 rounded-xl p-1.5 z-50
+                  transition-all duration-300 origin-top-right shadow-[0_30px_60px_-12px_rgba(0,0,0,0.15)]
+                  ${
+                    isCourseFilterOpen
+                      ? "opacity-100 scale-100 translate-y-0"
+                      : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
+                  }
+                `}
+              >
+                <div className="flex flex-col gap-1">
+                  {[
+                    { id: "All Topics", label: "All Topics" },
+                    { id: "Frontend", label: "Frontend" },
+                    { id: "Backend", label: "Backend" },
+                    { id: "Database", label: "Database" },
+                  ].map((cat) => (
+                    <button
+                      key={cat.id}
+                      onClick={() => {
+                        setCourseFilter(cat.id);
+                        setIsCourseFilterOpen(false);
+                      }}
+                      className={`
+                        flex items-center gap-3 w-full px-3 py-1.5 rounded-lg text-[12px] font-normal
+                        transition-all duration-200 cursor-pointer
+                        ${
+                          courseFilter === cat.id
+                            ? "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
+                            : "text-gray-700 dark:text-gray-300 hover:bg-gray-100/60 dark:hover:bg-gray-700/60 hover:text-gray-900 dark:hover:text-white"
+                        }
+                      `}
+                      style={{ fontFamily: '"Geometrica", sans-serif' }}
+                    >
+                      <span className="flex-1 text-left">{cat.label}</span>
+                      {courseFilter === cat.id && (
+                        <Check className="w-4 h-4 text-orange-600" />
+                      )}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="relative group/coursecarousel -mb-12 -mt-2">
+            <div
+              className={`absolute left-0 top-[calc(50%-24px)] -translate-y-1/2 z-30 hidden md:flex items-center justify-center px-4 pointer-events-none transition-opacity duration-300 ${canCoursesScrollLeft ? "opacity-100" : "opacity-0"}`}
+            >
+              <button
+                className={`w-12 h-12 -ml-10 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-gray-700 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white pointer-events-auto border border-transparent hover:border-gray-200/60 hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none ${!canCoursesScrollLeft && "pointer-events-none"}`}
+                onClick={() => {
+                  if (coursesCarouselRef.current) {
+                    coursesCarouselRef.current.scrollBy({
+                      left: -480,
+                      behavior: "smooth",
+                    });
+                    setTimeout(handleCoursesScroll, 500);
+                  }
+                }}
+              >
+                <ChevronLeft className="w-6 h-6 stroke-[2.5]" />
+              </button>
+            </div>
+
+            <div
+              ref={coursesCarouselRef}
+              onScroll={handleCoursesScroll}
+              className="flex overflow-x-auto gap-3 pt-2 pb-12 snap-x snap-mandatory no-scrollbar px-1 overflow-y-visible"
+              style={{ scrollBehavior: "smooth" }}
+            >
+              {courses
+                .filter((c) => {
+                  if (courseFilter === "Frontend")
+                    return c.category === "FRONTEND";
+                  if (courseFilter === "Backend")
+                    return c.category === "BACKEND";
+                  if (courseFilter === "Database")
+                    return c.tags?.includes("Database");
+                  return true;
+                })
+                .map((c) => (
+                  <div
+                    key={c.id}
+                    onMouseEnter={() => setHoveredCourseId(c.id)}
+                    onMouseLeave={() => setHoveredCourseId(null)}
+                    className="shrink-0 w-[90vw] md:w-[580px] p-4 rounded-[24px] bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer group snap-start overflow-hidden"
+                    onClick={() => {
+                      setSelectedCourse(c);
+                      navigate("/my-idp-learning/course/" + c.id);
+                    }}
+                  >
+                    <div className="flex gap-6 text-left h-[133px]">
+                      {/* Course Image */}
+                      <div className="w-[180px] md:w-[237px] h-[133px] rounded-xl shrink-0 overflow-hidden relative bg-gray-100 dark:bg-gray-700 aspect-video">
+                        {hoveredCourseId === c.id ? (
+                          <div className="absolute inset-0 w-full h-full pointer-events-none">
+                            <iframe
+                              src={`${c.videoUrl}${c.videoUrl.includes("?") ? "&" : "?"}autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&loop=1&playlist=${c.videoUrl.split("/").pop()?.split("?")[0]}&iv_load_policy=3&showinfo=0&disablekb=1`}
+                              className="absolute inset-0 w-full h-full"
+                              title={c.title}
+                              allow="autoplay; encrypted-media"
+                            />
+                          </div>
+                        ) : (
+                          <img
+                            src={c.thumbnail}
+                            alt={c.title}
+                            className="w-full h-full object-cover"
+                          />
+                        )}
+                      </div>
+
+                      {/* Course Info */}
+                      <div className="flex-1 min-w-0 flex flex-col h-[133px]">
+                        <div className="h-[93px] flex flex-col items-start gap-1.5 overflow-hidden">
+                          <div className="flex items-center gap-2">
+                            <div className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-700/50 text-slate-800 dark:text-slate-200 text-[11px] font-semibold tracking-wide">
+                              <svg
+                                className="w-3.5 h-3.5"
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                              >
+                                <circle cx="8.5" cy="8.5" r="5.2" />
+                                <circle cx="15.5" cy="8.5" r="5.2" />
+                                <circle cx="8.5" cy="15.5" r="5.2" />
+                                <circle cx="15.5" cy="15.5" r="5.2" />
+                              </svg>
+                              Course
+                            </div>
+                            <div className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-700/50 text-slate-800 dark:text-slate-200 text-[11px] font-semibold tracking-wide">
+                              {c.category === "BACKEND" ? (
+                                <Terminal className="w-3.5 h-3.5" />
+                              ) : (
+                                <AppWindow className="w-3.5 h-3.5" />
+                              )}
+                              {c.category.charAt(0).toUpperCase() +
+                                c.category.slice(1).toLowerCase()}
+                            </div>
+                          </div>
+                          <h3
+                            className="text-[15px] font-semibold text-gray-800 dark:text-white leading-tight line-clamp-2"
+                            style={{ fontFamily: '"Geometrica", sans-serif' }}
+                          >
+                            {c.title.split("-")[0].trim()}
+                          </h3>
+                          <p
+                            className="text-[11px] font-normal text-gray-500 dark:text-gray-400 mt-1 leading-tight line-clamp-1"
+                            style={{ fontFamily: '"Geometrica", sans-serif' }}
+                          >
+                            {c.description}
+                          </p>
+                        </div>
+
+                        <div className="h-[40px] flex items-center justify-between mt-auto">
+                          <div className="flex items-center gap-1.5 text-gray-700 dark:text-gray-300">
+                            <Clock className="w-4 h-4 opacity-80 shrink-0" />
+                            <span
+                              className="text-[11px] font-normal leading-tight"
+                              style={{ fontFamily: '"Geometrica", sans-serif' }}
+                            >
+                              {c.duration}
+                            </span>
+                          </div>
+                          <button className="w-8 h-8 rounded-full bg-[#006bff] flex items-center justify-center active:scale-95 hover:bg-[#0056cc] group-hover:bg-[#0056cc] transition-all shrink-0 cursor-pointer shadow-sm">
+                            <ArrowRight className="w-4 h-4 text-white transition-transform duration-300 group-hover:translate-x-1" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+            </div>
+
+            <div
+              className={`absolute right-0 top-[calc(50%-24px)] -translate-y-1/2 z-30 hidden md:flex items-center justify-center px-4 pointer-events-none transition-opacity duration-300 ${canCoursesScrollRight ? "opacity-100" : "opacity-0"}`}
+            >
+              <button
+                className={`w-12 h-12 -mr-10 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-gray-700 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white pointer-events-auto border border-transparent hover:border-gray-200/60 hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none ${!canCoursesScrollRight && "pointer-events-none"}`}
+                onClick={() => {
+                  if (coursesCarouselRef.current) {
+                    coursesCarouselRef.current.scrollBy({
+                      left: 480,
+                      behavior: "smooth",
+                    });
+                    setTimeout(handleCoursesScroll, 500);
+                  }
+                }}
+              >
+                <ChevronRight className="w-6 h-6 stroke-[2.5]" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Short Learning Reels */}
+        <div className="mb-8 relative z-0">
+          <div className="flex items-center justify-between mb-3 px-1">
+            <div className="flex items-center gap-2">
+              <Clapperboard className="w-5 h-5 text-[#08060d] dark:text-white relative -top-[3px]" />
+              <h2
+                className="!text-[18px] font-medium !text-[#08060d] dark:!text-white leading-none"
+                style={{ fontFamily: '"Geometrica", sans-serif' }}
+              >
+                Reels
+              </h2>
+            </div>
+            <div className="relative -top-[3px]" ref={reelsFilterRef}>
+              <button
+                title="Filter Reels"
+                onClick={() => setIsReelsFilterOpen(!isReelsFilterOpen)}
+                className={`
+                  group flex items-center justify-center gap-2 h-10 rounded-full border
+                  transition-all duration-300 active:scale-[0.96] cursor-pointer
+                  ${
+                    isReelsFilterOpen
+                      ? "bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl border-gray-200/50 dark:border-transparent shadow-xl translate-y-[-1px] text-gray-700 dark:text-gray-300 px-4"
+                      : "bg-transparent hover:bg-white dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white border-transparent hover:border-gray-200/60 dark:hover:border-transparent hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] w-10 md:w-auto md:px-4"
+                  }
+                `}
+              >
+                <span
+                  className="hidden md:inline text-[12px] font-normal"
+                  style={{ fontFamily: '"Geometrica", sans-serif' }}
+                >
+                  Filters
+                </span>
+                <Settings2
+                  className={`w-5 h-5 transition-transform duration-300 ${
+                    isReelsFilterOpen ? "scale-110 text-[#FC4C02]" : ""
+                  }`}
+                />
+              </button>
+
+              <div
+                className={`
+                  absolute top-full right-0 mt-2 w-40 
+                  bg-white dark:bg-gray-800 rounded-xl p-1.5 z-50 
+                  transition-all duration-300 origin-top-right shadow-[0_30px_60px_-12px_rgba(0,0,0,0.15)]
+                  ${
+                    isReelsFilterOpen
+                      ? "opacity-100 scale-100 translate-y-0"
+                      : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
+                  }
+                `}
+              >
+                <div className="flex flex-col gap-1">
+                  {[
+                    { id: "ALL", label: "All Reels" },
+                    { id: "FRONTEND", label: "Frontend" },
+                    { id: "BACKEND", label: "Backend" },
+                  ].map((cat) => (
+                    <button
+                      key={cat.id}
+                      onClick={() => {
+                        setReelsFilter(cat.id);
+                        setIsReelsFilterOpen(false);
+                      }}
+                      className={`
+                        flex items-center gap-3 w-full px-3 py-1.5 rounded-lg text-[12px] font-normal 
+                        transition-all duration-200 cursor-pointer
+                        ${
+                          reelsFilter === cat.id
+                            ? "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
+                            : "text-gray-700 dark:text-gray-300 hover:bg-gray-100/60 dark:hover:bg-gray-700/60 hover:text-gray-900 dark:hover:text-white"
+                        }
+                      `}
+                      style={{ fontFamily: '"Geometrica", sans-serif' }}
+                    >
+                      <span className="flex-1 text-left">{cat.label}</span>
+                      {reelsFilter === cat.id && (
+                        <Check className="w-4 h-4 text-orange-600" />
+                      )}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="relative group/carousel -mb-12 -mt-2">
+            <div
+              className={`absolute left-0 top-[calc(50%-24px)] -translate-y-1/2 z-30 hidden md:flex items-center justify-center px-4 pointer-events-none transition-opacity duration-300 ${canScrollLeft ? "opacity-100" : "opacity-0"}`}
+            >
+              <button
+                className={`w-12 h-12 -ml-10 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-gray-700 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white pointer-events-auto border border-transparent hover:border-gray-200/60 hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none ${!canScrollLeft && "pointer-events-none"}`}
+                onClick={() => {
+                  if (reelsCarouselRef.current) {
+                    reelsCarouselRef.current.scrollBy({
+                      left: -240,
+                      behavior: "smooth",
+                    });
+
+                    setTimeout(handleReelsScroll, 500);
+                  }
+                }}
+              >
+                <ChevronLeft className="w-6 h-6 stroke-[2.5]" />
+              </button>
+            </div>
+
+            <div
+              ref={reelsCarouselRef}
+              onScroll={handleReelsScroll}
+              className="flex overflow-x-auto gap-3 pt-2 pb-12 snap-x snap-mandatory no-scrollbar px-1 overflow-y-visible"
+              style={{ scrollBehavior: "smooth" }}
+            >
+              {filteredReels.map((reel) => {
+                return (
+                  <div
+                    key={reel.id}
+                    className="relative shrink-0 w-[180px] sm:w-[200px] md:w-[220px] aspect-[9/16] cursor-pointer shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] hover:ring-1 hover:ring-white/40 dark:hover:ring-white/10 hover:translate-y-[-2px] transition-all duration-300 snap-start group rounded-2xl"
+                    onMouseEnter={() => setHoveredReelId(reel.id)}
+                    onMouseLeave={() => setHoveredReelId(null)}
+                    onClick={() => {
+                      setSelectedReel(reel);
+                      setActiveReelId(reel.id);
+                    }}
+                  >
+                    <div className="absolute inset-0 z-0 overflow-hidden rounded-2xl bg-gray-200 dark:bg-gray-800">
+                      {hoveredReelId === reel.id ? (
+                        <div className="absolute inset-0 w-full h-full pointer-events-none">
+                          <iframe
+                            src={`${reel.videoUrl}${reel.videoUrl.includes("?") ? "&" : "?"}autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&loop=1&playlist=${reel.videoUrl.split("/").pop()?.split("?")[0]}&iv_load_policy=3&showinfo=0&disablekb=1`}
+                            className="absolute inset-0 w-full h-full"
+                            title={reel.title}
+                            allow="autoplay; encrypted-media"
+                          />
+                        </div>
+                      ) : (
+                        <img
+                          src={reel.thumbnail}
+                          alt={reel.title}
+                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-500"
+                        />
+                      )}
+
+                      <div className="absolute top-3 right-2 z-20">
+                        <button
+                          className="text-white drop-shadow-md hover:bg-white/20 p-1.5 rounded-full backdrop-blur-xs transition-all duration-300 active:scale-[0.96] cursor-pointer"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                          }}
+                        >
+                          <MoreVertical className="w-5 h-5" />
+                        </button>
+                      </div>
+
+                      <div className="absolute inset-x-0 bottom-0 h-[45%] bg-gradient-to-t from-black/90 via-black/30 to-transparent z-10 pointer-events-none" />
+
+                      <div className="absolute inset-x-0 bottom-0 p-4 z-20 flex flex-col justify-end text-left">
+                        <div className="flex items-center gap-1.5 mb-1.5">
+                          <div className="bg-black/30 backdrop-blur-md text-white text-[11px] font-semibold tracking-wide px-2 py-0.5 rounded-full shadow-lg flex items-center gap-1">
+                            {reel.category === "BACKEND" ? (
+                              <Terminal className="w-3 h-3" />
+                            ) : (
+                              <AppWindow className="w-3 h-3" />
+                            )}
+                            {reel.category.charAt(0).toUpperCase() +
+                              reel.category.slice(1).toLowerCase()}
+                          </div>
+                        </div>
+                        <h3
+                          className="text-[14px] font-medium text-white leading-tight mb-2 line-clamp-2"
+                          style={{ fontFamily: '"Geometrica", sans-serif' }}
+                        >
+                          {reel.title}
+                        </h3>
+
+                        <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-1 text-[11px] font-normal text-white/90">
+                            <Play className="w-3 h-3 fill-white/90" />
+                            {reel.views}
+                          </div>
+                          <span className="text-white/50 text-[10px]">•</span>
+                          <span className="text-[11px] font-normal text-white/90">
+                            {reel.duration}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div
+              className={`absolute right-0 top-[calc(50%-24px)] -translate-y-1/2 z-30 hidden md:flex items-center justify-center px-4 pointer-events-none transition-opacity duration-300 ${canScrollRight ? "opacity-100" : "opacity-0"}`}
+            >
+              <button
+                className={`w-12 h-12 -mr-10 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-gray-700 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white pointer-events-auto border border-transparent hover:border-gray-200/60 hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none ${!canScrollRight && "pointer-events-none"}`}
+                onClick={() => {
+                  if (reelsCarouselRef.current) {
+                    reelsCarouselRef.current.scrollBy({
+                      left: 240,
+                      behavior: "smooth",
+                    });
+                    setTimeout(handleReelsScroll, 500);
+                  }
+                }}
+              >
+                <ChevronRight className="w-6 h-6 stroke-[2.5]" />
+              </button>
+            </div>
+          </div>
+        </div>
 
         {/* Short Learning Reel Modal */}
         {selectedReel && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto">
+          <div
+            className="fixed inset-0 z-[100] bg-white dark:bg-[#0f0f0f]"
+            onWheel={handleWheel}
+            onClick={() => {
+              setSelectedReel(null);
+              setActiveReelId(null);
+            }}
+          >
+            <button
+              className="fixed top-2 left-2 z-[110] w-12 h-12 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-gray-700 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white border border-transparent hover:border-gray-200/60 hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none"
+              onClick={() => {
+                setSelectedReel(null);
+                setActiveReelId(null);
+              }}
+            >
+              <X className="w-6 h-6 stroke-[2.5]" />
+            </button>
+
+            {/* Navigation Arrows */}
             <div
-              className="absolute inset-0 bg-black/50"
-              onClick={() => setSelectedReel(null)}
-            />
-            <div className="relative z-10 w-full max-w-2xl bg-white dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden my-8">
-              {/* Close Button */}
-              <Button
-                variant="ghost"
-                onClick={() => setSelectedReel(null)}
-                className="absolute top-4 right-4 z-20"
+              className="fixed right-8 top-1/2 -translate-y-1/2 hidden md:flex flex-col gap-4 z-[110]"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={handleScrollToPrev}
+                className={`w-12 h-12 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-gray-700 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white border border-transparent hover:border-gray-200/60 hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none ${
+                  activeReelId &&
+                  shortLearningReels.findIndex((r) => r.id === activeReelId) > 0
+                    ? "opacity-100 scale-100"
+                    : "opacity-0 scale-90 pointer-events-none"
+                }`}
               >
-                ✕
-              </Button>
+                <ChevronUp className="w-7 h-7 stroke-[2.5]" />
+              </button>
+              <button
+                onClick={handleScrollToNext}
+                className={`w-12 h-12 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-gray-700 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white border border-transparent hover:border-gray-200/60 hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none ${
+                  activeReelId &&
+                  shortLearningReels.findIndex((r) => r.id === activeReelId) <
+                    shortLearningReels.length - 1
+                    ? "opacity-100 scale-100"
+                    : "opacity-0 scale-90 pointer-events-none"
+                }`}
+              >
+                <ChevronDown className="w-7 h-7 stroke-[2.5]" />
+              </button>
+            </div>
 
-              <div className="p-6 space-y-4">
-                {/* Video */}
-                <div>
-                  {selectedReel.videoUrl.includes("youtube") ||
-                  selectedReel.videoUrl.includes("youtu.be") ? (
-                    <div className="aspect-video w-full rounded-lg overflow-hidden bg-gray-800">
-                      <iframe
-                        className="w-full h-full"
-                        src={selectedReel.videoUrl}
-                        title={selectedReel.title}
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                      />
-                    </div>
-                  ) : (
-                    <video className="w-full rounded-lg" controls>
-                      <source src={selectedReel.videoUrl} />
-                      Your browser does not support the video tag.
-                    </video>
-                  )}
-                </div>
+            {/* Scroll Feed Container */}
+            <div
+              ref={scrollContainerRef}
+              className="h-full w-full overflow-y-auto snap-y snap-mandatory no-scrollbar"
+            >
+              {shortLearningReels.map((reel) => {
+                const isActive = activeReelId === reel.id;
+                const isLandscape = reel.aspectRatio === "16:9";
 
-                {/* Title and Info */}
-                <div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="inline-block bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 text-xs px-3 py-1 rounded-full font-medium">
-                      {selectedReel.category}
-                    </span>
-                    <span className="text-xs text-gray-500 dark:text-gray-400">
-                      • {selectedReel.duration}
-                    </span>
-                    <span className="text-xs text-gray-500 dark:text-gray-400">
-                      • {selectedReel.views} views
-                    </span>
-                  </div>
-                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                    {selectedReel.title}
-                  </h2>
-                  <p className="text-gray-700 dark:text-gray-300">
-                    {selectedReel.description}
-                  </p>
-                </div>
-
-                {/* Action Buttons */}
-                <div className="flex gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
-                  <Button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white">
-                    Add to Watchlist
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => setSelectedReel(null)}
+                return (
+                  <div
+                    key={reel.id}
+                    data-reel-id={reel.id}
+                    ref={(el) => {
+                      if (el) reelRefs.current[reel.id] = el;
+                    }}
+                    className="snap-start snap-always shrink-0 w-full h-[100vh] flex items-center justify-center"
                   >
-                    Close
-                  </Button>
-                </div>
-              </div>
+                    <div
+                      className={`relative flex ${isLandscape ? "flex-col items-center justify-center" : "items-center justify-center"} gap-6 h-[85vh] w-full ${isLandscape ? "max-w-4xl" : "max-w-6xl"} px-4`}
+                    >
+                      {/* Center Column - Video Player */}
+                      <div
+                        className={`relative ${isLandscape ? "w-full max-w-[750px]" : "h-full"} flex flex-col items-center justify-center`}
+                      >
+                        <div
+                          className={`relative ${isLandscape ? "w-full aspect-video" : "h-full aspect-[9/16]"} rounded-xl overflow-hidden shadow-2xl shadow-black/20 group isolation-isolate transform translate-z-0`}
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          {/* Video */}
+                          {isActive ? (
+                            reel.videoUrl.includes("youtube") ||
+                            reel.videoUrl.includes("youtu.be") ? (
+                              <div className="absolute inset-0 w-full h-full">
+                                <iframe
+                                  id={`iframe-${reel.id}`}
+                                  className="absolute inset-0 w-full h-full transition-opacity duration-500"
+                                  src={`${reel.videoUrl}?autoplay=1&controls=1&rel=0&showinfo=0&modestbranding=1&enablejsapi=1&origin=${window.location.origin}`}
+                                  title={reel.title}
+                                  frameBorder="0"
+                                  style={{ border: "none" }}
+                                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                  allowFullScreen
+                                />
+                                <div className="absolute inset-y-0 left-0 w-8 z-10 border-none" />
+                                <div className="absolute inset-y-0 right-0 w-8 z-10 border-none" />
+                                <div className="absolute inset-x-0 top-0 h-8 z-10 border-none" />
+                              </div>
+                            ) : (
+                              <video
+                                className="absolute inset-0 w-full h-full object-cover"
+                                autoPlay
+                                loop
+                                muted
+                                playsInline
+                                controls
+                              >
+                                <source src={reel.videoUrl} />
+                                Your browser does not support the video tag.
+                              </video>
+                            )
+                          ) : (
+                            <img
+                              src={reel.thumbnail}
+                              alt={reel.title}
+                              className="absolute inset-0 w-full h-full object-cover opacity-80"
+                            />
+                          )}
+                        </div>
+
+                        {/* Reel Info */}
+                        {isActive && (
+                          <div
+                            className="fixed bottom-4 left-4 z-[110] text-left space-y-1.5 max-w-sm"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <a
+                              href={reel.authorUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-2 group/author"
+                            >
+                              <div className="w-9 h-9 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center text-[#08060d] dark:text-white shrink-0 border border-transparent group-hover/author:border-gray-200/60 group-hover/author:bg-white dark:group-hover/author:bg-gray-700 group-hover/author:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] transition-all duration-500 ease-in-out">
+                                {reel.icon && (
+                                  <reel.icon className="w-4.5 h-4.5 stroke-[2.5]" />
+                                )}
+                              </div>
+                              <div className="flex flex-col items-start gap-0 relative group/author-text overflow-hidden">
+                                <span
+                                  className="text-sm font-semibold text-gray-800 dark:text-gray-200 transition-colors duration-300 truncate relative z-10"
+                                  style={
+                                    {
+                                      "--hover-color": [
+                                        "#006bff",
+                                        "#fc4c02",
+                                        "#ffa400",
+                                      ][
+                                        parseInt(reel.id.replace("reel-", "")) %
+                                          3
+                                      ],
+                                    } as React.CSSProperties
+                                  }
+                                >
+                                  <span className="group-hover/author:text-[var(--hover-color)] transition-colors duration-300">
+                                    {reel.author}
+                                  </span>
+                                </span>
+
+                                <div
+                                  className="absolute bottom-0 left-0 w-0 h-[2.5px] transition-all duration-300 group-hover/author:w-full rounded-full"
+                                  style={
+                                    {
+                                      backgroundColor: [
+                                        "#006bff",
+                                        "#fc4c02",
+                                        "#ffa400",
+                                      ][
+                                        parseInt(reel.id.replace("reel-", "")) %
+                                          3
+                                      ],
+                                    } as React.CSSProperties
+                                  }
+                                ></div>
+                              </div>
+                            </a>
+                            <div className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400">
+                              <Play className="w-3 h-3 fill-current shrink-0" />
+                              <span className="truncate">
+                                {reel.description}
+                              </span>
+                            </div>
+                            <h3 className="text-sm font-bold text-gray-900 dark:text-white leading-snug line-clamp-2">
+                              {reel.title}
+                            </h3>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         )}

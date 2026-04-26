@@ -62,6 +62,49 @@ const radarChartConfig = {
   },
 } satisfies ChartConfig;
 
+const AnimatedNumber = ({
+  value,
+  decimals = 0,
+  prefix = "",
+  suffix = "",
+}: {
+  value: number;
+  decimals?: number;
+  prefix?: string;
+  suffix?: string;
+}) => {
+  const [displayValue, setDisplayValue] = useState(0);
+
+  useEffect(() => {
+    const start = displayValue;
+    const end = value;
+    if (start === end) return;
+
+    const duration = 1000;
+    const startTime = performance.now();
+
+    const animate = (now: number) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const easedProgress = progress * (2 - progress);
+      const current = start + (end - start) * easedProgress;
+      setDisplayValue(current);
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
+    };
+    requestAnimationFrame(animate);
+  }, [value]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  return (
+    <>
+      {prefix}
+      {displayValue.toFixed(decimals)}
+      {suffix}
+    </>
+  );
+};
+
 import efficientLearnerIcon from "../assets/Award.png";
 import keepUpIcon from "../assets/Flame.png";
 import BookOpenPng from "../assets/BookOpen.png";
@@ -75,25 +118,44 @@ const generateMockContributions = (): ContributionData[] => {
   const endDate = new Date(year, 11, 31);
   const current = new Date(startDate);
 
+  const logoPattern = [
+    "                                                   ",
+    "  ###     #       #   #####    ####   #     #  ",
+    "    #     ##     ##  #     #  #    #  #     #  ",
+    "    #     # #   # #  #     #  #####   #     #  ",
+    "    #     #  # #  #  #     #  #    #   #### #  ",
+    "          #   #   #  #     #  #    #        #  ",
+    " #######  #       #   #####    ####   ######   ",
+  ];
+
+  const startWeek = 1;
+  const firstSunday = new Date(startDate);
+  firstSunday.setDate(startDate.getDate() - startDate.getDay());
+
   while (current <= endDate) {
-    const dayOfWeek = current.getDay();
-    // Higher activity on weekdays
-    const isWeekday = dayOfWeek > 0 && dayOfWeek < 6;
-    const baseChance = isWeekday ? 0.7 : 0.3;
-    const hasActivity = Math.random() < baseChance;
+    const diffTime = current.getTime() - firstSunday.getTime();
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    const weekNum = Math.floor(diffDays / 7);
+    const dayOfWeek = diffDays % 7;
 
-    if (hasActivity) {
-      const count = Math.floor(Math.random() * 12) + 1;
-      let level = 0;
-      if (count >= 9) level = 4;
-      else if (count >= 6) level = 3;
-      else if (count >= 3) level = 2;
-      else level = 1;
+    const logoWeek = weekNum - startWeek;
+    const isLogoPixel =
+      logoWeek >= 0 &&
+      logoWeek < logoPattern[0].length &&
+      logoPattern[dayOfWeek][logoWeek] === "#";
 
+    if (isLogoPixel) {
       data.push({
         date: current.toISOString().split("T")[0],
-        count,
-        level,
+        count: 15,
+        level: 4,
+      });
+    } else {
+      const hasBackground = Math.random() < 0.6;
+      data.push({
+        date: current.toISOString().split("T")[0],
+        count: hasBackground ? 1 : 0,
+        level: hasBackground ? 1 : 0,
       });
     }
 
@@ -109,6 +171,14 @@ function DashboardContent({ username }: { username: string }) {
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("Core");
   const categoryRef = useRef<HTMLDivElement>(null);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsMounted(true);
+    }, 50);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Random Selection Color
   useEffect(() => {
@@ -239,7 +309,26 @@ function DashboardContent({ username }: { username: string }) {
                   className="text-[24px] font-bold text-gray-700 dark:text-white leading-none text-left"
                   style={{ fontFamily: '"Geometrica", sans-serif' }}
                 >
-                  {item.value}
+                  {item.label === "Competency Score" ? (
+                    <>
+                      <AnimatedNumber
+                        value={isMounted ? parseFloat(item.value) : 0}
+                        decimals={1}
+                      />
+                      <span className="text-gray-400 font-medium ml-1.5 text-[18px]">
+                        / 5.0
+                      </span>
+                    </>
+                  ) : item.label === "Learning Hours" ? (
+                    <AnimatedNumber
+                      value={isMounted ? parseFloat(item.value) : 0}
+                      decimals={1}
+                    />
+                  ) : (
+                    <AnimatedNumber
+                      value={isMounted ? parseInt(item.value) : 0}
+                    />
+                  )}
                 </h3>
               </div>
 
@@ -353,7 +442,9 @@ function DashboardContent({ username }: { username: string }) {
                 >
                   <ChartTooltip
                     cursor={false}
-                    content={<ChartTooltipContent className="border-none" />}
+                    content={
+                      <ChartTooltipContent className="border-none ring-0" />
+                    }
                   />
                   <PolarAngleAxis
                     dataKey="subject"
@@ -398,7 +489,11 @@ function DashboardContent({ username }: { username: string }) {
                     </span>
                     <div className="flex items-center gap-1 text-emerald-500 font-bold text-[11px]">
                       <TrendingUp className="w-3 h-3" />
-                      +6%
+                      <AnimatedNumber
+                        value={isMounted ? 6 : 0}
+                        prefix="+"
+                        suffix="%"
+                      />
                     </div>
                   </div>
                   <div className="flex items-end gap-1.5">
@@ -406,7 +501,10 @@ function DashboardContent({ username }: { username: string }) {
                       className="text-[24px] font-bold text-gray-700 dark:text-white leading-none tracking-tight"
                       style={{ fontFamily: '"Geometrica", sans-serif' }}
                     >
-                      3.2
+                      <AnimatedNumber
+                        value={isMounted ? 3.2 : 0}
+                        decimals={1}
+                      />
                     </span>
                     <span className="text-[14px] font-bold text-gray-400 dark:text-gray-600 mb-0.5">
                       / 5.0
@@ -570,7 +668,7 @@ function DashboardContent({ username }: { username: string }) {
                   className="text-2xl font-semibold text-[#2ecc71] absolute right-2.5 top-1/2 -translate-y-1/2"
                   style={{ fontFamily: '"Geometrica", sans-serif' }}
                 >
-                  +20
+                  <AnimatedNumber value={isMounted ? 20 : 0} prefix="+" />
                 </span>
               </div>
 
@@ -745,14 +843,15 @@ function DashboardContent({ username }: { username: string }) {
                     <div className="flex-1 bg-gray-200/50 dark:bg-gray-700/50 rounded-full h-3 overflow-hidden shadow-[inset_0_1.5px_4px_rgba(0,0,0,0.1)]">
                       <div
                         className="bg-linear-to-r from-blue-400 to-blue-600 h-full rounded-full transition-all duration-1000 shadow-[0_0_8px_rgba(59,130,246,0.2)]"
-                        style={{ width: `${course.progress}%` }}
+                        style={{ width: `${isMounted ? course.progress : 0}%` }}
                       ></div>
                     </div>
                     <span
                       className="text-[14px] font-medium text-gray-800 dark:text-gray-200 shrink-0 min-w-[36px] text-right"
                       style={{ fontFamily: '"Geometrica", sans-serif' }}
                     >
-                      {course.progress}%
+                      <AnimatedNumber value={isMounted ? course.progress : 0} />
+                      %
                     </span>
                   </div>
                 </div>
@@ -828,8 +927,8 @@ function DashboardContent({ username }: { username: string }) {
 
                   {/* Bottom Row: Duration & Action Button */}
                   <div className="flex items-center justify-between w-full mt-auto">
-                    <div className="flex items-start gap-1.5 text-gray-700 dark:text-gray-300">
-                      <Clock className="w-5 h-5 opacity-80 shrink-0 mt-0.5" />
+                    <div className="flex items-center gap-1.5 text-gray-700 dark:text-gray-300">
+                      <Clock className="w-[19px] h-[19px] opacity-80 shrink-0" />
                       <div className="flex flex-col">
                         <span
                           className="text-[12px] font-normal leading-[1.2]"
@@ -895,14 +994,15 @@ function DashboardContent({ username }: { username: string }) {
               <div className="flex-1 bg-gray-200/50 dark:bg-gray-700/50 shadow-[inset_0_1.5px_4px_rgba(0,0,0,0.1)] rounded-full h-3 overflow-hidden">
                 <div
                   className="bg-linear-to-r from-orange-400 via-yellow-400 to-orange-500 h-full rounded-full transition-all duration-1000 shadow-[0_0_10px_rgba(251,146,60,0.3)]"
-                  style={{ width: "60%" }}
+                  style={{ width: `${isMounted ? 60 : 0}%` }}
                 ></div>
               </div>
               <span
                 className="text-[11px] font-normal text-gray-900 dark:text-white shrink-0"
                 style={{ fontFamily: '"Geometrica", sans-serif' }}
               >
-                60/100
+                <AnimatedNumber value={isMounted ? 60 : 0} />
+                /100
               </span>
             </div>
           </div>
@@ -1032,26 +1132,28 @@ function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
                       </BreadcrumbPage>
                     </BreadcrumbItem>
                   )}
-                  {location.pathname === '/help/history' && (
+                  {location.pathname === "/help/history" && (
                     <>
                       <BreadcrumbItem>
-                        <BreadcrumbLink 
-                          onClick={() => navigate('/help')}
+                        <BreadcrumbLink
+                          onClick={() => navigate("/help")}
                           className="cursor-pointer"
-                          style={{ fontFamily: 'Geometrica, sans-serif' }}
+                          style={{ fontFamily: "Geometrica, sans-serif" }}
                         >
                           Help
                         </BreadcrumbLink>
                       </BreadcrumbItem>
                       <BreadcrumbSeparator />
                       <BreadcrumbItem>
-                        <BreadcrumbPage style={{ fontFamily: 'Geometrica, sans-serif' }}>
+                        <BreadcrumbPage
+                          style={{ fontFamily: "Geometrica, sans-serif" }}
+                        >
                           History
                         </BreadcrumbPage>
                       </BreadcrumbItem>
                     </>
                   )}
-                  {location.pathname === '/my-idp-learning' && (
+                  {location.pathname === "/my-idp-learning" && (
                     <BreadcrumbItem>
                       <BreadcrumbPage
                         style={{ fontFamily: "Geometrica, sans-serif" }}
@@ -1059,6 +1161,27 @@ function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
                         My IDP & Learning
                       </BreadcrumbPage>
                     </BreadcrumbItem>
+                  )}
+                  {location.pathname.startsWith("/my-idp-learning/course/") && (
+                    <>
+                      <BreadcrumbItem>
+                        <BreadcrumbLink
+                          onClick={() => navigate("/my-idp-learning")}
+                          className="cursor-pointer"
+                          style={{ fontFamily: "Geometrica, sans-serif" }}
+                        >
+                          My IDP & Learning
+                        </BreadcrumbLink>
+                      </BreadcrumbItem>
+                      <BreadcrumbSeparator />
+                      <BreadcrumbItem>
+                        <BreadcrumbPage
+                          style={{ fontFamily: "Geometrica, sans-serif" }}
+                        >
+                          Course Details
+                        </BreadcrumbPage>
+                      </BreadcrumbItem>
+                    </>
                   )}
                 </BreadcrumbList>
               </Breadcrumb>
@@ -1084,15 +1207,12 @@ function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
             <div className="pt-16">
               <Routes>
                 <Route
-                  path="/my-idp-learning"
+                  path="/my-idp-learning/*"
                   element={<MyIDPLearningPage />}
                 />
                 <Route path="/settings" element={<SettingPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
-                <Route
-                  path="/help/*"
-                  element={<HelpPage username={username} role="employee" />}
-                />
+                <Route path="/help/*" element={<HelpPage />} />
                 <Route
                   path="/dashboard"
                   element={<DashboardContent username={username} />}

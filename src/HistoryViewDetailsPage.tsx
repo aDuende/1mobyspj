@@ -28,7 +28,10 @@ interface TimelineEvent {
   status: "completed" | "in-progress";
 }
 
-function HistoryViewDetailsPage({ complaint, onBack }: HistoryViewDetailsPageProps) {
+function HistoryViewDetailsPage({
+  complaint,
+  onBack,
+}: HistoryViewDetailsPageProps) {
   const getStatusColor = (status: Complaint["status"]) => {
     switch (status) {
       case "Pending":
@@ -52,34 +55,36 @@ function HistoryViewDetailsPage({ complaint, onBack }: HistoryViewDetailsPagePro
   const timelineEvents: TimelineEvent[] = [
     {
       title: "Complaint resolved",
-      description: "Module access restored. Permissions misconfiguration corrected by Admin following v3.2 rollback patch.",
+      description:
+        "Module access restored. Permissions misconfiguration corrected by Admin following v3.2 rollback patch.",
       timestamp: "17 Apr 2024 - 14:32",
-      status: "completed"
+      status: "completed",
     },
     {
       title: "Under investigation",
-      description: "Assigned to Admin. Root cause identified as a role-permission migration error during the v3.2 deployment.",
+      description:
+        "Assigned to Admin. Root cause identified as a role-permission migration error during the v3.2 deployment.",
       timestamp: "16 Apr 2024 - 09:10",
-      status: "in-progress"
+      status: "in-progress",
     },
     {
       title: "Complaint acknowledged",
       description: "Received and logged by the helpdesk team.",
       timestamp: "15 Apr 2024 - 08:45",
-      status: "in-progress"
+      status: "in-progress",
     },
     {
       title: "Complaint submitted",
       description: "Submitted via LMS Help portal with 2 attachments.",
       timestamp: "15 Apr 2024 - 07:00",
-      status: "in-progress"
-    }
+      status: "in-progress",
+    },
   ];
 
   // Mock attachments
   const mockAttachments = [
     { name: "error-screenshot.png", size: "248 KB", type: "png" },
-    { name: "browser-console-log.txt", size: "12 KB", type: "txt" }
+    { name: "browser-console-log.txt", size: "12 KB", type: "txt" },
   ];
 
   return (
@@ -107,9 +112,7 @@ function HistoryViewDetailsPage({ complaint, onBack }: HistoryViewDetailsPagePro
         </button>
 
         {/* Complaint ID */}
-        <p className="text-gray-500 text-sm mb-3">
-          #{complaint.id}
-        </p>
+        <p className="text-gray-500 text-sm mb-3">#{complaint.id}</p>
 
         {/* Title and Badges */}
         <div className="mb-6">
@@ -120,7 +123,9 @@ function HistoryViewDetailsPage({ complaint, onBack }: HistoryViewDetailsPagePro
             <span className="px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-700 border border-gray-300">
               {complaint.category || "Technical"}
             </span>
-            <span className={`px-3 py-1 rounded-full text-sm font-semibold ${getStatusColor(complaint.status)}`}>
+            <span
+              className={`px-3 py-1 rounded-full text-sm font-semibold ${getStatusColor(complaint.status)}`}
+            >
               {complaint.status}
             </span>
           </div>
@@ -129,32 +134,39 @@ function HistoryViewDetailsPage({ complaint, onBack }: HistoryViewDetailsPagePro
         {/* Information Grid */}
         <div className="grid grid-cols-4 gap-6 mb-8 pb-8 border-b border-gray-200">
           <div>
-            <p className="text-xs text-gray-500 uppercase tracking-wide mb-2 text-left">SUBMITTED</p>
+            <p className="text-xs text-gray-500 uppercase tracking-wide mb-2 text-left">
+              SUBMITTED
+            </p>
             <p className="text-gray-900 font-medium text-left">
               {new Date(complaint.date).toLocaleDateString("en-GB", {
                 day: "numeric",
                 month: "short",
-                year: "numeric"
+                year: "numeric",
               })}
             </p>
             <p className="text-sm text-gray-600 text-left">
               {new Date(complaint.date).toLocaleTimeString("en-GB", {
                 hour: "2-digit",
                 minute: "2-digit",
-                hour12: false
-              })} {new Date(complaint.date).toLocaleTimeString("en-GB", {
-                hour12: true
-              }).slice(-2)}
+                hour12: false,
+              })}{" "}
+              {new Date(complaint.date)
+                .toLocaleTimeString("en-GB", {
+                  hour12: true,
+                })
+                .slice(-2)}
             </p>
           </div>
           <div>
-            <p className="text-xs text-gray-500 uppercase tracking-wide mb-2 text-left">RESOLVED</p>
+            <p className="text-xs text-gray-500 uppercase tracking-wide mb-2 text-left">
+              RESOLVED
+            </p>
             <p className="text-gray-900 font-medium text-left">
               {complaint.resolvedDate
                 ? new Date(complaint.resolvedDate).toLocaleDateString("en-GB", {
                     day: "numeric",
                     month: "short",
-                    year: "numeric"
+                    year: "numeric",
                   })
                 : "17 Apr 2024"}
             </p>
@@ -162,34 +174,36 @@ function HistoryViewDetailsPage({ complaint, onBack }: HistoryViewDetailsPagePro
               {complaint.resolvedDate
                 ? new Date(complaint.resolvedDate).toLocaleTimeString("en-GB", {
                     hour: "2-digit",
-                    minute: "2-digit"
+                    minute: "2-digit",
                   }) + " PM"
                 : "14:32 PM"}
             </p>
           </div>
           <div>
-            <p className="text-xs text-gray-500 uppercase tracking-wide mb-2 text-left">RESPONSE TIME</p>
+            <p className="text-xs text-gray-500 uppercase tracking-wide mb-2 text-left">
+              RESPONSE TIME
+            </p>
             <p className="text-gray-900 font-medium text-left">
               {complaint.responseTime || "2 days"}
             </p>
-            <p className="text-sm text-gray-500 text-left">
-              Within SLA
-            </p>
+            <p className="text-sm text-gray-500 text-left">Within SLA</p>
           </div>
           <div>
-            <p className="text-xs text-gray-500 uppercase tracking-wide mb-2 text-left">HANDLED BY</p>
+            <p className="text-xs text-gray-500 uppercase tracking-wide mb-2 text-left">
+              HANDLED BY
+            </p>
             <p className="text-gray-900 font-medium text-left">
               {complaint.respondedBy || "Admin"}
             </p>
-            <p className="text-sm text-gray-600 text-left">
-              Team
-            </p>
+            <p className="text-sm text-gray-600 text-left">Team</p>
           </div>
         </div>
 
         {/* Description */}
         <div className="mb-8 pb-8 border-b border-gray-200">
-          <h2 className="text-xs text-gray-500 uppercase tracking-wide mb-4 text-left">DESCRIPTION</h2>
+          <h2 className="text-xs text-gray-500 uppercase tracking-wide mb-4 text-left">
+            DESCRIPTION
+          </h2>
           <p className="text-gray-700 leading-relaxed text-left">
             {complaint.details}
           </p>
@@ -197,7 +211,9 @@ function HistoryViewDetailsPage({ complaint, onBack }: HistoryViewDetailsPagePro
 
         {/* Attachments */}
         <div className="mb-8 pb-8 border-b border-gray-200">
-          <h2 className="text-xs text-gray-500 uppercase tracking-wide mb-4 text-left">ATTACHMENTS</h2>
+          <h2 className="text-xs text-gray-500 uppercase tracking-wide mb-4 text-left">
+            ATTACHMENTS
+          </h2>
           <div className="space-y-3">
             {mockAttachments.map((file, index) => (
               <div
@@ -205,13 +221,19 @@ function HistoryViewDetailsPage({ complaint, onBack }: HistoryViewDetailsPagePro
                 className="flex items-center justify-between bg-gray-50 rounded-lg p-4 hover:bg-gray-100 transition-colors border border-gray-200"
               >
                 <div className="flex items-center gap-3">
-                  <div className={`w-10 h-10 rounded flex items-center justify-center text-xs font-bold ${
-                    file.type === 'png' ? 'bg-blue-500 text-white' : 'bg-gray-600 text-white'
-                  }`}>
+                  <div
+                    className={`w-10 h-10 rounded flex items-center justify-center text-xs font-bold ${
+                      file.type === "png"
+                        ? "bg-blue-500 text-white"
+                        : "bg-gray-600 text-white"
+                    }`}
+                  >
                     {file.type.toUpperCase()}
                   </div>
                   <div>
-                    <p className="text-gray-900 font-medium text-sm">{file.name}</p>
+                    <p className="text-gray-900 font-medium text-sm">
+                      {file.name}
+                    </p>
                     <p className="text-gray-500 text-xs">{file.size}</p>
                   </div>
                 </div>
@@ -237,12 +259,16 @@ function HistoryViewDetailsPage({ complaint, onBack }: HistoryViewDetailsPagePro
 
         {/* Activity Timeline */}
         <div>
-          <h2 className="text-xs text-gray-500 uppercase tracking-wide mb-6 text-left">ACTIVITY TIMELINE</h2>
+          <h2 className="text-xs text-gray-500 uppercase tracking-wide mb-6 text-left">
+            ACTIVITY TIMELINE
+          </h2>
           <div className="space-y-6">
             {timelineEvents.map((event, index) => (
               <div key={index} className="flex gap-4">
                 <div className="flex flex-col items-center">
-                  <div className={`w-2 h-2 rounded-full ${getTimelineDotColor(event.status)}`}></div>
+                  <div
+                    className={`w-2 h-2 rounded-full ${getTimelineDotColor(event.status)}`}
+                  ></div>
                   {index < timelineEvents.length - 1 && (
                     <div className="w-0.5 h-full bg-gray-300 mt-2"></div>
                   )}
@@ -254,9 +280,7 @@ function HistoryViewDetailsPage({ complaint, onBack }: HistoryViewDetailsPagePro
                   <p className="text-sm text-gray-600 mb-2 text-left">
                     {event.description}
                   </p>
-                  <p className="text-xs text-gray-500">
-                    {event.timestamp}
-                  </p>
+                  <p className="text-xs text-gray-500">{event.timestamp}</p>
                 </div>
               </div>
             ))}
