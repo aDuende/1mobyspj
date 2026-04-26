@@ -260,35 +260,26 @@ function AdminHelpPage() {
             {filteredComplaints.map((complaint) => (
               <div
                 key={complaint.id}
-                className="bg-white border border-gray-200 rounded-lg p-5 hover:shadow-md hover:border-gray-300 transition-all duration-200"
+                onClick={() => setSelectedComplaint(complaint)}
+                className="bg-white border border-gray-200 rounded-lg p-5 hover:shadow-md hover:border-gray-300 transition-all duration-200 cursor-pointer"
               >
-                <div className="flex gap-4 items-start">
+                <div className="flex gap-4 items-center">
                   {/* Status Dot */}
-                  <div className="flex-shrink-0 pt-1">
+                  <div className="flex-shrink-0">
                     <div className={`w-3 h-3 rounded-full ${getStatusDotColor(complaint.status)}`} />
                   </div>
                   
                   {/* Content */}
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-2">
-                      <h3 className="text-base font-bold text-gray-900 text-left">
-                        {complaint.subject}
-                      </h3>
-                      <span className={`px-2 py-0.5 rounded text-xs font-semibold ${getRoleBadgeColor(complaint.submittedByRole)}`}>
-                        {complaint.submittedByRole}
-                      </span>
-                    </div>
-                    <p className="text-sm text-gray-600 text-left mb-2">
+                    <h3 className="text-lg font-bold text-gray-900 text-left mb-1">
+                      {complaint.subject}
+                    </h3>
+                    <p className="text-sm text-gray-600 text-left">
                       {complaint.details}
                     </p>
-                    <div className="flex items-center gap-3 text-xs text-gray-500">
-                      <span className="font-medium">By: {complaint.submittedBy}</span>
-                      <span>•</span>
-                      <span>{complaint.id}</span>
-                    </div>
                   </div>
                   
-                  {/* Right Side Info and Actions */}
+                  {/* Right Side Info */}
                   <div className="flex flex-col items-end gap-2 flex-shrink-0">
                     <span className="text-sm text-gray-600">
                       {new Date(complaint.date).toLocaleDateString("en-GB", {
@@ -304,28 +295,9 @@ function AdminHelpPage() {
                     >
                       {complaint.status}
                     </span>
-                    
-                    {/* Quick Actions */}
-                    <div className="flex gap-2 mt-2">
-                      <button
-                        onClick={() => setSelectedComplaint(complaint)}
-                        className="px-3 py-1 bg-blue-600 text-white text-xs rounded hover:bg-blue-700 transition-colors"
-                      >
-                        View Details
-                      </button>
-                      {complaint.status !== "Resolved" && (
-                        <select
-                          value={complaint.status}
-                          onChange={(e) => handleStatusUpdate(complaint.id, e.target.value as Complaint["status"])}
-                          className="px-2 py-1 border border-gray-300 rounded text-xs focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        >
-                          <option value="Pending">Pending</option>
-                          <option value="In Progress">In Progress</option>
-                          <option value="Resolved">Resolved</option>
-                          <option value="Closed">Closed</option>
-                        </select>
-                      )}
-                    </div>
+                    <span className="text-xs text-gray-500">
+                      {complaint.id}
+                    </span>
                   </div>
                 </div>
               </div>

@@ -238,7 +238,40 @@ function HistoryViewDetailsPage({ complaint, onBack, isAdmin = false }: HistoryV
                       strokeWidth={2}
                       d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
                     />
-              
+                  </svg>
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Activity Timeline */}
+        <div className="mb-8 pb-8 border-b border-gray-200">
+          <h2 className="text-xs text-gray-500 uppercase tracking-wide mb-6 text-left">ACTIVITY TIMELINE</h2>
+          <div className="space-y-6">
+            {timelineEvents.map((event, index) => (
+              <div key={index} className="flex gap-4">
+                <div className="flex flex-col items-center">
+                  <div className={`w-2 h-2 rounded-full ${getTimelineDotColor(event.status)}`}></div>
+                  {index < timelineEvents.length - 1 && (
+                    <div className="w-0.5 h-full bg-gray-300 mt-2"></div>
+                  )}
+                </div>
+                <div className="flex-1 pb-6">
+                  <p className="font-semibold text-gray-900 mb-1 text-left">
+                    {event.title}
+                  </p>
+                  <p className="text-sm text-gray-600 mb-2 text-left">
+                    {event.description}
+                  </p>
+                  <p className="text-xs text-gray-500">
+                    {event.timestamp}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
 
         {/* Admin Response Section */}
         {isAdmin && (
@@ -301,60 +334,25 @@ function HistoryViewDetailsPage({ complaint, onBack, isAdmin = false }: HistoryV
         )}
 
         {/* Status Update Section for Admin */}
-        {isAdmin && (
+        {isAdmin && complaint.status !== "Resolved" && (
           <div className="mb-8 pb-8 border-b border-gray-200">
             <h2 className="text-xs text-gray-500 uppercase tracking-wide mb-4 text-left">UPDATE STATUS</h2>
             <div className="flex gap-2 flex-wrap">
-              {(["Pending", "In Progress", "Resolved", "Closed"] as const).map((status) => (
-                <button
-                  key={status}
-                  onClick={() => handleStatusChange(status)}
-                  disabled={complaint.status === status}
-                  className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                    complaint.status === status
-                      ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                      : "bg-blue-600 hover:bg-blue-700 text-white"
-                  }`}
-                >
-                  Mark as {status}
-                </button>
-              ))}
+              <button
+                onClick={() => handleStatusChange("In Progress")}
+                className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium transition-colors"
+              >
+                In Progress
+              </button>
+              <button
+                onClick={() => handleStatusChange("Resolved")}
+                className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg font-medium transition-colors"
+              >
+                Resolved
+              </button>
             </div>
           </div>
-        )}    </svg>
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Activity Timeline */}
-        <div>
-          <h2 className="text-xs text-gray-500 uppercase tracking-wide mb-6 text-left">ACTIVITY TIMELINE</h2>
-          <div className="space-y-6">
-            {timelineEvents.map((event, index) => (
-              <div key={index} className="flex gap-4">
-                <div className="flex flex-col items-center">
-                  <div className={`w-2 h-2 rounded-full ${getTimelineDotColor(event.status)}`}></div>
-                  {index < timelineEvents.length - 1 && (
-                    <div className="w-0.5 h-full bg-gray-300 mt-2"></div>
-                  )}
-                </div>
-                <div className="flex-1 pb-6">
-                  <p className="font-semibold text-gray-900 mb-1 text-left">
-                    {event.title}
-                  </p>
-                  <p className="text-sm text-gray-600 mb-2 text-left">
-                    {event.description}
-                  </p>
-                  <p className="text-xs text-gray-500">
-                    {event.timestamp}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );
