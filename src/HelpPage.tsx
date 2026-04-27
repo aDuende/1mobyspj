@@ -28,7 +28,7 @@ function HelpPage({ username, role }: HelpPageProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [complaints, setComplaints] = useState<Complaint[]>([]);
-  
+
   // Sync activeTab with URL
   useEffect(() => {
     if (location.pathname === "/help/history") {
@@ -37,7 +37,7 @@ function HelpPage({ username, role }: HelpPageProps) {
       setActiveTab("submit");
     }
   }, [location.pathname]);
-  
+
   // Load user's complaints from store
   useEffect(() => {
     const userComplaints = complaintsStore.getByUser(username);
@@ -88,30 +88,30 @@ function HelpPage({ username, role }: HelpPageProps) {
 
     // Get the text label from the select value
     const subjectLabels: Record<string, string> = {
-      "technical": "Technical Issue",
-      "account": "Account Problem",
-      "performance": "Performance Review",
-      "leave": "Leave Request",
-      "training": "Training & Development",
-      "benefits": "Benefits & Compensation",
-      "workplace": "Workplace Environment",
-      "other": "Other"
+      technical: "Technical Issue",
+      account: "Account Problem",
+      performance: "Performance Review",
+      leave: "Leave Request",
+      training: "Training & Development",
+      benefits: "Benefits & Compensation",
+      workplace: "Workplace Environment",
+      other: "Other",
     };
 
     // Add complaint to store
     const newComplaint = complaintsStore.add({
       subject: subjectLabels[subject] || subject,
       details,
-      date: new Date().toISOString().split('T')[0],
+      date: new Date().toISOString().split("T")[0],
       status: "Pending",
       fileCount: files.length,
       category: subjectLabels[subject] || "Other",
       submittedBy: username,
-      submittedByRole: role
+      submittedByRole: role,
     });
 
     // Update local state
-    setComplaints(prev => [newComplaint, ...prev]);
+    setComplaints((prev) => [newComplaint, ...prev]);
 
     // Reset form
     setSubject("");
