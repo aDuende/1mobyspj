@@ -8,6 +8,8 @@ import SettingPage from "../SettingPage";
 import ProfilePage from "../ProfilePage";
 import HelpPage from "../HelpPage";
 import MyIDPLearningPage from "../MyIDPLearningPage";
+import EmployeeAssessmentPage from "./EmployeeAssessmentPage";
+import CompetencyProfilePage from "../CompetencyProfilePage";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import {
   TrendingUp,
@@ -1105,6 +1107,15 @@ function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
                       </BreadcrumbPage>
                     </BreadcrumbItem>
                   )}
+                  {location.pathname === "/assessment" && (
+                    <BreadcrumbItem>
+                      <BreadcrumbPage
+                        style={{ fontFamily: "Geometrica, sans-serif" }}
+                      >
+                        Assessment
+                      </BreadcrumbPage>
+                    </BreadcrumbItem>
+                  )}
                   {location.pathname === "/settings" && (
                     <BreadcrumbItem>
                       <BreadcrumbPage
@@ -1210,6 +1221,8 @@ function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
                   path="/my-idp-learning/*"
                   element={<MyIDPLearningPage />}
                 />
+                <Route path="/assessment" element={<EmployeeAssessmentPage />} />
+                <Route path="/competency-profile" element={<CompetencyProfilePage />} />
                 <Route path="/settings" element={<SettingPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/help/*" element={<HelpPage />} />

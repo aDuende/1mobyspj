@@ -7,6 +7,8 @@ import ExperiencePoints from "../components/ExperiencePoints";
 import SettingPage from "../SettingPage";
 import ProfilePage from "../ProfilePage";
 import HelpPage from "../HelpPage";
+import ManagerAssessmentPage from "./ManagerAssessmentPage";
+import CompetencyProfilePage from "../CompetencyProfilePage";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import {
@@ -91,6 +93,15 @@ function ManagerDashboard({ onLogout, username }: ManagerDashboardProps) {
                       </BreadcrumbPage>
                     </BreadcrumbItem>
                   )}
+                  {location.pathname === "/assessment" && (
+                    <BreadcrumbItem>
+                      <BreadcrumbPage
+                        style={{ fontFamily: "Geometrica, sans-serif" }}
+                      >
+                        Assessment
+                      </BreadcrumbPage>
+                    </BreadcrumbItem>
+                  )}
                   {location.pathname === "/settings" && (
                     <BreadcrumbItem>
                       <BreadcrumbPage
@@ -162,6 +173,8 @@ function ManagerDashboard({ onLogout, username }: ManagerDashboardProps) {
           >
             <div className="pt-16 p-6">
               <Routes>
+                <Route path="/assessment" element={<ManagerAssessmentPage />} />
+                <Route path="/competency-profile" element={<CompetencyProfilePage />} />
                 <Route path="/settings" element={<SettingPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route

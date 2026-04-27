@@ -9,6 +9,7 @@ import ProfilePage from "../ProfilePage";
 import AdminHelpPage from "./AdminHelpPage";
 import ManageRolePage from "./ManageRolePage";
 import AnnouncementPage from "./AnnouncementPage";
+import CompetencyProfilePage from "../CompetencyProfilePage";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import {
@@ -189,6 +190,7 @@ function AdminDashboard({ onLogout, username }: AdminDashboardProps) {
                   }
                 />
                 <Route path="/settings" element={<SettingPage />} />
+                <Route path="/competency-profile" element={<CompetencyProfilePage />} />
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/help" element={<AdminHelpPage />} />
                 <Route path="/manage-role" element={<ManageRolePage />} />
