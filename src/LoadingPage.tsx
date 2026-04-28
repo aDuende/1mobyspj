@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react';
-import logo from './assets/1Moby-Logo (white).png';
+import { useEffect, useState } from "react";
+import logo from "./assets/1Moby-Logo (white).png";
 
 interface LoadingPageProps {
   onLoadingComplete: () => void;
 }
 
 function LoadingPage({ onLoadingComplete }: LoadingPageProps) {
+  const [hasEntered, setHasEntered] = useState(false);
   const [fadeOut, setFadeOut] = useState(false);
 
   useEffect(() => {
@@ -15,17 +16,18 @@ function LoadingPage({ onLoadingComplete }: LoadingPageProps) {
 
     const completeTimer = setTimeout(() => {
       onLoadingComplete();
-    }, 2500);
+    }, 3500);
 
     return () => {
-      clearTimeout(fadeTimer);
+      clearTimeout(entranceTimer);
+      clearTimeout(exitTimer);
       clearTimeout(completeTimer);
     };
   }, [onLoadingComplete]);
 
   return (
     <div
-      className="fixed inset-0 w-screen h-screen flex items-center justify-center transition-all duration-700 ease-in-out"
+      className="fixed inset-0 w-screen h-screen flex items-center justify-center transition-all duration-800 ease-in-out z-[9999]"
       style={{
         background: `
           linear-gradient(

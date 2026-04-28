@@ -24,15 +24,24 @@ function LoginPage({ onLogin }: LoginPageProps) {
     setError("");
 
     const user = users[username.toLowerCase() as keyof typeof users];
-    if (!user || user.password !== password) {
+
+    if (!user) {
       setError("Invalid username or password");
       return;
     }
 
+    // Check password
+    if (user.password !== password) {
+      setError("Invalid username or password");
+      return;
+    }
+
+    // Login successful - extract username before @ if email and capitalize properly
     let displayName = username.includes("@")
       ? username.split("@")[0]
       : username;
 
+    // Capitalize first letter and letter after dot (e.g., tarin.chon -> Tarin.Chon)
     displayName = displayName
       .split(".")
       .map((part) => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())

@@ -1,46 +1,63 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "./components/ui/button";
 import { Input } from "./components/ui/input";
-import { Separator } from "./components/ui/separator";
+import bgImage from "./assets/8-bit-pixel-forest-landscape-and-mountains-palms-vector.jpg";
+import catWalkSprite from "./assets/white cat walk pixel.PNG";
 
-type SettingsState = {
-  name: string;
-  email: string;
-  currentPassword: string;
-  newPassword: string;
-  confirmPassword: string;
-  theme: "light" | "dark" | "system";
-  language: "en" | "es" | "fr";
-  emailNotifications: boolean;
-  pushNotifications: boolean;
-  twoFactorAuth: boolean;
-};
+const CAT_FRAME_WIDTH = 80; // width of ONE frame
+const CAT_HEIGHT = 80; // height of the sprite (one row)
+const TOTAL_FRAMES = 5; // using first row of sprite sheet
 
-const defaultSettings: SettingsState = {
-  name: "Admin User",
-  email: "admin@example.com",
-  currentPassword: "",
-  newPassword: "",
-  confirmPassword: "",
-  theme: "system",
-  language: "en",
-  emailNotifications: true,
-  pushNotifications: false,
-  twoFactorAuth: true,
+const PixelCat = () => {
+  return (
+    <>
+      <style>{`
+        .cat-sprite {
+          width: ${CAT_FRAME_WIDTH}px;
+          height: ${CAT_HEIGHT}px;
+          background-image: url('${catWalkSprite}');
+          background-size: ${CAT_FRAME_WIDTH * TOTAL_FRAMES}px auto;
+          background-repeat: no-repeat;
+          background-position-y: 0px;
+          image-rendering: pixelated;
+          animation: walk-cycle 0.5s steps(${TOTAL_FRAMES}) infinite;
+        }
+
+        @keyframes walk-cycle {
+          from { background-position-x: 0px; }
+          to   { background-position-x: -${CAT_FRAME_WIDTH * TOTAL_FRAMES}px; }
+        }
+      `}</style>
+
+      <div className="cat-sprite" />
+    </>
+  );
 };
 
 export default function SettingPage() {
-  const [settings, setSettings] = useState<SettingsState>(defaultSettings);
+  const [activeTab, setActiveTab] = useState<
+    "security" | "notifications" | "privacy" | "pet"
+  >("security");
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [twoFactorAuth, setTwoFactorAuth] = useState(true);
+  const [emailNotifications, setEmailNotifications] = useState(true);
+  const [pushNotifications, setPushNotifications] = useState(false);
+  const [marketingEmails, setMarketingEmails] = useState(false);
   const [saved, setSaved] = useState(false);
-  const [activeTab, setActiveTab] = useState<"profile" | "security" | "preferences">("profile");
+  const [petEnabled, setPetEnabled] = useState(true);
+  const [walkingSpeed, setWalkingSpeed] = useState(2);
+  const [petPosition, setPetPosition] = useState(0);
 
-  const updateSetting = <K extends keyof SettingsState>(
-    key: K,
-    value: SettingsState[K]
-  ) => {
-    setSaved(false);
-    setSettings((prev) => ({ ...prev, [key]: value }));
-  };
+  // Digital pet animation
+  useEffect(() => {
+    if (!petEnabled) return;
+    const interval = setInterval(() => {
+      setPetPosition((prev) => (prev + 1) % 100);
+    }, 1000 / walkingSpeed);
+    return () => clearInterval(interval);
+  }, [petEnabled, walkingSpeed]);
 
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
@@ -48,389 +65,495 @@ export default function SettingPage() {
     setTimeout(() => setSaved(false), 3000);
   };
 
-  const handleReset = () => {
-    setSettings(defaultSettings);
-    setSaved(false);
-  };
-
   return (
-    <div className="max-w-5xl mx-auto" style={{ fontFamily: 'Geometrica, sans-serif' }}>
-      {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-          Settings
-        </h1>
-        <p className="text-gray-600 dark:text-gray-400">
-          Manage your account settings and preferences
-        </p>
-      </div>
+    <div className="min-h-screen bg-gray-50 p-8">
+      <div className="max-w-4xl mx-auto">
+        {/* Header */}
+        <div className="mb-8 text-center">
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">Settings</h1>
+          <p className="text-gray-600">
+            Manage your account settings and preferences
+          </p>
+        </div>
 
-      {/* Tabs */}
-      <div className="flex gap-4 mb-6 border-b border-gray-200 dark:border-gray-700">
-        <button
-          onClick={() => setActiveTab("profile")}
-          className={`pb-3 px-4 text-sm font-medium transition-colors border-b-2 ${
-            activeTab === "profile"
-              ? "border-blue-600 text-blue-600 dark:text-blue-400"
-              : "border-transparent text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
-          }`}
-        >
-          Profile
-        </button>
-        <button
-          onClick={() => setActiveTab("security")}
-          className={`pb-3 px-4 text-sm font-medium transition-colors border-b-2 ${
-            activeTab === "security"
-              ? "border-blue-600 text-blue-600 dark:text-blue-400"
-              : "border-transparent text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
-          }`}
-        >
-          Security
-        </button>
-        <button
-          onClick={() => setActiveTab("preferences")}
-          className={`pb-3 px-4 text-sm font-medium transition-colors border-b-2 ${
-            activeTab === "preferences"
-              ? "border-blue-600 text-blue-600 dark:text-blue-400"
-              : "border-transparent text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
-          }`}
-        >
-          Preferences
-        </button>
-      </div>
+        {/* Tabs */}
+        <div className="flex gap-6 mb-8 border-b-2 border-gray-200 justify-center">
+          <button
+            onClick={() => setActiveTab("security")}
+            className={`pb-3 px-6 text-sm font-semibold transition-colors border-b-2 -mb-0.5 ${
+              activeTab === "security"
+                ? "border-blue-600 text-blue-600"
+                : "border-transparent text-gray-500 hover:text-gray-900"
+            }`}
+          >
+            Security
+          </button>
+          <button
+            onClick={() => setActiveTab("notifications")}
+            className={`pb-3 px-6 text-sm font-semibold transition-colors border-b-2 -mb-0.5 ${
+              activeTab === "notifications"
+                ? "border-blue-600 text-blue-600"
+                : "border-transparent text-gray-500 hover:text-gray-900"
+            }`}
+          >
+            Notifications
+          </button>
+          <button
+            onClick={() => setActiveTab("privacy")}
+            className={`pb-3 px-6 text-sm font-semibold transition-colors border-b-2 -mb-0.5 ${
+              activeTab === "privacy"
+                ? "border-blue-600 text-blue-600"
+                : "border-transparent text-gray-500 hover:text-gray-900"
+            }`}
+          >
+            Privacy
+          </button>
+          <button
+            onClick={() => setActiveTab("pet")}
+            className={`pb-3 px-6 text-sm font-semibold transition-colors border-b-2 -mb-0.5 ${
+              activeTab === "pet"
+                ? "border-blue-600 text-blue-600"
+                : "border-transparent text-gray-500 hover:text-gray-900"
+            }`}
+          >
+            Digital Pet
+          </button>
+        </div>
 
-      {/* Content */}
-      <form onSubmit={handleSave}>
-        {/* Profile Tab */}
-        {activeTab === "profile" && (
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 space-y-6">
-            <div>
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-                Profile Information
-              </h2>
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Full Name
-                  </label>
-                  <Input
-                    type="text"
-                    value={settings.name}
-                    onChange={(e) => updateSetting("name", e.target.value)}
-                    className="w-full"
-                    placeholder="Enter your full name"
-                  />
+        {/* Content */}
+        <form onSubmit={handleSave}>
+          {/* Security Tab */}
+          {activeTab === "security" && (
+            <div className="space-y-8">
+              {/* Change Password */}
+              <div className="bg-white rounded-lg border border-gray-200 p-8">
+                <h2 className="text-xl font-bold text-gray-900 mb-6 text-left">
+                  Change Password
+                </h2>
+                <div className="space-y-5">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2 text-left">
+                      Current Password
+                    </label>
+                    <Input
+                      type="password"
+                      value={currentPassword}
+                      onChange={(e) => setCurrentPassword(e.target.value)}
+                      className="w-full"
+                      placeholder="Enter your current password"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2 text-left">
+                      New Password
+                    </label>
+                    <Input
+                      type="password"
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
+                      className="w-full"
+                      placeholder="Enter your new password"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2 text-left">
+                      Confirm New Password
+                    </label>
+                    <Input
+                      type="password"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      className="w-full"
+                      placeholder="Confirm your new password"
+                    />
+                  </div>
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Email Address
+              </div>
+
+              {/* Two-Factor Authentication */}
+              <div className="bg-white rounded-lg border border-gray-200 p-8">
+                <h2 className="text-xl font-bold text-gray-900 mb-6 text-left">
+                  Two-Factor Authentication
+                </h2>
+                <div className="flex items-center justify-between p-5 bg-gray-50 rounded-lg">
+                  <div>
+                    <p className="font-semibold text-gray-900 mb-1">
+                      Enable Two-Factor Authentication
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      Add an extra layer of security to your account with 2FA
+                    </p>
+                  </div>
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={twoFactorAuth}
+                      onChange={(e) => setTwoFactorAuth(e.target.checked)}
+                      className="sr-only peer"
+                    />
+                    <div className="w-14 h-7 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-blue-600"></div>
                   </label>
-                  <Input
-                    type="email"
-                    value={settings.email}
-                    onChange={(e) => updateSetting("email", e.target.value)}
-                    className="w-full"
-                    placeholder="Enter your email"
-                  />
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Profile Picture
-                  </label>
-                  <div className="flex items-center gap-4">
-                    <div className="w-20 h-20 rounded-full bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center text-white text-2xl font-bold">
-                      {settings.name.split(' ').map(n => n[0]).join('')}
+              </div>
+
+              {/* Active Sessions */}
+              <div className="bg-white rounded-lg border border-gray-200 p-8">
+                <h2 className="text-xl font-bold text-gray-900 mb-6 text-left">
+                  Active Sessions
+                </h2>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg bg-gray-50">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <svg
+                          className="w-6 h-6 text-blue-600"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                          />
+                        </svg>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-gray-900">
+                          Windows PC - Chrome
+                        </p>
+                        <p className="text-sm text-gray-500">
+                          Bangkok, Thailand • Last active now
+                        </p>
+                      </div>
                     </div>
-                    <Button type="button" variant="outline">
-                      Upload Photo
-                    </Button>
+                    <span className="text-xs font-semibold text-green-700 px-3 py-1.5 bg-green-100 rounded-full">
+                      Current
+                    </span>
                   </div>
                 </div>
               </div>
             </div>
+          )}
 
-            <Separator />
-
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                Contact Information
-              </h3>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Phone Number
-                  </label>
-                  <Input
-                    type="tel"
-                    placeholder="+1 (555) 000-0000"
-                    className="w-full"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Department
-                  </label>
-                  <Input
-                    type="text"
-                    placeholder="Engineering"
-                    className="w-full"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Security Tab */}
-        {activeTab === "security" && (
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 space-y-6">
-            <div>
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-                Change Password
-              </h2>
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Current Password
-                  </label>
-                  <Input
-                    type="password"
-                    value={settings.currentPassword}
-                    onChange={(e) => updateSetting("currentPassword", e.target.value)}
-                    className="w-full"
-                    placeholder="Enter current password"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    New Password
-                  </label>
-                  <Input
-                    type="password"
-                    value={settings.newPassword}
-                    onChange={(e) => updateSetting("newPassword", e.target.value)}
-                    className="w-full"
-                    placeholder="Enter new password"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Confirm New Password
-                  </label>
-                  <Input
-                    type="password"
-                    value={settings.confirmPassword}
-                    onChange={(e) => updateSetting("confirmPassword", e.target.value)}
-                    className="w-full"
-                    placeholder="Confirm new password"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <Separator />
-
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                Two-Factor Authentication
-              </h3>
-              <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
-                <div>
-                  <p className="font-medium text-gray-900 dark:text-white">
-                    Enable 2FA
-                  </p>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
-                    Add an extra layer of security to your account
-                  </p>
-                </div>
-                <label className="relative inline-flex items-center cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={settings.twoFactorAuth}
-                    onChange={(e) => updateSetting("twoFactorAuth", e.target.checked)}
-                    className="sr-only peer"
-                  />
-                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                </label>
-              </div>
-            </div>
-
-            <Separator />
-
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                Active Sessions
-              </h3>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
-                      <svg className="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                      </svg>
-                    </div>
+          {/* Notifications Tab */}
+          {activeTab === "notifications" && (
+            <div className="space-y-8">
+              {/* Email Notifications */}
+              <div className="bg-white rounded-lg border border-gray-200 p-8">
+                <h2 className="text-xl font-bold text-gray-900 mb-6 text-left">
+                  Email Notifications
+                </h2>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between p-5 bg-gray-50 rounded-lg">
                     <div>
-                      <p className="font-medium text-gray-900 dark:text-white">Windows PC</p>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">Current session • Last active now</p>
+                      <p className="font-semibold text-gray-900 mb-1">
+                        Activity Notifications
+                      </p>
+                      <p className="text-sm text-gray-600">
+                        Get notified about important updates and activities
+                      </p>
                     </div>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={emailNotifications}
+                        onChange={(e) =>
+                          setEmailNotifications(e.target.checked)
+                        }
+                        className="sr-only peer"
+                      />
+                      <div className="w-14 h-7 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-blue-600"></div>
+                    </label>
                   </div>
-                  <span className="text-xs font-medium text-green-600 dark:text-green-400 px-3 py-1 bg-green-100 dark:bg-green-900/30 rounded-full">
-                    Active
-                  </span>
+                  <div className="flex items-center justify-between p-5 bg-gray-50 rounded-lg">
+                    <div>
+                      <p className="font-semibold text-gray-900 mb-1">
+                        Marketing Emails
+                      </p>
+                      <p className="text-sm text-gray-600">
+                        Receive promotional emails and product updates
+                      </p>
+                    </div>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={marketingEmails}
+                        onChange={(e) => setMarketingEmails(e.target.checked)}
+                        className="sr-only peer"
+                      />
+                      <div className="w-14 h-7 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-blue-600"></div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              {/* Push Notifications */}
+              <div className="bg-white rounded-lg border border-gray-200 p-8">
+                <h2 className="text-xl font-bold text-gray-900 mb-6 text-left">
+                  Push Notifications
+                </h2>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between p-5 bg-gray-50 rounded-lg">
+                    <div>
+                      <p className="font-semibold text-gray-900 mb-1">
+                        Browser Notifications
+                      </p>
+                      <p className="text-sm text-gray-600">
+                        Receive push notifications in your browser
+                      </p>
+                    </div>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={pushNotifications}
+                        onChange={(e) => setPushNotifications(e.target.checked)}
+                        className="sr-only peer"
+                      />
+                      <div className="w-14 h-7 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-blue-600"></div>
+                    </label>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {/* Preferences Tab */}
-        {activeTab === "preferences" && (
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 space-y-6">
-            <div>
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-                Appearance
-              </h2>
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Theme
-                  </label>
-                  <div className="grid grid-cols-3 gap-3">
-                    {(["light", "dark", "system"] as const).map((theme) => (
-                      <button
-                        key={theme}
+          {/* Privacy Tab */}
+          {activeTab === "privacy" && (
+            <div className="space-y-8">
+              {/* Data & Privacy */}
+              <div className="bg-white rounded-lg border border-gray-200 p-8">
+                <h2 className="text-xl font-bold text-gray-900 mb-6 text-left">
+                  Data & Privacy
+                </h2>
+                <div className="space-y-4">
+                  <div className="p-5 bg-gray-50 rounded-lg">
+                    <div className="flex items-start justify-between mb-3">
+                      <div>
+                        <p className="font-semibold text-gray-900 mb-1">
+                          Download Your Data
+                        </p>
+                        <p className="text-sm text-gray-600">
+                          Request a copy of your personal data
+                        </p>
+                      </div>
+                      <Button type="button" variant="outline" className="ml-4">
+                        Download
+                      </Button>
+                    </div>
+                  </div>
+                  <div className="p-5 bg-gray-50 rounded-lg">
+                    <div className="flex items-start justify-between mb-3">
+                      <div>
+                        <p className="font-semibold text-gray-900 mb-1">
+                          Delete Account
+                        </p>
+                        <p className="text-sm text-gray-600">
+                          Permanently delete your account and all data
+                        </p>
+                      </div>
+                      <Button
                         type="button"
-                        onClick={() => updateSetting("theme", theme)}
-                        className={`p-4 rounded-lg border-2 transition-all ${
-                          settings.theme === theme
-                            ? "border-blue-600 bg-blue-50 dark:bg-blue-900/20"
-                            : "border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600"
-                        }`}
+                        variant="outline"
+                        className="ml-4 border-red-300 text-red-600 hover:bg-red-50"
                       >
-                        <div className="text-center">
-                          <div className="text-2xl mb-2">
-                            {theme === "light" ? "☀️" : theme === "dark" ? "🌙" : "💻"}
-                          </div>
-                          <p className="text-sm font-medium text-gray-900 dark:text-white capitalize">
-                            {theme}
+                        Delete
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Login History */}
+              <div className="bg-white rounded-lg border border-gray-200 p-8">
+                <h2 className="text-xl font-bold text-gray-900 mb-6 text-left">
+                  Login History
+                </h2>
+                <div className="space-y-3">
+                  {[
+                    {
+                      device: "Windows PC - Chrome",
+                      location: "Bangkok, Thailand",
+                      time: "Just now",
+                      status: "success",
+                    },
+                    {
+                      device: "iPhone - Safari",
+                      location: "Bangkok, Thailand",
+                      time: "2 hours ago",
+                      status: "success",
+                    },
+                    {
+                      device: "iPad - Safari",
+                      location: "Chiang Mai, Thailand",
+                      time: "Yesterday",
+                      status: "success",
+                    },
+                  ].map((login, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center justify-between p-4 border border-gray-200 rounded-lg"
+                    >
+                      <div className="flex items-center gap-4">
+                        <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
+                          <svg
+                            className="w-5 h-5 text-gray-600"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                            />
+                          </svg>
+                        </div>
+                        <div>
+                          <p className="font-medium text-gray-900">
+                            {login.device}
+                          </p>
+                          <p className="text-sm text-gray-500">
+                            {login.location} • {login.time}
                           </p>
                         </div>
-                      </button>
-                    ))}
-                  </div>
+                      </div>
+                      <span className="text-xs font-semibold text-green-700 px-3 py-1.5 bg-green-100 rounded-full">
+                        Success
+                      </span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
+          )}
 
-            <Separator />
-
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                Language & Region
-              </h3>
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Language
-                  </label>
-                  <select
-                    value={settings.language}
-                    onChange={(e) => updateSetting("language", e.target.value as "en" | "es" | "fr")}
-                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  >
-                    <option value="en">English</option>
-                    <option value="es">Español</option>
-                    <option value="fr">Français</option>
-                  </select>
+          {/* Digital Pet Tab */}
+          {activeTab === "pet" && (
+            <div className="space-y-8">
+              {/* Pet Control */}
+              <div className="bg-white rounded-lg border border-gray-200 p-8">
+                <h2 className="text-xl font-bold text-gray-900 mb-6 text-left">
+                  Digital Pet Control
+                </h2>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between p-5 bg-gray-50 rounded-lg">
+                    <div>
+                      <p className="font-semibold text-gray-900 mb-1">
+                        Enable Digital Pet
+                      </p>
+                      <p className="text-sm text-gray-600">
+                        Show a pixel pet walking on your screen
+                      </p>
+                    </div>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={petEnabled}
+                        onChange={(e) => setPetEnabled(e.target.checked)}
+                        className="sr-only peer"
+                      />
+                      <div className="w-14 h-7 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-blue-600"></div>
+                    </label>
+                  </div>
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Timezone
-                  </label>
-                  <select className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    <option>(GMT-08:00) Pacific Time</option>
-                    <option>(GMT-05:00) Eastern Time</option>
-                    <option>(GMT+00:00) UTC</option>
-                  </select>
+              </div>
+
+              {/* Walking Speed */}
+              <div className="bg-white rounded-lg border border-gray-200 p-8">
+                <h2 className="text-xl font-bold text-gray-900 mb-6 text-left">
+                  Walking Speed
+                </h2>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-semibold text-gray-700">
+                      Speed:{" "}
+                      {walkingSpeed === 1
+                        ? "Slow"
+                        : walkingSpeed === 2
+                          ? "Normal"
+                          : "Fast"}
+                    </span>
+                  </div>
+                  <input
+                    type="range"
+                    min="1"
+                    max="3"
+                    value={walkingSpeed}
+                    onChange={(e) => setWalkingSpeed(Number(e.target.value))}
+                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
+                  />
+                  <div className="flex justify-between text-xs text-gray-500">
+                    <span>Slow</span>
+                    <span>Normal</span>
+                    <span>Fast</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Pet Preview */}
+              <div className="bg-white rounded-lg border border-gray-200 p-8">
+                <h2 className="text-xl font-bold text-gray-900 mb-6 text-left">
+                  Pet Preview
+                </h2>
+                <div
+                  className="relative h-48 rounded-lg overflow-hidden"
+                  style={{
+                    backgroundImage: `url(${bgImage})`,
+                    backgroundSize: "auto 100%",
+                    backgroundPosition: "center bottom",
+                    backgroundRepeat: "repeat-x",
+                    imageRendering: "pixelated",
+                  }}
+                >
+                  {/* Pet */}
+                  {petEnabled && (
+                    <div
+                      className="absolute bottom-2 transition-all duration-300"
+                      style={{ left: `${petPosition}%` }}
+                    >
+                      <PixelCat />
+                    </div>
+                  )}
+                  {!petEnabled && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40">
+                      <p className="text-white font-semibold">
+                        Pet is disabled
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
+          )}
 
-            <Separator />
-
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                Notifications
-              </h3>
-              <div className="space-y-4">
-                <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
-                  <div>
-                    <p className="font-medium text-gray-900 dark:text-white">
-                      Email Notifications
-                    </p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
-                      Receive notifications via email
-                    </p>
-                  </div>
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={settings.emailNotifications}
-                      onChange={(e) => updateSetting("emailNotifications", e.target.checked)}
-                      className="sr-only peer"
-                    />
-                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                  </label>
-                </div>
-                <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
-                  <div>
-                    <p className="font-medium text-gray-900 dark:text-white">
-                      Push Notifications
-                    </p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
-                      Receive push notifications in browser
-                    </p>
-                  </div>
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={settings.pushNotifications}
-                      onChange={(e) => updateSetting("pushNotifications", e.target.checked)}
-                      className="sr-only peer"
-                    />
-                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Action Buttons */}
-        <div className="mt-6 flex items-center justify-between">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={handleReset}
-            className="text-gray-700 dark:text-gray-300"
-          >
-            Reset Changes
-          </Button>
-          <div className="flex items-center gap-3">
-            {saved && (
-              <span className="text-sm text-green-600 dark:text-green-400 font-medium">
-                ✓ Settings saved successfully
-              </span>
-            )}
+          {/* Action Buttons */}
+          <div className="mt-8 flex items-center justify-between bg-white rounded-lg border border-gray-200 p-6">
             <Button
-              type="submit"
-              className="bg-blue-600 hover:bg-blue-700 text-white"
+              type="button"
+              variant="ghost"
+              className="text-gray-600 hover:text-gray-900"
             >
-              Save Changes
+              Reset Changes
             </Button>
+            <div className="flex items-center gap-4">
+              {saved && (
+                <span className="text-sm text-green-600 font-semibold">
+                  ✓ Settings saved successfully
+                </span>
+              )}
+              <Button
+                type="submit"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-8"
+              >
+                Save Changes
+              </Button>
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   );
 }

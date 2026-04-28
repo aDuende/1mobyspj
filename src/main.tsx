@@ -1,17 +1,15 @@
-import { StrictMode, useState, useEffect } from 'react'
-import { createRoot } from 'react-dom/client'
-import { BrowserRouter, useNavigate, useLocation } from 'react-router-dom'
-import './index.css'
-import LoginPage from './LoginPage.tsx'
-import LoadingPage from './LoadingPage.tsx'
-import EmployeeDashboard from './employee/EmployeeDashboardPage.tsx'
-import ManagerDashboard from './managerd/ManagerDashboardPage.tsx'
-import AdminDashboard from './adminn/AdminDashboardPage.tsx'
+/* eslint-disable react-refresh/only-export-components */
+import { StrictMode, useState, useEffect } from "react";
+import { createRoot } from "react-dom/client";
+import { BrowserRouter, useNavigate, useLocation } from "react-router-dom";
+import "./index.css";
+import LoginPage from "./LoginPage.tsx";
+import LoadingPage from "./LoadingPage.tsx";
+import EmployeeDashboard from "./employee/EmployeeDashboardPage.tsx";
+import ManagerDashboard from "./managerd/ManagerDashboardPage.tsx";
+import AdminDashboard from "./adminn/AdminDashboardPage.tsx";
 
-
-
-
-type UserRole = 'employee' | 'manager' | 'admin' | null;
+type UserRole = "employee" | "manager" | "admin" | null;
 
 function Main() {
   const [isLoading, setIsLoading] = useState(true);
@@ -22,27 +20,53 @@ function Main() {
 
   const handleLoadingComplete = () => {
     setIsLoading(false);
-    navigate('/');
+    navigate("/");
   };
 
-  const handleLogin = (role: 'employee' | 'manager' | 'admin', user: string) => {
+  const handleLogin = (
+    role: "employee" | "manager" | "admin",
+    user: string,
+  ) => {
     setUserRole(role);
     setUsername(user);
-    navigate('/dashboard');
+    navigate("/dashboard");
   };
 
   const handleLogout = () => {
     setUserRole(null);
     setUsername("");
-    navigate('/');
+    navigate("/");
   };
 
   // Redirect to login if not authenticated and trying to access dashboard
   useEffect(() => {
-    if (!isLoading && !userRole && location.pathname !== '/') {
-      navigate('/');
+    if (!isLoading && !userRole && location.pathname !== "/") {
+      navigate("/");
     }
   }, [isLoading, userRole, location.pathname, navigate]);
+
+  useEffect(() => {
+    let scrollTimeout: ReturnType<typeof setTimeout>;
+
+    const handleScroll = () => {
+      document.documentElement.classList.add("scrolling-active");
+
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        document.documentElement.classList.remove("scrolling-active");
+      }, 1000);
+    };
+
+    window.addEventListener("scroll", handleScroll, {
+      capture: true,
+      passive: true,
+    });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll, { capture: true });
+      clearTimeout(scrollTimeout);
+    };
+  }, []);
 
   // Show loading screen
   if (isLoading) {
@@ -50,15 +74,15 @@ function Main() {
   }
 
   // Route to appropriate dashboard based on user role
-  if (userRole === 'employee') {
+  if (userRole === "employee") {
     return <EmployeeDashboard onLogout={handleLogout} username={username} />;
   }
 
-  if (userRole === 'manager') {
+  if (userRole === "manager") {
     return <ManagerDashboard onLogout={handleLogout} username={username} />;
   }
 
-  if (userRole === 'admin') {
+  if (userRole === "admin") {
     return <AdminDashboard onLogout={handleLogout} username={username} />;
   }
 
@@ -66,10 +90,10 @@ function Main() {
   return <LoginPage onLogin={handleLogin} />;
 }
 
-createRoot(document.getElementById('root')!).render(
+createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
       <Main />
     </BrowserRouter>
   </StrictMode>,
-)
+);

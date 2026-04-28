@@ -1,22 +1,14 @@
-import { useState } from "react";
-import LoadingPage from "./LoadingPage";
-import LoginPage from "./LoginPage";
-
+import React from "react";
 function App() {
-  const [loading, setLoading] = useState(true);
-
   return (
-    <div className="relative min-h-screen overflow-hidden">
-      <LoginPage
-        onLogin={(role, username) => {
-          console.log(role, username);
-        }}
-      />
-
-      {loading && (
-        <LoadingPage onLoadingComplete={() => setLoading(false)} />
-      )}
-    </div>
+    <>
+      <div className="App">
+        <p className="text-blue-500">Hello</p>
+      </div>
+      <div className="container">
+        <p className="text-red-500">Hello world</p>
+      </div>
+    </>
   );
 }
 
