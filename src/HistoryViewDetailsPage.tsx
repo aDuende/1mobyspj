@@ -15,15 +15,19 @@ interface TimelineEvent {
   status: "completed" | "in-progress";
 }
 
-function HistoryViewDetailsPage({ complaint, onBack, isAdmin = false }: HistoryViewDetailsPageProps) {
+function HistoryViewDetailsPage({
+  complaint,
+  onBack,
+  isAdmin = false,
+}: HistoryViewDetailsPageProps) {
   const [response, setResponse] = useState(complaint.response || "");
   const [isEditingResponse, setIsEditingResponse] = useState(false);
 
   const handleSaveResponse = () => {
     complaintsStore.update(complaint.id, {
       response,
-      responseDate: new Date().toISOString().split('T')[0],
-      respondedBy: "Admin"
+      responseDate: new Date().toISOString().split("T")[0],
+      respondedBy: "Admin",
     });
     setIsEditingResponse(false);
     alert("Response saved successfully!");
@@ -246,7 +250,9 @@ function HistoryViewDetailsPage({ complaint, onBack, isAdmin = false }: HistoryV
 
         {/* Activity Timeline */}
         <div className="mb-8 pb-8 border-b border-gray-200">
-          <h2 className="text-xs text-gray-500 uppercase tracking-wide mb-6 text-left">ACTIVITY TIMELINE</h2>
+          <h2 className="text-xs text-gray-500 uppercase tracking-wide mb-6 text-left">
+            ACTIVITY TIMELINE
+          </h2>
           <div className="space-y-6">
             {timelineEvents.map((event, index) => (
               <div key={index} className="flex gap-4">
@@ -276,7 +282,9 @@ function HistoryViewDetailsPage({ complaint, onBack, isAdmin = false }: HistoryV
         {isAdmin && (
           <div className="mb-8 pb-8 border-b border-gray-200">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xs text-gray-500 uppercase tracking-wide text-left">ADMIN RESPONSE</h2>
+              <h2 className="text-xs text-gray-500 uppercase tracking-wide text-left">
+                ADMIN RESPONSE
+              </h2>
               {!isEditingResponse && (
                 <Button
                   onClick={() => setIsEditingResponse(true)}
@@ -320,11 +328,16 @@ function HistoryViewDetailsPage({ complaint, onBack, isAdmin = false }: HistoryV
                 </p>
                 {complaint.responseDate && (
                   <p className="text-sm text-gray-500 mt-2 text-left">
-                    Responded on {new Date(complaint.responseDate).toLocaleDateString("en-GB", {
-                      day: "numeric",
-                      month: "short",
-                      year: "numeric"
-                    })} by {complaint.respondedBy}
+                    Responded on{" "}
+                    {new Date(complaint.responseDate).toLocaleDateString(
+                      "en-GB",
+                      {
+                        day: "numeric",
+                        month: "short",
+                        year: "numeric",
+                      },
+                    )}{" "}
+                    by {complaint.respondedBy}
                   </p>
                 )}
               </div>
@@ -335,7 +348,9 @@ function HistoryViewDetailsPage({ complaint, onBack, isAdmin = false }: HistoryV
         {/* Status Update Section for Admin */}
         {isAdmin && complaint.status !== "Resolved" && (
           <div className="mb-8 pb-8 border-b border-gray-200">
-            <h2 className="text-xs text-gray-500 uppercase tracking-wide mb-4 text-left">UPDATE STATUS</h2>
+            <h2 className="text-xs text-gray-500 uppercase tracking-wide mb-4 text-left">
+              UPDATE STATUS
+            </h2>
             <div className="flex gap-2 flex-wrap">
               <button
                 onClick={() => handleStatusChange("In Progress")}

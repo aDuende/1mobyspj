@@ -784,7 +784,7 @@ function ManagerDashboard({ onLogout, username }: ManagerDashboardProps) {
                 absolute top-0 left-0 right-0 z-50 transition-all duration-200 flex items-center justify-between px-6 py-4 shrink-0
                 ${
                   isScrolled
-                    ? "bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl backdrop-saturate-150 border-b border-gray-200/50 dark:border-transparent shadow-sm surface-glass"
+                    ? "bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl backdrop-saturate-150 border-b  dark:border-transparent shadow-sm surface-glass"
                     : "bg-transparent border-b border-transparent shadow-none"
                 }
               `}

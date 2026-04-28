@@ -3,9 +3,13 @@ import { complaintsStore, type Complaint } from "../lib/complaintsStore";
 import HistoryViewDetailsPage from "../HistoryViewDetailsPage";
 
 function AdminHelpPage() {
-  const [selectedComplaint, setSelectedComplaint] = useState<Complaint | null>(null);
+  const [selectedComplaint, setSelectedComplaint] = useState<Complaint | null>(
+    null,
+  );
   const [complaints, setComplaints] = useState<Complaint[]>([]);
-  const [statusFilter, setStatusFilter] = useState<"All" | "Pending" | "In Progress" | "Resolved">("All");
+  const [statusFilter, setStatusFilter] = useState<
+    "All" | "Pending" | "In Progress" | "Resolved"
+  >("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [subjectFilter, setSubjectFilter] = useState<"All" | string>("All");
 
@@ -15,13 +19,16 @@ function AdminHelpPage() {
     setComplaints(allComplaints);
   }, []);
 
-  const handleStatusUpdate = (complaintId: string, newStatus: Complaint["status"]) => {
-    complaintsStore.update(complaintId, { 
+  const handleStatusUpdate = (
+    complaintId: string,
+    newStatus: Complaint["status"],
+  ) => {
+    complaintsStore.update(complaintId, {
       status: newStatus,
       respondedBy: "Admin",
-      responseDate: new Date().toISOString().split('T')[0]
+      responseDate: new Date().toISOString().split("T")[0],
     });
-    
+
     // Reload complaints
     setComplaints(complaintsStore.getAll());
   };
@@ -78,16 +85,21 @@ function AdminHelpPage() {
     "Training & Development",
     "Benefits & Compensation",
     "Workplace Environment",
-    "Other"
+    "Other",
   ];
 
-  const filteredComplaints = complaints.filter(complaint => {
-    const matchesStatusFilter = statusFilter === "All" || complaint.status === statusFilter;
-    const matchesSubjectFilter = subjectFilter === "All" || complaint.category === subjectFilter || complaint.subject === subjectFilter;
-    const matchesSearch = complaint.subject.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         complaint.details.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         complaint.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         complaint.submittedBy.toLowerCase().includes(searchQuery.toLowerCase());
+  const filteredComplaints = complaints.filter((complaint) => {
+    const matchesStatusFilter =
+      statusFilter === "All" || complaint.status === statusFilter;
+    const matchesSubjectFilter =
+      subjectFilter === "All" ||
+      complaint.category === subjectFilter ||
+      complaint.subject === subjectFilter;
+    const matchesSearch =
+      complaint.subject.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      complaint.details.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      complaint.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      complaint.submittedBy.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesStatusFilter && matchesSubjectFilter && matchesSearch;
   });
 
@@ -122,19 +134,19 @@ function AdminHelpPage() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
           <div className="bg-white rounded-lg shadow p-4 border-l-4 border-yellow-500">
             <div className="text-2xl font-bold text-gray-900">
-              {complaints.filter(c => c.status === "Pending").length}
+              {complaints.filter((c) => c.status === "Pending").length}
             </div>
             <div className="text-sm text-gray-600">Pending</div>
           </div>
           <div className="bg-white rounded-lg shadow p-4 border-l-4 border-blue-500">
             <div className="text-2xl font-bold text-gray-900">
-              {complaints.filter(c => c.status === "In Progress").length}
+              {complaints.filter((c) => c.status === "In Progress").length}
             </div>
             <div className="text-sm text-gray-600">In Progress</div>
           </div>
           <div className="bg-white rounded-lg shadow p-4 border-l-4 border-green-500">
             <div className="text-2xl font-bold text-gray-900">
-              {complaints.filter(c => c.status === "Resolved").length}
+              {complaints.filter((c) => c.status === "Resolved").length}
             </div>
             <div className="text-sm text-gray-600">Resolved</div>
           </div>
@@ -200,8 +212,10 @@ function AdminHelpPage() {
               className="px-4 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="All">All Subjects</option>
-              {allSubjects.map(subject => (
-                <option key={subject} value={subject}>{subject}</option>
+              {allSubjects.map((subject) => (
+                <option key={subject} value={subject}>
+                  {subject}
+                </option>
               ))}
             </select>
 
@@ -266,9 +280,11 @@ function AdminHelpPage() {
                 <div className="flex gap-4 items-center">
                   {/* Status Dot */}
                   <div className="flex-shrink-0">
-                    <div className={`w-3 h-3 rounded-full ${getStatusDotColor(complaint.status)}`} />
+                    <div
+                      className={`w-3 h-3 rounded-full ${getStatusDotColor(complaint.status)}`}
+                    />
                   </div>
-                  
+
                   {/* Content */}
                   <div className="flex-1 min-w-0">
                     <h3 className="text-lg font-bold text-gray-900 text-left mb-1">
@@ -278,19 +294,19 @@ function AdminHelpPage() {
                       {complaint.details}
                     </p>
                   </div>
-                  
+
                   {/* Right Side Info */}
                   <div className="flex flex-col items-end gap-2 flex-shrink-0">
                     <span className="text-sm text-gray-600">
                       {new Date(complaint.date).toLocaleDateString("en-GB", {
                         day: "numeric",
                         month: "short",
-                        year: "numeric"
+                        year: "numeric",
                       })}
                     </span>
                     <span
                       className={`px-3 py-1 rounded-md text-xs font-semibold ${getStatusColor(
-                        complaint.status
+                        complaint.status,
                       )}`}
                     >
                       {complaint.status}
