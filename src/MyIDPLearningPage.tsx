@@ -1,5 +1,9 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Routes, Route } from "react-router-dom";
+import MyIDPPage from "./MyIDPPage";
+import LessonLayout from "./components/courses/layouts/LessonLayout";
+import SeriesLayout from "./components/courses/layouts/SeriesLayout";
+import ReadingLayout from "./components/courses/layouts/ReadingLayout";
 import { Card } from "./components/ui/card";
 import { Area, AreaChart, XAxis } from "recharts";
 import {
@@ -24,6 +28,9 @@ import {
   Flame,
   Clock,
   ArrowRight,
+  BookOpen,
+  Layers,
+  FileText,
 } from "lucide-react";
 const AnimatedNumber = ({
   value,
@@ -192,6 +199,105 @@ const courses = [
   },
 ];
 
+const newCourses = [
+  {
+    id: "react-complete",
+    title: "React - The Complete Guide (incl. React Router & Redux)",
+    description: "Dive in and learn React.js from scratch — fully updated to React 18.",
+    fullDescription:
+      "Fully updated and covering React 18, hooks, context, React Router, Redux, and more. Build real-world apps and master modern React development from the ground up.",
+    category: "FRONTEND",
+    videoUrl: "https://www.youtube.com/embed/w7ejDZ8SWv8",
+    thumbnail: "https://i.ytimg.com/vi/w7ejDZ8SWv8/hqdefault.jpg",
+    rating: 4.9,
+    reviews: 8430,
+    instructor: "React Expert",
+    duration: "4h 30m",
+    lessons: 68,
+    modules: 12,
+    isFree: true,
+    tags: ["Frontend", "React", "JavaScript"],
+    highlights: [
+      "React 18 features including concurrent rendering",
+      "Hooks: useState, useEffect, useContext and custom hooks",
+      "React Router v6 for client-side routing",
+      "State management with Redux Toolkit",
+    ],
+  },
+  {
+    id: "nodejs-full",
+    title: "Node.js Full Course for Beginners",
+    description: "Complete Node.js tutorial — APIs, Express, and MongoDB.",
+    fullDescription:
+      "Learn Node.js from scratch. Build RESTful APIs with Express, connect to MongoDB, and deploy your server-side JavaScript applications.",
+    category: "BACKEND",
+    videoUrl: "https://www.youtube.com/embed/f2EqECiTBL8",
+    thumbnail: "https://i.ytimg.com/vi/f2EqECiTBL8/hqdefault.jpg",
+    rating: 4.8,
+    reviews: 3120,
+    instructor: "Backend Expert",
+    duration: "3h 45m",
+    lessons: 48,
+    modules: 9,
+    isFree: true,
+    tags: ["Backend", "Node.js", "JavaScript"],
+    highlights: [
+      "Node.js runtime and event loop",
+      "Express.js REST API design",
+      "MongoDB with Mongoose",
+      "Authentication with JWT",
+    ],
+  },
+  {
+    id: "css-mastery",
+    title: "CSS Mastery — Advanced CSS and Sass",
+    description: "Write modern, scalable CSS with Sass, Flexbox, and Grid.",
+    fullDescription:
+      "Master CSS with animations, variables, Sass/SCSS, Flexbox, CSS Grid, and responsive design. Build stunning UIs with clean, maintainable styles.",
+    category: "FRONTEND",
+    videoUrl: "https://www.youtube.com/embed/1Rs2ND1ryYc",
+    thumbnail: "https://i.ytimg.com/vi/1Rs2ND1ryYc/hqdefault.jpg",
+    rating: 4.7,
+    reviews: 2870,
+    instructor: "CSS Expert",
+    duration: "2h 10m",
+    lessons: 32,
+    modules: 6,
+    isFree: true,
+    tags: ["Frontend", "CSS", "Sass"],
+    highlights: [
+      "Flexbox and Grid layouts",
+      "CSS animations and transitions",
+      "Sass/SCSS variables and mixins",
+      "Responsive design strategies",
+    ],
+  },
+  {
+    id: "python-beginners",
+    title: "Python for Beginners — Full Course",
+    description: "Learn Python programming from scratch with hands-on projects.",
+    fullDescription:
+      "Start your programming journey with Python. Covers variables, data types, functions, OOP, file handling, and real-world projects including a web scraper and data visualizer.",
+    category: "BACKEND",
+    videoUrl: "https://www.youtube.com/embed/_uQrJ0TkZlc",
+    thumbnail: "https://i.ytimg.com/vi/_uQrJ0TkZlc/hqdefault.jpg",
+    rating: 4.8,
+    reviews: 5910,
+    instructor: "Python Expert",
+    duration: "6h 00m",
+    lessons: 75,
+    modules: 14,
+    isFree: true,
+    tags: ["Backend", "Python", "Programming"],
+    highlights: [
+      "Python fundamentals and syntax",
+      "Object-oriented programming",
+      "File I/O and error handling",
+      "Real-world mini projects",
+    ],
+  },
+];
+
 const shortLearningReels = [
   {
     id: "reel-1",
@@ -301,7 +407,115 @@ const shortLearningReels = [
   },
 ];
 
-export default function MyIDPLearningPage() {
+const seriesData = [
+  {
+    id: "series-1",
+    title: "The Complete JavaScript Series",
+    description: "Master JavaScript from fundamentals to advanced patterns.",
+    modules: 5,
+    videos: 12,
+    category: "FRONTEND",
+    thumbnail: "https://i.ytimg.com/vi/PkZNo7MFNFg/hqdefault.jpg",
+  },
+  {
+    id: "series-2",
+    title: "Node.js Crash Course Series",
+    description: "Build server-side apps with Node.js and Express step by step.",
+    modules: 3,
+    videos: 8,
+    category: "BACKEND",
+    thumbnail: "https://i.ytimg.com/vi/fBNz5xF-Kx4/hqdefault.jpg",
+  },
+  {
+    id: "series-3",
+    title: "React Hooks In Depth",
+    description: "Every React hook explained with real-world examples.",
+    modules: 4,
+    videos: 10,
+    category: "FRONTEND",
+    thumbnail: "https://i.ytimg.com/vi/O6P86uwfdR0/hqdefault.jpg",
+  },
+  {
+    id: "series-4",
+    title: "SQL & Database Design Series",
+    description: "Learn relational database design and advanced SQL queries.",
+    modules: 6,
+    videos: 14,
+    category: "DATABASE",
+    thumbnail: "https://i.ytimg.com/vi/HXV3zeQKqGY/hqdefault.jpg",
+  },
+  {
+    id: "series-5",
+    title: "TypeScript Full Series",
+    description: "Type-safe JavaScript for large-scale React applications.",
+    modules: 3,
+    videos: 9,
+    category: "FRONTEND",
+    thumbnail: "https://i.ytimg.com/vi/BwuLxPH8IDs/hqdefault.jpg",
+  },
+  {
+    id: "series-6",
+    title: "Docker & DevOps Series",
+    description: "Containerise and deploy your apps with Docker and CI/CD.",
+    modules: 4,
+    videos: 11,
+    category: "BACKEND",
+    thumbnail: "https://i.ytimg.com/vi/6OA9AjzX4k4/hqdefault.jpg",
+  },
+];
+
+const readingHubData = [
+  {
+    id: "read-1",
+    title: "Clean Code",
+    author: "Robert C. Martin",
+    pages: 431,
+    category: "Engineering",
+    thumbnail: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1436202607i/3735293.jpg",
+  },
+  {
+    id: "read-2",
+    title: "The Pragmatic Programmer",
+    author: "David Thomas & Andrew Hunt",
+    pages: 352,
+    category: "Engineering",
+    thumbnail: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1401432508i/4099.jpg",
+  },
+  {
+    id: "read-3",
+    title: "You Don't Know JS",
+    author: "Kyle Simpson",
+    pages: 278,
+    category: "Frontend",
+    thumbnail: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1373665727i/9422683.jpg",
+  },
+  {
+    id: "read-4",
+    title: "Designing Data-Intensive Applications",
+    author: "Martin Kleppmann",
+    pages: 616,
+    category: "Backend",
+    thumbnail: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1415816873i/23463279.jpg",
+  },
+  {
+    id: "read-5",
+    title: "System Design Interview",
+    author: "Alex Xu",
+    pages: 309,
+    category: "Engineering",
+    thumbnail: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1603160280i/54109255.jpg",
+  },
+  {
+    id: "read-6",
+    title: "CSS: The Definitive Guide",
+    author: "Eric A. Meyer",
+    pages: 1094,
+    category: "Frontend",
+    thumbnail: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1347964659i/1867080.jpg",
+  },
+];
+
+export default function MyIDPLearningPage({ role = "employee" }: { role?: "employee" | "manager" | "admin" }) {
   const navigate = useNavigate();
   const location = useLocation();
   const [selectedCourse, setSelectedCourse] = useState<null | {
@@ -321,6 +535,9 @@ export default function MyIDPLearningPage() {
     tags: string[];
     highlights: string[];
   }>(null);
+
+  const [selectedSeries, setSelectedSeries] = useState<null | (typeof seriesData)[0]>(null);
+  const [selectedReading, setSelectedReading] = useState<null | (typeof readingHubData)[0]>(null);
 
   const [selectedReel, setSelectedReel] = useState<
     null | (typeof shortLearningReels)[0]
@@ -390,6 +607,31 @@ export default function MyIDPLearningPage() {
   const [isCourseFilterOpen, setIsCourseFilterOpen] = useState(false);
   const courseFilterRef = useRef<HTMLDivElement>(null);
 
+  // New Course section (below Reels)
+  const [newCourseFilter, setNewCourseFilter] = useState("All Topics");
+  const [isNewCourseFilterOpen, setIsNewCourseFilterOpen] = useState(false);
+  const newCourseFilterRef = useRef<HTMLDivElement>(null);
+  const newCoursesCarouselRef = useRef<HTMLDivElement>(null);
+  const [canNewCoursesScrollLeft, setCanNewCoursesScrollLeft] = useState(false);
+  const [canNewCoursesScrollRight, setCanNewCoursesScrollRight] = useState(true);
+  const [hoveredNewCourseId, setHoveredNewCourseId] = useState<string | null>(null);
+
+  // Series section
+  const [seriesFilter, setSeriesFilter] = useState("All");
+  const [isSeriesFilterOpen, setIsSeriesFilterOpen] = useState(false);
+  const seriesFilterRef = useRef<HTMLDivElement>(null);
+  const seriesCarouselRef = useRef<HTMLDivElement>(null);
+  const [canSeriesScrollLeft, setCanSeriesScrollLeft] = useState(false);
+  const [canSeriesScrollRight, setCanSeriesScrollRight] = useState(true);
+
+  // Reading Hub section
+  const [readingFilter, setReadingFilter] = useState("All");
+  const [isReadingFilterOpen, setIsReadingFilterOpen] = useState(false);
+  const readingFilterRef = useRef<HTMLDivElement>(null);
+  const readingCarouselRef = useRef<HTMLDivElement>(null);
+  const [canReadingScrollLeft, setCanReadingScrollLeft] = useState(false);
+  const [canReadingScrollRight, setCanReadingScrollRight] = useState(true);
+
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (
@@ -415,6 +657,24 @@ export default function MyIDPLearningPage() {
         !courseFilterRef.current.contains(e.target as Node)
       ) {
         setIsCourseFilterOpen(false);
+      }
+      if (
+        newCourseFilterRef.current &&
+        !newCourseFilterRef.current.contains(e.target as Node)
+      ) {
+        setIsNewCourseFilterOpen(false);
+      }
+      if (
+        seriesFilterRef.current &&
+        !seriesFilterRef.current.contains(e.target as Node)
+      ) {
+        setIsSeriesFilterOpen(false);
+      }
+      if (
+        readingFilterRef.current &&
+        !readingFilterRef.current.contains(e.target as Node)
+      ) {
+        setIsReadingFilterOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -444,14 +704,48 @@ export default function MyIDPLearningPage() {
     }
   };
 
+  const handleNewCoursesScroll = () => {
+    if (newCoursesCarouselRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } =
+        newCoursesCarouselRef.current;
+      setCanNewCoursesScrollLeft(scrollLeft > 20);
+      setCanNewCoursesScrollRight(scrollLeft + clientWidth < scrollWidth - 20);
+    }
+  };
+
+  const handleSeriesScroll = () => {
+    if (seriesCarouselRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = seriesCarouselRef.current;
+      setCanSeriesScrollLeft(scrollLeft > 20);
+      setCanSeriesScrollRight(scrollLeft + clientWidth < scrollWidth - 20);
+    }
+  };
+
+  const handleReadingScroll = () => {
+    if (readingCarouselRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = readingCarouselRef.current;
+      setCanReadingScrollLeft(scrollLeft > 20);
+      setCanReadingScrollRight(scrollLeft + clientWidth < scrollWidth - 20);
+    }
+  };
+
   useEffect(() => {
     handleReelsScroll();
     handleCoursesScroll();
+    handleNewCoursesScroll();
+    handleSeriesScroll();
+    handleReadingScroll();
     window.addEventListener("resize", handleReelsScroll);
     window.addEventListener("resize", handleCoursesScroll);
+    window.addEventListener("resize", handleNewCoursesScroll);
+    window.addEventListener("resize", handleSeriesScroll);
+    window.addEventListener("resize", handleReadingScroll);
     return () => {
       window.removeEventListener("resize", handleReelsScroll);
       window.removeEventListener("resize", handleCoursesScroll);
+      window.removeEventListener("resize", handleNewCoursesScroll);
+      window.removeEventListener("resize", handleSeriesScroll);
+      window.removeEventListener("resize", handleReadingScroll);
     };
   }, []);
 
@@ -610,7 +904,8 @@ export default function MyIDPLearningPage() {
   useEffect(() => {
     if (location.pathname.startsWith("/my-idp-learning/course/")) {
       const courseId = location.pathname.split("/").pop();
-      const course = courses.find((c) => c.id === courseId);
+      const course = courses.find((c) => c.id === courseId)
+        ?? newCourses.find((c) => c.id === courseId);
       if (course && !selectedCourse) {
         setTimeout(() => setSelectedCourse(course), 0);
       }
@@ -619,12 +914,40 @@ export default function MyIDPLearningPage() {
     }
   }, [location.pathname]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  useEffect(() => {
+    if (location.pathname.startsWith("/my-idp-learning/series/")) {
+      const id = location.pathname.split("/").pop();
+      const item = seriesData.find((s) => s.id === id);
+      if (item && !selectedSeries) setTimeout(() => setSelectedSeries(item), 0);
+    } else {
+      if (selectedSeries) setTimeout(() => setSelectedSeries(null), 0);
+    }
+  }, [location.pathname]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (location.pathname.startsWith("/my-idp-learning/reading/")) {
+      const id = location.pathname.split("/").pop();
+      const item = readingHubData.find((r) => r.id === id);
+      if (item && !selectedReading) setTimeout(() => setSelectedReading(item), 0);
+    } else {
+      if (selectedReading) setTimeout(() => setSelectedReading(null), 0);
+    }
+  }, [location.pathname]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  if (location.pathname === "/my-idp-learning/my-idp") {
+    return <MyIDPPage role={role} />;
+  }
+
   if (selectedCourse) {
-    return (
-      <div className="flex-1 bg-[#f8fafc] dark:bg-[#08060d] h-screen overflow-hidden">
-        {/* Course Details */}
-      </div>
-    );
+    return <LessonLayout course={selectedCourse} />;
+  }
+
+  if (selectedSeries) {
+    return <SeriesLayout item={selectedSeries} />;
+  }
+
+  if (selectedReading) {
+    return <ReadingLayout item={selectedReading} />;
   }
 
   return (
@@ -1352,6 +1675,15 @@ export default function MyIDPLearningPage() {
                 </div>
               </div>
             </div>
+
+            <button
+              onClick={() => navigate("/my-idp-learning/my-idp")}
+              className="mt-4 w-full flex items-center justify-center gap-2 py-2.5 rounded-xl border border-[#006bff]/30 text-[#006bff] hover:bg-[#006bff]/5 hover:border-[#006bff] transition-all duration-300 cursor-pointer group"
+              style={{ fontFamily: '"Geometrica", sans-serif' }}
+            >
+              <span className="text-[12px] font-medium">View My IDP</span>
+              <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+            </button>
           </Card>
         </div>
 
@@ -1552,7 +1884,7 @@ export default function MyIDPLearningPage() {
           </div>
         </div>
 
-        {/* New Course Section */}
+        {/* Full Lessons Section */}
         <div className="relative z-0 mb-8">
           <div className="flex items-center justify-between mb-3 px-1">
             <div className="flex items-center gap-2">
@@ -1561,7 +1893,7 @@ export default function MyIDPLearningPage() {
                 className="!text-[18px] font-medium !text-[#08060d] dark:!text-white leading-none"
                 style={{ fontFamily: '"Geometrica", sans-serif' }}
               >
-                New Course
+                New Courses
               </h2>
             </div>
             <div className="relative -top-[3px]" ref={courseFilterRef}>
@@ -1731,7 +2063,7 @@ export default function MyIDPLearningPage() {
                             </div>
                           </div>
                           <h3
-                            className="text-[15px] font-semibold text-gray-800 dark:text-white leading-tight line-clamp-2"
+                            className="text-[14px] font-semibold text-gray-800 dark:text-white leading-tight line-clamp-2"
                             style={{ fontFamily: '"Geometrica", sans-serif' }}
                           >
                             {c.title.split("-")[0].trim()}
@@ -1794,7 +2126,7 @@ export default function MyIDPLearningPage() {
                 className="!text-[18px] font-medium !text-[#08060d] dark:!text-white leading-none"
                 style={{ fontFamily: '"Geometrica", sans-serif' }}
               >
-                Reels
+                Quick Bites
               </h2>
             </div>
             <div className="relative -top-[3px]" ref={reelsFilterRef}>
@@ -1990,6 +2322,459 @@ export default function MyIDPLearningPage() {
                     setTimeout(handleReelsScroll, 500);
                   }
                 }}
+              >
+                <ChevronRight className="w-6 h-6 stroke-[2.5]" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Full Lesson Section */}
+        <div className="relative z-0 mb-8">
+          <div className="flex items-center justify-between mb-3 px-1">
+            <div className="flex items-center gap-2">
+              <BookOpen className="w-5 h-5 text-[#08060d] dark:text-white relative -top-[3px]" />
+              <h2
+                className="!text-[18px] font-medium !text-[#08060d] dark:!text-white leading-none"
+                style={{ fontFamily: '"Geometrica", sans-serif' }}
+              >
+                Full Lesson
+              </h2>
+            </div>
+            <div className="relative -top-[3px]" ref={newCourseFilterRef}>
+              <button
+                onClick={() => setIsNewCourseFilterOpen(!isNewCourseFilterOpen)}
+                className={`
+                  group flex items-center justify-center gap-2 h-10 rounded-full border
+                  transition-all duration-300 active:scale-[0.96] cursor-pointer
+                  ${
+                    isNewCourseFilterOpen
+                      ? "bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl border-gray-200/50 dark:border-transparent shadow-xl translate-y-[-1px] text-gray-700 dark:text-gray-300 px-4"
+                      : "bg-transparent hover:bg-white dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white border-transparent hover:border-gray-200/60 dark:hover:border-transparent hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] w-10 md:w-auto md:px-4"
+                  }
+                `}
+              >
+                <span
+                  className="hidden md:inline text-[12px] font-normal"
+                  style={{ fontFamily: '"Geometrica", sans-serif' }}
+                >
+                  Filters
+                </span>
+                <Settings2
+                  className={`w-5 h-5 transition-transform duration-300 ${isNewCourseFilterOpen ? "scale-110 text-[#FC4C02]" : ""}`}
+                />
+              </button>
+
+              <div
+                className={`
+                  absolute top-full right-0 mt-2 w-44
+                  bg-white dark:bg-gray-800 rounded-xl p-1.5 z-50
+                  transition-all duration-300 origin-top-right shadow-[0_30px_60px_-12px_rgba(0,0,0,0.15)]
+                  ${
+                    isNewCourseFilterOpen
+                      ? "opacity-100 scale-100 translate-y-0"
+                      : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
+                  }
+                `}
+              >
+                <div className="flex flex-col gap-1">
+                  {[
+                    { id: "All Topics", label: "All Topics" },
+                    { id: "Frontend", label: "Frontend" },
+                    { id: "Backend", label: "Backend" },
+                  ].map((cat) => (
+                    <button
+                      key={cat.id}
+                      onClick={() => {
+                        setNewCourseFilter(cat.id);
+                        setIsNewCourseFilterOpen(false);
+                      }}
+                      className={`
+                        flex items-center gap-3 w-full px-3 py-1.5 rounded-lg text-[12px] font-normal
+                        transition-all duration-200 cursor-pointer
+                        ${
+                          newCourseFilter === cat.id
+                            ? "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
+                            : "text-gray-700 dark:text-gray-300 hover:bg-gray-100/60 dark:hover:bg-gray-700/60 hover:text-gray-900 dark:hover:text-white"
+                        }
+                      `}
+                      style={{ fontFamily: '"Geometrica", sans-serif' }}
+                    >
+                      <span className="flex-1 text-left">{cat.label}</span>
+                      {newCourseFilter === cat.id && (
+                        <Check className="w-4 h-4 text-orange-600" />
+                      )}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="relative group/newcoursecarousel -mb-12 -mt-2">
+            <div
+              className={`absolute left-0 top-[calc(50%-24px)] -translate-y-1/2 z-30 hidden md:flex items-center justify-center px-4 pointer-events-none transition-opacity duration-300 ${canNewCoursesScrollLeft ? "opacity-100" : "opacity-0"}`}
+            >
+              <button
+                className={`w-12 h-12 -ml-10 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-gray-700 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white pointer-events-auto border border-transparent hover:border-gray-200/60 hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none ${!canNewCoursesScrollLeft && "pointer-events-none"}`}
+                onClick={() => {
+                  if (newCoursesCarouselRef.current) {
+                    newCoursesCarouselRef.current.scrollBy({ left: -480, behavior: "smooth" });
+                    setTimeout(handleNewCoursesScroll, 500);
+                  }
+                }}
+              >
+                <ChevronLeft className="w-6 h-6 stroke-[2.5]" />
+              </button>
+            </div>
+
+            <div
+              ref={newCoursesCarouselRef}
+              onScroll={handleNewCoursesScroll}
+              className="flex overflow-x-auto gap-3 pt-2 pb-12 snap-x snap-mandatory no-scrollbar px-1 overflow-y-visible"
+              style={{ scrollBehavior: "smooth" }}
+            >
+              {newCourses
+                .filter((c) => {
+                  if (newCourseFilter === "Frontend") return c.category === "FRONTEND";
+                  if (newCourseFilter === "Backend") return c.category === "BACKEND";
+                  return true;
+                })
+                .map((c) => (
+                  <div
+                    key={c.id}
+                    onMouseEnter={() => setHoveredNewCourseId(c.id)}
+                    onMouseLeave={() => setHoveredNewCourseId(null)}
+                    className="shrink-0 w-[90vw] md:w-[580px] p-4 rounded-[24px] bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer group snap-start overflow-hidden"
+                    onClick={() => {
+                      setSelectedCourse(c);
+                      navigate("/my-idp-learning/course/" + c.id);
+                    }}
+                  >
+                    <div className="flex gap-6 text-left h-[133px]">
+                      <div className="w-[180px] md:w-[237px] h-[133px] rounded-xl shrink-0 overflow-hidden relative bg-gray-100 dark:bg-gray-700 aspect-video">
+                        {hoveredNewCourseId === c.id ? (
+                          <div className="absolute inset-0 w-full h-full pointer-events-none">
+                            <iframe
+                              src={`${c.videoUrl}${c.videoUrl.includes("?") ? "&" : "?"}autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&loop=1&playlist=${c.videoUrl.split("/").pop()?.split("?")[0]}&iv_load_policy=3&showinfo=0&disablekb=1`}
+                              className="absolute inset-0 w-full h-full"
+                              title={c.title}
+                              allow="autoplay; encrypted-media"
+                            />
+                          </div>
+                        ) : (
+                          <img src={c.thumbnail} alt={c.title} className="w-full h-full object-cover" />
+                        )}
+                      </div>
+
+                      <div className="flex-1 min-w-0 flex flex-col h-[133px]">
+                        <div className="h-[93px] flex flex-col items-start gap-1.5 overflow-hidden">
+                          <div className="flex items-center gap-2">
+                            <div className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-700/50 text-slate-800 dark:text-slate-200 text-[11px] font-semibold tracking-wide">
+                              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+                                <circle cx="8.5" cy="8.5" r="5.2" />
+                                <circle cx="15.5" cy="8.5" r="5.2" />
+                                <circle cx="8.5" cy="15.5" r="5.2" />
+                                <circle cx="15.5" cy="15.5" r="5.2" />
+                              </svg>
+                              Course
+                            </div>
+                            <div className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-700/50 text-slate-800 dark:text-slate-200 text-[11px] font-semibold tracking-wide">
+                              {c.category === "BACKEND" ? (
+                                <Terminal className="w-3.5 h-3.5" />
+                              ) : (
+                                <AppWindow className="w-3.5 h-3.5" />
+                              )}
+                              {c.category.charAt(0).toUpperCase() + c.category.slice(1).toLowerCase()}
+                            </div>
+                          </div>
+                          <h3
+                            className="text-[15px] font-semibold text-gray-800 dark:text-white leading-tight line-clamp-2"
+                            style={{ fontFamily: '"Geometrica", sans-serif' }}
+                          >
+                            {c.title.split("-")[0].trim()}
+                          </h3>
+                          <p
+                            className="text-[11px] font-normal text-gray-500 dark:text-gray-400 mt-1 leading-tight line-clamp-1"
+                            style={{ fontFamily: '"Geometrica", sans-serif' }}
+                          >
+                            {c.description}
+                          </p>
+                        </div>
+
+                        <div className="h-[40px] flex items-center justify-between mt-auto">
+                          <div className="flex items-center gap-1.5 text-gray-700 dark:text-gray-300">
+                            <Clock className="w-4 h-4 opacity-80 shrink-0" />
+                            <span
+                              className="text-[11px] font-normal leading-tight"
+                              style={{ fontFamily: '"Geometrica", sans-serif' }}
+                            >
+                              {c.duration}
+                            </span>
+                          </div>
+                          <button className="w-8 h-8 rounded-full bg-[#006bff] flex items-center justify-center active:scale-95 hover:bg-[#0056cc] group-hover:bg-[#0056cc] transition-all shrink-0 cursor-pointer shadow-sm">
+                            <ArrowRight className="w-4 h-4 text-white transition-transform duration-300 group-hover:translate-x-1" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+            </div>
+
+            <div
+              className={`absolute right-0 top-[calc(50%-24px)] -translate-y-1/2 z-30 hidden md:flex items-center justify-center px-4 pointer-events-none transition-opacity duration-300 ${canNewCoursesScrollRight ? "opacity-100" : "opacity-0"}`}
+            >
+              <button
+                className={`w-12 h-12 -mr-10 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-gray-700 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white pointer-events-auto border border-transparent hover:border-gray-200/60 hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none ${!canNewCoursesScrollRight && "pointer-events-none"}`}
+                onClick={() => {
+                  if (newCoursesCarouselRef.current) {
+                    newCoursesCarouselRef.current.scrollBy({ left: 480, behavior: "smooth" });
+                    setTimeout(handleNewCoursesScroll, 500);
+                  }
+                }}
+              >
+                <ChevronRight className="w-6 h-6 stroke-[2.5]" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Series Section */}
+        <div className="relative z-0 mb-8">
+          <div className="flex items-center justify-between mb-3 px-1">
+            <div className="flex items-center gap-2">
+              <Layers className="w-5 h-5 text-[#08060d] dark:text-white relative -top-[3px]" />
+              <h2
+                className="!text-[18px] font-medium !text-[#08060d] dark:!text-white leading-none"
+                style={{ fontFamily: '"Geometrica", sans-serif' }}
+              >
+                Series
+              </h2>
+            </div>
+            <div className="relative -top-[3px]" ref={seriesFilterRef}>
+              <button
+                onClick={() => setIsSeriesFilterOpen(!isSeriesFilterOpen)}
+                className={`group flex items-center justify-center gap-2 h-10 rounded-full border transition-all duration-300 active:scale-[0.96] cursor-pointer ${
+                  isSeriesFilterOpen
+                    ? "bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl border-gray-200/50 dark:border-transparent shadow-xl translate-y-[-1px] text-gray-700 dark:text-gray-300 px-4"
+                    : "bg-transparent hover:bg-white dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white border-transparent hover:border-gray-200/60 dark:hover:border-transparent hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] w-10 md:w-auto md:px-4"
+                }`}
+              >
+                <span className="hidden md:inline text-[12px] font-normal" style={{ fontFamily: '"Geometrica", sans-serif' }}>Filters</span>
+                <Settings2 className={`w-5 h-5 transition-transform duration-300 ${isSeriesFilterOpen ? "scale-110 text-[#FC4C02]" : ""}`} />
+              </button>
+              <div className={`absolute top-full right-0 mt-2 w-44 bg-white dark:bg-gray-800 rounded-xl p-1.5 z-50 transition-all duration-300 origin-top-right shadow-[0_30px_60px_-12px_rgba(0,0,0,0.15)] ${
+                isSeriesFilterOpen ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
+              }`}>
+                <div className="flex flex-col gap-1">
+                  {[{ id: "All", label: "All Series" }, { id: "FRONTEND", label: "Frontend" }, { id: "BACKEND", label: "Backend" }, { id: "DATABASE", label: "Database" }].map((cat) => (
+                    <button
+                      key={cat.id}
+                      onClick={() => { setSeriesFilter(cat.id); setIsSeriesFilterOpen(false); }}
+                      className={`flex items-center gap-3 w-full px-3 py-1.5 rounded-lg text-[12px] font-normal transition-all duration-200 cursor-pointer ${
+                        seriesFilter === cat.id
+                          ? "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
+                          : "text-gray-700 dark:text-gray-300 hover:bg-gray-100/60 dark:hover:bg-gray-700/60 hover:text-gray-900 dark:hover:text-white"
+                      }`}
+                      style={{ fontFamily: '"Geometrica", sans-serif' }}
+                    >
+                      <span className="flex-1 text-left">{cat.label}</span>
+                      {seriesFilter === cat.id && <Check className="w-4 h-4 text-orange-600" />}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="relative group/seriescarousel -mb-12 -mt-2">
+            <div className={`absolute left-0 top-[calc(50%-24px)] -translate-y-1/2 z-30 hidden md:flex items-center justify-center px-4 pointer-events-none transition-opacity duration-300 ${canSeriesScrollLeft ? "opacity-100" : "opacity-0"}`}>
+              <button
+                className="w-12 h-12 -ml-10 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-gray-700 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white pointer-events-auto border border-transparent hover:border-gray-200/60 hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none"
+                onClick={() => { seriesCarouselRef.current?.scrollBy({ left: -480, behavior: "smooth" }); setTimeout(handleSeriesScroll, 500); }}
+              >
+                <ChevronLeft className="w-6 h-6 stroke-[2.5]" />
+              </button>
+            </div>
+
+            <div
+              ref={seriesCarouselRef}
+              onScroll={handleSeriesScroll}
+              className="flex overflow-x-auto gap-3 pt-2 pb-12 snap-x snap-mandatory no-scrollbar px-1 overflow-y-visible"
+              style={{ scrollBehavior: "smooth" }}
+            >
+              {seriesData
+                .filter((s) => seriesFilter === "All" || s.category === seriesFilter)
+                .map((s) => (
+                  <div
+                    key={s.id}
+                    className="shrink-0 w-[90vw] md:w-[580px] p-4 rounded-[24px] bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer group snap-start overflow-hidden"
+                    onClick={() => { setSelectedSeries(s); navigate("/my-idp-learning/series/" + s.id); }}
+                  >
+                    <div className="flex gap-6 text-left h-[133px]">
+                      {/* Thumbnail */}
+                      <div className="w-[180px] md:w-[237px] h-[133px] rounded-xl shrink-0 overflow-hidden relative bg-gray-100 dark:bg-gray-700 aspect-video">
+                        <img src={s.thumbnail} alt={s.title} className="w-full h-full object-cover" />
+                      </div>
+
+                      {/* Info */}
+                      <div className="flex-1 min-w-0 flex flex-col h-[133px]">
+                        <div className="h-[93px] flex flex-col items-start gap-1.5 overflow-hidden">
+                          <div className="flex items-center gap-2">
+                            <div className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-700/50 text-slate-800 dark:text-slate-200 text-[11px] font-semibold tracking-wide">
+                              <Layers className="w-3.5 h-3.5" />
+                              Series
+                            </div>
+                            <div className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-700/50 text-slate-800 dark:text-slate-200 text-[11px] font-semibold tracking-wide">
+                              {s.category === "BACKEND" ? (
+                                <Terminal className="w-3.5 h-3.5" />
+                              ) : s.category === "DATABASE" ? (
+                                <FileText className="w-3.5 h-3.5" />
+                              ) : (
+                                <AppWindow className="w-3.5 h-3.5" />
+                              )}
+                              {s.category.charAt(0).toUpperCase() + s.category.slice(1).toLowerCase()}
+                            </div>
+                          </div>
+                          <h3
+                            className="text-[15px] font-semibold text-gray-800 dark:text-white leading-tight line-clamp-2"
+                            style={{ fontFamily: '"Geometrica", sans-serif' }}
+                          >
+                            {s.title}
+                          </h3>
+                          <p
+                            className="text-[11px] font-normal text-gray-500 dark:text-gray-400 mt-1 leading-tight line-clamp-1"
+                            style={{ fontFamily: '"Geometrica", sans-serif' }}
+                          >
+                            {s.description}
+                          </p>
+                        </div>
+
+                        <div className="h-[40px] flex items-center justify-between mt-auto">
+                          <div className="flex items-center gap-1.5 text-gray-700 dark:text-gray-300">
+                            <Layers className="w-4 h-4 opacity-80 shrink-0" />
+                            <span
+                              className="text-[11px] font-normal leading-tight"
+                              style={{ fontFamily: '"Geometrica", sans-serif' }}
+                            >
+                              {s.modules} modules · {s.videos} videos
+                            </span>
+                          </div>
+                          <button className="w-8 h-8 rounded-full bg-[#006bff] flex items-center justify-center active:scale-95 hover:bg-[#0056cc] group-hover:bg-[#0056cc] transition-all shrink-0 cursor-pointer shadow-sm">
+                            <ArrowRight className="w-4 h-4 text-white transition-transform duration-300 group-hover:translate-x-1" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+            </div>
+
+            <div className={`absolute right-0 top-[calc(50%-24px)] -translate-y-1/2 z-30 hidden md:flex items-center justify-center px-4 pointer-events-none transition-opacity duration-300 ${canSeriesScrollRight ? "opacity-100" : "opacity-0"}`}>
+              <button
+                className="w-12 h-12 -mr-10 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-gray-700 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white pointer-events-auto border border-transparent hover:border-gray-200/60 hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none"
+                onClick={() => { seriesCarouselRef.current?.scrollBy({ left: 480, behavior: "smooth" }); setTimeout(handleSeriesScroll, 500); }}
+              >
+                <ChevronRight className="w-6 h-6 stroke-[2.5]" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Reading Hub Section */}
+        <div className="relative z-0 mb-8">
+          <div className="flex items-center justify-between mb-3 px-1">
+            <div className="flex items-center gap-2">
+              <FileText className="w-5 h-5 text-[#08060d] dark:text-white relative -top-[3px]" />
+              <h2
+                className="!text-[18px] font-medium !text-[#08060d] dark:!text-white leading-none"
+                style={{ fontFamily: '"Geometrica", sans-serif' }}
+              >
+                Reading Hub
+              </h2>
+            </div>
+            <div className="relative -top-[3px]" ref={readingFilterRef}>
+              <button
+                onClick={() => setIsReadingFilterOpen(!isReadingFilterOpen)}
+                className={`group flex items-center justify-center gap-2 h-10 rounded-full border transition-all duration-300 active:scale-[0.96] cursor-pointer ${
+                  isReadingFilterOpen
+                    ? "bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl border-gray-200/50 dark:border-transparent shadow-xl translate-y-[-1px] text-gray-700 dark:text-gray-300 px-4"
+                    : "bg-transparent hover:bg-white dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white border-transparent hover:border-gray-200/60 dark:hover:border-transparent hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] w-10 md:w-auto md:px-4"
+                }`}
+              >
+                <span className="hidden md:inline text-[12px] font-normal" style={{ fontFamily: '"Geometrica", sans-serif' }}>Filters</span>
+                <Settings2 className={`w-5 h-5 transition-transform duration-300 ${isReadingFilterOpen ? "scale-110 text-[#FC4C02]" : ""}`} />
+              </button>
+              <div className={`absolute top-full right-0 mt-2 w-44 bg-white dark:bg-gray-800 rounded-xl p-1.5 z-50 transition-all duration-300 origin-top-right shadow-[0_30px_60px_-12px_rgba(0,0,0,0.15)] ${
+                isReadingFilterOpen ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
+              }`}>
+                <div className="flex flex-col gap-1">
+                  {[{ id: "All", label: "All Books" }, { id: "Engineering", label: "Engineering" }, { id: "Frontend", label: "Frontend" }, { id: "Backend", label: "Backend" }].map((cat) => (
+                    <button
+                      key={cat.id}
+                      onClick={() => { setReadingFilter(cat.id); setIsReadingFilterOpen(false); }}
+                      className={`flex items-center gap-3 w-full px-3 py-1.5 rounded-lg text-[12px] font-normal transition-all duration-200 cursor-pointer ${
+                        readingFilter === cat.id
+                          ? "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
+                          : "text-gray-700 dark:text-gray-300 hover:bg-gray-100/60 dark:hover:bg-gray-700/60 hover:text-gray-900 dark:hover:text-white"
+                      }`}
+                      style={{ fontFamily: '"Geometrica", sans-serif' }}
+                    >
+                      <span className="flex-1 text-left">{cat.label}</span>
+                      {readingFilter === cat.id && <Check className="w-4 h-4 text-orange-600" />}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="relative group/readingcarousel -mb-4 -mt-2">
+            <div className={`absolute left-0 top-1/2 -translate-y-1/2 z-30 hidden md:flex items-center justify-center px-4 pointer-events-none transition-opacity duration-300 ${canReadingScrollLeft ? "opacity-100" : "opacity-0"}`}>
+              <button
+                className="w-12 h-12 -ml-10 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-gray-700 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white pointer-events-auto border border-transparent hover:border-gray-200/60 hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none"
+                onClick={() => { readingCarouselRef.current?.scrollBy({ left: -400, behavior: "smooth" }); setTimeout(handleReadingScroll, 500); }}
+              >
+                <ChevronLeft className="w-6 h-6 stroke-[2.5]" />
+              </button>
+            </div>
+
+            <div
+              ref={readingCarouselRef}
+              onScroll={handleReadingScroll}
+              className="flex overflow-x-auto gap-4 pt-2 pb-4 snap-x snap-mandatory no-scrollbar px-1"
+              style={{ scrollBehavior: "smooth" }}
+            >
+              {readingHubData
+                .filter((r) => readingFilter === "All" || r.category === readingFilter)
+                .map((r) => (
+                  <div
+                    key={r.id}
+                    className="shrink-0 w-[140px] sm:w-[155px] md:w-[165px] cursor-pointer snap-start group"
+                    onClick={() => { setSelectedReading(r); navigate("/my-idp-learning/reading/" + r.id); }}
+                  >
+                    <div className="relative w-full aspect-[2/3] rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300">
+                      <img src={r.thumbnail} alt={r.title} className="w-full h-full object-cover" />
+                      <div className="absolute top-2 right-2">
+                        <div className="w-7 h-7 rounded-full bg-white/90 dark:bg-gray-900/80 backdrop-blur-md flex items-center justify-center shadow">
+                          <FileText className="w-3.5 h-3.5 text-[#fc4c02]" />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="mt-2 px-0.5">
+                      <p className="text-[12px] font-medium text-gray-800 dark:text-white leading-tight line-clamp-2" style={{ fontFamily: '"Geometrica", sans-serif' }}>{r.title}</p>
+                      <p className="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5" style={{ fontFamily: '"Geometrica", sans-serif' }}>{r.author}</p>
+                      <p className="text-[10px] text-gray-400 dark:text-gray-500 mt-0.5" style={{ fontFamily: '"Geometrica", sans-serif' }}>{r.pages} pages · PDF</p>
+                    </div>
+                  </div>
+                ))}
+            </div>
+
+            <div className={`absolute right-0 top-1/2 -translate-y-1/2 z-30 hidden md:flex items-center justify-center px-4 pointer-events-none transition-opacity duration-300 ${canReadingScrollRight ? "opacity-100" : "opacity-0"}`}>
+              <button
+                className="w-12 h-12 -mr-10 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-gray-700 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white pointer-events-auto border border-transparent hover:border-gray-200/60 hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none"
+                onClick={() => { readingCarouselRef.current?.scrollBy({ left: 400, behavior: "smooth" }); setTimeout(handleReadingScroll, 500); }}
               >
                 <ChevronRight className="w-6 h-6 stroke-[2.5]" />
               </button>

@@ -92,26 +92,6 @@ function HistoryViewDetailsPage({ complaint, onBack, isAdmin = false }: HistoryV
   return (
     <div className="min-h-screen bg-white p-8">
       <div className="max-w-4xl mx-auto">
-        {/* Back Button */}
-        <button
-          onClick={onBack}
-          className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6 transition-colors"
-        >
-          <svg
-            className="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M10 19l-7-7m0 0l7-7m-7 7h18"
-            />
-          </svg>
-          <span className="font-medium">Back to History</span>
-        </button>
 
         {/* Complaint ID */}
         <p className="text-gray-500 text-sm mb-3">#{complaint.id}</p>
