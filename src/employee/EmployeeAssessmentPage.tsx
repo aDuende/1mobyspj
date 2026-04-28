@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { CheckCircle2, Clock } from "lucide-react";
-import { Card } from "./components/ui/card";
+import { Card } from "../components/ui/card";
 
 interface Assessment {
   id: string;
@@ -12,7 +12,7 @@ interface Assessment {
   courseCode?: string;
 }
 
-function AssessmentPage() {
+function EmployeeAssessmentPage() {
   const [activeTab, setActiveTab] = useState<"upcoming" | "pastdue" | "completed">("upcoming");
 
   // Mock assessment data
@@ -80,7 +80,8 @@ function AssessmentPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="w-full">
-        <div className="mb-6 px-8">
+        {/* Tabs */}
+        <div className="mb-6 px-8 pt-8">
           <div className="flex gap-1 border-b border-gray-200">
             <button
               onClick={() => setActiveTab("upcoming")}
@@ -282,4 +283,4 @@ function AssessmentPage() {
   );
 }
 
-export default AssessmentPage;
+export default EmployeeAssessmentPage;

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { CheckCircle2, Clock } from "lucide-react";
-import { Card } from "./components/ui/card";
+import { CheckCircle2, Clock, Users } from "lucide-react";
+import { Card } from "../components/ui/card";
 
 interface Assessment {
   id: string;
@@ -10,46 +10,81 @@ interface Assessment {
   status: "pending" | "completed" | "overdue";
   submittedDate?: string;
   courseCode?: string;
+  employeeName?: string;
 }
 
-function AssessmentPage() {
+function ManagerAssessmentPage() {
   const [activeTab, setActiveTab] = useState<"upcoming" | "pastdue" | "completed">("upcoming");
+  const [viewMode, setViewMode] = useState<"my" | "team">("my");
 
-  // Mock assessment data
-  const assessments: Assessment[] = [
+  // Mock assessment data for manager
+  const myAssessments: Assessment[] = [
     {
-      id: "1",
-      title: "Self Assessment",
-      description: "Assign by jadi.vort",
-      dueDate: "2026-05-06",
-      status: "pending"
+      id: "m1",
+      title: "Leadership Assessment Q2",
+      description: "Due at 11:59 PM",
+      dueDate: "2026-06-30",
+      status: "pending",
+      courseCode: "MGMT_401_2026"
     },
     {
-      id: "2",
-      title: "February 2026 Test",
-      description: "Assign 2 Feb by honkh.arc",
-      dueDate: "2026-02-05",
+      id: "m2",
+      title: "Team Performance Review",
+      description: "Assign 1 Apr by hr.dept",
+      dueDate: "2026-04-15",
       status: "overdue"
     },
     {
-      id: "3",
-      title: "February 2026 Test",
-      description: "Submitted on 4 Feb 2026 at 1:04 pm",
-      dueDate: "2026-02-04",
-      submittedDate: "2026-02-04",
-      status: "completed"
-    },
-    {
-      id: "4",
-      title: "January 2026 Assessment",
-      description: "Submitted on 15 Jan 2026 at 2:30 pm",
-      dueDate: "2026-01-15",
-      submittedDate: "2026-01-15",
+      id: "m3",
+      title: "Q1 Management Review",
+      description: "Submitted on 31 Mar 2026 at 3:45 pm",
+      dueDate: "2026-03-31",
+      submittedDate: "2026-03-31",
       status: "completed"
     }
   ];
 
+  // Mock team assessments
+  const teamAssessments: Assessment[] = [
+    {
+      id: "t1",
+      title: "Self Assessment",
+      description: "Assign by jadi.vort",
+      dueDate: "2026-05-06",
+      status: "pending",
+      employeeName: "John Smith"
+    },
+    {
+      id: "t2",
+      title: "Technical Skills Assessment",
+      description: "Pending submission",
+      dueDate: "2026-04-20",
+      status: "overdue",
+      employeeName: "Sarah Johnson"
+    },
+    {
+      id: "t3",
+      title: "February 2026 Test",
+      description: "Submitted on 4 Feb 2026 at 1:04 pm",
+      dueDate: "2026-02-04",
+      submittedDate: "2026-02-04",
+      status: "completed",
+      employeeName: "Mike Chen"
+    },
+    {
+      id: "t4",
+      title: "Customer Service Training",
+      description: "Submitted on 10 Mar 2026 at 10:15 am",
+      dueDate: "2026-03-10",
+      submittedDate: "2026-03-10",
+      status: "completed",
+      employeeName: "Emily Davis"
+    }
+  ];
+
   const getFilteredAssessments = () => {
+    const assessments = viewMode === "my" ? myAssessments : teamAssessments;
+    
     switch (activeTab) {
       case "upcoming":
         return assessments.filter(a => a.status === "pending");
@@ -63,6 +98,8 @@ function AssessmentPage() {
   };
 
   const getTabCount = (tab: "upcoming" | "pastdue" | "completed") => {
+    const assessments = viewMode === "my" ? myAssessments : teamAssessments;
+    
     switch (tab) {
       case "upcoming":
         return assessments.filter(a => a.status === "pending").length;
@@ -80,6 +117,34 @@ function AssessmentPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="w-full">
+        {/* View Mode Toggle */}
+        <div className="mb-6 px-8 pt-8">
+          <div className="flex gap-2">
+            <button
+              onClick={() => setViewMode("my")}
+              className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                viewMode === "my"
+                  ? "bg-blue-600 text-white"
+                  : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
+              }`}
+            >
+              My Assessments
+            </button>
+            <button
+              onClick={() => setViewMode("team")}
+              className={`px-4 py-2 rounded-lg font-medium transition-all flex items-center gap-2 ${
+                viewMode === "team"
+                  ? "bg-blue-600 text-white"
+                  : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
+              }`}
+            >
+              <Users className="w-4 h-4" />
+              Team Assessments
+            </button>
+          </div>
+        </div>
+
+        {/* Tabs */}
         <div className="mb-6 px-8">
           <div className="flex gap-1 border-b border-gray-200">
             <button
@@ -128,7 +193,7 @@ function AssessmentPage() {
                   No upcoming assessments
                 </h3>
                 <p className="text-sm text-gray-500">
-                  You're all caught up!
+                  {viewMode === "my" ? "You're all caught up!" : "Your team is all caught up!"}
                 </p>
               </div>
             ) : (
@@ -161,6 +226,11 @@ function AssessmentPage() {
                             <p className="text-sm text-gray-600 mb-2 text-left">
                               {assessment.description}
                             </p>
+                            {assessment.employeeName && (
+                              <p className="text-xs text-gray-500 text-left">
+                                {assessment.employeeName}
+                              </p>
+                            )}
                           </div>
                         </div>
                       </Card>
@@ -181,7 +251,7 @@ function AssessmentPage() {
                   No overdue assessments
                 </h3>
                 <p className="text-sm text-gray-500">
-                  Great job staying on track!
+                  {viewMode === "my" ? "Great job staying on track!" : "Your team is on track!"}
                 </p>
               </div>
             ) : (
@@ -214,6 +284,11 @@ function AssessmentPage() {
                             <p className="text-sm text-gray-600 mb-2 text-left">
                               {assessment.description}
                             </p>
+                            {assessment.employeeName && (
+                              <p className="text-xs text-gray-500 text-left">
+                                Employee: {assessment.employeeName}
+                              </p>
+                            )}
                           </div>
                         </div>
                       </Card>
@@ -267,6 +342,11 @@ function AssessmentPage() {
                             <p className="text-sm text-gray-600 mb-2 text-left">
                               {assessment.description}
                             </p>
+                            {assessment.employeeName && (
+                              <p className="text-xs text-gray-500 text-left">
+                                Employee: {assessment.employeeName}
+                              </p>
+                            )}
                           </div>
                         </div>
                       </Card>
@@ -282,4 +362,4 @@ function AssessmentPage() {
   );
 }
 
-export default AssessmentPage;
+export default ManagerAssessmentPage;
