@@ -364,12 +364,12 @@ function DashboardContent({ username }: { username: string }) {
               <button
                 onClick={() => setIsCategoryOpen(!isCategoryOpen)}
                 className={`
-                  group flex items-center gap-2 px-4 py-2 rounded-full border
+                  group flex items-center gap-2 px-4 py-2 rounded-full border-transparent
                   transition-all duration-300 active:scale-[0.96] cursor-pointer text-[12px] font-normal
                   ${
                     isCategoryOpen
-                      ? "bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl border-gray-200/50 dark:border-transparent shadow-xl translate-y-[-1px] text-gray-700 dark:text-gray-300"
-                      : "bg-transparent hover:bg-white dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white border-transparent hover:border-gray-200/60 dark:hover:border-transparent hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)]"
+                      ? "bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl border-transparent shadow-xl translate-y-[-1px] text-gray-700 dark:text-gray-300"
+                      : "bg-transparent hover:bg-white dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white border-transparent hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)]"
                   }
                 `}
                 style={{ fontFamily: '"Geometrica", sans-serif' }}
@@ -387,7 +387,7 @@ function DashboardContent({ username }: { username: string }) {
               <div
                 className={`
                   absolute top-full right-0 mt-2 w-38 
-                  bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-xl border border-gray-200/50 dark:border-transparent p-1 z-50 
+                  bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-xl p-1 z-50 
                   transition-all duration-300 origin-top-right shadow-xl surface-glass
                   ${
                     isCategoryOpen
@@ -482,7 +482,7 @@ function DashboardContent({ username }: { username: string }) {
 
             <div className="flex-1 w-full flex flex-col items-end">
               <div className="w-fit ml-auto space-y-2.5">
-                <div className="py-3.5 px-3.5 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)]">
+                <div className="py-3.5 px-3.5 rounded-2xl bg-white dark:bg-gray-800 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)]">
                   <div className="flex items-center justify-between gap-6 mb-2">
                     <span className="text-[11px] font-bold text-gray-600 dark:text-gray-400">
                       Current Rating
@@ -560,7 +560,7 @@ function DashboardContent({ username }: { username: string }) {
               >
                 Top Strengths
               </h3>
-              <div className="w-full rounded-2xl bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer p-3 space-y-2.5">
+              <div className="w-full rounded-2xl bg-white dark:bg-gray-800 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer p-3 space-y-2.5">
                 {[
                   "Strategic Leadership Workshop",
                   "Team Communication",
@@ -598,7 +598,7 @@ function DashboardContent({ username }: { username: string }) {
               >
                 Areas to Improve
               </h3>
-              <div className="w-full rounded-2xl bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer p-3 space-y-2.5">
+              <div className="w-full rounded-2xl bg-white dark:bg-gray-800 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer p-3 space-y-2.5">
                 {[
                   "Project Management",
                   "Conflict Resolution",
@@ -639,12 +639,12 @@ function DashboardContent({ username }: { username: string }) {
             </h3>
             <div className="space-y-2.5">
               {/* Points */}
-              <div className="flex items-center p-3 bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer rounded-2xl relative">
+              <div className="flex items-center p-3 bg-white dark:bg-gray-800 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer rounded-2xl relative">
                 <div className="flex items-center gap-4 text-left pr-12">
                   <div className="w-9 h-9 flex items-center justify-center shrink-0">
                     <div className="relative flex items-center justify-center">
                       <div className="w-7 h-7 rounded-full bg-linear-to-br from-yellow-300 via-orange-400 to-yellow-500 shadow-[0_0_10px_rgba(245,158,11,0.25)]">
-                        <div className="absolute inset-[1.5px] rounded-full border border-yellow-200/50 shadow-inner"></div>
+                        <div className="absolute inset-[1.5px] rounded-full border-transparent border-yellow-200/50 shadow-inner"></div>
                       </div>
                       <Star className="absolute w-3.5 h-3.5 text-white fill-white drop-shadow-[0_1.5px_1.5px_rgba(0,0,0,0.15)]" />
                     </div>
@@ -673,7 +673,7 @@ function DashboardContent({ username }: { username: string }) {
               </div>
 
               {/* Efficient Learner */}
-              <div className="flex items-center gap-4 p-3 bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer rounded-2xl">
+              <div className="flex items-center gap-4 p-3 bg-white dark:bg-gray-800 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer rounded-2xl">
                 <div className="w-9 h-9 flex items-center justify-center shrink-0">
                   <img
                     src={efficientLearnerIcon}
@@ -698,7 +698,7 @@ function DashboardContent({ username }: { username: string }) {
               </div>
 
               {/* Streak */}
-              <div className="p-3 bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 rounded-2xl relative overflow-hidden h-[74px] cursor-pointer group">
+              <div className="p-3 bg-white dark:bg-gray-800 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 rounded-2xl relative overflow-hidden h-[74px] cursor-pointer group">
                 <div className="flex items-center gap-4 text-left">
                   <div className="w-9 h-9 flex items-center justify-center shrink-0">
                     <img
@@ -786,7 +786,7 @@ function DashboardContent({ username }: { username: string }) {
               ].map((course, i) => (
                 <div
                   key={i}
-                  className="p-5 rounded-[24px] bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer flex flex-col gap-4 group"
+                  className="p-5 rounded-[24px] bg-white dark:bg-gray-800 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer flex flex-col gap-4 group"
                 >
                   <div className="flex items-start justify-between gap-4 text-left">
                     <div className="flex flex-col items-start gap-2.5 flex-1">
@@ -891,7 +891,7 @@ function DashboardContent({ username }: { username: string }) {
               ].map((rec, i) => (
                 <div
                   key={i}
-                  className="flex flex-col items-start gap-2 p-3.5 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer group text-left relative min-h-[110px]"
+                  className="flex flex-col items-start gap-2 p-3.5 rounded-2xl bg-white dark:bg-gray-800 border-transparent  dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer group text-left relative min-h-[110px]"
                 >
                   <div className="flex flex-col items-start gap-1.5 text-left pr-8 flex-1">
                     {/* Course Badge */}
@@ -968,7 +968,7 @@ function DashboardContent({ username }: { username: string }) {
                 Your Fox
               </h2>
               <span
-                className="px-3 py-1 rounded-full text-[12px] font-normal bg-white/90 dark:bg-gray-800/90 text-gray-900 dark:text-white shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] border border-gray-200/40 cursor-default"
+                className="px-3 py-1 rounded-full text-[12px] font-normal bg-white/90 dark:bg-gray-800/90 text-gray-900 dark:text-white shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)]  cursor-default"
                 style={{ fontFamily: '"Geometrica", sans-serif' }}
               >
                 Lucy Lv.2
@@ -1212,7 +1212,10 @@ function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
                 />
                 <Route path="/settings" element={<SettingPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
-                <Route path="/help/*" element={<HelpPage />} />
+                <Route
+                  path="/help/*"
+                  element={<HelpPage username={username} role="employee" />}
+                />
                 <Route
                   path="/dashboard"
                   element={<DashboardContent username={username} />}

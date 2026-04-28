@@ -33,11 +33,11 @@ const LanguageSelector: React.FC<LanguageDropdownProps> = ({
         onClick={() => setIsOpen(!isOpen)}
         className={`
           flex items-center gap-2.5 px-4 py-2.5 rounded-full 
-          transition-all duration-300 active:scale-[0.96] cursor-pointer border
+          transition-all duration-300 active:scale-[0.96] cursor-pointer
           ${
             isOpen
-              ? "bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl border-gray-200/50 dark:border-transparent shadow-xl translate-y-[-1px]"
-              : "bg-transparent hover:bg-white dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white border-transparent hover:border-gray-200/60 dark:hover:border-transparent hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)]"
+              ? "bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl shadow-xl translate-y-[-1px]"
+              : "bg-transparent hover:bg-white dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)]"
           }
         `}
       >
@@ -68,8 +68,9 @@ const LanguageSelector: React.FC<LanguageDropdownProps> = ({
       <div
         className={`
           absolute top-full right-0 mt-3 w-40 
-          bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl border border-gray-200/50 dark:border-transparent p-1 z-50 
-          transition-all duration-300 origin-top-right surface-glass
+          bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-xl p-1 z-50 
+          transition-all duration-300 origin-top-right
+          shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)]
           ${
             isOpen
               ? "opacity-100 scale-100 translate-y-0"
