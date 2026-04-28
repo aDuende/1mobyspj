@@ -7,6 +7,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "./components/ui/chart";
+import CourseDetailsPage from "./CourseDetailsPage";
 
 import {
   Clapperboard,
@@ -311,6 +312,7 @@ export default function MyIDPLearningPage() {
     fullDescription: string;
     category: string;
     videoUrl: string;
+    thumbnail: string;
     rating: number;
     reviews: number;
     instructor: string;
@@ -621,9 +623,10 @@ export default function MyIDPLearningPage() {
 
   if (selectedCourse) {
     return (
-      <div className="flex-1 bg-[#f8fafc] dark:bg-[#08060d] h-screen overflow-hidden">
-        {/* Course Details */}
-      </div>
+      <CourseDetailsPage
+        course={selectedCourse}
+        onBack={() => setSelectedCourse(null)}
+      />
     );
   }
 
