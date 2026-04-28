@@ -1194,6 +1194,15 @@ function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
                       </BreadcrumbItem>
                     </>
                   )}
+                   {location.pathname === "/competency-profile" && (
+                    <BreadcrumbItem>
+                      <BreadcrumbPage
+                        style={{ fontFamily: "Geometrica, sans-serif" }}
+                      >
+                        Competency Profile
+                      </BreadcrumbPage>
+                    </BreadcrumbItem>
+                  )}
                 </BreadcrumbList>
               </Breadcrumb>
             </div>
