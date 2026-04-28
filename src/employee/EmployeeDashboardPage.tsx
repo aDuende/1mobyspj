@@ -1186,6 +1186,7 @@ function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
                 </BreadcrumbList>
               </Breadcrumb>
             </div>
+
             <div className="flex items-center gap-2">
               <ExperiencePoints points={120} />
               <AlertSelector />
