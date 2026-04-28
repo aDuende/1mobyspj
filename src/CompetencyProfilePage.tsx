@@ -174,8 +174,9 @@ export default function CompetencyProfilePage() {
               <Card className="p-4 rounded-2xl bg-white dark:bg-gray-800 border-none shadow-sm h-full text-left" style={fadeLeft(500)}>
                 <div className="flex flex-col gap-4 items-start">
                   <section className="w-full text-left">
-                    <h3 className="text-[18px] font-medium text-[#08060d] dark:text-white mb-2.5 text-left leading-tight flex items-center gap-2">
-                      <div className="h-8 w-8 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
+                    <h3 className="!text-[18px] font-medium !text-[#08060d] dark:!text-white mb-2.5 text-left leading-tight flex items-center gap-2"
+                style={{ fontFamily: '"Geometrica", sans-serif' }}>
+                      <div className="h-8 w-8 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center shrink-0">
                         <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
                       </div>
                       Top Strengths
@@ -192,7 +193,7 @@ export default function CompetencyProfilePage() {
                               <path d="M5 13l4 4L19 7" />
                             </svg>
                           </div>
-                          <span className="text-[11px] text-gray-700 dark:text-gray-200 font-medium leading-tight">
+                          <span className="text-[11px] text-gray-700 dark:text-gray-200 font-medium text-left leading-tight" style={{ fontFamily: '"Geometrica", sans-serif' }}>
                             {item}
                           </span>
                         </div>
@@ -206,8 +207,9 @@ export default function CompetencyProfilePage() {
               <Card className="p-4 rounded-2xl bg-white dark:bg-gray-800 border-none shadow-sm h-full text-left" style={fadeRight(500)}>
                 <div className="flex flex-col gap-4 items-start">
                   <section className="w-full text-left">
-                    <h3 className="text-[18px] font-medium text-[#08060d] dark:text-white mb-2.5 text-left leading-tight flex items-center gap-2">
-                      <div className="h-8 w-8 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center">
+                    <h3 className="!text-[18px] font-medium !text-[#08060d] dark:!text-white mb-2.5 text-left leading-tight flex items-center gap-2"
+                style={{ fontFamily: '"Geometrica", sans-serif' }}>
+                      <div className="h-8 w-8 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center shrink-0">
                         <AlertTriangle className="h-4 w-4 text-amber-500 dark:text-amber-400" />
                       </div>
                       Areas to Improve
@@ -225,7 +227,7 @@ export default function CompetencyProfilePage() {
                               <circle cx="12" cy="17" r="1.4" />
                             </svg>
                           </div>
-                          <span className="text-[11px] text-gray-700 dark:text-gray-200 font-medium leading-tight">
+                          <span className="text-[11px] text-gray-700 dark:text-gray-200 font-medium text-left leading-tight" style={{ fontFamily: '"Geometrica", sans-serif' }}>
                             {item}
                           </span>
                         </div>
