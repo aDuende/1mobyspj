@@ -9,7 +9,7 @@ export default function MyIDPLearningPage() {
         {/* Header */}
         <div className="flex items-start justify-between">
           <div>
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white">My IDP & Learning</h2>
+            <h2 className="text-xl font-semibold text-gray-900 text-foreground">My IDP & Learning</h2>
             <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5 text-left">Growing Area.</p>
           </div>
           <Button variant="link" className="text-blue-500 hover:text-blue-600">

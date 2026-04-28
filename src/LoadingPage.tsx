@@ -9,12 +9,10 @@ function LoadingPage({ onLoadingComplete }: LoadingPageProps) {
   const [fadeOut, setFadeOut] = useState(false);
 
   useEffect(() => {
-    // Start fade out after 2 seconds
     const fadeTimer = setTimeout(() => {
       setFadeOut(true);
-    }, 2000);
+    }, 2250);
 
-    // Complete loading after fade out animation (2.5 seconds total)
     const completeTimer = setTimeout(() => {
       onLoadingComplete();
     }, 2500);
@@ -29,41 +27,54 @@ function LoadingPage({ onLoadingComplete }: LoadingPageProps) {
     <div
       className="fixed inset-0 w-screen h-screen flex items-center justify-center transition-all duration-700 ease-in-out"
       style={{
-        background: 'linear-gradient(135deg, #006BFF 0%, #006BFF 30%, #1D3A72 45%, #2B5876 60%, #4DA0B0 75%, #24B850 85%, #FFE816 95%, #FF0000 100%)',
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
+        background: `
+          linear-gradient(
+            135deg,
+            #0b78ff 0%,
+            #0a5fd6 25%,
+            #0b3c9f 50%,
+            #1c5fa8 70%,
+            #ff932f 90%,
+            #ff7a00 100%
+          )
+        `,
         overflow: 'hidden',
         transform: fadeOut ? 'translateY(-100%)' : 'translateY(0)',
         opacity: fadeOut ? 0 : 1
       }}
     >
-      {/* Diagonal overlay effect */}
-      <div 
-        style={{
-          position: 'absolute',
-          top: '-50%',
-          right: '-20%',
-          width: '150%',
-          height: '200%',
-          background: 'linear-gradient(135deg, transparent 0%, transparent 35%, rgba(29, 58, 114, 0.6) 50%, rgba(43, 88, 118, 0.5) 65%, rgba(77, 160, 176, 0.4) 80%, transparent 100%)',
-          transform: 'rotate(-15deg)',
-          pointerEvents: 'none'
-        }}
+      {/* PNG ที่อยู่กับ background */}
+      <img
+        src="/bg-overlay.webp"
+        alt=""
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none z-[1] opacity-100"
       />
-      
+
+      {/* ภาพโผล่ขึ้น */}
+      <img
+        src="/reveal.webp"
+        alt=""
+        className={`
+          absolute inset-0 w-full h-full object-cover z-[2]
+          transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]
+          ${
+            fadeOut
+              ? "opacity-100 blur-0 scale-100 translate-y-0"
+              : "opacity-0 blur-md scale-110 translate-y-[80px]"
+          }
+        `}
+      />
+
+      {/* Logo */}
       <div className="flex flex-col items-center space-y-8 relative z-10">
-        {/* Logo with pulse animation */}
         <div className="animate-pulse">
           <img
             src={logo}
             alt="1Moby Logo"
             className="w-96 h-auto"
-            style={{ 
-              fontFamily: 'Geometrica, sans-serif',
-              filter: 'drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3)) drop-shadow(0 5px 15px rgba(0, 0, 0, 0.2))'
+            style={{
+              filter:
+                'drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3)) drop-shadow(0 5px 15px rgba(0, 0, 0, 0.2))'
             }}
           />
         </div>
