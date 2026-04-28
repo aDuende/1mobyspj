@@ -19,8 +19,7 @@ function LoadingPage({ onLoadingComplete }: LoadingPageProps) {
     }, 3500);
 
     return () => {
-      clearTimeout(entranceTimer);
-      clearTimeout(exitTimer);
+      clearTimeout(fadeTimer);
       clearTimeout(completeTimer);
     };
   }, [onLoadingComplete]);

@@ -13,26 +13,41 @@ type UserRole = "employee" | "manager" | "admin" | null;
 
 function Main() {
   const [isLoading, setIsLoading] = useState(true);
-  const [userRole, setUserRole] = useState<UserRole>(null);
-  const [username, setUsername] = useState("");
+  const [userRole, setUserRole] = useState<UserRole>(() => {
+    return (sessionStorage.getItem("userRole") as UserRole) ?? null;
+  });
+  const [username, setUsername] = useState(() => {
+    return sessionStorage.getItem("username") ?? "";
+  });
   const navigate = useNavigate();
   const location = useLocation();
 
   const handleLoadingComplete = () => {
     setIsLoading(false);
-    navigate("/");
+    const savedRole = sessionStorage.getItem("userRole");
+    if (savedRole) {
+      if (location.pathname === "/" || location.pathname === "") {
+        navigate("/dashboard");
+      }
+    } else {
+      navigate("/");
+    }
   };
 
   const handleLogin = (
     role: "employee" | "manager" | "admin",
     user: string,
   ) => {
+    sessionStorage.setItem("userRole", role);
+    sessionStorage.setItem("username", user);
     setUserRole(role);
     setUsername(user);
     navigate("/dashboard");
   };
 
   const handleLogout = () => {
+    sessionStorage.removeItem("userRole");
+    sessionStorage.removeItem("username");
     setUserRole(null);
     setUsername("");
     navigate("/");
