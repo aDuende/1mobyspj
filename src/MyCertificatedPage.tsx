@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowLeft, Clock } from "lucide-react";
+import { ArrowLeft, Clock, AlertCircle } from "lucide-react";
 
 interface Certificate {
   id: string;
@@ -13,6 +13,7 @@ interface Certificate {
   icon: string;
   gradient: string;
   category: "Technical" | "Leadership" | "Business";
+  notificationType?: "pending" | "expiring" | "expired"; // notification type
 }
 
 const mockCertificates: Certificate[] = [
@@ -27,6 +28,7 @@ const mockCertificates: Certificate[] = [
     category: "Technical",
     icon: "⚛️",
     gradient: "linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)",
+    notificationType: "expiring",
   },
   {
     id: "2",
@@ -39,6 +41,7 @@ const mockCertificates: Certificate[] = [
     category: "Technical",
     icon: "💻",
     gradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+    notificationType: "expired",
   },
   {
     id: "3",
@@ -50,6 +53,7 @@ const mockCertificates: Certificate[] = [
     category: "Leadership",
     icon: "👔",
     gradient: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+    notificationType: "pending",
   },
   {
     id: "4",
@@ -94,13 +98,37 @@ export default function MyCertificatedPage() {
     window.history.back();
   };
 
-  const filteredCertificates = selectedCategory === "All" 
-    ? mockCertificates 
-    : mockCertificates.filter(cert => cert.category === selectedCategory);
+  // Get all certificates
+  const allCount = mockCertificates.length;
 
-  const isExpired = (expiryDate?: string) => {
-    if (!expiryDate) return false;
-    return new Date(expiryDate) < new Date();
+  const filteredCertificates = mockCertificates.filter(cert => 
+    selectedCategory === "All" || cert.category === selectedCategory
+  );
+
+  const getNotificationBadgeColor = (type?: string) => {
+    switch(type) {
+      case "expired":
+        return "bg-red-500/20 text-red-100 border border-red-500/30";
+      case "expiring":
+        return "bg-yellow-500/20 text-yellow-100 border border-yellow-500/30";
+      case "pending":
+        return "bg-blue-500/20 text-blue-100 border border-blue-500/30";
+      default:
+        return "bg-gray-500/20 text-gray-100 border border-gray-500/30";
+    }
+  };
+
+  const getNotificationBadgeText = (type?: string) => {
+    switch(type) {
+      case "expired":
+        return "หมดอายุแล้ว";
+      case "expiring":
+        return "ใกล้หมดอายุ";
+      case "pending":
+        return "รออยู่";
+      default:
+        return "";
+    }
   };
 
   return (
@@ -108,7 +136,7 @@ export default function MyCertificatedPage() {
       {/* Header */}
       <div className="sticky top-0 z-40 bg-white dark:bg-neutral-950 border-b border-gray-200 dark:border-white/10 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-4">
               <button
                 onClick={handleGoBack}
@@ -123,18 +151,7 @@ export default function MyCertificatedPage() {
                 >
                   My Certificated
                 </h1>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                  Your professional achievements
-                </p>
               </div>
-            </div>
-            <div className="text-right">
-              <div className="text-3xl font-bold text-[#FC4C02]" style={{ fontFamily: '"Geometrica", sans-serif' }}>
-                {filteredCertificates.length}
-              </div>
-              <p className="text-xs text-gray-500 dark:text-gray-400">
-                {selectedCategory === "All" ? "Total" : selectedCategory}
-              </p>
             </div>
           </div>
         </div>
@@ -163,96 +180,97 @@ export default function MyCertificatedPage() {
         {/* Certificates Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredCertificates.map((cert) => {
-            const expired = isExpired(cert.expiryDate);
-
             return (
               <div
                 key={cert.id}
-                className="group relative bg-white dark:bg-neutral-950 rounded-3xl overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 cursor-pointer border border-gray-200 dark:border-white/10"
+                className="group relative bg-black dark:bg-black rounded-3xl overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 cursor-pointer border border-gray-700 dark:border-gray-800"
               >
-                {/* Certificate Header with Gradient */}
-                <div
-                  className="relative h-48 flex flex-col justify-between p-6 text-white overflow-hidden"
-                  style={{
-                    background: cert.gradient,
-                  }}
-                >
-                  {/* Background pattern */}
-                  <div className="absolute inset-0 opacity-10">
-                    <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-                      <defs>
-                        <pattern id="lines" x="0" y="0" width="4" height="4" patternUnits="userSpaceOnUse">
-                          <line x1="0" y1="0" x2="0" y2="4" stroke="white" strokeWidth="0.5" />
-                        </pattern>
-                      </defs>
-                      <rect width="100" height="100" fill="url(#lines)" />
-                    </svg>
-                  </div>
+                  {/* Certificate Header with Gradient */}
+                  <div
+                    className="relative h-40 flex flex-col justify-between p-6 text-white overflow-hidden"
+                    style={{
+                      background: cert.gradient,
+                    }}
+                  >
+                    {/* Background pattern - Vertical lines */}
+                    <div className="absolute inset-0 opacity-20">
+                      <svg className="w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 100">
+                        <defs>
+                          <pattern id={`lines-${cert.id}`} x="0" y="0" width="3" height="100" patternUnits="userSpaceOnUse">
+                            <line x1="0" y1="0" x2="0" y2="100" stroke="white" strokeWidth="0.8" />
+                          </pattern>
+                        </defs>
+                        <rect width="100" height="100" fill={`url(#lines-${cert.id})`} />
+                      </svg>
+                    </div>
 
-                  {/* Status Badge */}
-                  <div className="absolute top-4 right-4 flex items-center gap-2">
-                    <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full backdrop-blur-md ${
-                      expired
-                        ? "bg-red-500/20 text-red-100"
-                        : "bg-emerald-500/20 text-emerald-100"
-                    }`}>
-                      <div className={`w-2 h-2 rounded-full ${expired ? "bg-red-400" : "bg-emerald-400"}`} />
-                      <span className="text-xs font-semibold">
-                        {expired ? "Expired" : "Active"}
-                      </span>
+                    {/* Status Badge */}
+                    {cert.notificationType && (
+                      <div className="absolute top-4 right-4 z-10">
+                        <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full backdrop-blur-md ${getNotificationBadgeColor(cert.notificationType)}`}>
+                          <div className={`w-2 h-2 rounded-full ${
+                            cert.notificationType === "expired" ? "bg-red-400" : 
+                            cert.notificationType === "expiring" ? "bg-yellow-400" : 
+                            "bg-blue-400"
+                          }`} />
+                          <span className="text-xs font-semibold">
+                            {getNotificationBadgeText(cert.notificationType)}
+                          </span>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Category Label */}
+                    <div className="relative z-10">
+                      <div className="inline-block bg-blue-600 px-3 py-1.5 rounded-lg mb-3">
+                        <span className="text-xs font-bold uppercase text-white" style={{ fontFamily: '"Geometrica", sans-serif' }}>
+                          {cert.category}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Bottom Content */}
+                    <div className="relative z-10">
+                      <div className="text-4xl mb-2">{cert.icon}</div>
                     </div>
                   </div>
 
-                  {/* Content */}
-                  <div className="relative z-10 space-y-3">
-                    <div className="text-4xl">{cert.icon}</div>
+                  {/* Certificate Body - Dark section */}
+                  <div className="bg-gray-950 dark:bg-black p-6 space-y-4 border-t border-gray-800">
+                    {/* Title */}
                     <div>
                       <h3 
-                        className="text-lg font-bold line-clamp-2"
+                        className="text-lg font-bold text-white line-clamp-2"
                         style={{ fontFamily: '"Geometrica", sans-serif' }}
                       >
                         {cert.title}
                       </h3>
                     </div>
-                  </div>
 
-                  {/* Bottom Info */}
-                  <div className="relative z-10 flex items-center gap-2 text-sm opacity-90 mt-auto">
-                    <Clock className="w-4 h-4" />
-                    <span>{cert.duration}</span>
+                    {/* Description */}
+                    <p className="text-xs text-gray-400 line-clamp-2">
+                      {cert.subtitle}
+                    </p>
+
+                    {/* Meta Info */}
+                    <div className="flex items-center gap-2 text-xs text-gray-500 pt-2">
+                      <Clock className="w-3 h-3" />
+                      <span>{cert.duration}</span>
+                    </div>
+
+                    {/* Action Button */}
+                    <button className="w-full py-3 px-4 bg-gray-800 hover:bg-gray-700 text-white rounded-xl font-semibold text-sm transition-all duration-200 active:scale-95 mt-2"
+                      style={{ fontFamily: '"Geometrica", sans-serif' }}
+                    >
+                      ดูใบรับรอง
+                    </button>
                   </div>
                 </div>
+              );
+            })}
+          </div>
 
-                {/* Certificate Body */}
-                <div className="p-6 bg-white dark:bg-neutral-950">
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">
-                    {cert.subtitle}
-                  </p>
-
-                  <div className="space-y-3 mb-6 pb-6 border-b border-gray-200 dark:border-gray-800">
-                    <div className="flex items-center gap-2 text-sm">
-                      <div className="w-1 h-1 rounded-full bg-[#FC4C02]" />
-                      <span className="text-gray-600 dark:text-gray-400">{cert.issuer}</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-sm">
-                      <div className="w-1 h-1 rounded-full bg-[#FC4C02]" />
-                      <span className="text-gray-600 dark:text-gray-400">{cert.issueDate}</span>
-                    </div>
-                  </div>
-
-                  {/* Action Button */}
-                  <button className="w-full py-3 px-4 bg-linear-to-r from-[#FC4C02] to-[#FF6B35] hover:from-[#E63E00] hover:to-[#FF5520] text-white rounded-xl font-semibold text-sm transition-all duration-200 active:scale-95 shadow-lg shadow-[#FC4C02]/20 hover:shadow-xl hover:shadow-[#FC4C02]/40"
-                    style={{ fontFamily: '"Geometrica", sans-serif' }}
-                  >
-                    ดูใบรับรอง
-                  </button>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Empty State */}
+        {/* Empty State for Grid */}
         {filteredCertificates.length === 0 && (
           <div className="text-center py-16">
             <div className="text-6xl mb-4">🎓</div>
