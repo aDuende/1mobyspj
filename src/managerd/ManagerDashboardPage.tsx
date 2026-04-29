@@ -11,6 +11,7 @@ import ManagerAssessmentPage from "./ManagerAssessmentPage";
 import TeamProfilePage from "./TeamProfilePage";
 import CompetencyProfilePage from "../CompetencyProfilePage";
 import MyIDPLearningPage from "../MyIDPLearningPage";
+import MyCertificatedPage from "../MyCertificatedPage";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import {
@@ -997,6 +998,7 @@ function ManagerDashboard({ onLogout, username }: ManagerDashboardProps) {
                 <Route path="/team-profile" element={<TeamProfilePage />} />
                 <Route path="/competency-profile" element={<CompetencyProfilePage role="manager" />} />
                 <Route path="/my-idp-learning/*" element={<MyIDPLearningPage role="manager" />} />
+                <Route path="/my-certificated" element={<MyCertificatedPage />} />
                 <Route path="/settings" element={<SettingPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route

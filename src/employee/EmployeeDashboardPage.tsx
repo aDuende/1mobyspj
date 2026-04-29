@@ -8,6 +8,7 @@ import SettingPage from "../SettingPage";
 import ProfilePage from "../ProfilePage";
 import HelpPage from "../HelpPage";
 import MyIDPLearningPage from "../MyIDPLearningPage";
+import MyCertificatedPage from "../MyCertificatedPage";
 import EmployeeAssessmentPage from "./EmployeeAssessmentPage";
 import CompetencyProfilePage from "../CompetencyProfilePage";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
@@ -1302,6 +1303,7 @@ function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
                 />
                 <Route path="/assessment" element={<EmployeeAssessmentPage />} />
                 <Route path="/competency-profile" element={<CompetencyProfilePage />} />
+                <Route path="/my-certificated" element={<MyCertificatedPage />} />
                 <Route path="/settings" element={<SettingPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/help/*" element={<HelpPage username={username} role="employee" />} />

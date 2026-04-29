@@ -958,6 +958,7 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
         {/* Header */}
         <div className="flex items-baseline justify-end mb-6">
           <button
+            onClick={() => navigate("/my-certificated")}
             className="group flex items-center gap-2 px-4 py-2 rounded-full border-transparent-transparent bg-transparent hover:bg-white dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] transition-all duration-300 active:scale-[0.96] cursor-pointer"
             style={{ fontFamily: '"Geometrica", sans-serif' }}
           >
