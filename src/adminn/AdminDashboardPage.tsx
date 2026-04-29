@@ -9,6 +9,8 @@ import ProfilePage from "../ProfilePage";
 import AdminHelpPage from "./AdminHelpPage";
 import ManageRolePage from "./ManageRolePage";
 import AnnouncementPage from "./AnnouncementPage";
+import AdminIDPPage from "./AdminIDPPage";
+import AdminAddCourse from "./AdminAddCourse";
 import CompetencyProfilePage from "../CompetencyProfilePage";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
@@ -17,6 +19,7 @@ import {
   BreadcrumbItem,
   BreadcrumbList,
   BreadcrumbPage,
+  BreadcrumbSeparator,
 } from "../components/ui/breadcrumb";
 
 interface AdminDashboardProps {
@@ -146,6 +149,38 @@ function AdminDashboard({ onLogout, username }: AdminDashboardProps) {
                       </BreadcrumbPage>
                     </BreadcrumbItem>
                   )}
+                  
+                  {location.pathname === "/my-idp-learning" && (
+                    <BreadcrumbItem>
+                      <BreadcrumbPage
+                        style={{ fontFamily: "Geometrica, sans-serif" }}
+                      >
+                        My IDP &amp; Learning
+                      </BreadcrumbPage>
+                    </BreadcrumbItem>
+                  )}
+                  {location.pathname === "/admin-add-course" && (
+                    <>
+                      <BreadcrumbItem>
+                        <button
+                          onClick={() => navigate("/my-idp-learning")}
+                          className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                          style={{ fontFamily: "Geometrica, sans-serif" }}
+                        >
+                          My IDP &amp; Learning
+                        </button>
+                      </BreadcrumbItem>
+                      <BreadcrumbSeparator />
+                      <BreadcrumbItem>
+                        <BreadcrumbPage
+                          style={{ fontFamily: "Geometrica, sans-serif" }}
+                        >
+                          Add New Course
+                        </BreadcrumbPage>
+                      </BreadcrumbItem>
+                    </>
+                  )}
+                  
                 </BreadcrumbList>
               </Breadcrumb>
             </div>
@@ -195,6 +230,8 @@ function AdminDashboard({ onLogout, username }: AdminDashboardProps) {
                 <Route path="/help" element={<AdminHelpPage />} />
                 <Route path="/manage-role" element={<ManageRolePage />} />
                 <Route path="/announcement" element={<AnnouncementPage />} />
+                <Route path="/my-idp-learning" element={<AdminIDPPage />} />
+                <Route path="/admin-add-course" element={<AdminAddCourse />} />
                 <Route
                   path="/dashboard"
                   element={

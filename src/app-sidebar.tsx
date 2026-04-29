@@ -14,6 +14,7 @@ import {
   Home,
   Shield,
   Megaphone,
+  BarChart2,
 } from "lucide-react";
 import { useLocation } from "react-router-dom";
 

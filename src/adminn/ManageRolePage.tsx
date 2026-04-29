@@ -1,6 +1,4 @@
 import { useState, useEffect } from "react";
-import { Button } from "../components/ui/button";
-import { Input } from "../components/ui/input";
 import { Skeleton } from "../components/ui/skeleton";
 
 interface User {
@@ -40,7 +38,7 @@ const MOCK_USERS: User[] = [
 function ManageRolePage() {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery] = useState("");
 
   // Fetch users from backend
   useEffect(() => {
@@ -234,25 +232,25 @@ function ManageRolePage() {
                     Name
                   </th>
                   <th
-                    className="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white"
+                    className="px-6 py-4 text-center text-sm font-semibold text-gray-900 dark:text-white"
                     style={{ fontFamily: "Geometrica, sans-serif" }}
                   >
                     ROLE
                   </th>
                   <th
-                    className="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white"
+                    className="px-6 py-4 text-center text-sm font-semibold text-gray-900 dark:text-white"
                     style={{ fontFamily: "Geometrica, sans-serif" }}
                   >
                     DEPARTMENT
                   </th>
                   <th
-                    className="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white"
+                    className="px-6 py-4 text-center text-sm font-semibold text-gray-900 dark:text-white"
                     style={{ fontFamily: "Geometrica, sans-serif" }}
                   >
                     STATUS
                   </th>
                   <th
-                    className="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white"
+                    className="px-6 py-4 text-center text-sm font-semibold text-gray-900 dark:text-white"
                     style={{ fontFamily: "Geometrica, sans-serif" }}
                   >
                     ACTION
@@ -271,10 +269,10 @@ function ManageRolePage() {
                           <img
                             src={user.avatar}
                             alt={user.name}
-                            className="w-12 h-12 rounded-full object-cover flex-shrink-0"
+                            className="w-12 h-12 rounded-full object-cover shrink-0"
                           />
                         ) : (
-                          <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center flex-shrink-0">
+                          <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center shrink-0">
                             <span
                               className="text-blue-600 dark:text-blue-400 font-semibold text-sm"
                               style={{ fontFamily: "Geometrica, sans-serif" }}
@@ -288,7 +286,7 @@ function ManageRolePage() {
                             className="font-semibold text-left text-gray-900 dark:text-white"
                             style={{ fontFamily: "Geometrica, sans-serif" }}
                           >
-                            {user.name} chon
+                            {user.name}
                           </p>
                           <p
                             className="text-sm  text-gray-500 dark:text-gray-400 mt-0.5"
@@ -299,7 +297,7 @@ function ManageRolePage() {
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-4 text-center">
                       <span
                         className={`px-3 py-1 rounded-full text-sm font-medium ${getRoleBadgeColor(user.role)}`}
                         style={{ fontFamily: "Geometrica, sans-serif" }}
@@ -307,7 +305,7 @@ function ManageRolePage() {
                         {user.role}
                       </span>
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-4 text-center">
                       <span
                         className="text-blue-600 dark:text-blue-400 hover:underline cursor-pointer font-medium"
                         style={{ fontFamily: "Geometrica, sans-serif" }}
@@ -316,7 +314,7 @@ function ManageRolePage() {
                       </span>
                     </td>
                     <td className="px-6 py-4">
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center justify-center gap-2">
                         <div
                           className={`w-2 h-2 rounded-full ${user.status === "active" ? "bg-green-500" : "bg-red-500"}`}
                         ></div>
@@ -329,7 +327,7 @@ function ManageRolePage() {
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center justify-center gap-3">
                         
                         <button
                           onClick={() => handleRemoveUser(user.id)}
