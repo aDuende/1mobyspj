@@ -62,7 +62,7 @@ export default function CourseDetailsPage({
         {/* Back Button */}
         <button
           onClick={handleBack}
-          className="group flex items-center gap-2 px-4 py-2 mb-6 rounded-full bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 transition-all duration-300 active:scale-95 shadow-sm border border-gray-200 dark:border-gray-700"
+          className="group flex items-center gap-2 px-4 py-2 mb-6 rounded-full bg-white dark:bg-neutral-950 hover:bg-gray-50 dark:hover:bg-neutral-800 text-gray-700 dark:text-gray-300 transition-all duration-300 active:scale-95 shadow-sm border border-gray-200 dark:border-gray-700"
           style={{ fontFamily: '"Geometrica", sans-serif' }}
         >
           <ArrowLeft className="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-1" />
@@ -73,7 +73,7 @@ export default function CourseDetailsPage({
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-6">
             {/* Video Player */}
-            <Card className="overflow-hidden rounded-2xl bg-white dark:bg-gray-800 border-none shadow-lg">
+            <Card className="overflow-hidden rounded-2xl bg-white dark:bg-neutral-950 border-none shadow-lg">
               <div className="relative w-full bg-black aspect-video">
                 {isVideoLoaded ? (
                   <iframe
@@ -104,7 +104,7 @@ export default function CourseDetailsPage({
             </Card>
 
             {/* Course Info */}
-            <Card className="p-6 rounded-2xl bg-white dark:bg-gray-800 border-none shadow-lg">
+            <Card className="p-6 rounded-2xl bg-white dark:bg-neutral-950 border-none shadow-lg">
               {/* Badges */}
               <div className="flex items-center gap-2 mb-4">
                 <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-700/50 text-slate-800 dark:text-slate-200 text-[12px] font-semibold tracking-wide">
@@ -221,7 +221,7 @@ export default function CourseDetailsPage({
           {/* Sidebar */}
           <div className="lg:col-span-1 space-y-6">
             {/* Course Details Card */}
-            <Card className="p-6 rounded-2xl bg-white dark:bg-gray-800 border-none shadow-lg sticky top-6">
+            <Card className="p-6 rounded-2xl bg-white dark:bg-neutral-950 border-none shadow-lg sticky top-6">
               <h3
                 className="text-[18px] font-semibold text-gray-900 dark:text-white mb-4"
                 style={{ fontFamily: '"Geometrica", sans-serif' }}
@@ -232,7 +232,7 @@ export default function CourseDetailsPage({
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+                    <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-950/30 flex items-center justify-center">
                       <Clock className="w-5 h-5 text-[#006bff]" />
                     </div>
                     <div>
@@ -254,7 +254,7 @@ export default function CourseDetailsPage({
 
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center">
+                    <div className="w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-950/30 flex items-center justify-center">
                       <BookOpen className="w-5 h-5 text-purple-600 dark:text-purple-400" />
                     </div>
                     <div>

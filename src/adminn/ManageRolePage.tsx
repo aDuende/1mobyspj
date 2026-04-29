@@ -79,13 +79,13 @@ function ManageRolePage() {
 
   const getRoleBadgeColor = (role: string) => {
     if (role === "Team Lead")
-      return "bg-orange-100 text-orange-600 dark:bg-orange-900/30 dark:text-orange-400";
-    return "bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400";
+      return "bg-orange-100 text-orange-600 dark:bg-orange-950/30 dark:text-orange-400";
+    return "bg-blue-100 text-blue-600 dark:bg-blue-950/30 dark:text-blue-400";
   };
 
   if (loading) {
     return (
-      <div className="min-h-full p-6 bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+      <div className="min-h-full p-6 bg-gray-50 dark:bg-black flex items-center justify-center">
         <p
           className="text-gray-600 dark:text-gray-400"
           style={{ fontFamily: "Geometrica, sans-serif" }}
@@ -97,7 +97,7 @@ function ManageRolePage() {
   }
 
   return (
-    <div className="min-h-full p-6 bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-full p-6 bg-gray-50 dark:bg-black">
       <div className="max-w-7xl mx-auto space-y-6">
         {/* Header with All User and Stats Cards */}
         <div className="flex items-center justify-between gap-16">
@@ -118,7 +118,7 @@ function ManageRolePage() {
 
           {/* Stats Cards */}
           <div className="flex gap-4 flex-1">
-            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm flex-1">
+            <div className="bg-white dark:bg-neutral-950 rounded-lg p-6 shadow-sm flex-1">
               <p
                 className="text-sm text-gray-600 dark:text-gray-400 mb-1"
                 style={{ fontFamily: "Geometrica, sans-serif" }}
@@ -132,7 +132,7 @@ function ManageRolePage() {
                 {totalUsers}
               </p>
             </div>
-            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm flex-1">
+            <div className="bg-white dark:bg-neutral-950 rounded-lg p-6 shadow-sm flex-1">
               <p
                 className="text-sm text-gray-600 dark:text-gray-400 mb-1"
                 style={{ fontFamily: "Geometrica, sans-serif" }}
@@ -146,7 +146,7 @@ function ManageRolePage() {
                 {unassignedRole}
               </p>
             </div>
-            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm flex-1">
+            <div className="bg-white dark:bg-neutral-950 rounded-lg p-6 shadow-sm flex-1">
               <p
                 className="text-sm text-gray-600 dark:text-gray-400 mb-1"
                 style={{ fontFamily: "Geometrica, sans-serif" }}
@@ -164,7 +164,7 @@ function ManageRolePage() {
         </div>
 
         {/* Table */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm">
+        <div className="bg-white dark:bg-neutral-950 rounded-lg shadow-sm">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
@@ -205,7 +205,7 @@ function ManageRolePage() {
                 {filteredUsers.map((user) => (
                   <tr
                     key={user.id}
-                    className="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+                    className="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-neutral-800/50 transition-colors"
                   >
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">

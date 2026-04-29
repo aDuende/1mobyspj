@@ -118,13 +118,13 @@ function HelpPage({ username, role }: HelpPageProps) {
       case "Pending":
         return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/40 dark:text-yellow-300";
       case "In Progress":
-        return "bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300";
+        return "bg-blue-100 text-blue-800 dark:bg-blue-950/40 dark:text-blue-300";
       case "Resolved":
         return "bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300";
       case "Closed":
-        return "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300";
+        return "bg-gray-100 text-gray-800 dark:bg-neutral-800 dark:text-gray-300";
       default:
-        return "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300";
+        return "bg-gray-100 text-gray-800 dark:bg-neutral-800 dark:text-gray-300";
     }
   };
 
@@ -158,7 +158,7 @@ function HelpPage({ username, role }: HelpPageProps) {
     `px-4 py-2 rounded-lg font-medium transition-colors ${
       statusFilter === filter
         ? "bg-gray-900 text-white dark:bg-white dark:text-gray-900"
-        : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700 dark:hover:bg-gray-700"
+        : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 dark:bg-neutral-950 dark:text-gray-300 dark:border-gray-700 dark:hover:bg-neutral-800"
     }`;
 
   if (selectedComplaint) {
@@ -171,13 +171,13 @@ function HelpPage({ username, role }: HelpPageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-white p-8">
+    <div className="min-h-screen bg-gray-50 text-gray-900 dark:bg-black dark:text-white p-8">
       <div className="max-w-4xl mx-auto relative">
         {activeTab === "submit" && (
           <div className="absolute top-0 right-0">
             <button
               onClick={() => navigate("/help/history")}
-              className="p-3 rounded-lg font-semibold transition-colors bg-white text-gray-600 hover:bg-gray-100 border border-gray-300 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:border-gray-700"
+              className="p-3 rounded-lg font-semibold transition-colors bg-white text-gray-600 hover:bg-gray-100 border border-gray-300 dark:bg-neutral-950 dark:text-gray-300 dark:hover:bg-neutral-800 dark:border-gray-700"
               title="View Complaint History"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -196,7 +196,7 @@ function HelpPage({ username, role }: HelpPageProps) {
           <div className="absolute top-0 right-0">
             <button
               onClick={() => navigate("/help")}
-              className="p-3 rounded-lg font-semibold transition-colors bg-white text-blue-600 hover:bg-gray-100 border-2 border-blue-600 dark:bg-gray-800 dark:text-blue-400 dark:hover:bg-gray-700 dark:border-blue-400"
+              className="p-3 rounded-lg font-semibold transition-colors bg-white text-blue-600 hover:bg-gray-100 border-2 border-blue-600 dark:bg-neutral-950 dark:text-blue-400 dark:hover:bg-neutral-800 dark:border-blue-400"
               title="Back to Submit Complaint"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -233,7 +233,7 @@ function HelpPage({ username, role }: HelpPageProps) {
                   <select
                     value={subject}
                     onChange={(e) => setSubject(e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-700"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-neutral-950 dark:text-white dark:border-gray-700"
                     required
                   >
                     <option value="">--- Select Subject ---</option>
@@ -264,7 +264,7 @@ function HelpPage({ username, role }: HelpPageProps) {
                   value={details}
                   onChange={(e) => setDetails(e.target.value)}
                   placeholder="Describe the issue you encountered..."
-                  className="w-full px-4 py-3 border bg-white text-gray-900 border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-gray-400 dark:bg-gray-800 dark:text-white dark:border-gray-700 dark:placeholder:text-gray-500"
+                  className="w-full px-4 py-3 border bg-white text-gray-900 border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-gray-400 dark:bg-neutral-950 dark:text-white dark:border-gray-700 dark:placeholder:text-gray-500"
                   rows={6}
                   required
                 />
@@ -282,8 +282,8 @@ function HelpPage({ username, role }: HelpPageProps) {
                   onClick={handleClickUpload}
                   className={`border-2 border-dashed rounded-lg p-12 text-center cursor-pointer transition-colors ${
                     isDragging
-                      ? "border-blue-400 bg-blue-50 dark:bg-blue-900/20"
-                      : "border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
+                      ? "border-blue-400 bg-blue-50 dark:bg-blue-950/20"
+                      : "border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-700 dark:bg-neutral-950 dark:hover:bg-neutral-800"
                   }`}
                 >
                   <input
@@ -316,7 +316,7 @@ function HelpPage({ username, role }: HelpPageProps) {
                     {files.map((file, index) => (
                       <div
                         key={index}
-                        className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700"
+                        className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 dark:bg-neutral-950 dark:border-gray-700"
                       >
                         <div className="flex items-center space-x-3">
                           <svg className="w-5 h-5 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -397,7 +397,7 @@ function HelpPage({ username, role }: HelpPageProps) {
                     placeholder="Search complaints..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-lg bg-gray-50 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-gray-400 dark:bg-gray-800 dark:text-white dark:border-gray-700 dark:placeholder:text-gray-500"
+                    className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-lg bg-gray-50 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-gray-400 dark:bg-neutral-950 dark:text-white dark:border-gray-700 dark:placeholder:text-gray-500"
                   />
 
                   <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -434,7 +434,7 @@ function HelpPage({ username, role }: HelpPageProps) {
                 </h2>
 
                 {filteredComplaints.length === 0 ? (
-                  <div className="text-center py-12 bg-white rounded-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+                  <div className="text-center py-12 bg-white rounded-lg border border-gray-200 dark:bg-neutral-950 dark:border-gray-700">
                     <svg className="mx-auto h-12 w-12 text-gray-300 dark:text-gray-600 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path
                         strokeLinecap="round"
@@ -460,7 +460,7 @@ function HelpPage({ username, role }: HelpPageProps) {
                       <div
                         key={complaint.id}
                         onClick={() => setSelectedComplaint(complaint)}
-                        className="bg-white border border-gray-200 rounded-lg p-5 hover:shadow-md hover:border-gray-300 transition-all duration-200 cursor-pointer dark:bg-gray-800 dark:border-gray-700 dark:hover:border-gray-600"
+                        className="bg-white border border-gray-200 rounded-lg p-5 hover:shadow-md hover:border-gray-300 transition-all duration-200 cursor-pointer dark:bg-neutral-950 dark:border-gray-700 dark:hover:border-gray-600"
                       >
                         <div className="flex gap-4 items-center">
                           <div className="flex-shrink-0">

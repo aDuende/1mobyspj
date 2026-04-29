@@ -57,7 +57,7 @@ export default function ReadingLayout({ item }: ReadingLayoutProps) {
         <div className="flex-1 overflow-auto">
           <div className="max-w-3xl mx-auto p-4 lg:p-8">
             {/* Book hero card */}
-            <div className="rounded-2xl bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] overflow-hidden mb-6">
+            <div className="rounded-2xl bg-white dark:bg-neutral-950 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] overflow-hidden mb-6">
               <div className="flex flex-col sm:flex-row gap-0">
                 {/* Cover */}
                 <div className="sm:w-50 shrink-0 bg-gray-100 dark:bg-gray-700">
@@ -119,7 +119,7 @@ export default function ReadingLayout({ item }: ReadingLayoutProps) {
                       className={`flex items-center gap-1.5 px-4 py-2 rounded-full border text-[12px] font-medium transition-all duration-200 cursor-pointer ${
                         bookmarked
                           ? "bg-[#fc4c02]/10 border-[#fc4c02]/30 text-[#fc4c02]"
-                          : "border-gray-200/60 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700"
+                          : "border-gray-200/60 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-neutral-800"
                       }`}
                       style={GEO}
                     >
@@ -127,14 +127,14 @@ export default function ReadingLayout({ item }: ReadingLayoutProps) {
                       {bookmarked ? "Saved" : "Save"}
                     </button>
                     <button
-                      className="flex items-center gap-1.5 px-4 py-2 rounded-full border border-gray-200/60 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 text-[12px] font-medium transition-all duration-200 cursor-pointer"
+                      className="flex items-center gap-1.5 px-4 py-2 rounded-full border border-gray-200/60 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-neutral-800 text-[12px] font-medium transition-all duration-200 cursor-pointer"
                       style={GEO}
                     >
                       <Share2 className="w-3.5 h-3.5" />
                       Share
                     </button>
                     <button
-                      className="flex items-center gap-1.5 px-4 py-2 rounded-full border border-gray-200/60 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 text-[12px] font-medium transition-all duration-200 cursor-pointer"
+                      className="flex items-center gap-1.5 px-4 py-2 rounded-full border border-gray-200/60 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-neutral-800 text-[12px] font-medium transition-all duration-200 cursor-pointer"
                       style={GEO}
                     >
                       <Download className="w-3.5 h-3.5" />
@@ -146,7 +146,7 @@ export default function ReadingLayout({ item }: ReadingLayoutProps) {
             </div>
 
             {/* Table of contents (simulated) */}
-            <div className="rounded-2xl bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] p-5">
+            <div className="rounded-2xl bg-white dark:bg-neutral-950 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] p-5">
               <h2 className="text-[13px] font-semibold text-gray-800 dark:text-white mb-4" style={GEO}>
                 Table of Contents
               </h2>
@@ -157,7 +157,7 @@ export default function ReadingLayout({ item }: ReadingLayoutProps) {
                     <button
                       key={i}
                       onClick={() => { setCurrentPage(i); setReading(true); }}
-                      className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700/40 transition-colors duration-150 text-left group cursor-pointer"
+                      className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-50 dark:hover:bg-neutral-800/40 transition-colors duration-150 text-left group cursor-pointer"
                     >
                       <span className="w-5 text-[10px] text-gray-400 dark:text-gray-600 shrink-0 tabular-nums" style={GEO}>
                         {String(i + 1).padStart(2, "0")}
@@ -200,7 +200,7 @@ export default function ReadingLayout({ item }: ReadingLayoutProps) {
 
           {/* Page content */}
           <div className="flex-1 flex items-start justify-center p-4 lg:p-8">
-            <div className="w-full max-w-3xl rounded-2xl bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[0_8px_40px_-12px_rgba(0,0,0,0.12)] p-6 lg:p-10 min-h-100">
+            <div className="w-full max-w-3xl rounded-2xl bg-white dark:bg-neutral-950 border border-gray-200/60 dark:border-white/5 shadow-[0_8px_40px_-12px_rgba(0,0,0,0.12)] p-6 lg:p-10 min-h-100">
               <p
                 className="text-[13px] text-gray-700 dark:text-gray-200 leading-[1.9] whitespace-pre-line"
                 style={GEO}
@@ -212,11 +212,11 @@ export default function ReadingLayout({ item }: ReadingLayoutProps) {
 
           {/* Navigation */}
           <div className="sticky bottom-0 px-4 pb-4">
-            <div className="max-w-3xl mx-auto flex items-center justify-between bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl rounded-2xl border border-gray-200/60 dark:border-white/5 shadow-[0_8px_20px_-8px_rgba(0,0,0,0.15)] px-4 py-3">
+            <div className="max-w-3xl mx-auto flex items-center justify-between bg-white/90 dark:bg-neutral-950/90 backdrop-blur-xl rounded-2xl border border-gray-200/60 dark:border-white/5 shadow-[0_8px_20px_-8px_rgba(0,0,0,0.15)] px-4 py-3">
               <button
                 onClick={goPrev}
                 disabled={currentPage === 0}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-gray-200/60 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-30 disabled:cursor-not-allowed text-[12px] font-medium transition-all duration-200 cursor-pointer"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-gray-200/60 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-neutral-800 disabled:opacity-30 disabled:cursor-not-allowed text-[12px] font-medium transition-all duration-200 cursor-pointer"
                 style={GEO}
               >
                 <ChevronLeft className="w-3.5 h-3.5" />
@@ -241,7 +241,7 @@ export default function ReadingLayout({ item }: ReadingLayoutProps) {
               <button
                 onClick={goNext}
                 disabled={currentPage === totalPages - 1}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-gray-200/60 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-30 disabled:cursor-not-allowed text-[12px] font-medium transition-all duration-200 cursor-pointer"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-gray-200/60 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-neutral-800 disabled:opacity-30 disabled:cursor-not-allowed text-[12px] font-medium transition-all duration-200 cursor-pointer"
                 style={GEO}
               >
                 Next

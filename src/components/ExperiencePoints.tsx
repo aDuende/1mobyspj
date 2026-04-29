@@ -486,7 +486,7 @@ const ExperiencePoints: React.FC<ExperiencePointsProps> = ({ points }) => {
           will-change-transform transform-gpu antialiased
           ${
             isOpen
-              ? "bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl shadow-xl translate-y-[-1px]"
+              ? "bg-white/90 dark:bg-neutral-950/90 backdrop-blur-xl shadow-xl translate-y-[-1px]"
               : "bg-transparent hover:bg-white dark:hover:bg-gray-800 hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)]"
           }
         `}
@@ -498,7 +498,7 @@ const ExperiencePoints: React.FC<ExperiencePointsProps> = ({ points }) => {
       <div
         className={`
           absolute top-full right-0 mt-3 w-[259.5px]
-          bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-xl p-1.5 z-50 
+          bg-white/80 dark:bg-neutral-950/80 backdrop-blur-xl rounded-xl p-1.5 z-50 
           transition-all duration-300 origin-top-right overflow-hidden
           shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)]
           ${

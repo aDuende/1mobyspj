@@ -166,7 +166,7 @@ export default function CompetencyProfilePage({ role = "employee" }: { role?: "e
           <div className="lg:col-span-4 space-y-6">
 
             {/* Profile */}
-            <Card className="border-none overflow-hidden relative dark:bg-gray-800">
+            <Card className="border-none overflow-hidden relative dark:bg-neutral-950">
               <div className="absolute top-0 right-0 w-64 h-64  rounded-full blur-3xl -mr-32 -mt-32" />
               <CardContent className="pt-4 pb-4 px-4 relative z-10">
                 <div className="flex items-center gap-3">
@@ -190,7 +190,7 @@ export default function CompetencyProfilePage({ role = "employee" }: { role?: "e
                     </div>
                     <div className="flex items-center gap-2 mb-2">
                       <span className="px-2.5 py-0.5 bg-gradient-to-r from-amber-400 to-orange-400 text-white rounded-full text-xs font-semibold shadow-md">Level 2</span>
-                      <span className="px-2.5 py-0.5 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-xs font-medium">Full Stack Dev</span>
+                      <span className="px-2.5 py-0.5 bg-blue-100 dark:bg-blue-950/30 text-blue-700 dark:text-blue-300 rounded-full text-xs font-medium">Full Stack Dev</span>
                     </div>
                     <div className="space-y-1">
                       <div className="flex items-center justify-between">
@@ -220,17 +220,17 @@ export default function CompetencyProfilePage({ role = "employee" }: { role?: "e
             <div className="grid gap-4 md:grid-cols-2">
 
               {/* Top Strengths */}
-              <Card className="p-4 rounded-2xl bg-white dark:bg-gray-800 border-none text-left">
+              <Card className="p-4 rounded-2xl bg-white dark:bg-neutral-950 border-none text-left">
                 <div className="flex flex-col gap-4 items-start">
                   <section className="w-full text-left">
                     <h3 className="!text-[18px] font-medium !text-[#08060d] dark:!text-white mb-2.5 text-left leading-tight flex items-center gap-2"
                 style={{ fontFamily: '"Geometrica", sans-serif' }}>
-                      <div className="h-8 w-8 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center shrink-0">
+                      <div className="h-8 w-8 rounded-full bg-emerald-100 dark:bg-emerald-950/30 flex items-center justify-center shrink-0">
                         <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
                       </div>
                       Top Strengths
                     </h3>
-                    <div className="w-full rounded-2xl bg-white dark:bg-gray-800 dark:border-white/5 p-3 space-y-2.5">
+                    <div className="w-full rounded-2xl bg-white dark:bg-neutral-950 dark:border-white/5 p-3 space-y-2.5">
                       {topStrengths.map((item, i) => (
                         <div
                           key={i}
@@ -253,7 +253,7 @@ export default function CompetencyProfilePage({ role = "employee" }: { role?: "e
               </Card>
 
               {/* Areas to Improve */}
-              <Card className="p-4 rounded-2xl bg-white dark:bg-gray-800 shadow-sm h-full text-left" style={fadeRight(500)}>
+              <Card className="p-4 rounded-2xl bg-white dark:bg-neutral-950 shadow-sm h-full text-left" style={fadeRight(500)}>
                 <div className="flex flex-col gap-4 items-start">
                   <section className="w-full text-left">
                     <h3 className="!text-[18px] font-medium !text-[#08060d] dark:!text-white mb-2.5 text-left leading-tight flex items-center gap-2"
@@ -263,7 +263,7 @@ export default function CompetencyProfilePage({ role = "employee" }: { role?: "e
                       </div>
                       Areas to Improve
                     </h3>
-                    <div className="w-full rounded-2xl bg-white dark:bg-gray-800 dark:border-white/5 p-3 space-y-2.5">
+                    <div className="w-full rounded-2xl bg-white dark:bg-neutral-950 dark:border-white/5 p-3 space-y-2.5">
                       {areasToImprove.map((item, i) => (
                         <div
                           key={i}
@@ -289,7 +289,7 @@ export default function CompetencyProfilePage({ role = "employee" }: { role?: "e
             </div>
 
             {/* Radar */}
-            <Card className="p-4 rounded-lg bg-white dark:bg-gray-800 border-none shadow-none relative" style={fadeUp(700)}>
+            <Card className="p-4 rounded-lg bg-white dark:bg-neutral-950 border-none shadow-none relative" style={fadeUp(700)}>
               <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-[#006BFF]/5 dark:bg-[#006BFF]/10 rounded-full -mr-16 -mt-16 blur-3xl"></div>
               </div>
@@ -311,7 +311,7 @@ export default function CompetencyProfilePage({ role = "employee" }: { role?: "e
                       transition-all duration-300 active:scale-[0.96] cursor-pointer text-[12px] font-normal
                       ${
                         isCategoryOpen
-                          ? "bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl border-gray-200/50 dark:border-transparent shadow-xl translate-y-[-1px] text-gray-700 dark:text-gray-200"
+                          ? "bg-white/90 dark:bg-neutral-950/90 backdrop-blur-xl border-gray-200/50 dark:border-transparent shadow-xl translate-y-[-1px] text-gray-700 dark:text-gray-200"
                           : "bg-transparent hover:bg-white dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white border-transparent hover:border-gray-200/60 dark:hover:border-transparent hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)]"
                       }
                     `}
@@ -330,7 +330,7 @@ export default function CompetencyProfilePage({ role = "employee" }: { role?: "e
                   <div
                     className={`
                       absolute top-full right-0 mt-2 w-38
-                      bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-xl border border-gray-200/50 dark:border-transparent p-1 z-50
+                      bg-white/80 dark:bg-neutral-950/80 backdrop-blur-xl rounded-xl border border-gray-200/50 dark:border-transparent p-1 z-50
                       transition-all duration-300 origin-top-right shadow-xl
                       ${
                         isCategoryOpen
@@ -353,7 +353,7 @@ export default function CompetencyProfilePage({ role = "employee" }: { role?: "e
                             ${
                               selectedCategory === cat
                                 ? "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
-                                : "text-gray-700 dark:text-gray-300 hover:bg-gray-100/60 dark:hover:bg-gray-700/60 hover:text-gray-900 dark:hover:text-white"
+                                : "text-gray-700 dark:text-gray-300 hover:bg-gray-100/60 dark:hover:bg-neutral-800/60 hover:text-gray-900 dark:hover:text-white"
                             }
                           `}
                           style={{ fontFamily: '"Geometrica", sans-serif' }}
@@ -461,10 +461,10 @@ export default function CompetencyProfilePage({ role = "employee" }: { role?: "e
           <div className="lg:col-span-3 space-y-6">
 
             {/* Core Definition card */}
-            <Card className="border-none transition-all duration-500 bg-white dark:bg-gray-800">
+            <Card className="border-none transition-all duration-500 bg-white dark:bg-neutral-950">
               <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle className="flex items-center gap-2">
-                  <div className="h-8 w-8 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center">
+                  <div className="h-8 w-8 rounded-full bg-purple-100 dark:bg-purple-950/30 flex items-center justify-center">
                     <Sparkles className="h-4 w-4 text-purple-600 dark:text-purple-400" />
                   </div>
                   {coreType} Definition
@@ -479,7 +479,7 @@ export default function CompetencyProfilePage({ role = "employee" }: { role?: "e
                     {coreType} ▾
                   </button>
                   {showCoreDropdown && (
-                    <div className="absolute right-0 mt-2 w-32 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 z-10">
+                    <div className="absolute right-0 mt-2 w-32 bg-white dark:bg-neutral-950 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 z-10">
                       {(role === "manager"
                         ? ["Core", "Managerial", "Functional"] as const
                         : ["Core", "Functional"] as const
@@ -525,7 +525,7 @@ export default function CompetencyProfilePage({ role = "employee" }: { role?: "e
             </Card>
 
             {/* Growth Timeline */}
-            <Card className="border-none relative overflow-hidden dark:bg-gray-800">
+            <Card className="border-none relative overflow-hidden dark:bg-neutral-950">
               <div className="absolute bottom-0 right-0 w-40 h-40 bg-gradient-to-tl from-blue-400/10 to-purple-400/10 rounded-full blur-3xl" />
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">

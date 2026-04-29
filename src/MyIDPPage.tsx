@@ -53,7 +53,7 @@ function getDevelopment(gap: number): { label: string; color: string; bg: string
   return {
     label: "Competency Fit",
     color: "text-blue-600 dark:text-blue-400",
-    bg: "bg-blue-50 dark:bg-blue-900/20",
+    bg: "bg-blue-50 dark:bg-blue-950/20",
     icon: <Minus className="w-3.5 h-3.5" />,
   };
 }
@@ -88,7 +88,7 @@ function CompetencyTable({ title, rows, color }: { title: string; rows: Competen
       </div>
       <div className="w-full rounded-2xl overflow-hidden border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)]">
         {/* Header */}
-        <div className="grid grid-cols-[1fr_auto_auto_auto_auto] gap-0 bg-gray-50/80 dark:bg-gray-900/60 border-b border-gray-200/60 dark:border-white/5">
+        <div className="grid grid-cols-[1fr_auto_auto_auto_auto] gap-0 bg-gray-50/80 dark:bg-black/60 border-b border-gray-200/60 dark:border-white/5">
           {["Competency", "Expected", "Manager", "GAP", "Development"].map((h) => (
             <div key={h} className="px-4 py-2.5 text-[11px] font-semibold text-gray-500 dark:text-gray-400 text-left"
               style={{ fontFamily: '"Geometrica", sans-serif' }}>
@@ -103,7 +103,7 @@ function CompetencyTable({ title, rows, color }: { title: string; rows: Competen
           return (
             <div
               key={i}
-              className={`grid grid-cols-[1fr_auto_auto_auto_auto] gap-0 border-b last:border-b-0 border-gray-100 dark:border-white/5 bg-white dark:bg-gray-800 hover:bg-gray-50/60 dark:hover:bg-gray-700/30 transition-colors duration-150`}
+              className={`grid grid-cols-[1fr_auto_auto_auto_auto] gap-0 border-b last:border-b-0 border-gray-100 dark:border-white/5 bg-white dark:bg-neutral-950 hover:bg-gray-50/60 dark:hover:bg-neutral-800/30 transition-colors duration-150`}
             >
               <div className="px-4 py-3 text-[12px] font-medium text-gray-800 dark:text-gray-200 text-left"
                 style={{ fontFamily: '"Geometrica", sans-serif' }}>
@@ -184,7 +184,7 @@ export default function MyIDPPage({ role = "employee" }: MyIDPPageProps) {
           {[
             { label: "Critical", count: critical, color: "text-rose-600 dark:text-rose-400", bg: "bg-rose-50 dark:bg-rose-900/20", border: "border-rose-200/60 dark:border-rose-500/20", icon: <TrendingDown className="w-5 h-5" /> },
             { label: "Strength", count: strength, color: "text-emerald-600 dark:text-emerald-400", bg: "bg-emerald-50 dark:bg-emerald-900/20", border: "border-emerald-200/60 dark:border-emerald-500/20", icon: <TrendingUp className="w-5 h-5" /> },
-            { label: "Competency Fit", count: fit, color: "text-blue-600 dark:text-blue-400", bg: "bg-blue-50 dark:bg-blue-900/20", border: "border-blue-200/60 dark:border-blue-500/20", icon: <Minus className="w-5 h-5" /> },
+            { label: "Competency Fit", count: fit, color: "text-blue-600 dark:text-blue-400", bg: "bg-blue-50 dark:bg-blue-950/20", border: "border-blue-200/60 dark:border-blue-500/20", icon: <Minus className="w-5 h-5" /> },
           ].map((s) => (
             <div key={s.label} className={`p-4 rounded-2xl border  ${s.bg} ${s.border} flex items-center gap-3`}>
               <div className={`${s.color}`}>{s.icon}</div>
@@ -218,7 +218,7 @@ export default function MyIDPPage({ role = "employee" }: MyIDPPageProps) {
           <CompetencyTable
             title="Core"
             rows={coreItems}
-            color="bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300"
+            color="bg-purple-100 dark:bg-purple-950/30 text-purple-700 dark:text-purple-300"
           />
           {role === "manager" && (
             <CompetencyTable
@@ -230,7 +230,7 @@ export default function MyIDPPage({ role = "employee" }: MyIDPPageProps) {
           <CompetencyTable
             title="Functional"
             rows={functionalItems}
-            color="bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300"
+            color="bg-blue-100 dark:bg-blue-950/30 text-blue-700 dark:text-blue-300"
           />
         </div>
 

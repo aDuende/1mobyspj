@@ -46,8 +46,8 @@ const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 // Contribution level colors
 const CONTRIBUTION_COLORS = [
-  "bg-gray-100 dark:bg-gray-800", // Level 0 - No contributions
-  "bg-orange-200/50 dark:bg-orange-900/30", // Level 1
+  "bg-gray-100 dark:bg-neutral-950", // Level 0 - No contributions
+  "bg-orange-200/50 dark:bg-orange-950/30", // Level 1
   "bg-orange-300 dark:bg-orange-700", // Level 2
   "bg-orange-400 dark:bg-orange-600", // Level 3
   "bg-orange-500 dark:bg-orange-500", // Level 4 - Max
@@ -333,7 +333,7 @@ export function ContributionGraph({
           animate={
             shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }
           }
-          className="pointer-events-none fixed z-50 grid min-w-32 items-start gap-0.5 rounded-xl border-none bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl px-3.5 py-2.5 text-xs shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] ring-0"
+          className="pointer-events-none fixed z-50 grid min-w-32 items-start gap-0.5 rounded-xl border-none bg-white/80 dark:bg-neutral-950/80 backdrop-blur-xl px-3.5 py-2.5 text-xs shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] ring-0"
           exit={
             shouldReduceMotion
               ? { opacity: 0, transition: { duration: 0 } }

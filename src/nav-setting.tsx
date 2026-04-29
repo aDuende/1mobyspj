@@ -35,7 +35,7 @@ export function NavSetting({
             <SidebarMenuButton
               asChild
               isActive={item.isActive}
-              className="px-6 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 data-[active=true]:bg-blue-50 dark:data-[active=true]:bg-blue-900/20 data-[active=true]:text-blue-600 dark:data-[active=true]:text-blue-400"
+              className="px-6 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-neutral-800 data-[active=true]:bg-blue-50 dark:data-[active=true]:bg-blue-900/20 data-[active=true]:text-blue-600 dark:data-[active=true]:text-blue-400"
             >
               <a
                 href={item.url}

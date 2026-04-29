@@ -78,13 +78,13 @@ export default function SettingPage() {
     }`;
 
   const sectionCardClass =
-    "bg-white rounded-lg border border-gray-200 p-8 dark:bg-gray-800 dark:border-gray-700";
+    "bg-white rounded-lg border border-gray-200 p-8 dark:bg-neutral-950 dark:border-gray-700";
 
   const innerCardClass =
-    "bg-gray-50 rounded-lg dark:bg-gray-900/60";
+    "bg-gray-50 rounded-lg dark:bg-black/60";
 
   const innerBorderCardClass =
-    "border border-gray-200 rounded-lg bg-gray-50 dark:border-gray-700 dark:bg-gray-900/60";
+    "border border-gray-200 rounded-lg bg-gray-50 dark:border-gray-700 dark:bg-black/60";
 
   const headingClass =
     "text-xl font-bold text-gray-900 dark:text-white mb-6 text-left";
@@ -99,7 +99,7 @@ export default function SettingPage() {
     "text-sm text-gray-600 dark:text-gray-300";
 
   const inputClass =
-    "w-full bg-white text-gray-900 border-gray-200 dark:bg-gray-900 dark:text-white dark:border-gray-700 dark:placeholder:text-gray-500";
+    "w-full bg-white text-gray-900 border-gray-200 dark:bg-black dark:text-white dark:border-gray-700 dark:placeholder:text-gray-500";
 
   const toggleClass =
     "w-14 h-7 bg-gray-300 dark:bg-gray-700 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-900 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-blue-600";
@@ -200,7 +200,7 @@ export default function SettingPage() {
                 <div className="space-y-3">
                   <div className={`flex items-center justify-between p-4 ${innerBorderCardClass}`}>
                     <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/40 rounded-lg flex items-center justify-center">
+                      <div className="w-12 h-12 bg-blue-100 dark:bg-blue-950/40 rounded-lg flex items-center justify-center">
                         <svg
                           className="w-6 h-6 text-blue-600 dark:text-blue-300"
                           fill="none"
@@ -326,7 +326,7 @@ export default function SettingPage() {
                       <Button
                         type="button"
                         variant="outline"
-                        className="ml-4 dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:hover:bg-gray-800"
+                        className="ml-4 dark:border-gray-700 dark:bg-black dark:text-white dark:hover:bg-gray-800"
                       >
                         Download
                       </Button>
@@ -380,10 +380,10 @@ export default function SettingPage() {
                   ].map((login, index) => (
                     <div
                       key={index}
-                      className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900/60"
+                      className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-black/60"
                     >
                       <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center">
+                        <div className="w-10 h-10 bg-gray-100 dark:bg-neutral-950 rounded-lg flex items-center justify-center">
                           <svg
                             className="w-5 h-5 text-gray-600 dark:text-gray-300"
                             fill="none"
@@ -512,11 +512,11 @@ export default function SettingPage() {
             </div>
           )}
 
-          <div className="mt-8 flex items-center justify-between bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
+          <div className="mt-8 flex items-center justify-between bg-white dark:bg-neutral-950 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
             <Button
               type="button"
               variant="ghost"
-              className="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-700"
+              className="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white dark:hover:bg-neutral-800"
             >
               Reset Changes
             </Button>

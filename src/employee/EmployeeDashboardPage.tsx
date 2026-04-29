@@ -266,7 +266,7 @@ function DashboardContent({ username }: { username: string }) {
               trend: "Excellent Progress",
               color: "blue",
               icon: TrendingUp,
-              bgColor: "bg-blue-50 dark:bg-blue-900/30",
+              bgColor: "bg-blue-50 dark:bg-blue-950/30",
               textColor: "text-blue-500 dark:text-blue-400",
             },
             {
@@ -275,7 +275,7 @@ function DashboardContent({ username }: { username: string }) {
               trend: "2 Due Next Week",
               color: "orange",
               icon: CheckCircle2,
-              bgColor: "bg-orange-50 dark:bg-orange-900/30",
+              bgColor: "bg-orange-50 dark:bg-orange-950/30",
               textColor: "text-orange-500 dark:text-orange-400",
             },
             {
@@ -284,7 +284,7 @@ function DashboardContent({ username }: { username: string }) {
               trend: "Due in 5 day",
               color: "rose",
               icon: AlertCircle,
-              bgColor: "bg-rose-50 dark:bg-rose-900/30",
+              bgColor: "bg-rose-50 dark:bg-rose-950/30",
               textColor: "text-rose-500 dark:text-rose-400",
             },
             {
@@ -293,13 +293,13 @@ function DashboardContent({ username }: { username: string }) {
               trend: "+2.5 This Week",
               color: "emerald",
               icon: Clock,
-              bgColor: "bg-emerald-50 dark:bg-emerald-900/30",
+              bgColor: "bg-emerald-50 dark:bg-emerald-950/30",
               textColor: "text-emerald-500 dark:text-emerald-400",
             },
           ].map((item, i) => (
             <Card
               key={i}
-              className="p-4 rounded-lg bg-white dark:bg-gray-800 transition-all flex flex-col justify-between h-[140px] text-left border-none shadow-none"
+              className="p-4 rounded-lg bg-white dark:bg-neutral-950 transition-all flex flex-col justify-between h-[140px] text-left border-none shadow-none"
             >
               <div className="space-y-1">
                 <div className="flex justify-between items-start text-left w-full">
@@ -354,7 +354,7 @@ function DashboardContent({ username }: { username: string }) {
       {/* Middle Row: Competency, Strengths, Engagement */}
       <div className="grid grid-cols-12 gap-4 items-stretch radar-chart">
         {/* Competency Overview */}
-        <Card className="col-span-12 xl:col-span-5 p-4 rounded-lg bg-white dark:bg-gray-800 border-none shadow-none relative">
+        <Card className="col-span-12 xl:col-span-5 p-4 rounded-lg bg-white dark:bg-neutral-950 border-none shadow-none relative">
           <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#006BFF]/5 dark:bg-[#006BFF]/10 rounded-full -mr-16 -mt-16 blur-3xl"></div>
           </div>
@@ -376,8 +376,8 @@ function DashboardContent({ username }: { username: string }) {
                   transition-all duration-300 active:scale-[0.96] cursor-pointer text-[12px] font-normal
                   ${
                     isCategoryOpen
-                      ? "bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl border-transparent shadow-xl translate-y-[-1px] text-gray-700 dark:text-gray-300"
-                      : "bg-transparent hover:bg-white dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white border-transparent hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)]"
+                      ? "bg-white/90 dark:bg-neutral-950/90 backdrop-blur-xl border-transparent shadow-xl translate-y-[-1px] text-gray-700 dark:text-gray-300"
+                      : "bg-transparent hover:bg-white dark:hover:bg-neutral-800 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white border-transparent hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)]"
                   }
                 `}
                 style={{ fontFamily: '"Geometrica", sans-serif' }}
@@ -395,7 +395,7 @@ function DashboardContent({ username }: { username: string }) {
               <div
                 className={`
                   absolute top-full right-0 mt-2 w-38 
-                  bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-xl p-1 z-50 
+                  bg-white/80 dark:bg-neutral-950/80 backdrop-blur-xl rounded-xl p-1 z-50 
                   transition-all duration-300 origin-top-right shadow-xl surface-glass
                   ${
                     isCategoryOpen
@@ -418,8 +418,8 @@ function DashboardContent({ username }: { username: string }) {
                         transition-all duration-200 cursor-pointer
                         ${
                           selectedCategory === cat
-                            ? "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
-                            : "text-gray-700 dark:text-gray-300 hover:bg-gray-100/60 dark:hover:bg-gray-700/60 hover:text-gray-900 dark:hover:text-white"
+                            ? "bg-gray-100 dark:bg-neutral-800 text-gray-900 dark:text-white"
+                            : "text-gray-700 dark:text-gray-300 hover:bg-gray-100/60 dark:hover:bg-neutral-800/60 hover:text-gray-900 dark:hover:text-white"
                         }
                       `}
                         style={{ fontFamily: '"Geometrica", sans-serif' }}
@@ -490,7 +490,7 @@ function DashboardContent({ username }: { username: string }) {
 
             <div className="flex-1 w-full flex flex-col items-end">
               <div className="w-fit ml-auto space-y-2.5">
-                <div className="py-3.5 px-3.5 rounded-2xl bg-white dark:bg-gray-800 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)]">
+                <div className="py-3.5 px-3.5 rounded-2xl bg-white dark:bg-neutral-950 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)]">
                   <div className="flex items-center justify-between gap-6 mb-2">
                     <span className="text-[11px] font-bold text-gray-600 dark:text-gray-400">
                       Current Rating
@@ -559,7 +559,7 @@ function DashboardContent({ username }: { username: string }) {
         </Card>
 
         {/* Top Strengths & Areas to Improve */}
-        <Card className="col-span-12 md:col-span-6 xl:col-span-3 p-4 rounded-lg bg-white dark:bg-gray-800 border-none shadow-none h-full text-left">
+        <Card className="col-span-12 md:col-span-6 xl:col-span-3 p-4 rounded-lg bg-white dark:bg-neutral-950 border-none shadow-none h-full text-left">
           <div className="flex flex-col gap-4 items-start">
             <section className="w-full text-left">
               <h3
@@ -568,7 +568,7 @@ function DashboardContent({ username }: { username: string }) {
               >
                 Top Strengths
               </h3>
-              <div className="w-full rounded-2xl bg-white dark:bg-gray-800 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer p-3 space-y-2.5">
+              <div className="w-full rounded-2xl bg-white dark:bg-neutral-950 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer p-3 space-y-2.5">
                 {[
                   "Strategic Leadership Workshop",
                   "Team Communication",
@@ -606,7 +606,7 @@ function DashboardContent({ username }: { username: string }) {
               >
                 Areas to Improve
               </h3>
-              <div className="w-full rounded-2xl bg-white dark:bg-gray-800 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer p-3 space-y-2.5">
+              <div className="w-full rounded-2xl bg-white dark:bg-neutral-950 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer p-3 space-y-2.5">
                 {[
                   "Project Management",
                   "Conflict Resolution",
@@ -637,7 +637,7 @@ function DashboardContent({ username }: { username: string }) {
         </Card>
 
         {/* Engagement Overview */}
-        <Card className="col-span-12 md:col-span-6 xl:col-span-4 p-4 rounded-lg bg-white dark:bg-gray-800 border-none shadow-none h-full">
+        <Card className="col-span-12 md:col-span-6 xl:col-span-4 p-4 rounded-lg bg-white dark:bg-neutral-950 border-none shadow-none h-full">
           <div className="flex flex-col gap-3.5">
             <h3
               className="!text-[18px] font-medium !text-[#08060d] dark:!text-white mb-2.5 text-left leading-tight"
@@ -647,7 +647,7 @@ function DashboardContent({ username }: { username: string }) {
             </h3>
             <div className="space-y-2.5">
               {/* Points */}
-              <div className="flex items-center p-3 bg-white dark:bg-gray-800 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer rounded-2xl relative">
+              <div className="flex items-center p-3 bg-white dark:bg-neutral-950 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer rounded-2xl relative">
                 <div className="flex items-center gap-4 text-left pr-12">
                   <div className="w-9 h-9 flex items-center justify-center shrink-0">
                     <div className="relative flex items-center justify-center">
@@ -681,7 +681,7 @@ function DashboardContent({ username }: { username: string }) {
               </div>
 
               {/* Efficient Learner */}
-              <div className="flex items-center gap-4 p-3 bg-white dark:bg-gray-800 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer rounded-2xl">
+              <div className="flex items-center gap-4 p-3 bg-white dark:bg-neutral-950 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer rounded-2xl">
                 <div className="w-9 h-9 flex items-center justify-center shrink-0">
                   <img
                     src={efficientLearnerIcon}
@@ -706,7 +706,7 @@ function DashboardContent({ username }: { username: string }) {
               </div>
 
               {/* Streak */}
-              <div className="p-3 bg-white dark:bg-gray-800 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 rounded-2xl relative overflow-hidden h-[74px] cursor-pointer group">
+              <div className="p-3 bg-white dark:bg-neutral-950 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 rounded-2xl relative overflow-hidden h-[74px] cursor-pointer group">
                 <div className="flex items-center gap-4 text-left">
                   <div className="w-9 h-9 flex items-center justify-center shrink-0">
                     <img
@@ -751,7 +751,7 @@ function DashboardContent({ username }: { username: string }) {
       {/* Bottom Row: Progress and Recommended */}
       <div className="grid grid-cols-12 gap-4 items-stretch">
         {/* Learning Progress */}
-        <Card className="col-span-12 xl:col-span-5 pt-4 pb-0 px-0 rounded-lg bg-white dark:bg-gray-800 border-none shadow-none relative overflow-hidden">
+        <Card className="col-span-12 xl:col-span-5 pt-4 pb-0 px-0 rounded-lg bg-white dark:bg-neutral-950 border-none shadow-none relative overflow-hidden">
           <h2
             className="!text-[18px] font-medium !text-[#08060d] dark:!text-white !mb-[-4px] px-4 text-left leading-none"
             style={{ fontFamily: '"Geometrica", sans-serif' }}
@@ -794,7 +794,7 @@ function DashboardContent({ username }: { username: string }) {
               ].map((course, i) => (
                 <div
                   key={i}
-                  className="p-5 rounded-[24px] bg-white dark:bg-gray-800 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer flex flex-col gap-4 group"
+                  className="p-5 rounded-[24px] bg-white dark:bg-neutral-950 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer flex flex-col gap-4 group"
                 >
                   <div className="flex items-start justify-between gap-4 text-left">
                     <div className="flex flex-col items-start gap-2.5 flex-1">
@@ -848,7 +848,7 @@ function DashboardContent({ username }: { username: string }) {
 
                   {/* Progress Bar */}
                   <div className="flex items-center gap-3">
-                    <div className="flex-1 bg-gray-200/50 dark:bg-gray-700/50 rounded-full h-3 overflow-hidden shadow-[inset_0_1.5px_4px_rgba(0,0,0,0.1)]">
+                    <div className="flex-1 bg-gray-200/50 dark:bg-neutral-800/50 rounded-full h-3 overflow-hidden shadow-[inset_0_1.5px_4px_rgba(0,0,0,0.1)]">
                       <div
                         className="bg-linear-to-r from-blue-400 to-blue-600 h-full rounded-full transition-all duration-1000 shadow-[0_0_8px_rgba(59,130,246,0.2)]"
                         style={{ width: `${isMounted ? course.progress : 0}%` }}
@@ -871,7 +871,7 @@ function DashboardContent({ username }: { username: string }) {
         </Card>
 
         {/* Recommended for You */}
-        <Card className="col-span-12 md:col-span-6 xl:col-span-3 pt-4 pb-0 px-0 rounded-lg bg-white dark:bg-gray-800 border-none shadow-none relative overflow-hidden">
+        <Card className="col-span-12 md:col-span-6 xl:col-span-3 pt-4 pb-0 px-0 rounded-lg bg-white dark:bg-neutral-950 border-none shadow-none relative overflow-hidden">
           <h2
             className="!text-[18px] font-medium !text-[#08060d] dark:!text-white !mb-[-4px] px-4 text-left leading-none"
             style={{ fontFamily: '"Geometrica", sans-serif' }}
@@ -899,7 +899,7 @@ function DashboardContent({ username }: { username: string }) {
               ].map((rec, i) => (
                 <div
                   key={i}
-                  className="flex flex-col items-start gap-2 p-3.5 rounded-2xl bg-white dark:bg-gray-800 border-transparent  dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer group text-left relative min-h-[110px]"
+                  className="flex flex-col items-start gap-2 p-3.5 rounded-2xl bg-white dark:bg-neutral-950 border-transparent  dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer group text-left relative min-h-[110px]"
                 >
                   <div className="flex flex-col items-start gap-1.5 text-left pr-8 flex-1">
                     {/* Course Badge */}
@@ -966,7 +966,7 @@ function DashboardContent({ username }: { username: string }) {
         </Card>
 
         {/* Fox - Gamification */}
-        <Card className="col-span-12 md:col-span-6 xl:col-span-4 p-0 overflow-hidden rounded-lg bg-[#fcfcfd] dark:bg-gray-800/90 border-none shadow-none transition-all duration-300">
+        <Card className="col-span-12 md:col-span-6 xl:col-span-4 p-0 overflow-hidden rounded-lg bg-[#fcfcfd] dark:bg-neutral-950/90 border-none shadow-none transition-all duration-300">
           <div className="relative h-64 overflow-hidden group">
             <div className="absolute inset-x-0 top-0 pt-4 px-4 z-20 flex items-center justify-between">
               <h2
@@ -976,7 +976,7 @@ function DashboardContent({ username }: { username: string }) {
                 Your Fox
               </h2>
               <span
-                className="px-3 py-1 rounded-full text-[12px] font-normal bg-white/90 dark:bg-gray-800/90 text-gray-900 dark:text-white shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)]  cursor-default"
+                className="px-3 py-1 rounded-full text-[12px] font-normal bg-white/90 dark:bg-neutral-950/90 text-gray-900 dark:text-white shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)]  cursor-default"
                 style={{ fontFamily: '"Geometrica", sans-serif' }}
               >
                 Lucy Lv.2
@@ -999,7 +999,7 @@ function DashboardContent({ username }: { username: string }) {
               >
                 EXP
               </span>
-              <div className="flex-1 bg-gray-200/50 dark:bg-gray-700/50 shadow-[inset_0_1.5px_4px_rgba(0,0,0,0.1)] rounded-full h-3 overflow-hidden">
+              <div className="flex-1 bg-gray-200/50 dark:bg-neutral-800/50 shadow-[inset_0_1.5px_4px_rgba(0,0,0,0.1)] rounded-full h-3 overflow-hidden">
                 <div
                   className="bg-linear-to-r from-orange-400 via-yellow-400 to-orange-500 h-full rounded-full transition-all duration-1000 shadow-[0_0_10px_rgba(251,146,60,0.3)]"
                   style={{ width: `${isMounted ? 60 : 0}%` }}
@@ -1089,13 +1089,13 @@ function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
           position="Employee"
           onLogout={onLogout}
         />
-        <main className="flex-1 overflow-hidden w-full h-full relative bg-gray-50 dark:bg-gray-900">
+        <main className="flex-1 overflow-hidden w-full h-full relative bg-gray-50 dark:bg-black">
           <header
             className={`
                 absolute top-0 left-0 right-0 z-50 transition-all duration-500 flex items-center justify-between px-6 py-4 shrink-0
                 ${
                   isScrolled
-                    ? "bg-[#fcfcfd]/80 dark:bg-[#0c0e12]/80 backdrop-blur-xl backdrop-saturate-150 surface-glass border-none"
+                    ? "bg-[#fcfcfd]/80 dark:bg-black/80 backdrop-blur-xl backdrop-saturate-150 surface-glass border-none"
                     : "bg-transparent border-none shadow-none"
                 }
               `}
@@ -1292,9 +1292,9 @@ function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
 
           <div
             ref={scrollRef}
-            className="h-full w-full overflow-y-auto relative bg-gray-50 dark:bg-gray-900"
+            className="h-full w-full overflow-y-auto relative bg-gray-50 dark:bg-black"
           >
-            <div className="pt-16 min-h-screen bg-transparent">
+            <div className="pt-16 min-h-screen bg-white dark:bg-black">
               <Routes>
                 <Route
                   path="/my-idp-learning/*"

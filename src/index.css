@@ -272,36 +272,36 @@ code {
   --text: oklch(100% 0.00011 271.152);
   --text-h: oklch(97.338% 0.01291 71.172);
   --bg: var(--background);
-  --background: oklch(0.145 0 0);
+  --background: #000000;
   --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
+  --card: #000000;
   --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
+  --popover: #000000;
   --popover-foreground: oklch(0.985 0 0);
   --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
+  --primary-foreground: #000000;
+  --secondary: #1a1a1a;
   --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
+  --muted: #1a1a1a;
   --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
+  --accent: #1a1a1a;
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
+  --border: oklch(1 0 0 / 5%);
+  --input: oklch(1 0 0 / 10%);
   --ring: oklch(0.556 0 0);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
+  --sidebar: #000000;
   --sidebar-foreground: oklch(0.985 0 0);
   --sidebar-primary: oklch(0.488 0.243 264.376);
   --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent: #1a1a1a;
   --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-border: oklch(1 0 0 / 5%);
   --sidebar-ring: oklch(0.556 0 0);
 }
 
@@ -379,6 +379,12 @@ body,
   scrollbar-gutter: auto !important;
 }
 
+.dark,
+.dark body,
+.dark html {
+  background-color: #000000 !important;
+}
+
 .surface-glass {
   box-shadow:
     0 4px 6px -1px rgba(0, 0, 0, 0.05),
@@ -388,9 +394,10 @@ body,
 
 .dark .surface-glass {
   box-shadow:
-    0 4px 6px -1px rgba(0, 0, 0, 0.2),
-    0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    0 4px 6px -1px rgba(0, 0, 0, 0.5),
+    0 10px 15px -3px rgba(0, 0, 0, 0.3),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 @keyframes motion-alert-ring {

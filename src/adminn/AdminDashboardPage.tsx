@@ -68,13 +68,13 @@ function AdminDashboard({ onLogout, username }: AdminDashboardProps) {
           role="admin"
           onLogout={onLogout}
         />
-        <main className="flex-1 overflow-hidden w-full h-full relative bg-gray-50 dark:bg-gray-900">
+        <main className="flex-1 overflow-hidden w-full h-full relative bg-gray-50 dark:bg-black">
           <header
             className={`
                 absolute top-0 left-0 right-0 z-50 transition-all duration-200 flex items-center justify-between px-6 py-4 shrink-0
                 ${
                   isScrolled
-                    ? "bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl backdrop-saturate-150 border-b  dark:border-transparent shadow-sm surface-glass"
+                    ? "bg-white/80 dark:bg-black/80 backdrop-blur-xl backdrop-saturate-150 border-b  dark:border-transparent shadow-sm surface-glass"
                     : "bg-transparent border-b border-transparent shadow-none"
                 }
               `}
@@ -172,7 +172,7 @@ function AdminDashboard({ onLogout, username }: AdminDashboardProps) {
                 <Route
                   path="/home"
                   element={
-                    <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                    <div className="bg-white dark:bg-neutral-950 rounded-lg shadow p-6">
                       <h2
                         className="text-2xl font-bold text-gray-900 dark:text-white mb-4"
                         style={{ fontFamily: "Geometrica, sans-serif" }}
@@ -198,7 +198,7 @@ function AdminDashboard({ onLogout, username }: AdminDashboardProps) {
                 <Route
                   path="/dashboard"
                   element={
-                    <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                    <div className="bg-white dark:bg-neutral-950 rounded-lg shadow p-6">
                       <h2
                         className="text-2xl font-bold text-gray-900 dark:text-white mb-4"
                         style={{ fontFamily: "Geometrica, sans-serif" }}

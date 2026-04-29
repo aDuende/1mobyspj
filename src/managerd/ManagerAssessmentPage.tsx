@@ -115,7 +115,7 @@ function ManagerAssessmentPage() {
   const filteredAssessments = getFilteredAssessments();
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-black">
       <div className="w-full">
         {/* View Mode Toggle */}
         <div className="mb-6 px-8 pt-8">
@@ -124,8 +124,8 @@ function ManagerAssessmentPage() {
               onClick={() => setViewMode("my")}
               className={`px-4 py-2 rounded-lg font-medium transition-all ${
                 viewMode === "my"
-                  ? "bg-blue-600 text-white"
-                  : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
+                  ? "bg-blue-600 text-white dark:bg-blue-500"
+                  : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 dark:bg-neutral-950 dark:text-gray-300 dark:border-gray-700 dark:hover:bg-neutral-900"
               }`}
             >
               My Assessments
@@ -134,8 +134,8 @@ function ManagerAssessmentPage() {
               onClick={() => setViewMode("team")}
               className={`px-4 py-2 rounded-lg font-medium transition-all flex items-center gap-2 ${
                 viewMode === "team"
-                  ? "bg-blue-600 text-white"
-                  : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
+                  ? "bg-blue-600 text-white dark:bg-blue-500"
+                  : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 dark:bg-neutral-950 dark:text-gray-300 dark:border-gray-700 dark:hover:bg-neutral-900"
               }`}
             >
               <Users className="w-4 h-4" />
@@ -146,13 +146,13 @@ function ManagerAssessmentPage() {
 
         {/* Tabs */}
         <div className="mb-6 px-8">
-          <div className="flex gap-1 border-b border-gray-200">
+          <div className="flex gap-1 border-b border-gray-200 dark:border-gray-800">
             <button
               onClick={() => setActiveTab("upcoming")}
               className={`px-6 py-3 font-medium transition-all relative ${
                 activeTab === "upcoming"
-                  ? "text-blue-600 border-b-2 border-blue-600"
-                  : "text-gray-600 hover:text-gray-900"
+                  ? "text-blue-600 border-b-2 border-blue-600 dark:text-blue-400 dark:border-blue-400"
+                  : "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200"
               }`}
             >
               Upcoming
@@ -161,8 +161,8 @@ function ManagerAssessmentPage() {
               onClick={() => setActiveTab("pastdue")}
               className={`px-6 py-3 font-medium transition-all relative flex items-center gap-2 ${
                 activeTab === "pastdue"
-                  ? "text-blue-600 border-b-2 border-blue-600"
-                  : "text-gray-600 hover:text-gray-900"
+                  ? "text-blue-600 border-b-2 border-blue-600 dark:text-blue-400 dark:border-blue-400"
+                  : "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200"
               }`}
             >
               Past due
@@ -174,8 +174,8 @@ function ManagerAssessmentPage() {
               onClick={() => setActiveTab("completed")}
               className={`px-6 py-3 font-medium transition-all relative ${
                 activeTab === "completed"
-                  ? "text-blue-600 border-b-2 border-blue-600"
-                  : "text-gray-600 hover:text-gray-900"
+                  ? "text-blue-600 border-b-2 border-blue-600 dark:text-blue-400 dark:border-blue-400"
+                  : "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200"
               }`}
             >
               Completed
@@ -187,12 +187,12 @@ function ManagerAssessmentPage() {
         {activeTab === "upcoming" && (
           <div className="px-8 pb-8">
             {filteredAssessments.length === 0 ? (
-              <div className="text-center py-12 bg-white rounded-lg border border-gray-200">
-                <Clock className="mx-auto h-12 w-12 text-gray-300 mb-3" />
-                <h3 className="text-base font-semibold text-gray-900 mb-1">
+              <div className="text-center py-12 bg-white dark:bg-neutral-950 rounded-lg border border-gray-200 dark:border-gray-800">
+                <Clock className="mx-auto h-12 w-12 text-gray-300 dark:text-gray-700 mb-3" />
+                <h3 className="text-base font-semibold text-gray-900 dark:text-white mb-1">
                   No upcoming assessments
                 </h3>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-gray-500 dark:text-gray-400">
                   {viewMode === "my" ? "You're all caught up!" : "Your team is all caught up!"}
                 </p>
               </div>
@@ -209,10 +209,10 @@ function ManagerAssessmentPage() {
                   
                   return (
                     <div key={assessment.id}>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-3 text-left">
-                        {month} {day}{ordinal} <span className="text-gray-500 font-normal">{weekday}</span>
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3 text-left">
+                        {month} {day}{ordinal} <span className="text-gray-500 dark:text-gray-400 font-normal">{weekday}</span>
                       </h3>
-                      <Card className="p-6 hover:shadow-md transition-shadow">
+                      <Card className="p-6 bg-white dark:bg-neutral-950 hover:shadow-md dark:hover:shadow-lg transition-shadow border-gray-200 dark:border-gray-800 text-gray-900 dark:text-white">
                         <div className="flex items-start gap-4">
                           <div className="w-12 h-12 bg-teal-500 rounded flex items-center justify-center shrink-0">
                             <span className="text-white font-bold text-lg">
@@ -220,14 +220,14 @@ function ManagerAssessmentPage() {
                             </span>
                           </div>
                           <div className="flex-1">
-                            <h4 className="text-lg font-bold text-gray-900 mb-1 text-left">
+                            <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-1 text-left">
                               {assessment.title}
                             </h4>
-                            <p className="text-sm text-gray-600 mb-2 text-left">
+                            <p className="text-sm text-gray-600 dark:text-gray-400 mb-2 text-left">
                               {assessment.description}
                             </p>
                             {assessment.employeeName && (
-                              <p className="text-xs text-gray-500 text-left">
+                              <p className="text-xs text-gray-500 dark:text-gray-500 text-left">
                                 {assessment.employeeName}
                               </p>
                             )}
@@ -245,12 +245,12 @@ function ManagerAssessmentPage() {
         {activeTab === "pastdue" && (
           <div className="px-8 pb-8">
             {filteredAssessments.length === 0 ? (
-              <div className="text-center py-12 bg-white rounded-lg border border-gray-200">
-                <CheckCircle2 className="mx-auto h-12 w-12 text-gray-300 mb-3" />
-                <h3 className="text-base font-semibold text-gray-900 mb-1">
+              <div className="text-center py-12 bg-white dark:bg-neutral-950 rounded-lg border border-gray-200 dark:border-gray-800">
+                <CheckCircle2 className="mx-auto h-12 w-12 text-gray-300 dark:text-gray-700 mb-3" />
+                <h3 className="text-base font-semibold text-gray-900 dark:text-white mb-1">
                   No overdue assessments
                 </h3>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-gray-500 dark:text-gray-400">
                   {viewMode === "my" ? "Great job staying on track!" : "Your team is on track!"}
                 </p>
               </div>
@@ -267,10 +267,10 @@ function ManagerAssessmentPage() {
                   
                   return (
                     <div key={assessment.id}>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-3 text-left">
-                        {month} {day}{ordinal} <span className="text-gray-500 font-normal">{weekday}</span>
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3 text-left">
+                        {month} {day}{ordinal} <span className="text-gray-500 dark:text-gray-400 font-normal">{weekday}</span>
                       </h3>
-                      <Card className="p-6 hover:shadow-md transition-shadow">
+                      <Card className="p-6 bg-white dark:bg-neutral-950 hover:shadow-md dark:hover:shadow-lg transition-shadow border-gray-200 dark:border-gray-800 text-gray-900 dark:text-white">
                         <div className="flex items-start gap-4">
                           <div className="w-12 h-12 bg-orange-500 rounded flex items-center justify-center shrink-0">
                             <span className="text-white font-bold text-lg">
@@ -278,14 +278,14 @@ function ManagerAssessmentPage() {
                             </span>
                           </div>
                           <div className="flex-1">
-                            <h4 className="text-lg font-bold text-gray-900 mb-1 text-left">
+                            <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-1 text-left">
                               {assessment.title}
                             </h4>
-                            <p className="text-sm text-gray-600 mb-2 text-left">
+                            <p className="text-sm text-gray-600 dark:text-gray-400 mb-2 text-left">
                               {assessment.description}
                             </p>
                             {assessment.employeeName && (
-                              <p className="text-xs text-gray-500 text-left">
+                              <p className="text-xs text-gray-500 dark:text-gray-500 text-left">
                                 Employee: {assessment.employeeName}
                               </p>
                             )}
@@ -303,12 +303,12 @@ function ManagerAssessmentPage() {
         {activeTab === "completed" && (
           <div className="px-8 pb-8">
             {filteredAssessments.length === 0 ? (
-              <div className="text-center py-12 bg-white rounded-lg border border-gray-200">
-                <CheckCircle2 className="mx-auto h-12 w-12 text-gray-300 mb-3" />
-                <h3 className="text-base font-semibold text-gray-900 mb-1">
+              <div className="text-center py-12 bg-white dark:bg-neutral-950 rounded-lg border border-gray-200 dark:border-gray-800">
+                <CheckCircle2 className="mx-auto h-12 w-12 text-gray-300 dark:text-gray-700 mb-3" />
+                <h3 className="text-base font-semibold text-gray-900 dark:text-white mb-1">
                   No completed assessments
                 </h3>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-gray-500 dark:text-gray-400">
                   Completed assessments will appear here.
                 </p>
               </div>
@@ -325,10 +325,10 @@ function ManagerAssessmentPage() {
                   
                   return (
                     <div key={assessment.id}>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-3 text-left">
-                        {month} {day}{ordinal} <span className="text-gray-500 font-normal">{weekday}</span>
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3 text-left">
+                        {month} {day}{ordinal} <span className="text-gray-500 dark:text-gray-400 font-normal">{weekday}</span>
                       </h3>
-                      <Card className="p-6 hover:shadow-md transition-shadow">
+                      <Card className="p-6 bg-white dark:bg-neutral-950 hover:shadow-md dark:hover:shadow-lg transition-shadow border-gray-200 dark:border-gray-800 text-gray-900 dark:text-white">
                         <div className="flex items-start gap-4">
                           <div className="w-12 h-12 bg-green-500 rounded flex items-center justify-center shrink-0">
                             <span className="text-white font-bold text-lg">
@@ -336,14 +336,14 @@ function ManagerAssessmentPage() {
                             </span>
                           </div>
                           <div className="flex-1">
-                            <h4 className="text-lg font-bold text-gray-900 mb-1 text-left">
+                            <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-1 text-left">
                               {assessment.title}
                             </h4>
-                            <p className="text-sm text-gray-600 mb-2 text-left">
+                            <p className="text-sm text-gray-600 dark:text-gray-400 mb-2 text-left">
                               {assessment.description}
                             </p>
                             {assessment.employeeName && (
-                              <p className="text-xs text-gray-500 text-left">
+                              <p className="text-xs text-gray-500 dark:text-gray-500 text-left">
                                 Employee: {assessment.employeeName}
                               </p>
                             )}

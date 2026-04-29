@@ -101,10 +101,10 @@ function EmployeeAssessmentPage() {
     }`;
 
   const cardClass =
-    "p-6 bg-white text-gray-900 border border-gray-200 hover:shadow-md transition-shadow dark:bg-gray-800 dark:text-white dark:border-gray-700";
+    "p-6 bg-white text-gray-900 border border-gray-200 hover:shadow-md transition-shadow dark:bg-neutral-950 dark:text-white dark:border-gray-700";
 
   const emptyCardClass =
-    "text-center py-12 bg-white rounded-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700";
+    "text-center py-12 bg-white rounded-lg border border-gray-200 dark:bg-neutral-950 dark:border-gray-700";
 
   const renderAssessmentList = (
     colorClass: string,

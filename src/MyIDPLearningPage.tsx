@@ -969,7 +969,7 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
         {/* Learning Timeline and My Learning Path */}
         <div className="grid grid-cols-12 gap-4 items-stretch mb-8">
           {/* Learning Timeline */}
-          <Card className="col-span-12 xl:col-span-7 p-4 rounded-lg bg-white dark:bg-gray-800 border-none shadow-none">
+          <Card className="col-span-12 xl:col-span-7 p-4 rounded-lg bg-white dark:bg-neutral-950 border-none shadow-none">
             <div className="flex items-baseline justify-between mb-4">
               <h2
                 className="!text-[18px] font-medium !text-[#08060d] dark:!text-white leading-tight"
@@ -985,7 +985,7 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
                     transition-all duration-300 active:scale-[0.96] cursor-pointer text-[12px] font-normal
                     ${
                       isTimelineOpen
-                        ? "bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl border-transparent shadow-xl translate-y-[-1px] text-gray-700 dark:text-gray-300"
+                        ? "bg-white/90 dark:bg-neutral-950/90 backdrop-blur-xl border-transparent shadow-xl translate-y-[-1px] text-gray-700 dark:text-gray-300"
                         : "bg-transparent hover:bg-white dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white border-transparent hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)]"
                     }
                   `}
@@ -1000,7 +1000,7 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
                 <div
                   className={`
                     absolute top-full right-0 mt-2 w-40
-                    bg-white dark:bg-gray-800 rounded-xl p-1.5 z-50
+                    bg-white dark:bg-neutral-950 rounded-xl p-1.5 z-50
                     transition-all duration-300 origin-top-right shadow-[0_30px_60px_-12px_rgba(0,0,0,0.15)]
                     ${
                       isTimelineOpen
@@ -1024,7 +1024,7 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
                           ${
                             timelineMonth === opt
                               ? "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
-                              : "text-gray-700 dark:text-gray-300 hover:bg-gray-100/60 dark:hover:bg-gray-700/60 hover:text-gray-900 dark:hover:text-white"
+                              : "text-gray-700 dark:text-gray-300 hover:bg-gray-100/60 dark:hover:bg-neutral-800/60 hover:text-gray-900 dark:hover:text-white"
                           }
                         `}
                         style={{ fontFamily: '"Geometrica", sans-serif' }}
@@ -1559,7 +1559,7 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
           </Card>
 
           {/* My Learning Path */}
-          <Card className="col-span-12 xl:col-span-5 p-4 rounded-lg bg-white dark:bg-gray-800 border-none shadow-none">
+          <Card className="col-span-12 xl:col-span-5 p-4 rounded-lg bg-white dark:bg-neutral-950 border-none shadow-none">
             <h2
               className="!text-[18px] font-medium !text-[#08060d] dark:!text-white leading-tight text-left mb-4"
               style={{ fontFamily: '"Geometrica", sans-serif' }}
@@ -1568,7 +1568,7 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
             </h2>
             <div className="space-y-4">
               {/* Functional Path */}
-              <div className="p-4 rounded-2xl bg-white dark:bg-gray-800 border-transparent  dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer group">
+              <div className="p-4 rounded-2xl bg-white dark:bg-neutral-950 border-transparent  dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer group">
                 <div className="flex items-center justify-between mb-3">
                   <span
                     className="text-[14px] font-semibold text-gray-800 dark:text-white"
@@ -1623,7 +1623,7 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
               </div>
 
               {/* Core Path */}
-              <div className="p-4 rounded-2xl bg-white dark:bg-gray-800 border-transparent  dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer group">
+              <div className="p-4 rounded-2xl bg-white dark:bg-neutral-950 border-transparent  dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer group">
                 <div className="flex items-center justify-between mb-3">
                   <span
                     className="text-[14px] font-semibold text-gray-800 dark:text-white"
@@ -1709,7 +1709,7 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
                   transition-all duration-300 active:scale-[0.96] cursor-pointer
                   ${
                     isProgressFilterOpen
-                      ? "bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl border-transparent shadow-xl translate-y-[-1px] text-gray-700 dark:text-gray-300 px-4"
+                      ? "bg-white/90 dark:bg-neutral-950/90 backdrop-blur-xl border-transparent shadow-xl translate-y-[-1px] text-gray-700 dark:text-gray-300 px-4"
                       : "bg-transparent hover:bg-white dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white border-transparent hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] w-10 md:w-auto md:px-4"
                   }
                 `}
@@ -1728,7 +1728,7 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
               <div
                 className={`
                   absolute top-full right-0 mt-2 w-44
-                  bg-white dark:bg-gray-800 rounded-xl p-1.5 z-50
+                  bg-white dark:bg-neutral-950 rounded-xl p-1.5 z-50
                   transition-all duration-300 origin-top-right shadow-[0_30px_60px_-12px_rgba(0,0,0,0.15)]
                   ${
                     isProgressFilterOpen
@@ -1755,7 +1755,7 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
                         ${
                           progressFilter === cat.id
                             ? "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
-                            : "text-gray-700 dark:text-gray-300 hover:bg-gray-100/60 dark:hover:bg-gray-700/60 hover:text-gray-900 dark:hover:text-white"
+                            : "text-gray-700 dark:text-gray-300 hover:bg-gray-100/60 dark:hover:bg-neutral-800/60 hover:text-gray-900 dark:hover:text-white"
                         }
                       `}
                       style={{ fontFamily: '"Geometrica", sans-serif' }}
@@ -1771,7 +1771,7 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
             </div>
           </div>
 
-          <div className="p-4 rounded-[24px] bg-white dark:bg-gray-800 border-transparent  dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer group max-w-[580px]">
+          <div className="p-4 rounded-[24px] bg-white dark:bg-neutral-950 border-transparent  dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer group max-w-[580px]">
             <div className="flex items-start gap-6 text-left">
               {/* Course Image */}
               <div className="w-[180px] md:w-[237px] h-[133px] rounded-xl shrink-0 overflow-hidden relative bg-gray-100 dark:bg-gray-700 aspect-video">
@@ -1906,7 +1906,7 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
                   transition-all duration-300 active:scale-[0.96] cursor-pointer
                   ${
                     isCourseFilterOpen
-                      ? "bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl border-transparent shadow-xl translate-y-[-1px] text-gray-700 dark:text-gray-300 px-4"
+                      ? "bg-white/90 dark:bg-neutral-950/90 backdrop-blur-xl border-transparent shadow-xl translate-y-[-1px] text-gray-700 dark:text-gray-300 px-4"
                       : "bg-transparent hover:bg-white dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white border-transparent hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] w-10 md:w-auto md:px-4"
                   }
                 `}
@@ -1925,7 +1925,7 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
               <div
                 className={`
                   absolute top-full right-0 mt-2 w-44
-                  bg-white dark:bg-gray-800 rounded-xl p-1.5 z-50
+                  bg-white dark:bg-neutral-950 rounded-xl p-1.5 z-50
                   transition-all duration-300 origin-top-right shadow-[0_30px_60px_-12px_rgba(0,0,0,0.15)]
                   ${
                     isCourseFilterOpen
@@ -1953,7 +1953,7 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
                         ${
                           courseFilter === cat.id
                             ? "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
-                            : "text-gray-700 dark:text-gray-300 hover:bg-gray-100/60 dark:hover:bg-gray-700/60 hover:text-gray-900 dark:hover:text-white"
+                            : "text-gray-700 dark:text-gray-300 hover:bg-gray-100/60 dark:hover:bg-neutral-800/60 hover:text-gray-900 dark:hover:text-white"
                         }
                       `}
                       style={{ fontFamily: '"Geometrica", sans-serif' }}
@@ -1974,7 +1974,7 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
               className={`absolute left-0 top-[calc(50%-24px)] -translate-y-1/2 z-30 hidden md:flex items-center justify-center px-4 pointer-events-none transition-opacity duration-300 ${canCoursesScrollLeft ? "opacity-100" : "opacity-0"}`}
             >
               <button
-                className={`w-12 h-12 -ml-10 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-gray-700 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white pointer-events-auto border-transparent hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none ${!canCoursesScrollLeft && "pointer-events-none"}`}
+                className={`w-12 h-12 -ml-10 bg-white/80 dark:bg-neutral-950/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-neutral-800 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white pointer-events-auto border-transparent hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none ${!canCoursesScrollLeft && "pointer-events-none"}`}
                 onClick={() => {
                   if (coursesCarouselRef.current) {
                     coursesCarouselRef.current.scrollBy({
@@ -2010,7 +2010,7 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
                     key={c.id}
                     onMouseEnter={() => setHoveredCourseId(c.id)}
                     onMouseLeave={() => setHoveredCourseId(null)}
-                    className="shrink-0 w-[90vw] md:w-[580px] p-4 rounded-[24px] bg-white dark:bg-gray-800 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer group snap-start overflow-hidden"
+                    className="shrink-0 w-[90vw] md:w-[580px] p-4 rounded-[24px] bg-white dark:bg-neutral-950 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer group snap-start overflow-hidden"
                     onClick={() => {
                       setSelectedCourse(c);
                       navigate("/my-idp-learning/course/" + c.id);
@@ -2102,7 +2102,7 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
               className={`absolute right-0 top-[calc(50%-24px)] -translate-y-1/2 z-30 hidden md:flex items-center justify-center px-4 pointer-events-none transition-opacity duration-300 ${canCoursesScrollRight ? "opacity-100" : "opacity-0"}`}
             >
               <button
-                className={`w-12 h-12 -mr-10 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-gray-700 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white pointer-events-auto border-transparent hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none ${!canCoursesScrollRight && "pointer-events-none"}`}
+                className={`w-12 h-12 -mr-10 bg-white/80 dark:bg-neutral-950/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-neutral-800 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white pointer-events-auto border-transparent hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none ${!canCoursesScrollRight && "pointer-events-none"}`}
                 onClick={() => {
                   if (coursesCarouselRef.current) {
                     coursesCarouselRef.current.scrollBy({
@@ -2140,7 +2140,7 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
                   transition-all duration-300 active:scale-[0.96] cursor-pointer
                   ${
                     isReelsFilterOpen
-                      ? "bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl border-transparent shadow-xl translate-y-[-1px] text-gray-700 dark:text-gray-300 px-4"
+                      ? "bg-white/90 dark:bg-neutral-950/90 backdrop-blur-xl border-transparent shadow-xl translate-y-[-1px] text-gray-700 dark:text-gray-300 px-4"
                       : "bg-transparent hover:bg-white dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white border-transparent hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] w-10 md:w-auto md:px-4"
                   }
                 `}
@@ -2161,7 +2161,7 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
               <div
                 className={`
                   absolute top-full right-0 mt-2 w-40 
-                  bg-white dark:bg-gray-800 rounded-xl p-1.5 z-50 
+                  bg-white dark:bg-neutral-950 rounded-xl p-1.5 z-50 
                   transition-all duration-300 origin-top-right shadow-[0_30px_60px_-12px_rgba(0,0,0,0.15)]
                   ${
                     isReelsFilterOpen
@@ -2188,7 +2188,7 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
                         ${
                           reelsFilter === cat.id
                             ? "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
-                            : "text-gray-700 dark:text-gray-300 hover:bg-gray-100/60 dark:hover:bg-gray-700/60 hover:text-gray-900 dark:hover:text-white"
+                            : "text-gray-700 dark:text-gray-300 hover:bg-gray-100/60 dark:hover:bg-neutral-800/60 hover:text-gray-900 dark:hover:text-white"
                         }
                       `}
                       style={{ fontFamily: '"Geometrica", sans-serif' }}
@@ -2209,7 +2209,7 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
               className={`absolute left-0 top-[calc(50%-24px)] -translate-y-1/2 z-30 hidden md:flex items-center justify-center px-4 pointer-events-none transition-opacity duration-300 ${canScrollLeft ? "opacity-100" : "opacity-0"}`}
             >
               <button
-                className={`w-12 h-12 -ml-10 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-gray-700 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white pointer-events-auto border-transparent hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none ${!canScrollLeft && "pointer-events-none"}`}
+                className={`w-12 h-12 -ml-10 bg-white/80 dark:bg-neutral-950/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-neutral-800 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white pointer-events-auto border-transparent hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none ${!canScrollLeft && "pointer-events-none"}`}
                 onClick={() => {
                   if (reelsCarouselRef.current) {
                     reelsCarouselRef.current.scrollBy({
@@ -2243,7 +2243,7 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
                       setActiveReelId(reel.id);
                     }}
                   >
-                    <div className="absolute inset-0 z-0 overflow-hidden rounded-2xl bg-gray-200 dark:bg-gray-800">
+                    <div className="absolute inset-0 z-0 overflow-hidden rounded-2xl bg-gray-200 dark:bg-neutral-950">
                       {hoveredReelId === reel.id ? (
                         <div className="absolute inset-0 w-full h-full pointer-events-none">
                           <iframe
@@ -2314,7 +2314,7 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
               className={`absolute right-0 top-[calc(50%-24px)] -translate-y-1/2 z-30 hidden md:flex items-center justify-center px-4 pointer-events-none transition-opacity duration-300 ${canScrollRight ? "opacity-100" : "opacity-0"}`}
             >
               <button
-                className={`w-12 h-12 -mr-10 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-gray-700 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white pointer-events-auto border-transparent hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none ${!canScrollRight && "pointer-events-none"}`}
+                className={`w-12 h-12 -mr-10 bg-white/80 dark:bg-neutral-950/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-neutral-800 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white pointer-events-auto border-transparent hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none ${!canScrollRight && "pointer-events-none"}`}
                 onClick={() => {
                   if (reelsCarouselRef.current) {
                     reelsCarouselRef.current.scrollBy({
@@ -2351,7 +2351,7 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
                   transition-all duration-300 active:scale-[0.96] cursor-pointer
                   ${
                     isNewCourseFilterOpen
-                      ? "bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl border-gray-200/50 dark:border-transparent shadow-xl translate-y-[-1px] text-gray-700 dark:text-gray-300 px-4"
+                      ? "bg-white/90 dark:bg-neutral-950/90 backdrop-blur-xl border-gray-200/50 dark:border-transparent shadow-xl translate-y-[-1px] text-gray-700 dark:text-gray-300 px-4"
                       : "bg-transparent hover:bg-white dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white border-transparent hover:border-gray-200/60 dark:hover:border-transparent hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] w-10 md:w-auto md:px-4"
                   }
                 `}
@@ -2370,7 +2370,7 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
               <div
                 className={`
                   absolute top-full right-0 mt-2 w-44
-                  bg-white dark:bg-gray-800 rounded-xl p-1.5 z-50
+                  bg-white dark:bg-neutral-950 rounded-xl p-1.5 z-50
                   transition-all duration-300 origin-top-right shadow-[0_30px_60px_-12px_rgba(0,0,0,0.15)]
                   ${
                     isNewCourseFilterOpen
@@ -2397,7 +2397,7 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
                         ${
                           newCourseFilter === cat.id
                             ? "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
-                            : "text-gray-700 dark:text-gray-300 hover:bg-gray-100/60 dark:hover:bg-gray-700/60 hover:text-gray-900 dark:hover:text-white"
+                            : "text-gray-700 dark:text-gray-300 hover:bg-gray-100/60 dark:hover:bg-neutral-800/60 hover:text-gray-900 dark:hover:text-white"
                         }
                       `}
                       style={{ fontFamily: '"Geometrica", sans-serif' }}
@@ -2418,7 +2418,7 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
               className={`absolute left-0 top-[calc(50%-24px)] -translate-y-1/2 z-30 hidden md:flex items-center justify-center px-4 pointer-events-none transition-opacity duration-300 ${canNewCoursesScrollLeft ? "opacity-100" : "opacity-0"}`}
             >
               <button
-                className={`w-12 h-12 -ml-10 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-gray-700 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white pointer-events-auto border border-transparent hover:border-gray-200/60 hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none ${!canNewCoursesScrollLeft && "pointer-events-none"}`}
+                className={`w-12 h-12 -ml-10 bg-white/80 dark:bg-neutral-950/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-neutral-800 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white pointer-events-auto border border-transparent hover:border-gray-200/60 hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none ${!canNewCoursesScrollLeft && "pointer-events-none"}`}
                 onClick={() => {
                   if (newCoursesCarouselRef.current) {
                     newCoursesCarouselRef.current.scrollBy({ left: -480, behavior: "smooth" });
@@ -2447,7 +2447,7 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
                     key={c.id}
                     onMouseEnter={() => setHoveredNewCourseId(c.id)}
                     onMouseLeave={() => setHoveredNewCourseId(null)}
-                    className="shrink-0 w-[90vw] md:w-[580px] p-4 rounded-[24px] bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer group snap-start overflow-hidden"
+                    className="shrink-0 w-[90vw] md:w-[580px] p-4 rounded-[24px] bg-white dark:bg-neutral-950 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer group snap-start overflow-hidden"
                     onClick={() => {
                       setSelectedCourse(c);
                       navigate("/my-idp-learning/course/" + c.id);
@@ -2528,7 +2528,7 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
               className={`absolute right-0 top-[calc(50%-24px)] -translate-y-1/2 z-30 hidden md:flex items-center justify-center px-4 pointer-events-none transition-opacity duration-300 ${canNewCoursesScrollRight ? "opacity-100" : "opacity-0"}`}
             >
               <button
-                className={`w-12 h-12 -mr-10 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-gray-700 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white pointer-events-auto border border-transparent hover:border-gray-200/60 hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none ${!canNewCoursesScrollRight && "pointer-events-none"}`}
+                className={`w-12 h-12 -mr-10 bg-white/80 dark:bg-neutral-950/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-neutral-800 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white pointer-events-auto border border-transparent hover:border-gray-200/60 hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none ${!canNewCoursesScrollRight && "pointer-events-none"}`}
                 onClick={() => {
                   if (newCoursesCarouselRef.current) {
                     newCoursesCarouselRef.current.scrollBy({ left: 480, behavior: "smooth" });
@@ -2559,14 +2559,14 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
                 onClick={() => setIsSeriesFilterOpen(!isSeriesFilterOpen)}
                 className={`group flex items-center justify-center gap-2 h-10 rounded-full border transition-all duration-300 active:scale-[0.96] cursor-pointer ${
                   isSeriesFilterOpen
-                    ? "bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl border-gray-200/50 dark:border-transparent shadow-xl translate-y-[-1px] text-gray-700 dark:text-gray-300 px-4"
+                    ? "bg-white/90 dark:bg-neutral-950/90 backdrop-blur-xl border-gray-200/50 dark:border-transparent shadow-xl translate-y-[-1px] text-gray-700 dark:text-gray-300 px-4"
                     : "bg-transparent hover:bg-white dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white border-transparent hover:border-gray-200/60 dark:hover:border-transparent hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] w-10 md:w-auto md:px-4"
                 }`}
               >
                 <span className="hidden md:inline text-[12px] font-normal" style={{ fontFamily: '"Geometrica", sans-serif' }}>Filters</span>
                 <Settings2 className={`w-5 h-5 transition-transform duration-300 ${isSeriesFilterOpen ? "scale-110 text-[#FC4C02]" : ""}`} />
               </button>
-              <div className={`absolute top-full right-0 mt-2 w-44 bg-white dark:bg-gray-800 rounded-xl p-1.5 z-50 transition-all duration-300 origin-top-right shadow-[0_30px_60px_-12px_rgba(0,0,0,0.15)] ${
+              <div className={`absolute top-full right-0 mt-2 w-44 bg-white dark:bg-neutral-950 rounded-xl p-1.5 z-50 transition-all duration-300 origin-top-right shadow-[0_30px_60px_-12px_rgba(0,0,0,0.15)] ${
                 isSeriesFilterOpen ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
               }`}>
                 <div className="flex flex-col gap-1">
@@ -2577,7 +2577,7 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
                       className={`flex items-center gap-3 w-full px-3 py-1.5 rounded-lg text-[12px] font-normal transition-all duration-200 cursor-pointer ${
                         seriesFilter === cat.id
                           ? "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
-                          : "text-gray-700 dark:text-gray-300 hover:bg-gray-100/60 dark:hover:bg-gray-700/60 hover:text-gray-900 dark:hover:text-white"
+                          : "text-gray-700 dark:text-gray-300 hover:bg-gray-100/60 dark:hover:bg-neutral-800/60 hover:text-gray-900 dark:hover:text-white"
                       }`}
                       style={{ fontFamily: '"Geometrica", sans-serif' }}
                     >
@@ -2593,7 +2593,7 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
           <div className="relative group/seriescarousel -mb-12 -mt-2">
             <div className={`absolute left-0 top-[calc(50%-24px)] -translate-y-1/2 z-30 hidden md:flex items-center justify-center px-4 pointer-events-none transition-opacity duration-300 ${canSeriesScrollLeft ? "opacity-100" : "opacity-0"}`}>
               <button
-                className="w-12 h-12 -ml-10 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-gray-700 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white pointer-events-auto border border-transparent hover:border-gray-200/60 hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none"
+                className="w-12 h-12 -ml-10 bg-white/80 dark:bg-neutral-950/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-neutral-800 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white pointer-events-auto border border-transparent hover:border-gray-200/60 hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none"
                 onClick={() => { seriesCarouselRef.current?.scrollBy({ left: -480, behavior: "smooth" }); setTimeout(handleSeriesScroll, 500); }}
               >
                 <ChevronLeft className="w-6 h-6 stroke-[2.5]" />
@@ -2611,7 +2611,7 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
                 .map((s) => (
                   <div
                     key={s.id}
-                    className="shrink-0 w-[90vw] md:w-[580px] p-4 rounded-[24px] bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer group snap-start overflow-hidden"
+                    className="shrink-0 w-[90vw] md:w-[580px] p-4 rounded-[24px] bg-white dark:bg-neutral-950 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer group snap-start overflow-hidden"
                     onClick={() => { setSelectedSeries(s); navigate("/my-idp-learning/series/" + s.id); }}
                   >
                     <div className="flex gap-6 text-left h-[133px]">
@@ -2675,7 +2675,7 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
 
             <div className={`absolute right-0 top-[calc(50%-24px)] -translate-y-1/2 z-30 hidden md:flex items-center justify-center px-4 pointer-events-none transition-opacity duration-300 ${canSeriesScrollRight ? "opacity-100" : "opacity-0"}`}>
               <button
-                className="w-12 h-12 -mr-10 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-gray-700 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white pointer-events-auto border border-transparent hover:border-gray-200/60 hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none"
+                className="w-12 h-12 -mr-10 bg-white/80 dark:bg-neutral-950/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-neutral-800 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white pointer-events-auto border border-transparent hover:border-gray-200/60 hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none"
                 onClick={() => { seriesCarouselRef.current?.scrollBy({ left: 480, behavior: "smooth" }); setTimeout(handleSeriesScroll, 500); }}
               >
                 <ChevronRight className="w-6 h-6 stroke-[2.5]" />
@@ -2701,14 +2701,14 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
                 onClick={() => setIsReadingFilterOpen(!isReadingFilterOpen)}
                 className={`group flex items-center justify-center gap-2 h-10 rounded-full border transition-all duration-300 active:scale-[0.96] cursor-pointer ${
                   isReadingFilterOpen
-                    ? "bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl border-gray-200/50 dark:border-transparent shadow-xl translate-y-[-1px] text-gray-700 dark:text-gray-300 px-4"
+                    ? "bg-white/90 dark:bg-neutral-950/90 backdrop-blur-xl border-gray-200/50 dark:border-transparent shadow-xl translate-y-[-1px] text-gray-700 dark:text-gray-300 px-4"
                     : "bg-transparent hover:bg-white dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white border-transparent hover:border-gray-200/60 dark:hover:border-transparent hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] w-10 md:w-auto md:px-4"
                 }`}
               >
                 <span className="hidden md:inline text-[12px] font-normal" style={{ fontFamily: '"Geometrica", sans-serif' }}>Filters</span>
                 <Settings2 className={`w-5 h-5 transition-transform duration-300 ${isReadingFilterOpen ? "scale-110 text-[#FC4C02]" : ""}`} />
               </button>
-              <div className={`absolute top-full right-0 mt-2 w-44 bg-white dark:bg-gray-800 rounded-xl p-1.5 z-50 transition-all duration-300 origin-top-right shadow-[0_30px_60px_-12px_rgba(0,0,0,0.15)] ${
+              <div className={`absolute top-full right-0 mt-2 w-44 bg-white dark:bg-neutral-950 rounded-xl p-1.5 z-50 transition-all duration-300 origin-top-right shadow-[0_30px_60px_-12px_rgba(0,0,0,0.15)] ${
                 isReadingFilterOpen ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
               }`}>
                 <div className="flex flex-col gap-1">
@@ -2719,7 +2719,7 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
                       className={`flex items-center gap-3 w-full px-3 py-1.5 rounded-lg text-[12px] font-normal transition-all duration-200 cursor-pointer ${
                         readingFilter === cat.id
                           ? "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
-                          : "text-gray-700 dark:text-gray-300 hover:bg-gray-100/60 dark:hover:bg-gray-700/60 hover:text-gray-900 dark:hover:text-white"
+                          : "text-gray-700 dark:text-gray-300 hover:bg-gray-100/60 dark:hover:bg-neutral-800/60 hover:text-gray-900 dark:hover:text-white"
                       }`}
                       style={{ fontFamily: '"Geometrica", sans-serif' }}
                     >
@@ -2735,7 +2735,7 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
           <div className="relative group/readingcarousel -mb-4 -mt-2">
             <div className={`absolute left-0 top-1/2 -translate-y-1/2 z-30 hidden md:flex items-center justify-center px-4 pointer-events-none transition-opacity duration-300 ${canReadingScrollLeft ? "opacity-100" : "opacity-0"}`}>
               <button
-                className="w-12 h-12 -ml-10 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-gray-700 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white pointer-events-auto border border-transparent hover:border-gray-200/60 hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none"
+                className="w-12 h-12 -ml-10 bg-white/80 dark:bg-neutral-950/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-neutral-800 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white pointer-events-auto border border-transparent hover:border-gray-200/60 hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none"
                 onClick={() => { readingCarouselRef.current?.scrollBy({ left: -400, behavior: "smooth" }); setTimeout(handleReadingScroll, 500); }}
               >
                 <ChevronLeft className="w-6 h-6 stroke-[2.5]" />
@@ -2756,10 +2756,10 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
                     className="shrink-0 w-[140px] sm:w-[155px] md:w-[165px] cursor-pointer snap-start group"
                     onClick={() => { setSelectedReading(r); navigate("/my-idp-learning/reading/" + r.id); }}
                   >
-                    <div className="relative w-full aspect-[2/3] rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300">
+                    <div className="relative w-full aspect-[2/3] rounded-xl overflow-hidden bg-gray-100 dark:bg-neutral-950 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300">
                       <img src={r.thumbnail} alt={r.title} className="w-full h-full object-cover" />
                       <div className="absolute top-2 right-2">
-                        <div className="w-7 h-7 rounded-full bg-white/90 dark:bg-gray-900/80 backdrop-blur-md flex items-center justify-center shadow">
+                        <div className="w-7 h-7 rounded-full bg-white/90 dark:bg-black/80 backdrop-blur-md flex items-center justify-center shadow">
                           <FileText className="w-3.5 h-3.5 text-[#fc4c02]" />
                         </div>
                       </div>
@@ -2775,7 +2775,7 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
 
             <div className={`absolute right-0 top-1/2 -translate-y-1/2 z-30 hidden md:flex items-center justify-center px-4 pointer-events-none transition-opacity duration-300 ${canReadingScrollRight ? "opacity-100" : "opacity-0"}`}>
               <button
-                className="w-12 h-12 -mr-10 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-gray-700 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white pointer-events-auto border border-transparent hover:border-gray-200/60 hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none"
+                className="w-12 h-12 -mr-10 bg-white/80 dark:bg-neutral-950/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-neutral-800 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white pointer-events-auto border border-transparent hover:border-gray-200/60 hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none"
                 onClick={() => { readingCarouselRef.current?.scrollBy({ left: 400, behavior: "smooth" }); setTimeout(handleReadingScroll, 500); }}
               >
                 <ChevronRight className="w-6 h-6 stroke-[2.5]" />
@@ -2795,7 +2795,7 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
             }}
           >
             <button
-              className="fixed top-2 left-2 z-[110] w-12 h-12 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-gray-700 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white border-transparent hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none"
+              className="fixed top-2 left-2 z-[110] w-12 h-12 bg-white/80 dark:bg-neutral-950/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-neutral-800 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white border-transparent hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none"
               onClick={() => {
                 setSelectedReel(null);
                 setActiveReelId(null);
@@ -2811,7 +2811,7 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
             >
               <button
                 onClick={handleScrollToPrev}
-                className={`w-12 h-12 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-gray-700 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white border-transparent hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none ${
+                className={`w-12 h-12 bg-white/80 dark:bg-neutral-950/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-neutral-800 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white border-transparent hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none ${
                   activeReelId &&
                   shortLearningReels.findIndex((r) => r.id === activeReelId) > 0
                     ? "opacity-100 scale-100"
@@ -2822,7 +2822,7 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
               </button>
               <button
                 onClick={handleScrollToNext}
-                className={`w-12 h-12 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-gray-700 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white border-transparent hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none ${
+                className={`w-12 h-12 bg-white/80 dark:bg-neutral-950/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-neutral-800 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white border-transparent hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none ${
                   activeReelId &&
                   shortLearningReels.findIndex((r) => r.id === activeReelId) <
                     shortLearningReels.length - 1
@@ -2916,7 +2916,7 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
                               rel="noopener noreferrer"
                               className="flex items-center gap-2 group/author"
                             >
-                              <div className="w-9 h-9 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center text-[#08060d] dark:text-white shrink-0 border-transparent border-transparent group-hover/author: group-hover/author:bg-white dark:group-hover/author:bg-gray-700 group-hover/author:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] transition-all duration-500 ease-in-out">
+                              <div className="w-9 h-9 bg-white/80 dark:bg-neutral-950/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center text-[#08060d] dark:text-white shrink-0 border-transparent border-transparent group-hover/author: group-hover/author:bg-white dark:group-hover/author:bg-gray-700 group-hover/author:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] transition-all duration-500 ease-in-out">
                                 {reel.icon && (
                                   <reel.icon className="w-4.5 h-4.5 stroke-[2.5]" />
                                 )}

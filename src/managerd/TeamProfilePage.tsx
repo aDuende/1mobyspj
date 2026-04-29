@@ -302,7 +302,7 @@ function MemberCard({ m, onClick }: { m: TeamMember; onClick: () => void }) {
   return (
     <button
       onClick={onClick}
-      className="w-full text-left flex items-center gap-4 p-4 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 cursor-pointer group"
+      className="w-full text-left flex items-center gap-4 p-4 rounded-2xl bg-white dark:bg-neutral-950 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 cursor-pointer group"
     >
       {/* Avatar */}
       <div
@@ -389,7 +389,7 @@ function MemberDetail({ m, onBack }: { m: TeamMember; onBack: () => void }) {
       {/* Back button */}
       <button
         onClick={onBack}
-        className="flex items-center gap-2 w-fit px-4 py-2 rounded-full bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-sm text-[13px] font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:shadow-md transition-all duration-200 cursor-pointer"
+        className="flex items-center gap-2 w-fit px-4 py-2 rounded-full bg-white dark:bg-neutral-950 border border-gray-200/60 dark:border-white/5 shadow-sm text-[13px] font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:shadow-md transition-all duration-200 cursor-pointer"
         style={GEO}
       >
         <ArrowLeft className="w-4 h-4" />
@@ -458,7 +458,7 @@ function MemberDetail({ m, onBack }: { m: TeamMember; onBack: () => void }) {
                     <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold text-white" style={{ background: "#fc4c02" }}>
                       Level {m.level}
                     </span>
-                    <span className="px-2.5 py-0.5 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-xs font-medium" style={GEO}>
+                    <span className="px-2.5 py-0.5 bg-blue-100 dark:bg-blue-950/30 text-blue-700 dark:text-blue-300 rounded-full text-xs font-medium" style={GEO}>
                       {m.position}
                     </span>
                   </div>
@@ -467,7 +467,7 @@ function MemberDetail({ m, onBack }: { m: TeamMember; onBack: () => void }) {
                       <span className="text-[11px] font-medium text-gray-500 dark:text-gray-400" style={GEO}>Progress</span>
                       <span className="text-[11px] font-semibold text-emerald-600 dark:text-emerald-400" style={GEO}>{m.progress}%</span>
                     </div>
-                    <div className="h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                    <div className="h-1.5 bg-gray-200 dark:bg-neutral-800 rounded-full overflow-hidden">
                       <div
                         className="h-full bg-gradient-to-r from-purple-500 to-blue-500 rounded-full transition-all duration-1000"
                         style={{ width: isMounted ? `${m.progress}%` : "0%" }}
@@ -494,11 +494,11 @@ function MemberDetail({ m, onBack }: { m: TeamMember; onBack: () => void }) {
           {/* Stats row */}
           <div className="grid grid-cols-3 gap-3" style={fadeUp(280)}>
             {[
-              { label: "Learning Hours", value: m.learningHours, icon: Clock,      color: "text-blue-500",    bg: "bg-blue-50 dark:bg-blue-900/20" },
+              { label: "Learning Hours", value: m.learningHours, icon: Clock,      color: "text-blue-500",    bg: "bg-blue-50 dark:bg-blue-950/20" },
               { label: "Active IDPs",    value: m.activeIDPs,    icon: Target,     color: "text-orange-500",  bg: "bg-orange-50 dark:bg-orange-900/20" },
               { label: "Pending",        value: m.pendingAssessments, icon: AlertCircle, color: "text-rose-500", bg: "bg-rose-50 dark:bg-rose-900/20" },
             ].map((s, si) => (
-              <div key={si} className="flex items-center gap-3 p-3 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)]">
+              <div key={si} className="flex items-center gap-3 p-3 rounded-2xl bg-white dark:bg-neutral-950 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)]">
                 <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${s.bg}`}>
                   <s.icon className={`w-4 h-4 ${s.color}`} />
                 </div>
@@ -512,14 +512,14 @@ function MemberDetail({ m, onBack }: { m: TeamMember; onBack: () => void }) {
 
           {/* Strengths + Areas */}
           <div className="grid gap-4 md:grid-cols-2" style={fadeUp(320)}>
-            <Card className="p-4 rounded-2xl bg-white dark:bg-gray-800 border-none shadow-sm">
+            <Card className="p-4 rounded-2xl bg-white dark:bg-neutral-950 border-none shadow-sm">
               <h3 className="text-[16px] font-medium text-[#08060d] dark:text-white mb-3 flex items-center gap-2" style={GEO}>
-                <div className="h-7 w-7 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center shrink-0">
+                <div className="h-7 w-7 rounded-full bg-emerald-100 dark:bg-emerald-950/30 flex items-center justify-center shrink-0">
                   <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />
                 </div>
                 Top Strengths
               </h3>
-              <div className="rounded-2xl bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] p-3 space-y-2.5">
+              <div className="rounded-2xl bg-white dark:bg-neutral-950 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] p-3 space-y-2.5">
                 {m.strengths.map((item, i) => (
                   <div key={i} className="flex items-center gap-2.5">
                     <div className="w-4 h-4 rounded-full bg-[#32bea6] flex items-center justify-center shrink-0">
@@ -531,14 +531,14 @@ function MemberDetail({ m, onBack }: { m: TeamMember; onBack: () => void }) {
               </div>
             </Card>
 
-            <Card className="p-4 rounded-2xl bg-white dark:bg-gray-800 border-none shadow-sm">
+            <Card className="p-4 rounded-2xl bg-white dark:bg-neutral-950 border-none shadow-sm">
               <h3 className="text-[16px] font-medium text-[#08060d] dark:text-white mb-3 flex items-center gap-2" style={GEO}>
                 <div className="h-7 w-7 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center shrink-0">
                   <AlertTriangle className="h-3.5 w-3.5 text-amber-500" />
                 </div>
                 Areas to Improve
               </h3>
-              <div className="rounded-2xl bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] p-3 space-y-2.5">
+              <div className="rounded-2xl bg-white dark:bg-neutral-950 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] p-3 space-y-2.5">
                 {m.areasToImprove.map((item, i) => (
                   <div key={i} className="flex items-center gap-2.5">
                     <div className="w-4 h-4 rounded-full bg-[#f4c300] flex items-center justify-center shrink-0">
@@ -552,7 +552,7 @@ function MemberDetail({ m, onBack }: { m: TeamMember; onBack: () => void }) {
           </div>
 
           {/* Competency Overview radar */}
-          <Card className="p-4 rounded-lg bg-white dark:bg-gray-800 border-none shadow-none relative" style={fadeUp(400)}>
+          <Card className="p-4 rounded-lg bg-white dark:bg-neutral-950 border-none shadow-none relative" style={fadeUp(400)}>
             <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#006BFF]/5 rounded-full -mr-16 -mt-16 blur-3xl" />
             </div>
@@ -561,17 +561,17 @@ function MemberDetail({ m, onBack }: { m: TeamMember; onBack: () => void }) {
               <div className="relative" ref={categoryRef}>
                 <button
                   onClick={() => setIsCategoryOpen(!isCategoryOpen)}
-                  className={`group flex items-center gap-2 px-4 py-2 rounded-full border transition-all duration-300 active:scale-[0.96] cursor-pointer text-[12px] font-normal ${isCategoryOpen ? "bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl border-gray-200/50 shadow-xl text-gray-700 dark:text-gray-300" : "bg-transparent hover:bg-white dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 border-transparent hover:border-gray-200/60"}`}
+                  className={`group flex items-center gap-2 px-4 py-2 rounded-full border transition-all duration-300 active:scale-[0.96] cursor-pointer text-[12px] font-normal ${isCategoryOpen ? "bg-white/90 dark:bg-neutral-950/90 backdrop-blur-xl border-gray-200/50 shadow-xl text-gray-700 dark:text-gray-300" : "bg-transparent hover:bg-white dark:hover:bg-neutral-800 text-gray-500 dark:text-gray-400 border-transparent hover:border-gray-200/60"}`}
                   style={GEO}
                 >
                   {selectedCategory}
                   <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${isCategoryOpen ? "rotate-180 text-[#FC4C02]" : "rotate-0"}`} />
                 </button>
-                <div className={`absolute top-full right-0 mt-2 w-36 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-xl border border-gray-200/50 dark:border-transparent p-1 z-50 transition-all duration-300 origin-top-right shadow-xl ${isCategoryOpen ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-95 -translate-y-2 pointer-events-none"}`}>
+                <div className={`absolute top-full right-0 mt-2 w-36 bg-white/80 dark:bg-neutral-950/80 backdrop-blur-xl rounded-xl border border-gray-200/50 dark:border-transparent p-1 z-50 transition-all duration-300 origin-top-right shadow-xl ${isCategoryOpen ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-95 -translate-y-2 pointer-events-none"}`}>
                   <div className="flex flex-col gap-1">
                     {["Core", "Functional"].map(cat => (
                       <button key={cat} onClick={() => { setSelectedCategory(cat); setIsCategoryOpen(false); }}
-                        className={`flex items-center gap-3 w-full px-3 py-1.5 rounded-lg text-[12px] font-normal transition-all duration-200 cursor-pointer ${selectedCategory === cat ? "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white" : "text-gray-700 dark:text-gray-300 hover:bg-gray-100/60 dark:hover:bg-gray-700/60"}`}
+                        className={`flex items-center gap-3 w-full px-3 py-1.5 rounded-lg text-[12px] font-normal transition-all duration-200 cursor-pointer ${selectedCategory === cat ? "bg-gray-100 dark:bg-neutral-800 text-gray-900 dark:text-white" : "text-gray-700 dark:text-gray-300 hover:bg-gray-100/60 dark:hover:bg-neutral-800/60"}`}
                         style={GEO}
                       >
                         <span className="flex-1 text-left">{cat}</span>
@@ -597,7 +597,7 @@ function MemberDetail({ m, onBack }: { m: TeamMember; onBack: () => void }) {
               </div>
               <div className="flex-1 w-full flex flex-col items-end">
                 <div className="w-fit ml-auto space-y-2.5">
-                  <div className="py-3.5 px-3.5 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)]">
+                  <div className="py-3.5 px-3.5 rounded-2xl bg-white dark:bg-neutral-950 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)]">
                     <div className="flex items-center justify-between gap-6 mb-2">
                       <span className="text-[11px] font-bold text-gray-600 dark:text-gray-400">Current Rating</span>
                       <div className="flex items-center gap-1 text-emerald-500 font-bold text-[11px]">
@@ -626,10 +626,10 @@ function MemberDetail({ m, onBack }: { m: TeamMember; onBack: () => void }) {
         <div className="lg:col-span-3 space-y-6">
 
           {/* Core Definition */}
-          <Card className="border-none shadow-lg hover:shadow-xl transition-all duration-500 bg-white dark:bg-gray-800" style={fadeUp(300)}>
+          <Card className="border-none shadow-lg hover:shadow-xl transition-all duration-500 bg-white dark:bg-neutral-950" style={fadeUp(300)}>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="flex items-center gap-2 text-[15px]" style={GEO}>
-                <div className="h-7 w-7 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center">
+                <div className="h-7 w-7 rounded-full bg-purple-100 dark:bg-purple-950/30 flex items-center justify-center">
                   <Sparkles className="h-3.5 w-3.5 text-purple-600 dark:text-purple-400" />
                 </div>
                 {coreType} Definition
@@ -643,7 +643,7 @@ function MemberDetail({ m, onBack }: { m: TeamMember; onBack: () => void }) {
                   {coreType} ▾
                 </button>
                 {showCoreDropdown && (
-                  <div className="absolute right-0 mt-2 w-32 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 z-10">
+                  <div className="absolute right-0 mt-2 w-32 bg-white dark:bg-neutral-950 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 z-10">
                     {(["Core", "Functional"] as const).map(opt => (
                       <button key={opt}
                         className={`w-full text-left px-4 py-2 text-[12px] first:rounded-t-xl last:rounded-b-xl transition-colors hover:bg-purple-50 dark:hover:bg-purple-900/30 cursor-pointer ${coreType === opt ? "font-bold text-purple-600 dark:text-purple-300" : "text-gray-700 dark:text-gray-300"}`}
@@ -670,7 +670,7 @@ function MemberDetail({ m, onBack }: { m: TeamMember; onBack: () => void }) {
           </Card>
 
           {/* Growth Timeline */}
-          <Card className="border-none shadow-lg hover:shadow-xl transition-all duration-500 bg-white dark:bg-gray-800 relative overflow-hidden" style={fadeUp(400)}>
+          <Card className="border-none shadow-lg hover:shadow-xl transition-all duration-500 bg-white dark:bg-neutral-950 relative overflow-hidden" style={fadeUp(400)}>
             <div className="absolute bottom-0 right-0 w-40 h-40 bg-gradient-to-tl from-blue-400/10 to-purple-400/10 rounded-full blur-3xl" />
             <CardHeader className="pb-2">
               <CardTitle className="flex items-center gap-2 text-[15px]" style={GEO}>
@@ -759,7 +759,7 @@ export default function TeamProfilePage() {
               value={search}
               onChange={e => setSearch(e.target.value)}
               placeholder="Search by name or position…"
-              className="w-full pl-4 pr-4 py-2.5 rounded-xl border border-gray-200/60 dark:border-white/10 bg-white dark:bg-gray-800 text-[13px] text-gray-700 dark:text-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#006bff]/30 shadow-[inset_0_1px_4px_rgba(0,0,0,0.04)] transition-all"
+              className="w-full pl-4 pr-4 py-2.5 rounded-xl border border-gray-200/60 dark:border-white/10 bg-white dark:bg-neutral-950 text-[13px] text-gray-700 dark:text-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#006bff]/30 shadow-[inset_0_1px_4px_rgba(0,0,0,0.04)] transition-all"
               style={GEO}
             />
           </div>
@@ -777,14 +777,14 @@ export default function TeamProfilePage() {
         <div className="col-span-12 xl:col-span-5 flex flex-col gap-4">
 
           {/* Top Performer */}
-          <div className="rounded-2xl bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] p-4">
+          <div className="rounded-2xl bg-white dark:bg-neutral-950 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] p-4">
             <h2 className="text-[16px] font-semibold text-[#08060d] dark:text-white mb-3" style={GEO}>Top Performer</h2>
             <div className="flex flex-col gap-3">
               {topPerformers.map(m => (
                 <button
                   key={m.id}
                   onClick={() => setSelectedMember(m)}
-                  className="w-full text-left flex items-center gap-3 p-3 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 cursor-pointer group"
+                  className="w-full text-left flex items-center gap-3 p-3 rounded-2xl bg-white dark:bg-neutral-950 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 cursor-pointer group"
                 >
                   <div
                     className="w-12 h-12 rounded-xl flex items-center justify-center text-white text-[15px] font-bold shrink-0 transition-transform duration-300 group-hover:scale-105"
@@ -814,7 +814,7 @@ export default function TeamProfilePage() {
           </div>
 
           {/* Team summary stats */}
-          <div className="rounded-2xl bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] p-4">
+          <div className="rounded-2xl bg-white dark:bg-neutral-950 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] p-4">
             <h2 className="text-[16px] font-semibold text-[#08060d] dark:text-white mb-3" style={GEO}>Team Summary</h2>
             <div className="space-y-3">
               {[
@@ -835,7 +835,7 @@ export default function TeamProfilePage() {
           </div>
 
           {/* Position breakdown */}
-          <div className="rounded-2xl bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] p-4">
+          <div className="rounded-2xl bg-white dark:bg-neutral-950 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] p-4">
             <h2 className="text-[16px] font-semibold text-[#08060d] dark:text-white mb-3" style={GEO}>Position Breakdown</h2>
             <div className="space-y-2.5">
               {Array.from(new Set(TEAM.map(m => m.position))).map(pos => {
@@ -847,7 +847,7 @@ export default function TeamProfilePage() {
                       <span className="text-[11px] text-gray-600 dark:text-gray-300" style={GEO}>{pos}</span>
                       <span className="text-[11px] font-semibold text-gray-700 dark:text-gray-300" style={GEO}>{count} · {pct}%</span>
                     </div>
-                    <div className="h-1.5 w-full bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+                    <div className="h-1.5 w-full bg-gray-100 dark:bg-neutral-800 rounded-full overflow-hidden">
                       <div className="h-full bg-[#006bff] rounded-full transition-all duration-700" style={{ width: `${pct}%` }} />
                     </div>
                   </div>

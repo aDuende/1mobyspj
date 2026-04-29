@@ -117,7 +117,7 @@ const heatColumns: { key: keyof typeof teamMembers[0]["scores"]; label: string }
 ];
 
 function heatColor(score: number): string {
-  if (score >= 3.5) return "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300";
+  if (score >= 3.5) return "bg-emerald-100 text-emerald-800 dark:bg-emerald-950/30 dark:text-emerald-300";
   if (score >= 2.5) return "bg-teal-50 text-teal-700 dark:bg-teal-900/20 dark:text-teal-300";
   if (score >= 1.5) return "bg-yellow-50 text-yellow-700 dark:bg-yellow-900/20 dark:text-yellow-300";
   return "bg-orange-50 text-orange-700 dark:bg-orange-900/20 dark:text-orange-300";
@@ -248,12 +248,12 @@ function ManagerDashboardContent({ username }: { username: string }) {
         {/* Metrics */}
         <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
           {[
-            { label: "Team Avg Score",        value: "3.6", trend: "Team Performing Well",  color: "blue",    icon: TrendingUp,   bgColor: "bg-blue-50 dark:bg-blue-900/30",     textColor: "text-blue-500 dark:text-blue-400" },
-            { label: "Team Members",           value: "4",   trend: "All Active",            color: "orange",  icon: Users,        bgColor: "bg-orange-50 dark:bg-orange-900/30", textColor: "text-orange-500 dark:text-orange-400" },
-            { label: "Pending Assessments",    value: "3",   trend: "Due in 5 days",         color: "rose",    icon: AlertCircle,  bgColor: "bg-rose-50 dark:bg-rose-900/30",     textColor: "text-rose-500 dark:text-rose-400" },
-            { label: "Team Learning Hours",    value: "48",  trend: "+8 This Week",          color: "emerald", icon: Clock,        bgColor: "bg-emerald-50 dark:bg-emerald-900/30", textColor: "text-emerald-500 dark:text-emerald-400" },
+            { label: "Team Avg Score",        value: "3.6", trend: "Team Performing Well",  color: "blue",    icon: TrendingUp,   bgColor: "bg-blue-50 dark:bg-blue-950/30",     textColor: "text-blue-500 dark:text-blue-400" },
+            { label: "Team Members",           value: "4",   trend: "All Active",            color: "orange",  icon: Users,        bgColor: "bg-orange-50 dark:bg-orange-950/30", textColor: "text-orange-500 dark:text-orange-400" },
+            { label: "Pending Assessments",    value: "3",   trend: "Due in 5 days",         color: "rose",    icon: AlertCircle,  bgColor: "bg-rose-50 dark:bg-rose-950/30",     textColor: "text-rose-500 dark:text-rose-400" },
+            { label: "Team Learning Hours",    value: "48",  trend: "+8 This Week",          color: "emerald", icon: Clock,        bgColor: "bg-emerald-50 dark:bg-emerald-950/30", textColor: "text-emerald-500 dark:text-emerald-400" },
           ].map((item, i) => (
-            <Card key={i} className="p-4 rounded-lg bg-white dark:bg-gray-800 transition-all flex flex-col justify-between h-[140px] text-left border-none shadow-none">
+            <Card key={i} className="p-4 rounded-lg bg-white dark:bg-neutral-950 transition-all flex flex-col justify-between h-[140px] text-left border-none shadow-none">
               <div className="space-y-1">
                 <div className="flex justify-between items-start w-full">
                   <p className="text-[11px] text-gray-600 dark:text-gray-400 font-normal leading-tight" style={GEO}>{item.label}</p>
@@ -277,7 +277,7 @@ function ManagerDashboardContent({ username }: { username: string }) {
       <div className="grid grid-cols-12 gap-4 items-stretch">
 
         {/* Competency Overview */}
-        <Card className="col-span-12 xl:col-span-5 p-4 rounded-lg bg-white dark:bg-gray-800 border-none shadow-none relative">
+        <Card className="col-span-12 xl:col-span-5 p-4 rounded-lg bg-white dark:bg-neutral-950 border-none shadow-none relative">
           <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#006BFF]/5 dark:bg-[#006BFF]/10 rounded-full -mr-16 -mt-16 blur-3xl" />
           </div>
@@ -288,17 +288,17 @@ function ManagerDashboardContent({ username }: { username: string }) {
             <div className="relative" ref={categoryRef}>
               <button
                 onClick={() => setIsCategoryOpen(!isCategoryOpen)}
-                className={`group flex items-center gap-2 px-4 py-2 rounded-full border transition-all duration-300 active:scale-[0.96] cursor-pointer text-[12px] font-normal ${isCategoryOpen ? "bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl border-gray-200/50 dark:border-transparent shadow-xl translate-y-[-1px] text-gray-700 dark:text-gray-300" : "bg-transparent hover:bg-white dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white border-transparent hover:border-gray-200/60 dark:hover:border-transparent hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)]"}`}
+                className={`group flex items-center gap-2 px-4 py-2 rounded-full border transition-all duration-300 active:scale-[0.96] cursor-pointer text-[12px] font-normal ${isCategoryOpen ? "bg-white/90 dark:bg-neutral-950/90 backdrop-blur-xl border-gray-200/50 dark:border-transparent shadow-xl translate-y-[-1px] text-gray-700 dark:text-gray-300" : "bg-transparent hover:bg-white dark:hover:bg-neutral-800 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white border-transparent hover:border-gray-200/60 dark:hover:border-transparent hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)]"}`}
                 style={GEO}
               >
                 {selectedCategory}
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${isCategoryOpen ? "rotate-180 text-[#FC4C02]" : "rotate-0 text-gray-500 group-hover:text-gray-900 dark:group-hover:text-white"}`} />
               </button>
-              <div className={`absolute top-full right-0 mt-2 w-38 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-xl border border-gray-200/50 dark:border-transparent p-1 z-50 transition-all duration-300 origin-top-right shadow-xl ${isCategoryOpen ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-95 -translate-y-2 pointer-events-none"}`}>
+              <div className={`absolute top-full right-0 mt-2 w-38 bg-white/80 dark:bg-neutral-950/80 backdrop-blur-xl rounded-xl border border-gray-200/50 dark:border-transparent p-1 z-50 transition-all duration-300 origin-top-right shadow-xl ${isCategoryOpen ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-95 -translate-y-2 pointer-events-none"}`}>
                 <div className="flex flex-col gap-1">
                   {["Core", "Managerial", "Functional"].map(cat => (
                     <button key={cat} onClick={() => { setSelectedCategory(cat); setIsCategoryOpen(false); }}
-                      className={`flex items-center gap-3 w-full px-3 py-1.5 rounded-lg text-[12px] font-normal transition-all duration-200 cursor-pointer ${selectedCategory === cat ? "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white" : "text-gray-700 dark:text-gray-300 hover:bg-gray-100/60 dark:hover:bg-gray-700/60"}`}
+                      className={`flex items-center gap-3 w-full px-3 py-1.5 rounded-lg text-[12px] font-normal transition-all duration-200 cursor-pointer ${selectedCategory === cat ? "bg-gray-100 dark:bg-neutral-800 text-gray-900 dark:text-white" : "text-gray-700 dark:text-gray-300 hover:bg-gray-100/60 dark:hover:bg-neutral-800/60"}`}
                       style={GEO}
                     >
                       <span className="flex-1 text-left">{cat}</span>
@@ -324,7 +324,7 @@ function ManagerDashboardContent({ username }: { username: string }) {
             </div>
             <div className="flex-1 w-full flex flex-col items-end">
               <div className="w-fit ml-auto space-y-2.5">
-                <div className="py-3.5 px-3.5 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)]">
+                <div className="py-3.5 px-3.5 rounded-2xl bg-white dark:bg-neutral-950 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)]">
                   <div className="flex items-center justify-between gap-6 mb-2">
                     <span className="text-[11px] font-bold text-gray-600 dark:text-gray-400">Team Avg</span>
                     <div className="flex items-center gap-1 text-emerald-500 font-bold text-[11px]">
@@ -363,11 +363,11 @@ function ManagerDashboardContent({ username }: { username: string }) {
         </Card>
 
         {/* Team Focus */}
-        <Card className="col-span-12 md:col-span-6 xl:col-span-3 p-4 rounded-lg bg-white dark:bg-gray-800 border-none shadow-none h-full text-left">
+        <Card className="col-span-12 md:col-span-6 xl:col-span-3 p-4 rounded-lg bg-white dark:bg-neutral-950 border-none shadow-none h-full text-left">
           <div className="flex flex-col gap-4 items-start">
             <section className="w-full">
               <h3 className="!text-[18px] font-medium !text-[#08060d] dark:!text-white mb-2.5 leading-tight" style={GEO}>Team Strengths</h3>
-              <div className="w-full rounded-2xl bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer p-3 space-y-2.5">
+              <div className="w-full rounded-2xl bg-white dark:bg-neutral-950 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer p-3 space-y-2.5">
                 {["Collaboration & Teamwork", "Strategic Thinking", "Stakeholder Communication"].map((item, i) => (
                   <div key={i} className="flex items-center gap-2.5">
                     <div className="w-4.5 h-4.5 rounded-full bg-[#32bea6] flex items-center justify-center shrink-0">
@@ -380,7 +380,7 @@ function ManagerDashboardContent({ username }: { username: string }) {
             </section>
             <section className="w-full">
               <h3 className="!text-[18px] font-medium !text-[#08060d] dark:!text-white mb-2.5 leading-tight" style={GEO}>Areas to Improve</h3>
-              <div className="w-full rounded-2xl bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer p-3 space-y-2.5">
+              <div className="w-full rounded-2xl bg-white dark:bg-neutral-950 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer p-3 space-y-2.5">
                 {["Adaptive Leadership", "Conflict Resolution", "Data-Driven Decisions"].map((item, i) => (
                   <div key={i} className="flex items-center gap-2.5">
                     <div className="w-4.5 h-4.5 rounded-full bg-[#f4c300] flex items-center justify-center shrink-0">
@@ -395,12 +395,12 @@ function ManagerDashboardContent({ username }: { username: string }) {
         </Card>
 
         {/* Team Engagement */}
-        <Card className="col-span-12 md:col-span-6 xl:col-span-4 p-4 rounded-lg bg-white dark:bg-gray-800 border-none shadow-none h-full">
+        <Card className="col-span-12 md:col-span-6 xl:col-span-4 p-4 rounded-lg bg-white dark:bg-neutral-950 border-none shadow-none h-full">
           <div className="flex flex-col gap-3.5">
             <h3 className="!text-[18px] font-medium !text-[#08060d] dark:!text-white mb-2.5 text-left leading-tight" style={GEO}>Team Engagement</h3>
             <div className="space-y-2.5">
               {/* Team Points */}
-              <div className="flex items-center p-3 bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer rounded-2xl relative">
+              <div className="flex items-center p-3 bg-white dark:bg-neutral-950 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer rounded-2xl relative">
                 <div className="flex items-center gap-4 text-left pr-12">
                   <div className="w-9 h-9 flex items-center justify-center shrink-0">
                     <div className="relative flex items-center justify-center">
@@ -420,7 +420,7 @@ function ManagerDashboardContent({ username }: { username: string }) {
                 </span>
               </div>
               {/* Top Achiever */}
-              <div className="flex items-center gap-4 p-3 bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer rounded-2xl">
+              <div className="flex items-center gap-4 p-3 bg-white dark:bg-neutral-950 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer rounded-2xl">
                 <div className="w-9 h-9 flex items-center justify-center shrink-0">
                   <img src={efficientLearnerIcon} className="w-full h-full object-contain" alt="Top Achiever" />
                 </div>
@@ -430,7 +430,7 @@ function ManagerDashboardContent({ username }: { username: string }) {
                 </div>
               </div>
               {/* Streak */}
-              <div className="p-3 bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 rounded-2xl relative overflow-hidden h-[74px] cursor-pointer group">
+              <div className="p-3 bg-white dark:bg-neutral-950 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 rounded-2xl relative overflow-hidden h-[74px] cursor-pointer group">
                 <div className="flex items-center gap-4 text-left">
                   <div className="w-9 h-9 flex items-center justify-center shrink-0">
                     <img src={keepUpIcon} className="w-full h-full object-contain" alt="Streak" />
@@ -453,7 +453,7 @@ function ManagerDashboardContent({ username }: { username: string }) {
       <div className="grid grid-cols-12 gap-4 items-stretch">
 
         {/* Team Competency HeatMap */}
-        <Card className="col-span-12 xl:col-span-8 p-4 rounded-lg bg-white dark:bg-gray-800 border-none shadow-none">
+        <Card className="col-span-12 xl:col-span-8 p-4 rounded-lg bg-white dark:bg-neutral-950 border-none shadow-none">
           <h2 className="!text-[18px] font-medium !text-[#08060d] dark:!text-white mb-4 leading-tight" style={GEO}>Team Competency HeatMap</h2>
 
           {/* Header row */}
@@ -477,7 +477,7 @@ function ManagerDashboardContent({ username }: { username: string }) {
                 <div key={member.name} className="rounded-2xl border border-gray-100 dark:border-white/5 overflow-hidden">
                   {/* Main row */}
                   <div
-                    className="flex items-center gap-2 px-2 py-2.5 hover:bg-gray-50/60 dark:hover:bg-gray-700/20 transition-colors duration-150 cursor-pointer"
+                    className="flex items-center gap-2 px-2 py-2.5 hover:bg-gray-50/60 dark:hover:bg-neutral-800/20 transition-colors duration-150 cursor-pointer"
                     onClick={() => setExpandedMember(isExpanded ? null : member.name)}
                   >
                     {/* Avatar + Name */}
@@ -521,7 +521,7 @@ function ManagerDashboardContent({ username }: { username: string }) {
 
                   {/* Expanded detail */}
                   {isExpanded && (
-                    <div className="border-t border-gray-100 dark:border-white/5 px-4 py-3 bg-gray-50/50 dark:bg-gray-700/10">
+                    <div className="border-t border-gray-100 dark:border-white/5 px-4 py-3 bg-gray-50/50 dark:bg-neutral-800/10">
                       <div className="flex flex-col gap-2">
                         {heatColumns.map(col => {
                           const score = member.scores[col.key];
@@ -529,7 +529,7 @@ function ManagerDashboardContent({ username }: { username: string }) {
                           return (
                             <div key={col.key} className="flex items-center gap-3">
                               <span className="text-[11px] text-gray-500 dark:text-gray-400 w-[120px] shrink-0" style={GEO}>{col.label}</span>
-                              <div className="flex-1 h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                              <div className="flex-1 h-1.5 bg-gray-200 dark:bg-neutral-800 rounded-full overflow-hidden">
                                 <div
                                   className="h-full bg-[#fc4c02] rounded-full transition-all duration-700"
                                   style={{ width: `${isMounted ? pct : 0}%` }}
@@ -550,7 +550,7 @@ function ManagerDashboardContent({ username }: { username: string }) {
           {/* Legend */}
           <div className="flex items-center gap-4 mt-4 flex-wrap">
             {[
-              { label: "Excellent (≥3.5)", cls: "bg-emerald-100 dark:bg-emerald-900/30" },
+              { label: "Excellent (≥3.5)", cls: "bg-emerald-100 dark:bg-emerald-950/30" },
               { label: "Good (≥2.5)",      cls: "bg-teal-50 dark:bg-teal-900/20" },
               { label: "Fair (≥1.5)",      cls: "bg-yellow-50 dark:bg-yellow-900/20" },
               { label: "Needs Work (<1.5)", cls: "bg-orange-50 dark:bg-orange-900/20" },
@@ -564,7 +564,7 @@ function ManagerDashboardContent({ username }: { username: string }) {
         </Card>
 
         {/* Team Progress */}
-        <Card className="col-span-12 xl:col-span-4 pt-4 pb-0 px-0 rounded-lg bg-white dark:bg-gray-800 border-none shadow-none relative overflow-hidden">
+        <Card className="col-span-12 xl:col-span-4 pt-4 pb-0 px-0 rounded-lg bg-white dark:bg-neutral-950 border-none shadow-none relative overflow-hidden">
           <h2 className="!text-[18px] font-medium !text-[#08060d] dark:!text-white !mb-[-4px] px-4 text-left leading-none" style={GEO}>Team Progress</h2>
           <div className="relative">
             <div className="space-y-4 max-h-[360px] overflow-y-auto px-4 -mt-2 pt-2 pb-10 no-scrollbar">
@@ -575,7 +575,7 @@ function ManagerDashboardContent({ username }: { username: string }) {
                 { name: "Jessica", title: "Communication Skills",         progress: 40, color: "#8b6f5a" },
                 { name: "Tarin",   title: "Data-Driven Decision Making",  progress: 20, color: "#e8a598" },
               ].map((item, i) => (
-                <div key={i} className="p-4 rounded-[20px] bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer flex flex-col gap-3 group">
+                <div key={i} className="p-4 rounded-[20px] bg-white dark:bg-neutral-950 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer flex flex-col gap-3 group">
                   <div className="flex items-center gap-2">
                     <div className="w-6 h-6 rounded-full flex items-center justify-center text-white text-[10px] font-bold shrink-0" style={{ background: item.color }}>
                       {item.name[0]}
@@ -586,7 +586,7 @@ function ManagerDashboardContent({ username }: { username: string }) {
                     </div>
                     <span className="text-[12px] font-medium text-gray-600 dark:text-gray-300 shrink-0" style={GEO}>{item.progress}%</span>
                   </div>
-                  <div className="flex-1 bg-gray-200/50 dark:bg-gray-700/50 rounded-full h-2.5 overflow-hidden shadow-[inset_0_1.5px_4px_rgba(0,0,0,0.1)]">
+                  <div className="flex-1 bg-gray-200/50 dark:bg-neutral-800/50 rounded-full h-2.5 overflow-hidden shadow-[inset_0_1.5px_4px_rgba(0,0,0,0.1)]">
                     <div
                       className="bg-linear-to-r from-blue-400 to-blue-600 h-full rounded-full transition-all duration-1000 shadow-[0_0_8px_rgba(59,130,246,0.2)]"
                       style={{ width: `${isMounted ? item.progress : 0}%` }}
@@ -603,7 +603,7 @@ function ManagerDashboardContent({ username }: { username: string }) {
       {/* ── Row 4: Learning Progress + Recommended + Team Leaderboard ── */}
       <div className="grid grid-cols-12 gap-4 items-stretch">
         {/* Team Learning Progress */}
-        <Card className="col-span-12 xl:col-span-5 pt-4 pb-0 px-0 rounded-lg bg-white dark:bg-gray-800 border-none shadow-none relative overflow-hidden">
+        <Card className="col-span-12 xl:col-span-5 pt-4 pb-0 px-0 rounded-lg bg-white dark:bg-neutral-950 border-none shadow-none relative overflow-hidden">
           <h2 className="!text-[18px] font-medium !text-[#08060d] dark:!text-white !mb-[-4px] px-4 text-left leading-none" style={GEO}>Learning Progress</h2>
           <div className="relative">
             <div className="space-y-4 max-h-[360px] overflow-y-auto px-4 -mt-2 pt-2 pb-10 no-scrollbar">
@@ -614,7 +614,7 @@ function ManagerDashboardContent({ username }: { username: string }) {
                 { title: "Team Communication",        date: "2027-08-01", progress: 30,  status: "Resume Course" },
                 { title: "Conflict Resolution",       date: "2027-08-15", progress: 45,  status: "Resume Course" },
               ].map((course, i) => (
-                <div key={i} className="p-5 rounded-[24px] bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer flex flex-col gap-4 group">
+                <div key={i} className="p-5 rounded-[24px] bg-white dark:bg-neutral-950 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer flex flex-col gap-4 group">
                   <div className="flex items-start justify-between gap-4 text-left">
                     <div className="flex flex-col items-start gap-2.5 flex-1">
                       <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-700/50 text-slate-800 dark:text-slate-200 text-[12px] font-semibold tracking-wide">
@@ -635,7 +635,7 @@ function ManagerDashboardContent({ username }: { username: string }) {
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <div className="flex-1 bg-gray-200/50 dark:bg-gray-700/50 rounded-full h-3 overflow-hidden shadow-[inset_0_1.5px_4px_rgba(0,0,0,0.1)]">
+                    <div className="flex-1 bg-gray-200/50 dark:bg-neutral-800/50 rounded-full h-3 overflow-hidden shadow-[inset_0_1.5px_4px_rgba(0,0,0,0.1)]">
                       <div className="bg-linear-to-r from-blue-400 to-blue-600 h-full rounded-full transition-all duration-1000" style={{ width: `${isMounted ? course.progress : 0}%` }} />
                     </div>
                     <span className="text-[14px] font-medium text-gray-800 dark:text-gray-200 shrink-0 min-w-[36px] text-right" style={GEO}>
@@ -650,7 +650,7 @@ function ManagerDashboardContent({ username }: { username: string }) {
         </Card>
 
         {/* Recommended */}
-        <Card className="col-span-12 md:col-span-6 xl:col-span-3 pt-4 pb-0 px-0 rounded-lg bg-white dark:bg-gray-800 border-none shadow-none relative overflow-hidden">
+        <Card className="col-span-12 md:col-span-6 xl:col-span-3 pt-4 pb-0 px-0 rounded-lg bg-white dark:bg-neutral-950 border-none shadow-none relative overflow-hidden">
           <h2 className="!text-[18px] font-medium !text-[#08060d] dark:!text-white !mb-[-4px] px-4 text-left leading-none" style={GEO}>Recommended for Team</h2>
           <div className="relative">
             <div className="space-y-2 max-h-[360px] overflow-y-auto px-4 -mt-2 pt-2 pb-10 no-scrollbar">
@@ -659,7 +659,7 @@ function ManagerDashboardContent({ username }: { username: string }) {
                 { title: "Adaptive Management",        date: "2027-06-20", duration: "1 hour 15 minutes"  },
                 { title: "Conflict Resolution Skills", date: "2027-06-25", duration: "3 hours 45 minutes" },
               ].map((rec, i) => (
-                <div key={i} className="flex flex-col items-start gap-2 p-3.5 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer group text-left relative min-h-[110px]">
+                <div key={i} className="flex flex-col items-start gap-2 p-3.5 rounded-2xl bg-white dark:bg-neutral-950 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer group text-left relative min-h-[110px]">
                   <div className="flex flex-col items-start gap-1.5 text-left pr-8 flex-1">
                     <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-700/50 text-slate-800 dark:text-slate-200 text-[12px] font-semibold tracking-wide">
                       <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
@@ -693,7 +693,7 @@ function ManagerDashboardContent({ username }: { username: string }) {
         </Card>
 
         {/* Team Leaderboard */}
-        <Card className="col-span-12 md:col-span-6 xl:col-span-4 p-4 rounded-lg bg-white dark:bg-gray-800 border-none shadow-none">
+        <Card className="col-span-12 md:col-span-6 xl:col-span-4 p-4 rounded-lg bg-white dark:bg-neutral-950 border-none shadow-none">
           <div className="flex items-center justify-between mb-4">
             <h2 className="!text-[18px] font-medium !text-[#08060d] dark:!text-white leading-tight" style={GEO}>Team Leaderboard</h2>
             <UserCheck className="w-4.5 h-4.5 text-gray-400" />
@@ -705,7 +705,7 @@ function ManagerDashboardContent({ username }: { username: string }) {
               { rank: 3, name: "Tarin",   score: 3.6, hrs: "11h", color: "#e8a598",  medal: "#CD7F32" },
               { rank: 4, name: "Jessica", score: 3.4, hrs: "9h",  color: "#8b6f5a",  medal: undefined },
             ].map(member => (
-              <div key={member.name} className="flex items-center gap-3 p-3 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer">
+              <div key={member.name} className="flex items-center gap-3 p-3 rounded-2xl bg-white dark:bg-neutral-950 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer">
                 <span className="w-5 text-center text-[12px] font-bold text-gray-400 shrink-0" style={GEO}>{member.rank}</span>
                 <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-[12px] font-bold shrink-0" style={{ background: member.color }}>
                   {member.name[0]}
@@ -778,13 +778,13 @@ function ManagerDashboard({ onLogout, username }: ManagerDashboardProps) {
           role="manager"
           onLogout={onLogout}
         />
-        <main className="flex-1 overflow-hidden w-full h-full relative bg-gray-50 dark:bg-gray-900">
+        <main className="flex-1 overflow-hidden w-full h-full relative bg-gray-50 dark:bg-black">
           <header
             className={`
                 absolute top-0 left-0 right-0 z-50 transition-all duration-200 flex items-center justify-between px-6 py-4 shrink-0
                 ${
                   isScrolled
-                    ? "bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl backdrop-saturate-150 border-b  dark:border-transparent shadow-sm surface-glass"
+                    ? "bg-white/80 dark:bg-black/80 backdrop-blur-xl backdrop-saturate-150 border-b  dark:border-transparent shadow-sm surface-glass"
                     : "bg-transparent border-b border-transparent shadow-none"
                 }
               `}
@@ -989,9 +989,9 @@ function ManagerDashboard({ onLogout, username }: ManagerDashboardProps) {
 
           <div
             ref={scrollRef}
-            className="h-full w-full overflow-y-auto relative"
+            className="h-full w-full overflow-y-auto relative bg-white dark:bg-black"
           >
-            <div className="pt-16">
+            <div className="pt-16 bg-white dark:bg-black">
               <Routes>
                 <Route path="/assessment" element={<ManagerAssessmentPage />} />
                 <Route path="/team-profile" element={<TeamProfilePage />} />

@@ -148,7 +148,7 @@ export default function LessonLayout({ course }: LessonLayoutProps) {
                 onClick={() => setLiked((v) => !v)}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-[12px] font-medium transition-all duration-200 cursor-pointer ${
                   liked
-                    ? "bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-500/30 text-blue-600 dark:text-blue-400"
+                    ? "bg-blue-50 dark:bg-blue-950/20 border-blue-200 dark:border-blue-500/30 text-blue-600 dark:text-blue-400"
                     : "border-gray-200/60 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
                 }`}
               >
@@ -200,7 +200,7 @@ export default function LessonLayout({ course }: LessonLayoutProps) {
           </div>
 
           {/* Description */}
-          <div className="rounded-xl bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] p-3">
+          <div className="rounded-xl bg-white dark:bg-neutral-950 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] p-3">
             <div className="flex items-center gap-4 text-[11px] text-gray-500 dark:text-gray-400 mb-3" style={GEO}>
               <span className="font-semibold text-gray-700 dark:text-gray-300 text-[12px]">
                 {course.rating} ★
@@ -232,7 +232,7 @@ export default function LessonLayout({ course }: LessonLayoutProps) {
         </div>
 
         {/* RIGHT: lesson list */}
-        <div className="w-full lg:w-90 shrink-0 border-t lg:border-t-0 lg:border-l border-gray-200/60 dark:border-white/5 bg-white dark:bg-gray-900 flex flex-col">
+        <div className="w-full lg:w-90 shrink-0 border-t lg:border-t-0 lg:border-l border-gray-200/60 dark:border-white/5 bg-white dark:bg-black flex flex-col">
           <div className="p-4 border-b border-gray-200/60 dark:border-white/5">
             <p className="text-[13px] font-semibold text-gray-800 dark:text-white" style={GEO}>
               Course contents

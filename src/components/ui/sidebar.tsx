@@ -246,7 +246,7 @@ function SidebarTrigger({
       className={cn(
         "flex items-center justify-center w-11 h-11 rounded-full -ml-2",
         "transition-all duration-300 active:scale-[0.96] cursor-pointer border",
-        "bg-transparent hover:bg-white dark:hover:bg-gray-800",
+        "bg-transparent hover:bg-white dark:hover:bg-neutral-900",
         "text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white",
         "border-transparent hover:border-gray-200/60 dark:hover:border-transparent",
         "hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)]",

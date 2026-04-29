@@ -239,16 +239,16 @@ export default function SeriesLayout({ item }: SeriesLayoutProps) {
                 return (
                   <div
                     key={mod.id}
-                    className="rounded-2xl bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] overflow-hidden"
+                    className="rounded-2xl bg-white dark:bg-neutral-950 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] overflow-hidden"
                   >
                     {/* Module header */}
                     <button
                       onClick={() => toggleExpand(mod.id)}
-                      className="w-full flex items-center gap-3 p-4 text-left cursor-pointer hover:bg-gray-50/60 dark:hover:bg-gray-700/30 transition-colors duration-150"
+                      className="w-full flex items-center gap-3 p-4 text-left cursor-pointer hover:bg-gray-50/60 dark:hover:bg-neutral-800/30 transition-colors duration-150"
                     >
                       <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
                         modDone
-                          ? "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-500"
+                          ? "bg-emerald-100 dark:bg-emerald-950/30 text-emerald-500"
                           : "bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400"
                       }`}>
                         {modDone
@@ -282,13 +282,13 @@ export default function SeriesLayout({ item }: SeriesLayoutProps) {
                               onClick={() => unlocked && setPlaying(ep)}
                               className={`w-full flex items-center gap-3 px-4 py-3 text-left border-b border-gray-100 dark:border-white/5 last:border-b-0 transition-all duration-150 ${
                                 unlocked
-                                  ? "cursor-pointer hover:bg-gray-50/80 dark:hover:bg-gray-700/30"
+                                  ? "cursor-pointer hover:bg-gray-50/80 dark:hover:bg-neutral-800/30"
                                   : "cursor-not-allowed opacity-50"
                               }`}
                             >
                               <div className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 ${
                                 done
-                                  ? "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-500"
+                                  ? "bg-emerald-100 dark:bg-emerald-950/30 text-emerald-500"
                                   : unlocked
                                   ? "bg-[#fc4c02]/10 text-[#fc4c02]"
                                   : "bg-gray-100 dark:bg-gray-700 text-gray-400"
