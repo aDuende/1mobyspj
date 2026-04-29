@@ -204,7 +204,8 @@ const newCourses = [
   {
     id: "react-complete",
     title: "React - The Complete Guide (incl. React Router & Redux)",
-    description: "Dive in and learn React.js from scratch — fully updated to React 18.",
+    description:
+      "Dive in and learn React.js from scratch — fully updated to React 18.",
     fullDescription:
       "Fully updated and covering React 18, hooks, context, React Router, Redux, and more. Build real-world apps and master modern React development from the ground up.",
     category: "FRONTEND",
@@ -276,7 +277,8 @@ const newCourses = [
   {
     id: "python-beginners",
     title: "Python for Beginners — Full Course",
-    description: "Learn Python programming from scratch with hands-on projects.",
+    description:
+      "Learn Python programming from scratch with hands-on projects.",
     fullDescription:
       "Start your programming journey with Python. Covers variables, data types, functions, OOP, file handling, and real-world projects including a web scraper and data visualizer.",
     category: "BACKEND",
@@ -421,7 +423,8 @@ const seriesData = [
   {
     id: "series-2",
     title: "Node.js Crash Course Series",
-    description: "Build server-side apps with Node.js and Express step by step.",
+    description:
+      "Build server-side apps with Node.js and Express step by step.",
     modules: 3,
     videos: 8,
     category: "BACKEND",
@@ -472,7 +475,8 @@ const readingHubData = [
     author: "Robert C. Martin",
     pages: 431,
     category: "Engineering",
-    thumbnail: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1436202607i/3735293.jpg",
+    thumbnail:
+      "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1436202607i/3735293.jpg",
   },
   {
     id: "read-2",
@@ -480,7 +484,8 @@ const readingHubData = [
     author: "David Thomas & Andrew Hunt",
     pages: 352,
     category: "Engineering",
-    thumbnail: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1401432508i/4099.jpg",
+    thumbnail:
+      "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1401432508i/4099.jpg",
   },
   {
     id: "read-3",
@@ -488,7 +493,8 @@ const readingHubData = [
     author: "Kyle Simpson",
     pages: 278,
     category: "Frontend",
-    thumbnail: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1373665727i/9422683.jpg",
+    thumbnail:
+      "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1373665727i/9422683.jpg",
   },
   {
     id: "read-4",
@@ -496,7 +502,8 @@ const readingHubData = [
     author: "Martin Kleppmann",
     pages: 616,
     category: "Backend",
-    thumbnail: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1415816873i/23463279.jpg",
+    thumbnail:
+      "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1415816873i/23463279.jpg",
   },
   {
     id: "read-5",
@@ -504,7 +511,8 @@ const readingHubData = [
     author: "Alex Xu",
     pages: 309,
     category: "Engineering",
-    thumbnail: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1603160280i/54109255.jpg",
+    thumbnail:
+      "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1603160280i/54109255.jpg",
   },
   {
     id: "read-6",
@@ -512,11 +520,16 @@ const readingHubData = [
     author: "Eric A. Meyer",
     pages: 1094,
     category: "Frontend",
-    thumbnail: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1347964659i/1867080.jpg",
+    thumbnail:
+      "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1347964659i/1867080.jpg",
   },
 ];
 
-export default function MyIDPLearningPage({ role = "employee" }: { role?: "employee" | "manager" | "admin" }) {
+export default function MyIDPLearningPage({
+  role = "employee",
+}: {
+  role?: "employee" | "manager" | "admin";
+}) {
   const navigate = useNavigate();
   const location = useLocation();
   const [selectedCourse, setSelectedCourse] = useState<null | {
@@ -538,8 +551,12 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
     highlights: string[];
   }>(null);
 
-  const [selectedSeries, setSelectedSeries] = useState<null | (typeof seriesData)[0]>(null);
-  const [selectedReading, setSelectedReading] = useState<null | (typeof readingHubData)[0]>(null);
+  const [selectedSeries, setSelectedSeries] = useState<
+    null | (typeof seriesData)[0]
+  >(null);
+  const [selectedReading, setSelectedReading] = useState<
+    null | (typeof readingHubData)[0]
+  >(null);
 
   const [selectedReel, setSelectedReel] = useState<
     null | (typeof shortLearningReels)[0]
@@ -615,8 +632,11 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
   const newCourseFilterRef = useRef<HTMLDivElement>(null);
   const newCoursesCarouselRef = useRef<HTMLDivElement>(null);
   const [canNewCoursesScrollLeft, setCanNewCoursesScrollLeft] = useState(false);
-  const [canNewCoursesScrollRight, setCanNewCoursesScrollRight] = useState(true);
-  const [hoveredNewCourseId, setHoveredNewCourseId] = useState<string | null>(null);
+  const [canNewCoursesScrollRight, setCanNewCoursesScrollRight] =
+    useState(true);
+  const [hoveredNewCourseId, setHoveredNewCourseId] = useState<string | null>(
+    null,
+  );
 
   // Series section
   const [seriesFilter, setSeriesFilter] = useState("All");
@@ -717,7 +737,8 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
 
   const handleSeriesScroll = () => {
     if (seriesCarouselRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = seriesCarouselRef.current;
+      const { scrollLeft, scrollWidth, clientWidth } =
+        seriesCarouselRef.current;
       setCanSeriesScrollLeft(scrollLeft > 20);
       setCanSeriesScrollRight(scrollLeft + clientWidth < scrollWidth - 20);
     }
@@ -725,7 +746,8 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
 
   const handleReadingScroll = () => {
     if (readingCarouselRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = readingCarouselRef.current;
+      const { scrollLeft, scrollWidth, clientWidth } =
+        readingCarouselRef.current;
       setCanReadingScrollLeft(scrollLeft > 20);
       setCanReadingScrollRight(scrollLeft + clientWidth < scrollWidth - 20);
     }
@@ -906,8 +928,9 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
   useEffect(() => {
     if (location.pathname.startsWith("/my-idp-learning/course/")) {
       const courseId = location.pathname.split("/").pop();
-      const course = courses.find((c) => c.id === courseId)
-        ?? newCourses.find((c) => c.id === courseId);
+      const course =
+        courses.find((c) => c.id === courseId) ??
+        newCourses.find((c) => c.id === courseId);
       if (course && !selectedCourse) {
         setTimeout(() => setSelectedCourse(course), 0);
       }
@@ -930,7 +953,8 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
     if (location.pathname.startsWith("/my-idp-learning/reading/")) {
       const id = location.pathname.split("/").pop();
       const item = readingHubData.find((r) => r.id === id);
-      if (item && !selectedReading) setTimeout(() => setSelectedReading(item), 0);
+      if (item && !selectedReading)
+        setTimeout(() => setSelectedReading(item), 0);
     } else {
       if (selectedReading) setTimeout(() => setSelectedReading(null), 0);
     }
@@ -2421,7 +2445,10 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
                 className={`w-12 h-12 -ml-10 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-gray-700 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white pointer-events-auto border border-transparent hover:border-gray-200/60 hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none ${!canNewCoursesScrollLeft && "pointer-events-none"}`}
                 onClick={() => {
                   if (newCoursesCarouselRef.current) {
-                    newCoursesCarouselRef.current.scrollBy({ left: -480, behavior: "smooth" });
+                    newCoursesCarouselRef.current.scrollBy({
+                      left: -480,
+                      behavior: "smooth",
+                    });
                     setTimeout(handleNewCoursesScroll, 500);
                   }
                 }}
@@ -2438,8 +2465,10 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
             >
               {newCourses
                 .filter((c) => {
-                  if (newCourseFilter === "Frontend") return c.category === "FRONTEND";
-                  if (newCourseFilter === "Backend") return c.category === "BACKEND";
+                  if (newCourseFilter === "Frontend")
+                    return c.category === "FRONTEND";
+                  if (newCourseFilter === "Backend")
+                    return c.category === "BACKEND";
                   return true;
                 })
                 .map((c) => (
@@ -2465,7 +2494,11 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
                             />
                           </div>
                         ) : (
-                          <img src={c.thumbnail} alt={c.title} className="w-full h-full object-cover" />
+                          <img
+                            src={c.thumbnail}
+                            alt={c.title}
+                            className="w-full h-full object-cover"
+                          />
                         )}
                       </div>
 
@@ -2473,7 +2506,11 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
                         <div className="h-[93px] flex flex-col items-start gap-1.5 overflow-hidden">
                           <div className="flex items-center gap-2">
                             <div className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-700/50 text-slate-800 dark:text-slate-200 text-[11px] font-semibold tracking-wide">
-                              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+                              <svg
+                                className="w-3.5 h-3.5"
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                              >
                                 <circle cx="8.5" cy="8.5" r="5.2" />
                                 <circle cx="15.5" cy="8.5" r="5.2" />
                                 <circle cx="8.5" cy="15.5" r="5.2" />
@@ -2487,7 +2524,8 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
                               ) : (
                                 <AppWindow className="w-3.5 h-3.5" />
                               )}
-                              {c.category.charAt(0).toUpperCase() + c.category.slice(1).toLowerCase()}
+                              {c.category.charAt(0).toUpperCase() +
+                                c.category.slice(1).toLowerCase()}
                             </div>
                           </div>
                           <h3
@@ -2531,7 +2569,10 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
                 className={`w-12 h-12 -mr-10 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-gray-700 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white pointer-events-auto border border-transparent hover:border-gray-200/60 hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none ${!canNewCoursesScrollRight && "pointer-events-none"}`}
                 onClick={() => {
                   if (newCoursesCarouselRef.current) {
-                    newCoursesCarouselRef.current.scrollBy({ left: 480, behavior: "smooth" });
+                    newCoursesCarouselRef.current.scrollBy({
+                      left: 480,
+                      behavior: "smooth",
+                    });
                     setTimeout(handleNewCoursesScroll, 500);
                   }
                 }}
@@ -2563,17 +2604,36 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
                     : "bg-transparent hover:bg-white dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white border-transparent hover:border-gray-200/60 dark:hover:border-transparent hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] w-10 md:w-auto md:px-4"
                 }`}
               >
-                <span className="hidden md:inline text-[12px] font-normal" style={{ fontFamily: '"Geometrica", sans-serif' }}>Filters</span>
-                <Settings2 className={`w-5 h-5 transition-transform duration-300 ${isSeriesFilterOpen ? "scale-110 text-[#FC4C02]" : ""}`} />
+                <span
+                  className="hidden md:inline text-[12px] font-normal"
+                  style={{ fontFamily: '"Geometrica", sans-serif' }}
+                >
+                  Filters
+                </span>
+                <Settings2
+                  className={`w-5 h-5 transition-transform duration-300 ${isSeriesFilterOpen ? "scale-110 text-[#FC4C02]" : ""}`}
+                />
               </button>
-              <div className={`absolute top-full right-0 mt-2 w-44 bg-white dark:bg-gray-800 rounded-xl p-1.5 z-50 transition-all duration-300 origin-top-right shadow-[0_30px_60px_-12px_rgba(0,0,0,0.15)] ${
-                isSeriesFilterOpen ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
-              }`}>
+              <div
+                className={`absolute top-full right-0 mt-2 w-44 bg-white dark:bg-gray-800 rounded-xl p-1.5 z-50 transition-all duration-300 origin-top-right shadow-[0_30px_60px_-12px_rgba(0,0,0,0.15)] ${
+                  isSeriesFilterOpen
+                    ? "opacity-100 scale-100 translate-y-0"
+                    : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
+                }`}
+              >
                 <div className="flex flex-col gap-1">
-                  {[{ id: "All", label: "All Series" }, { id: "FRONTEND", label: "Frontend" }, { id: "BACKEND", label: "Backend" }, { id: "DATABASE", label: "Database" }].map((cat) => (
+                  {[
+                    { id: "All", label: "All Series" },
+                    { id: "FRONTEND", label: "Frontend" },
+                    { id: "BACKEND", label: "Backend" },
+                    { id: "DATABASE", label: "Database" },
+                  ].map((cat) => (
                     <button
                       key={cat.id}
-                      onClick={() => { setSeriesFilter(cat.id); setIsSeriesFilterOpen(false); }}
+                      onClick={() => {
+                        setSeriesFilter(cat.id);
+                        setIsSeriesFilterOpen(false);
+                      }}
                       className={`flex items-center gap-3 w-full px-3 py-1.5 rounded-lg text-[12px] font-normal transition-all duration-200 cursor-pointer ${
                         seriesFilter === cat.id
                           ? "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
@@ -2582,7 +2642,9 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
                       style={{ fontFamily: '"Geometrica", sans-serif' }}
                     >
                       <span className="flex-1 text-left">{cat.label}</span>
-                      {seriesFilter === cat.id && <Check className="w-4 h-4 text-orange-600" />}
+                      {seriesFilter === cat.id && (
+                        <Check className="w-4 h-4 text-orange-600" />
+                      )}
                     </button>
                   ))}
                 </div>
@@ -2591,10 +2653,18 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
           </div>
 
           <div className="relative group/seriescarousel -mb-12 -mt-2">
-            <div className={`absolute left-0 top-[calc(50%-24px)] -translate-y-1/2 z-30 hidden md:flex items-center justify-center px-4 pointer-events-none transition-opacity duration-300 ${canSeriesScrollLeft ? "opacity-100" : "opacity-0"}`}>
+            <div
+              className={`absolute left-0 top-[calc(50%-24px)] -translate-y-1/2 z-30 hidden md:flex items-center justify-center px-4 pointer-events-none transition-opacity duration-300 ${canSeriesScrollLeft ? "opacity-100" : "opacity-0"}`}
+            >
               <button
                 className="w-12 h-12 -ml-10 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-gray-700 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white pointer-events-auto border border-transparent hover:border-gray-200/60 hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none"
-                onClick={() => { seriesCarouselRef.current?.scrollBy({ left: -480, behavior: "smooth" }); setTimeout(handleSeriesScroll, 500); }}
+                onClick={() => {
+                  seriesCarouselRef.current?.scrollBy({
+                    left: -480,
+                    behavior: "smooth",
+                  });
+                  setTimeout(handleSeriesScroll, 500);
+                }}
               >
                 <ChevronLeft className="w-6 h-6 stroke-[2.5]" />
               </button>
@@ -2607,17 +2677,26 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
               style={{ scrollBehavior: "smooth" }}
             >
               {seriesData
-                .filter((s) => seriesFilter === "All" || s.category === seriesFilter)
+                .filter(
+                  (s) => seriesFilter === "All" || s.category === seriesFilter,
+                )
                 .map((s) => (
                   <div
                     key={s.id}
                     className="shrink-0 w-[90vw] md:w-[580px] p-4 rounded-[24px] bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300 cursor-pointer group snap-start overflow-hidden"
-                    onClick={() => { setSelectedSeries(s); navigate("/my-idp-learning/series/" + s.id); }}
+                    onClick={() => {
+                      setSelectedSeries(s);
+                      navigate("/my-idp-learning/series/" + s.id);
+                    }}
                   >
                     <div className="flex gap-6 text-left h-[133px]">
                       {/* Thumbnail */}
                       <div className="w-[180px] md:w-[237px] h-[133px] rounded-xl shrink-0 overflow-hidden relative bg-gray-100 dark:bg-gray-700 aspect-video">
-                        <img src={s.thumbnail} alt={s.title} className="w-full h-full object-cover" />
+                        <img
+                          src={s.thumbnail}
+                          alt={s.title}
+                          className="w-full h-full object-cover"
+                        />
                       </div>
 
                       {/* Info */}
@@ -2636,7 +2715,8 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
                               ) : (
                                 <AppWindow className="w-3.5 h-3.5" />
                               )}
-                              {s.category.charAt(0).toUpperCase() + s.category.slice(1).toLowerCase()}
+                              {s.category.charAt(0).toUpperCase() +
+                                s.category.slice(1).toLowerCase()}
                             </div>
                           </div>
                           <h3
@@ -2673,10 +2753,18 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
                 ))}
             </div>
 
-            <div className={`absolute right-0 top-[calc(50%-24px)] -translate-y-1/2 z-30 hidden md:flex items-center justify-center px-4 pointer-events-none transition-opacity duration-300 ${canSeriesScrollRight ? "opacity-100" : "opacity-0"}`}>
+            <div
+              className={`absolute right-0 top-[calc(50%-24px)] -translate-y-1/2 z-30 hidden md:flex items-center justify-center px-4 pointer-events-none transition-opacity duration-300 ${canSeriesScrollRight ? "opacity-100" : "opacity-0"}`}
+            >
               <button
                 className="w-12 h-12 -mr-10 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-gray-700 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white pointer-events-auto border border-transparent hover:border-gray-200/60 hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none"
-                onClick={() => { seriesCarouselRef.current?.scrollBy({ left: 480, behavior: "smooth" }); setTimeout(handleSeriesScroll, 500); }}
+                onClick={() => {
+                  seriesCarouselRef.current?.scrollBy({
+                    left: 480,
+                    behavior: "smooth",
+                  });
+                  setTimeout(handleSeriesScroll, 500);
+                }}
               >
                 <ChevronRight className="w-6 h-6 stroke-[2.5]" />
               </button>
@@ -2705,17 +2793,36 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
                     : "bg-transparent hover:bg-white dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white border-transparent hover:border-gray-200/60 dark:hover:border-transparent hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] w-10 md:w-auto md:px-4"
                 }`}
               >
-                <span className="hidden md:inline text-[12px] font-normal" style={{ fontFamily: '"Geometrica", sans-serif' }}>Filters</span>
-                <Settings2 className={`w-5 h-5 transition-transform duration-300 ${isReadingFilterOpen ? "scale-110 text-[#FC4C02]" : ""}`} />
+                <span
+                  className="hidden md:inline text-[12px] font-normal"
+                  style={{ fontFamily: '"Geometrica", sans-serif' }}
+                >
+                  Filters
+                </span>
+                <Settings2
+                  className={`w-5 h-5 transition-transform duration-300 ${isReadingFilterOpen ? "scale-110 text-[#FC4C02]" : ""}`}
+                />
               </button>
-              <div className={`absolute top-full right-0 mt-2 w-44 bg-white dark:bg-gray-800 rounded-xl p-1.5 z-50 transition-all duration-300 origin-top-right shadow-[0_30px_60px_-12px_rgba(0,0,0,0.15)] ${
-                isReadingFilterOpen ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
-              }`}>
+              <div
+                className={`absolute top-full right-0 mt-2 w-44 bg-white dark:bg-gray-800 rounded-xl p-1.5 z-50 transition-all duration-300 origin-top-right shadow-[0_30px_60px_-12px_rgba(0,0,0,0.15)] ${
+                  isReadingFilterOpen
+                    ? "opacity-100 scale-100 translate-y-0"
+                    : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
+                }`}
+              >
                 <div className="flex flex-col gap-1">
-                  {[{ id: "All", label: "All Books" }, { id: "Engineering", label: "Engineering" }, { id: "Frontend", label: "Frontend" }, { id: "Backend", label: "Backend" }].map((cat) => (
+                  {[
+                    { id: "All", label: "All Books" },
+                    { id: "Engineering", label: "Engineering" },
+                    { id: "Frontend", label: "Frontend" },
+                    { id: "Backend", label: "Backend" },
+                  ].map((cat) => (
                     <button
                       key={cat.id}
-                      onClick={() => { setReadingFilter(cat.id); setIsReadingFilterOpen(false); }}
+                      onClick={() => {
+                        setReadingFilter(cat.id);
+                        setIsReadingFilterOpen(false);
+                      }}
                       className={`flex items-center gap-3 w-full px-3 py-1.5 rounded-lg text-[12px] font-normal transition-all duration-200 cursor-pointer ${
                         readingFilter === cat.id
                           ? "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
@@ -2724,7 +2831,9 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
                       style={{ fontFamily: '"Geometrica", sans-serif' }}
                     >
                       <span className="flex-1 text-left">{cat.label}</span>
-                      {readingFilter === cat.id && <Check className="w-4 h-4 text-orange-600" />}
+                      {readingFilter === cat.id && (
+                        <Check className="w-4 h-4 text-orange-600" />
+                      )}
                     </button>
                   ))}
                 </div>
@@ -2733,10 +2842,18 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
           </div>
 
           <div className="relative group/readingcarousel -mb-4 -mt-2">
-            <div className={`absolute left-0 top-1/2 -translate-y-1/2 z-30 hidden md:flex items-center justify-center px-4 pointer-events-none transition-opacity duration-300 ${canReadingScrollLeft ? "opacity-100" : "opacity-0"}`}>
+            <div
+              className={`absolute left-0 top-1/2 -translate-y-1/2 z-30 hidden md:flex items-center justify-center px-4 pointer-events-none transition-opacity duration-300 ${canReadingScrollLeft ? "opacity-100" : "opacity-0"}`}
+            >
               <button
                 className="w-12 h-12 -ml-10 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-gray-700 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white pointer-events-auto border border-transparent hover:border-gray-200/60 hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none"
-                onClick={() => { readingCarouselRef.current?.scrollBy({ left: -400, behavior: "smooth" }); setTimeout(handleReadingScroll, 500); }}
+                onClick={() => {
+                  readingCarouselRef.current?.scrollBy({
+                    left: -400,
+                    behavior: "smooth",
+                  });
+                  setTimeout(handleReadingScroll, 500);
+                }}
               >
                 <ChevronLeft className="w-6 h-6 stroke-[2.5]" />
               </button>
@@ -2749,15 +2866,25 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
               style={{ scrollBehavior: "smooth" }}
             >
               {readingHubData
-                .filter((r) => readingFilter === "All" || r.category === readingFilter)
+                .filter(
+                  (r) =>
+                    readingFilter === "All" || r.category === readingFilter,
+                )
                 .map((r) => (
                   <div
                     key={r.id}
                     className="shrink-0 w-[140px] sm:w-[155px] md:w-[165px] cursor-pointer snap-start group"
-                    onClick={() => { setSelectedReading(r); navigate("/my-idp-learning/reading/" + r.id); }}
+                    onClick={() => {
+                      setSelectedReading(r);
+                      navigate("/my-idp-learning/reading/" + r.id);
+                    }}
                   >
                     <div className="relative w-full aspect-[2/3] rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300">
-                      <img src={r.thumbnail} alt={r.title} className="w-full h-full object-cover" />
+                      <img
+                        src={r.thumbnail}
+                        alt={r.title}
+                        className="w-full h-full object-cover"
+                      />
                       <div className="absolute top-2 right-2">
                         <div className="w-7 h-7 rounded-full bg-white/90 dark:bg-gray-900/80 backdrop-blur-md flex items-center justify-center shadow">
                           <FileText className="w-3.5 h-3.5 text-[#fc4c02]" />
@@ -2765,18 +2892,41 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
                       </div>
                     </div>
                     <div className="mt-2 px-0.5">
-                      <p className="text-[12px] font-medium text-gray-800 dark:text-white leading-tight line-clamp-2" style={{ fontFamily: '"Geometrica", sans-serif' }}>{r.title}</p>
-                      <p className="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5" style={{ fontFamily: '"Geometrica", sans-serif' }}>{r.author}</p>
-                      <p className="text-[10px] text-gray-400 dark:text-gray-500 mt-0.5" style={{ fontFamily: '"Geometrica", sans-serif' }}>{r.pages} pages · PDF</p>
+                      <p
+                        className="text-[12px] font-medium text-gray-800 dark:text-white leading-tight line-clamp-2"
+                        style={{ fontFamily: '"Geometrica", sans-serif' }}
+                      >
+                        {r.title}
+                      </p>
+                      <p
+                        className="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5"
+                        style={{ fontFamily: '"Geometrica", sans-serif' }}
+                      >
+                        {r.author}
+                      </p>
+                      <p
+                        className="text-[10px] text-gray-400 dark:text-gray-500 mt-0.5"
+                        style={{ fontFamily: '"Geometrica", sans-serif' }}
+                      >
+                        {r.pages} pages · PDF
+                      </p>
                     </div>
                   </div>
                 ))}
             </div>
 
-            <div className={`absolute right-0 top-1/2 -translate-y-1/2 z-30 hidden md:flex items-center justify-center px-4 pointer-events-none transition-opacity duration-300 ${canReadingScrollRight ? "opacity-100" : "opacity-0"}`}>
+            <div
+              className={`absolute right-0 top-1/2 -translate-y-1/2 z-30 hidden md:flex items-center justify-center px-4 pointer-events-none transition-opacity duration-300 ${canReadingScrollRight ? "opacity-100" : "opacity-0"}`}
+            >
               <button
                 className="w-12 h-12 -mr-10 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] rounded-full flex items-center justify-center cursor-pointer hover:bg-white dark:hover:bg-gray-700 active:scale-[0.96] transition-all duration-500 ease-in-out text-[#08060d] dark:text-white pointer-events-auto border border-transparent hover:border-gray-200/60 hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] outline-none"
-                onClick={() => { readingCarouselRef.current?.scrollBy({ left: 400, behavior: "smooth" }); setTimeout(handleReadingScroll, 500); }}
+                onClick={() => {
+                  readingCarouselRef.current?.scrollBy({
+                    left: 400,
+                    behavior: "smooth",
+                  });
+                  setTimeout(handleReadingScroll, 500);
+                }}
               >
                 <ChevronRight className="w-6 h-6 stroke-[2.5]" />
               </button>

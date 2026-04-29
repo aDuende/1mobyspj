@@ -15,7 +15,9 @@ interface Assessment {
 }
 
 function ManagerAssessmentPage() {
-  const [activeTab, setActiveTab] = useState<"upcoming" | "pastdue" | "completed">("upcoming");
+  const [activeTab, setActiveTab] = useState<
+    "upcoming" | "pastdue" | "completed"
+  >("upcoming");
   const [viewMode, setViewMode] = useState<"my" | "team">("my");
 
   // Mock assessment data for manager
@@ -26,14 +28,14 @@ function ManagerAssessmentPage() {
       description: "Due at 11:59 PM",
       dueDate: "2026-06-30",
       status: "pending",
-      courseCode: "MGMT_401_2026"
+      courseCode: "MGMT_401_2026",
     },
     {
       id: "m2",
       title: "Team Performance Review",
       description: "Assign 1 Apr by hr.dept",
       dueDate: "2026-04-15",
-      status: "overdue"
+      status: "overdue",
     },
     {
       id: "m3",
@@ -41,8 +43,8 @@ function ManagerAssessmentPage() {
       description: "Submitted on 31 Mar 2026 at 3:45 pm",
       dueDate: "2026-03-31",
       submittedDate: "2026-03-31",
-      status: "completed"
-    }
+      status: "completed",
+    },
   ];
 
   // Mock team assessments
@@ -53,7 +55,7 @@ function ManagerAssessmentPage() {
       description: "Assign by jadi.vort",
       dueDate: "2026-05-06",
       status: "pending",
-      employeeName: "John Smith"
+      employeeName: "John Smith",
     },
     {
       id: "t2",
@@ -61,7 +63,7 @@ function ManagerAssessmentPage() {
       description: "Pending submission",
       dueDate: "2026-04-20",
       status: "overdue",
-      employeeName: "Sarah Johnson"
+      employeeName: "Sarah Johnson",
     },
     {
       id: "t3",
@@ -70,7 +72,7 @@ function ManagerAssessmentPage() {
       dueDate: "2026-02-04",
       submittedDate: "2026-02-04",
       status: "completed",
-      employeeName: "Mike Chen"
+      employeeName: "Mike Chen",
     },
     {
       id: "t4",
@@ -79,20 +81,20 @@ function ManagerAssessmentPage() {
       dueDate: "2026-03-10",
       submittedDate: "2026-03-10",
       status: "completed",
-      employeeName: "Emily Davis"
-    }
+      employeeName: "Emily Davis",
+    },
   ];
 
   const getFilteredAssessments = () => {
     const assessments = viewMode === "my" ? myAssessments : teamAssessments;
-    
+
     switch (activeTab) {
       case "upcoming":
-        return assessments.filter(a => a.status === "pending");
+        return assessments.filter((a) => a.status === "pending");
       case "pastdue":
-        return assessments.filter(a => a.status === "overdue");
+        return assessments.filter((a) => a.status === "overdue");
       case "completed":
-        return assessments.filter(a => a.status === "completed");
+        return assessments.filter((a) => a.status === "completed");
       default:
         return assessments;
     }
@@ -100,14 +102,14 @@ function ManagerAssessmentPage() {
 
   const getTabCount = (tab: "upcoming" | "pastdue" | "completed") => {
     const assessments = viewMode === "my" ? myAssessments : teamAssessments;
-    
+
     switch (tab) {
       case "upcoming":
-        return assessments.filter(a => a.status === "pending").length;
+        return assessments.filter((a) => a.status === "pending").length;
       case "pastdue":
-        return assessments.filter(a => a.status === "overdue").length;
+        return assessments.filter((a) => a.status === "overdue").length;
       case "completed":
-        return assessments.filter(a => a.status === "completed").length;
+        return assessments.filter((a) => a.status === "completed").length;
       default:
         return 0;
     }
@@ -223,7 +225,9 @@ function ManagerAssessmentPage() {
                   No upcoming assessments
                 </h3>
                 <p className="text-sm text-gray-500">
-                  {viewMode === "my" ? "You're all caught up!" : "Your team is all caught up!"}
+                  {viewMode === "my"
+                    ? "You're all caught up!"
+                    : "Your team is all caught up!"}
                 </p>
               </div>
             ) : (
@@ -231,16 +235,29 @@ function ManagerAssessmentPage() {
                 {filteredAssessments.map((assessment) => {
                   const dueDate = new Date(assessment.dueDate);
                   const day = dueDate.getDate();
-                  const month = dueDate.toLocaleDateString("en-US", { month: "short" });
-                  const weekday = dueDate.toLocaleDateString("en-US", { weekday: "long" });
-                  const ordinal = day === 1 || day === 21 || day === 31 ? "st" : 
-                                  day === 2 || day === 22 ? "nd" : 
-                                  day === 3 || day === 23 ? "rd" : "th";
-                  
+                  const month = dueDate.toLocaleDateString("en-US", {
+                    month: "short",
+                  });
+                  const weekday = dueDate.toLocaleDateString("en-US", {
+                    weekday: "long",
+                  });
+                  const ordinal =
+                    day === 1 || day === 21 || day === 31
+                      ? "st"
+                      : day === 2 || day === 22
+                        ? "nd"
+                        : day === 3 || day === 23
+                          ? "rd"
+                          : "th";
+
                   return (
                     <div key={assessment.id}>
                       <h3 className="text-lg font-semibold text-gray-900 mb-3 text-left">
-                        {month} {day}{ordinal} <span className="text-gray-500 font-normal">{weekday}</span>
+                        {month} {day}
+                        {ordinal}{" "}
+                        <span className="text-gray-500 font-normal">
+                          {weekday}
+                        </span>
                       </h3>
                       <Card className="p-6 hover:shadow-md transition-shadow">
                         <div className="flex items-start gap-4">
@@ -281,7 +298,9 @@ function ManagerAssessmentPage() {
                   No overdue assessments
                 </h3>
                 <p className="text-sm text-gray-500">
-                  {viewMode === "my" ? "Great job staying on track!" : "Your team is on track!"}
+                  {viewMode === "my"
+                    ? "Great job staying on track!"
+                    : "Your team is on track!"}
                 </p>
               </div>
             ) : (
@@ -289,16 +308,29 @@ function ManagerAssessmentPage() {
                 {filteredAssessments.map((assessment) => {
                   const dueDate = new Date(assessment.dueDate);
                   const day = dueDate.getDate();
-                  const month = dueDate.toLocaleDateString("en-US", { month: "short" });
-                  const weekday = dueDate.toLocaleDateString("en-US", { weekday: "long" });
-                  const ordinal = day === 1 || day === 21 || day === 31 ? "st" : 
-                                  day === 2 || day === 22 ? "nd" : 
-                                  day === 3 || day === 23 ? "rd" : "th";
-                  
+                  const month = dueDate.toLocaleDateString("en-US", {
+                    month: "short",
+                  });
+                  const weekday = dueDate.toLocaleDateString("en-US", {
+                    weekday: "long",
+                  });
+                  const ordinal =
+                    day === 1 || day === 21 || day === 31
+                      ? "st"
+                      : day === 2 || day === 22
+                        ? "nd"
+                        : day === 3 || day === 23
+                          ? "rd"
+                          : "th";
+
                   return (
                     <div key={assessment.id}>
                       <h3 className="text-lg font-semibold text-gray-900 mb-3 text-left">
-                        {month} {day}{ordinal} <span className="text-gray-500 font-normal">{weekday}</span>
+                        {month} {day}
+                        {ordinal}{" "}
+                        <span className="text-gray-500 font-normal">
+                          {weekday}
+                        </span>
                       </h3>
                       <Card className="p-6 hover:shadow-md transition-shadow">
                         <div className="flex items-start gap-4">
@@ -345,18 +377,33 @@ function ManagerAssessmentPage() {
             ) : (
               <div className="space-y-6">
                 {filteredAssessments.map((assessment) => {
-                  const submittedDate = assessment.submittedDate ? new Date(assessment.submittedDate) : new Date(assessment.dueDate);
+                  const submittedDate = assessment.submittedDate
+                    ? new Date(assessment.submittedDate)
+                    : new Date(assessment.dueDate);
                   const day = submittedDate.getDate();
-                  const month = submittedDate.toLocaleDateString("en-US", { month: "short" });
-                  const weekday = submittedDate.toLocaleDateString("en-US", { weekday: "long" });
-                  const ordinal = day === 1 || day === 21 || day === 31 ? "st" : 
-                                  day === 2 || day === 22 ? "nd" : 
-                                  day === 3 || day === 23 ? "rd" : "th";
-                  
+                  const month = submittedDate.toLocaleDateString("en-US", {
+                    month: "short",
+                  });
+                  const weekday = submittedDate.toLocaleDateString("en-US", {
+                    weekday: "long",
+                  });
+                  const ordinal =
+                    day === 1 || day === 21 || day === 31
+                      ? "st"
+                      : day === 2 || day === 22
+                        ? "nd"
+                        : day === 3 || day === 23
+                          ? "rd"
+                          : "th";
+
                   return (
                     <div key={assessment.id}>
                       <h3 className="text-lg font-semibold text-gray-900 mb-3 text-left">
-                        {month} {day}{ordinal} <span className="text-gray-500 font-normal">{weekday}</span>
+                        {month} {day}
+                        {ordinal}{" "}
+                        <span className="text-gray-500 font-normal">
+                          {weekday}
+                        </span>
                       </h3>
                       <Card className="p-6 hover:shadow-md transition-shadow">
                         <div className="flex items-start gap-4">

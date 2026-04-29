@@ -96,7 +96,6 @@ function HistoryViewDetailsPage({
   return (
     <div className="min-h-screen bg-white p-8">
       <div className="max-w-4xl mx-auto">
-
         {/* Complaint ID */}
         <p className="text-gray-500 text-sm mb-3">#{complaint.id}</p>
 

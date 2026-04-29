@@ -42,7 +42,8 @@ export default function ReadingLayout({ item }: ReadingLayoutProps) {
   const [bookmarked, setBookmarked] = useState(false);
 
   const totalPages = MOCK_PAGES.length;
-  const progress = totalPages > 0 ? Math.round(((currentPage + 1) / totalPages) * 100) : 0;
+  const progress =
+    totalPages > 0 ? Math.round(((currentPage + 1) / totalPages) * 100) : 0;
 
   const goNext = () => setCurrentPage((p) => Math.min(p + 1, totalPages - 1));
   const goPrev = () => setCurrentPage((p) => Math.max(p - 1, 0));
@@ -78,10 +79,16 @@ export default function ReadingLayout({ item }: ReadingLayoutProps) {
                       {item.category}
                     </div>
                   </div>
-                  <h1 className="text-[20px] font-semibold text-gray-900 dark:text-white mb-1.5" style={GEO}>
+                  <h1
+                    className="text-[20px] font-semibold text-gray-900 dark:text-white mb-1.5"
+                    style={GEO}
+                  >
                     {item.title}
                   </h1>
-                  <p className="text-[12px] text-gray-500 dark:text-gray-400 mb-4" style={GEO}>
+                  <p
+                    className="text-[12px] text-gray-500 dark:text-gray-400 mb-4"
+                    style={GEO}
+                  >
                     by {item.author}
                   </p>
 
@@ -94,10 +101,16 @@ export default function ReadingLayout({ item }: ReadingLayoutProps) {
                       { label: "Language", value: "English" },
                     ].map(({ label, value }) => (
                       <div key={label} className="flex flex-col gap-0.5">
-                        <span className="text-[10px] text-gray-400 dark:text-gray-500 uppercase tracking-wide" style={GEO}>
+                        <span
+                          className="text-[10px] text-gray-400 dark:text-gray-500 uppercase tracking-wide"
+                          style={GEO}
+                        >
                           {label}
                         </span>
-                        <span className="text-[12px] font-medium text-gray-700 dark:text-gray-200" style={GEO}>
+                        <span
+                          className="text-[12px] font-medium text-gray-700 dark:text-gray-200"
+                          style={GEO}
+                        >
                           {value}
                         </span>
                       </div>
@@ -107,7 +120,10 @@ export default function ReadingLayout({ item }: ReadingLayoutProps) {
                   {/* Actions */}
                   <div className="flex items-center gap-2 flex-wrap">
                     <button
-                      onClick={() => { setCurrentPage(0); setReading(true); }}
+                      onClick={() => {
+                        setCurrentPage(0);
+                        setReading(true);
+                      }}
                       className="flex items-center gap-2 px-5 py-2 rounded-full bg-[#fc4c02] hover:bg-[#e04400] text-white text-[12px] font-medium transition-all duration-200 cursor-pointer shadow-sm active:scale-[0.97]"
                       style={GEO}
                     >
@@ -147,7 +163,10 @@ export default function ReadingLayout({ item }: ReadingLayoutProps) {
 
             {/* Table of contents (simulated) */}
             <div className="rounded-2xl bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] p-5">
-              <h2 className="text-[13px] font-semibold text-gray-800 dark:text-white mb-4" style={GEO}>
+              <h2
+                className="text-[13px] font-semibold text-gray-800 dark:text-white mb-4"
+                style={GEO}
+              >
                 Table of Contents
               </h2>
               <div className="flex flex-col gap-1">
@@ -156,13 +175,22 @@ export default function ReadingLayout({ item }: ReadingLayoutProps) {
                   return (
                     <button
                       key={i}
-                      onClick={() => { setCurrentPage(i); setReading(true); }}
+                      onClick={() => {
+                        setCurrentPage(i);
+                        setReading(true);
+                      }}
                       className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700/40 transition-colors duration-150 text-left group cursor-pointer"
                     >
-                      <span className="w-5 text-[10px] text-gray-400 dark:text-gray-600 shrink-0 tabular-nums" style={GEO}>
+                      <span
+                        className="w-5 text-[10px] text-gray-400 dark:text-gray-600 shrink-0 tabular-nums"
+                        style={GEO}
+                      >
                         {String(i + 1).padStart(2, "0")}
                       </span>
-                      <span className="flex-1 text-[12px] text-gray-700 dark:text-gray-300 group-hover:text-[#fc4c02] transition-colors duration-150" style={GEO}>
+                      <span
+                        className="flex-1 text-[12px] text-gray-700 dark:text-gray-300 group-hover:text-[#fc4c02] transition-colors duration-150"
+                        style={GEO}
+                      >
                         {titleLine}
                       </span>
                       <ChevronRight className="w-3.5 h-3.5 text-gray-300 dark:text-gray-600 group-hover:text-[#fc4c02] transition-colors duration-150 shrink-0" />
@@ -182,10 +210,16 @@ export default function ReadingLayout({ item }: ReadingLayoutProps) {
           <div className="px-4 pt-3 pb-0">
             <div className="max-w-3xl mx-auto">
               <div className="flex items-center justify-between mb-1">
-                <span className="text-[10px] text-gray-400 dark:text-gray-500" style={GEO}>
+                <span
+                  className="text-[10px] text-gray-400 dark:text-gray-500"
+                  style={GEO}
+                >
                   Reading progress
                 </span>
-                <span className="text-[10px] font-semibold text-[#fc4c02]" style={GEO}>
+                <span
+                  className="text-[10px] font-semibold text-[#fc4c02]"
+                  style={GEO}
+                >
                   {progress}%
                 </span>
               </div>

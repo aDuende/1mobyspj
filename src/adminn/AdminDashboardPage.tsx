@@ -1,5 +1,6 @@
 import { SidebarProvider, SidebarTrigger } from "../components/ui/sidebar";
 import { AppSidebar } from "../app-sidebar";
+import BackToTop from "../components/smoothui/back-to-top";
 import LanguageSelector from "../components/LanguageSelector";
 import AppearanceSelector from "../components/AppearanceSelector";
 import AlertSelector from "../components/AlertSelector";
@@ -74,13 +75,13 @@ function AdminDashboard({ onLogout, username }: AdminDashboardProps) {
                 absolute top-0 left-0 right-0 z-50 transition-all duration-200 flex items-center justify-between px-6 py-4 shrink-0
                 ${
                   isScrolled
-                    ? "bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl backdrop-saturate-150 border-b  dark:border-transparent shadow-sm surface-glass"
-                    : "bg-transparent border-b border-transparent shadow-none"
+                    ? "bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl backdrop-saturate-150 border-none dark:border-transparent shadow-sm surface-glass"
+                    : "bg-transparent border-none border-transparent shadow-none"
                 }
               `}
           >
             <div className="flex items-center gap-3">
-              <SidebarTrigger />
+              <SidebarTrigger className="md:hidden" />
               <Breadcrumb>
                 <BreadcrumbList>
                   {location.pathname === "/home" && (
@@ -98,6 +99,26 @@ function AdminDashboard({ onLogout, username }: AdminDashboardProps) {
                         style={{ fontFamily: "Geometrica, sans-serif" }}
                       >
                         Dashboard
+                      </BreadcrumbPage>
+                    </BreadcrumbItem>
+                  )}
+                  {location.pathname === "/competency-profile" && (
+                    <BreadcrumbItem>
+                      <BreadcrumbPage
+                        style={{ fontFamily: "Geometrica, sans-serif" }}
+                      >
+                        Competency Profile
+                      </BreadcrumbPage>
+                    </BreadcrumbItem>
+                  )}
+                  {["/my-idp", "/my-idp-learning"].includes(
+                    location.pathname,
+                  ) && (
+                    <BreadcrumbItem>
+                      <BreadcrumbPage
+                        style={{ fontFamily: "Geometrica, sans-serif" }}
+                      >
+                        My IDP & Learning
                       </BreadcrumbPage>
                     </BreadcrumbItem>
                   )}
@@ -190,7 +211,10 @@ function AdminDashboard({ onLogout, username }: AdminDashboardProps) {
                   }
                 />
                 <Route path="/settings" element={<SettingPage />} />
-                <Route path="/competency-profile" element={<CompetencyProfilePage />} />
+                <Route
+                  path="/competency-profile"
+                  element={<CompetencyProfilePage />}
+                />
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/help" element={<AdminHelpPage />} />
                 <Route path="/manage-role" element={<ManageRolePage />} />
@@ -220,6 +244,7 @@ function AdminDashboard({ onLogout, username }: AdminDashboardProps) {
           </div>
         </main>
       </div>
+      <BackToTop />
     </SidebarProvider>
   );
 }

@@ -83,26 +83,30 @@ function Main() {
     };
   }, []);
 
-  // Show loading screen
-  if (isLoading) {
-    return <LoadingPage onLoadingComplete={handleLoadingComplete} />;
-  }
-
   // Route to appropriate dashboard based on user role
-  if (userRole === "employee") {
-    return <EmployeeDashboard onLogout={handleLogout} username={username} />;
-  }
+  const renderContent = () => {
+    if (userRole === "employee") {
+      return <EmployeeDashboard onLogout={handleLogout} username={username} />;
+    }
 
-  if (userRole === "manager") {
-    return <ManagerDashboard onLogout={handleLogout} username={username} />;
-  }
+    if (userRole === "manager") {
+      return <ManagerDashboard onLogout={handleLogout} username={username} />;
+    }
 
-  if (userRole === "admin") {
-    return <AdminDashboard onLogout={handleLogout} username={username} />;
-  }
+    if (userRole === "admin") {
+      return <AdminDashboard onLogout={handleLogout} username={username} />;
+    }
 
-  // Show login page
-  return <LoginPage onLogin={handleLogin} />;
+    return <LoginPage onLogin={handleLogin} />;
+  };
+
+  return (
+    <>
+      {renderContent()}
+
+      {isLoading && <LoadingPage onLoadingComplete={handleLoadingComplete} />}
+    </>
+  );
 }
 
 createRoot(document.getElementById("root")!).render(
