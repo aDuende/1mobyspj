@@ -258,7 +258,7 @@ function DashboardContent({ username }: { username: string }) {
         </div>
 
         {/* Metrics Group */}
-        <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 ">
           {[
             {
               label: "Competency Score",
@@ -352,7 +352,7 @@ function DashboardContent({ username }: { username: string }) {
       </div>
 
       {/* Middle Row: Competency, Strengths, Engagement */}
-      <div className="grid grid-cols-12 gap-4 items-stretch">
+      <div className="grid grid-cols-12 gap-4 items-stretch radar-chart">
         {/* Competency Overview */}
         <Card className="col-span-12 xl:col-span-5 p-4 rounded-lg bg-white dark:bg-gray-800 border-none shadow-none relative">
           <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
@@ -1292,9 +1292,9 @@ function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
 
           <div
             ref={scrollRef}
-            className="h-full w-full overflow-y-auto relative"
+            className="h-full w-full overflow-y-auto relative bg-gray-50 dark:bg-gray-900"
           >
-            <div className="pt-16">
+            <div className="pt-16 min-h-screen bg-transparent">
               <Routes>
                 <Route
                   path="/my-idp-learning/*"
