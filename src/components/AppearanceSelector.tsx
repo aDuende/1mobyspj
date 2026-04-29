@@ -17,7 +17,7 @@ const AppearanceSelector: React.FC<ThemeSelectorProps> = ({
         flex items-center justify-center w-11 h-11 rounded-full 
         transition-all duration-300 active:scale-[0.96] cursor-pointer border-transparent
         bg-transparent hover:bg-white dark:hover:bg-neutral-900 
-        text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white 
+        text-gray-700 dark:text-white hover:text-gray-900 dark:hover:text-white 
         hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)]
       `}
       title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
@@ -30,7 +30,7 @@ const AppearanceSelector: React.FC<ThemeSelectorProps> = ({
         {isDarkMode ? (
           <Sun className="w-[20px] h-[20px] text-orange-500" />
         ) : (
-          <Moon className="w-[20px] h-[20px] text-gray-600" />
+          <Moon className="w-[20px] h-[20px] text-gray-700 dark:text-white" />
         )}
       </div>
     </button>
