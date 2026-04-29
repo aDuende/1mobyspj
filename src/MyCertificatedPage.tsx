@@ -118,18 +118,18 @@ export default function MyCertificatedPage() {
     }
   };
 
-  const getNotificationBadgeText = (type?: string) => {
-    switch(type) {
-      case "expired":
-        return "หมดอายุแล้ว";
-      case "expiring":
-        return "ใกล้หมดอายุ";
-      case "pending":
-        return "รออยู่";
-      default:
-        return "";
-    }
-  };
+  // const getNotificationBadgeText = (type?: string) => {
+  //   switch(type) {
+  //     case "expired":
+  //       return "หมดอายุแล้ว";
+  //     case "expiring":
+  //       return "ใกล้หมดอายุ";
+  //     case "pending":
+  //       return "รออยู่";
+  //     default:
+  //       return "";
+  //   }
+  // };
 
   return (
     <div className="min-h-screen bg-linear-to-br from-gray-50 to-gray-100 dark:from-black dark:to-gray-900">
@@ -178,94 +178,67 @@ export default function MyCertificatedPage() {
         </div>
 
         {/* Certificates Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredCertificates.map((cert) => {
             return (
               <div
                 key={cert.id}
-                className="group relative bg-black dark:bg-black rounded-3xl overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 cursor-pointer border border-gray-700 dark:border-gray-800"
+                className="group relative bg-gray-900 dark:bg-gray-900 rounded-2xl overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 cursor-pointer border border-gray-800 dark:border-gray-700"
               >
-                  {/* Certificate Header with Gradient */}
-                  <div
-                    className="relative h-40 flex flex-col justify-between p-6 text-white overflow-hidden"
-                    style={{
-                      background: cert.gradient,
-                    }}
-                  >
-                    {/* Background pattern - Vertical lines */}
-                    <div className="absolute inset-0 opacity-20">
-                      <svg className="w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 100">
-                        <defs>
-                          <pattern id={`lines-${cert.id}`} x="0" y="0" width="3" height="100" patternUnits="userSpaceOnUse">
-                            <line x1="0" y1="0" x2="0" y2="100" stroke="white" strokeWidth="0.8" />
-                          </pattern>
-                        </defs>
-                        <rect width="100" height="100" fill={`url(#lines-${cert.id})`} />
-                      </svg>
-                    </div>
-
-                    {/* Status Badge */}
-                    {cert.notificationType && (
-                      <div className="absolute top-4 right-4 z-10">
-                        <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full backdrop-blur-md ${getNotificationBadgeColor(cert.notificationType)}`}>
-                          <div className={`w-2 h-2 rounded-full ${
-                            cert.notificationType === "expired" ? "bg-red-400" : 
-                            cert.notificationType === "expiring" ? "bg-yellow-400" : 
-                            "bg-blue-400"
-                          }`} />
-                          <span className="text-xs font-semibold">
-                            {getNotificationBadgeText(cert.notificationType)}
-                          </span>
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Category Label */}
-                    <div className="relative z-10">
-                      <div className="inline-block bg-blue-600 px-3 py-1.5 rounded-lg mb-3">
-                        <span className="text-xs font-bold uppercase text-white" style={{ fontFamily: '"Geometrica", sans-serif' }}>
-                          {cert.category}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Bottom Content */}
-                    <div className="relative z-10">
-                      <div className="text-4xl mb-2">{cert.icon}</div>
-                    </div>
+                {/* Certificate Header with Gradient - Takes up 40% */}
+                <div
+                  className="relative h-64 flex flex-col justify-between p-8 text-white overflow-hidden"
+                  style={{
+                    background: cert.gradient,
+                  }}
+                >
+                  {/* Background pattern - Vertical lines */}
+                  <div className="absolute inset-0 opacity-30">
+                    <svg className="w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 100">
+                      <defs>
+                        <pattern id={`lines-${cert.id}`} x="0" y="0" width="4" height="100" patternUnits="userSpaceOnUse">
+                          <line x1="0" y1="0" x2="0" y2="100" stroke="white" strokeWidth="1.2" />
+                        </pattern>
+                      </defs>
+                      <rect width="100" height="100" fill={`url(#lines-${cert.id})`} />
+                    </svg>
                   </div>
 
-                  {/* Certificate Body - Dark section */}
-                  <div className="bg-gray-950 dark:bg-black p-6 space-y-4 border-t border-gray-800">
-                    {/* Title */}
-                    <div>
-                      <h3 
-                        className="text-lg font-bold text-white line-clamp-2"
-                        style={{ fontFamily: '"Geometrica", sans-serif' }}
-                      >
-                        {cert.title}
-                      </h3>
-                    </div>
-
-                    {/* Description */}
-                    <p className="text-xs text-gray-400 line-clamp-2">
-                      {cert.subtitle}
-                    </p>
-
-                    {/* Meta Info */}
-                    <div className="flex items-center gap-2 text-xs text-gray-500 pt-2">
-                      <Clock className="w-3 h-3" />
-                      <span>{cert.duration}</span>
-                    </div>
-
-                    {/* Action Button */}
-                    <button className="w-full py-3 px-4 bg-gray-800 hover:bg-gray-700 text-white rounded-xl font-semibold text-sm transition-all duration-200 active:scale-95 mt-2"
+                  {/* Title and Subtitle at the bottom of header */}
+                  <div className="relative z-10 mt-auto">
+                    <h3 
+                      className="text-3xl font-bold text-white mb-2"
                       style={{ fontFamily: '"Geometrica", sans-serif' }}
                     >
-                      ดูใบรับรอง
-                    </button>
+                      {cert.title}
+                    </h3>
+                    <p className="text-sm text-gray-200 opacity-90">
+                      {cert.subtitle}
+                    </p>
                   </div>
                 </div>
+
+                {/* Certificate Body - Dark section */}
+                <div className="bg-gray-900 dark:bg-gray-900 px-8 pt-6 pb-8 flex flex-col gap-4">
+                  {/* Duration/Meta Info */}
+                  <div className="flex items-center gap-3">
+                    <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-800">
+                      <Clock className="w-4 h-4 text-gray-300" />
+                    </div>
+                    <span className="text-sm text-gray-300 font-medium">{cert.duration}</span>
+                  </div>
+
+                  {/* Divider */}
+                  <div className="w-full h-px bg-linear-to-r from-gray-700 to-transparent"></div>
+
+                  {/* Action Button */}
+                  <button className="w-full py-3 px-4 bg-gray-800 hover:bg-gray-700 text-white rounded-lg font-semibold text-sm transition-all duration-200 active:scale-95"
+                    style={{ fontFamily: '"Geometrica", sans-serif' }}
+                  >
+                    ดูเกียรติบัตร
+                  </button>
+                </div>
+              </div>
               );
             })}
           </div>
