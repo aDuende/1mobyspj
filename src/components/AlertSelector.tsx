@@ -149,7 +149,7 @@ const AlertSelector: React.FC = () => {
                   }`}
                   style={{ fontFamily: '"Geometrica", sans-serif' }}
                 >
-                  ประมาณ{" "}
+                  ประกาศ{" "}
                   <span className="inline-flex items-center justify-center w-6 h-6 bg-orange-500 text-white text-xs font-bold rounded-full">
                     5
                   </span>
