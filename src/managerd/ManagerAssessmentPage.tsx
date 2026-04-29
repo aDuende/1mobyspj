@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { CheckCircle2, Clock, Users } from "lucide-react";
 import { Card } from "../components/ui/card";
+import TeamAssessment from "./TeamAssessment";
 
 interface Assessment {
   id: string;
@@ -113,6 +114,35 @@ function ManagerAssessmentPage() {
   };
 
   const filteredAssessments = getFilteredAssessments();
+
+  // Render TeamAssessment component directly when in team mode
+  if (viewMode === "team") {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <div className="w-full">
+          {/* View Mode Toggle */}
+          <div className="mb-0 px-8 pt-8">
+            <div className="flex gap-2">
+              <button
+                onClick={() => setViewMode("my")}
+                className="px-4 py-2 rounded-lg font-medium transition-all bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
+              >
+                My Assessments
+              </button>
+              <button
+                onClick={() => setViewMode("team")}
+                className="px-4 py-2 rounded-lg font-medium transition-all flex items-center gap-2 bg-blue-600 text-white"
+              >
+                <Users className="w-4 h-4" />
+                Team Assessments
+              </button>
+            </div>
+          </div>
+          <TeamAssessment />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
