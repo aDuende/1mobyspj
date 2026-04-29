@@ -115,7 +115,7 @@ function ManagerAssessmentPage() {
   const filteredAssessments = getFilteredAssessments();
 
   return (
-    <div className="min-h-screen bg-red-50">
+    <div className="min-h-screen bg-white">
       <div className="w-full">
         {/* View Mode Toggle */}
         <div className="mb-6 px-8 pt-8">

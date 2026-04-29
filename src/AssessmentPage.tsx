@@ -78,7 +78,7 @@ function AssessmentPage() {
   const filteredAssessments = getFilteredAssessments();
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white">
       <div className="w-full">
         <div className="mb-6 px-8">
           <div className="flex gap-1 border-b border-gray-200">
