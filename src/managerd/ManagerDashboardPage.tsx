@@ -790,7 +790,6 @@ function ManagerDashboard({ onLogout, username }: ManagerDashboardProps) {
               `}
           >
             <div className="flex items-center gap-3">
-              <SidebarTrigger />
               <Breadcrumb>
                 <BreadcrumbList>
                   {location.pathname === "/dashboard" && (

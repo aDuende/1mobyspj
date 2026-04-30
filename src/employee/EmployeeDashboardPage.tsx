@@ -1,4 +1,5 @@
 import { SidebarProvider, SidebarTrigger } from "../components/ui/sidebar";
+import { useSidebar } from "../hooks/use-sidebar";
 import { AppSidebar } from "../app-sidebar";
 import LanguageSelector from "../components/LanguageSelector";
 import AppearanceSelector from "../components/AppearanceSelector";
@@ -1025,6 +1026,14 @@ interface EmployeeDashboardProps {
   username: string;
 }
 
+function CollapsedSidebarTrigger() {
+  const { state, isMobile } = useSidebar();
+  if (state !== "collapsed" || isMobile) return null;
+  return (
+    <SidebarTrigger className="h-9 w-9 rounded-full border border-gray-200 bg-white shadow-sm hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-gray-800 transition-all duration-200" />
+  );
+}
+
 function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
   const navigate = useNavigate();
   const location = useLocation();
@@ -1101,6 +1110,7 @@ function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
               `}
           >
             <div className="flex items-center gap-3">
+              <CollapsedSidebarTrigger />
               <Breadcrumb>
                 <BreadcrumbList>
                   {location.pathname === "/dashboard" && (

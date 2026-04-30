@@ -14,6 +14,7 @@ import {
   Home,
   Shield,
   Megaphone,
+  PanelLeft,
 } from "lucide-react";
 import { useLocation } from "react-router-dom";
 
@@ -32,6 +33,7 @@ import {
   SidebarTrigger,
   SidebarSeparator,
 } from "./components/ui/sidebar";
+import { useSidebar } from "./hooks/use-sidebar";
 
 import {
   DropdownMenu,
@@ -81,6 +83,7 @@ export function AppSidebar({
   ...props
 }: AppSidebarProps) {
   const location = useLocation();
+  const { toggleSidebar } = useSidebar();
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, url: string) => {
     if (onNavigate) {
@@ -134,12 +137,12 @@ export function AppSidebar({
       {...props}
       className="relative z-50 border-r border-gray-200 dark:border-gray-700"
     >
-      {/* HEADER */}
-      <SidebarHeader className="items-center p-6 border-b border-gray-200 dark:border-gray-700 group-data-[collapsible=icon]:hidden">
+      {/* HEADER (expanded) */}
+      <SidebarHeader className="flex-row items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700 group-data-[collapsible=icon]:hidden transition-all duration-200">
         <img
           src={logoWhite}
           alt="1Moby"
-          className="h-auto w-36 dark:hidden"
+          className="h-auto w-32 dark:hidden"
           style={{
             filter:
               "brightness(0) saturate(100%) invert(35%) sepia(90%) saturate(3500%) hue-rotate(200deg) brightness(100%) contrast(105%)",
@@ -148,30 +151,32 @@ export function AppSidebar({
         <img
           src={logoWhite}
           alt="1Moby"
-          className="h-auto w-36 hidden dark:block"
+          className="h-auto w-32 hidden dark:block"
+        />
+        <SidebarTrigger
+          className="ml-2 h-9 w-9 rounded-full border border-gray-200 bg-white shadow-sm hover:bg-gray-50 hover:scale-105 dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-gray-800 transition-all duration-200 shrink-0"
         />
       </SidebarHeader>
 
-      {/* Floating Toggle */}
-      <div className="absolute top-6 -right-5 z-[999] hidden md:flex group-data-[collapsible=icon]:hidden">
-        <SidebarTrigger
-          className="
-            !ml-0
-            h-9 w-9 rounded-full border border-gray-200 bg-white shadow-lg
-            hover:bg-gray-50 hover:scale-105
-            dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-gray-800
-            transition-all duration-200
-          "
-        />
-      </div>
+      {/* HEADER (collapsed) - favicon morphs to sidebar icon on hover */}
+      <SidebarHeader className="hidden group-data-[collapsible=icon]:flex items-center justify-center px-2 pt-6 pb-3 transition-all duration-200">
+        <button
+          type="button"
+          onClick={toggleSidebar}
+          aria-label="Open sidebar"
+          className="group/trigger relative h-9 w-9 rounded-full flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200 cursor-pointer"
+        >
+          <img
+            src="/favicon.svg"
+            alt="1Moby"
+            className="absolute h-7 w-7 transition-all duration-200 ease-out opacity-100 scale-100 group-hover/trigger:opacity-0 group-hover/trigger:scale-75"
+          />
+          <PanelLeft className="absolute h-5 w-5 text-gray-700 dark:text-gray-300 transition-all duration-200 ease-out opacity-0 scale-75 group-hover/trigger:opacity-100 group-hover/trigger:scale-100" />
+        </button>
+      </SidebarHeader>
 
       {/* CONTENT */}
-      <SidebarContent className="relative z-10">
-        {/* Toggle ตอนหุบ */}
-        <div className="hidden group-data-[collapsible=icon]:flex justify-center items-center px-0 pt-2">
-          <SidebarTrigger className="!ml-0 h-9 w-9 rounded-md" />
-        </div>
-
+      <SidebarContent className="relative z-10 transition-all duration-200">
         <SidebarSeparator className="hidden group-data-[collapsible=icon]:block my-2 mx-3" />
 
         {role === "admin" ? (
