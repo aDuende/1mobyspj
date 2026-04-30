@@ -2,6 +2,7 @@ import { useState } from "react";
 import { CheckCircle2, Clock, Users } from "lucide-react";
 import { Card } from "../components/ui/card";
 import TeamAssessment from "./TeamAssessment";
+import SelfAssessmentPage from "../SelfAssessmentPage";
 
 interface Assessment {
   id: string;
@@ -12,14 +13,35 @@ interface Assessment {
   submittedDate?: string;
   courseCode?: string;
   employeeName?: string;
+  type?: "self" | "other";
 }
 
 function ManagerAssessmentPage() {
   const [activeTab, setActiveTab] = useState<"upcoming" | "pastdue" | "completed">("upcoming");
   const [viewMode, setViewMode] = useState<"my" | "team">("my");
+  const [openSelfAssessment, setOpenSelfAssessment] = useState(false);
+
+  if (openSelfAssessment) {
+    return (
+      <SelfAssessmentPage
+        role="manager"
+        assessmentTitle="Self Assessment"
+        assignedBy="jadi.vort"
+        onBack={() => setOpenSelfAssessment(false)}
+      />
+    );
+  }
 
   // Mock assessment data for manager
   const myAssessments: Assessment[] = [
+    {
+      id: "m0",
+      title: "Self Assessment",
+      description: "Assign by jadi.vort",
+      dueDate: "2026-05-06",
+      status: "pending",
+      type: "self"
+    },
     {
       id: "m1",
       title: "Leadership Assessment Q2",
@@ -242,7 +264,10 @@ function ManagerAssessmentPage() {
                       <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3 text-left">
                         {month} {day}{ordinal} <span className="text-gray-500 dark:text-gray-400 font-normal">{weekday}</span>
                       </h3>
-                      <Card className="p-6 hover:shadow-md transition-shadow dark:bg-gray-800 dark:border-gray-700">
+                      <Card
+                        className={`p-6 hover:shadow-md transition-shadow dark:bg-gray-800 dark:border-gray-700 ${assessment.type === "self" ? "cursor-pointer hover:border-teal-400" : ""}`}
+                        onClick={assessment.type === "self" ? () => setOpenSelfAssessment(true) : undefined}
+                      >
                         <div className="flex items-start gap-4">
                           <div className="w-12 h-12 bg-teal-500 rounded flex items-center justify-center shrink-0">
                             <span className="text-white font-bold text-lg">

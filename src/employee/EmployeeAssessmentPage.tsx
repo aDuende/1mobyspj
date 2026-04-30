@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { CheckCircle2, Clock } from "lucide-react";
 import { Card } from "../components/ui/card";
+import SelfAssessmentPage from "../SelfAssessmentPage";
 
 interface Assessment {
   id: string;
@@ -10,10 +11,23 @@ interface Assessment {
   status: "pending" | "completed" | "overdue";
   submittedDate?: string;
   courseCode?: string;
+  type?: "self" | "other";
 }
 
 function EmployeeAssessmentPage() {
   const [activeTab, setActiveTab] = useState<"upcoming" | "pastdue" | "completed">("upcoming");
+  const [openSelfAssessment, setOpenSelfAssessment] = useState(false);
+
+  if (openSelfAssessment) {
+    return (
+      <SelfAssessmentPage
+        role="employee"
+        assessmentTitle="Self Assessment"
+        assignedBy="jadi.vort"
+        onBack={() => setOpenSelfAssessment(false)}
+      />
+    );
+  }
 
   const assessments: Assessment[] = [
     {
@@ -22,6 +36,7 @@ function EmployeeAssessmentPage() {
       description: "Assign by jadi.vort",
       dueDate: "2026-05-06",
       status: "pending",
+      type: "self",
     },
     {
       id: "2",
@@ -129,7 +144,10 @@ function EmployeeAssessmentPage() {
               </span>
             </h3>
 
-            <Card className={cardClass}>
+            <Card
+              className={`${cardClass} ${assessment.type === "self" ? "cursor-pointer hover:border-teal-400" : ""}`}
+              onClick={assessment.type === "self" ? () => setOpenSelfAssessment(true) : undefined}
+            >
               <div className="flex items-start gap-4">
                 <div className={`w-12 h-12 ${colorClass} rounded flex items-center justify-center shrink-0`}>
                   <span className="text-white font-bold text-lg">{day}</span>

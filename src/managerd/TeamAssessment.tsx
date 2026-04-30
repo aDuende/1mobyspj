@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { ArrowLeft, Plus, Trash2, Send, CheckCircle2, Award, TrendingUp, Users } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Plus, Trash2, Send, CheckCircle2, Award, TrendingUp, Users } from "lucide-react";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -128,7 +128,7 @@ function MedalBadge({ level }: { level: number }) {
     <div className="flex flex-col items-center gap-0 shrink-0">
       <div className="w-9 h-9 rounded-full flex items-center justify-center shadow-md relative"
         style={{ background: `radial-gradient(circle at 35% 35%, ${c}ee, ${c}88)`, border: `2px solid ${c}` }}>
-        <div className="absolute inset-[2px] rounded-full" style={{ border: `1px solid ${c}aa` }} />
+        <div className="absolute inset-0.5 rounded-full" style={{ border: `1px solid ${c}aa` }} />
         <Award className="w-4 h-4 text-white drop-shadow" />
       </div>
       <div className="flex gap-0.5 -mt-0.5">
@@ -155,6 +155,16 @@ function AssessmentForm({
   );
   const [comments, setComments] = useState<string[]>([""]);
   const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    window.dispatchEvent(new CustomEvent("assessment:subpage", { detail: { page: "Team Assessment" } }));
+    const handleBack = () => onBack();
+    window.addEventListener("assessment:back", handleBack);
+    return () => {
+      window.dispatchEvent(new CustomEvent("assessment:subpage", { detail: { page: null } }));
+      window.removeEventListener("assessment:back", handleBack);
+    };
+  }, []); // eslint-disable-line
 
   const setScore = (sIdx: number, rIdx: number, score: number) => {
     setSections(prev => {
@@ -191,15 +201,7 @@ function AssessmentForm({
   return (
     <div className="p-6 bg-[#f8fafc] dark:bg-gray-900 min-h-screen" style={GEO}>
 
-      {/* Back */}
-      <button
-        onClick={onBack}
-        className="flex items-center gap-2 w-fit px-4 py-2 mb-6 rounded-full bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-sm text-[13px] font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:shadow-md transition-all duration-200 cursor-pointer"
-        style={GEO}
-      >
-        <ArrowLeft className="w-4 h-4" />
-        Back to Team
-      </button>
+      {/* Breadcrumb handled by dashboard header */}
 
       {/* Profile card */}
       <div className="flex items-center gap-4 p-5 mb-6 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)]">
@@ -263,7 +265,7 @@ function AssessmentForm({
                 return (
                   <div
                     key={row.name}
-                    className={`grid grid-cols-[1fr_160px_160px_70px_140px] gap-2 items-center px-5 py-3.5 transition-colors hover:bg-gray-50/50 dark:hover:bg-white/[0.02] ${rIdx < section.rows.length - 1 ? "border-b border-gray-100 dark:border-white/5" : ""}`}
+                    className={`grid grid-cols-[1fr_160px_160px_70px_140px] gap-2 items-center px-5 py-3.5 transition-colors hover:bg-gray-50/50 dark:hover:bg-white/2 ${rIdx < section.rows.length - 1 ? "border-b border-gray-100 dark:border-white/5" : ""}`}
                   >
                     {/* Name */}
                     <span className="text-[13px] font-semibold text-gray-800 dark:text-gray-200 text-left" style={GEO}>
@@ -285,7 +287,7 @@ function AssessmentForm({
                         interactive
                         onClick={(v) => setScore(sIdx, rIdx, v)}
                       />
-                      <span className="text-[13px] font-semibold text-gray-700 dark:text-gray-300 min-w-[16px]" style={GEO}>
+                      <span className="text-[13px] font-semibold text-gray-700 dark:text-gray-300 min-w-4" style={GEO}>
                         {row.managerScore > 0 ? row.managerScore : ""}
                       </span>
                     </div>
