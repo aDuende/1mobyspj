@@ -118,7 +118,7 @@ function ManagerAssessmentPage() {
   // Render TeamAssessment component directly when in team mode
   if (viewMode === "team") {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-sidebar">
         <div className="w-full">
           {/* View Mode Toggle */}
           <div className="mb-0 px-8 pt-8">
@@ -145,7 +145,7 @@ function ManagerAssessmentPage() {
   }
 
   return (
-    <div className="min-h-screen bg-red-50">
+    <div className="min-h-screen bg-sidebar">
       <div className="w-full">
         {/* View Mode Toggle */}
         <div className="mb-6 px-8 pt-8">
