@@ -138,7 +138,7 @@ export function AppSidebar({
       className="relative z-50 border-r border-gray-200 dark:border-gray-700"
     >
       {/* HEADER (expanded) */}
-      <SidebarHeader className="flex-row items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700 group-data-[collapsible=icon]:hidden transition-all duration-200">
+      <SidebarHeader className="group/header flex-row items-center justify-between px-5 pt-6 pb-4 border-b border-gray-200 dark:border-gray-700 group-data-[collapsible=icon]:hidden transition-all duration-200">
         <img
           src={logoWhite}
           alt="1Moby"
@@ -151,15 +151,15 @@ export function AppSidebar({
         <img
           src={logoWhite}
           alt="1Moby"
-          className="h-auto w-32 hidden dark:block"
+          className="h-auto w-32 hidden dark:block mt-1"
         />
         <SidebarTrigger
-          className="ml-2 h-9 w-9 rounded-full border border-gray-200 bg-white shadow-sm hover:bg-gray-50 hover:scale-105 dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-gray-800 transition-all duration-200 shrink-0"
+          className="ml-2 h-9 w-9 rounded-full border border-transparent bg-transparent hover:border-gray-200 hover:bg-white hover:shadow-sm hover:scale-105 dark:hover:border-gray-700 dark:hover:bg-gray-900 transition-all duration-200 shrink-0"
         />
       </SidebarHeader>
 
       {/* HEADER (collapsed) - favicon morphs to sidebar icon on hover */}
-      <SidebarHeader className="hidden group-data-[collapsible=icon]:flex items-center justify-center px-2 pt-6 pb-3 transition-all duration-200">
+      <SidebarHeader className="hidden group-data-[collapsible=icon]:flex items-center justify-center px-2 pt-5 pb-3 transition-all duration-200">
         <button
           type="button"
           onClick={toggleSidebar}
