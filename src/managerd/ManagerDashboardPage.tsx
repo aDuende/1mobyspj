@@ -740,7 +740,20 @@ function ManagerDashboard({ onLogout, username }: ManagerDashboardProps) {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [language, setLanguage] = useState("EN");
   const [isScrolled, setIsScrolled] = useState(false);
+  const [assessmentSubPage, setAssessmentSubPage] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleSubPage = (e: Event) => {
+      setAssessmentSubPage((e as CustomEvent).detail.page);
+    };
+    window.addEventListener("assessment:subpage", handleSubPage);
+    return () => window.removeEventListener("assessment:subpage", handleSubPage);
+  }, []);
+
+  useEffect(() => {
+    if (location.pathname !== "/assessment") setAssessmentSubPage(null);
+  }, [location.pathname]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -801,7 +814,7 @@ function ManagerDashboard({ onLogout, username }: ManagerDashboardProps) {
                       </BreadcrumbPage>
                     </BreadcrumbItem>
                   )}
-                  {location.pathname === "/assessment" && (
+                  {location.pathname === "/assessment" && !assessmentSubPage && (
                     <BreadcrumbItem>
                       <BreadcrumbPage
                         style={{ fontFamily: "Geometrica, sans-serif" }}
@@ -809,6 +822,25 @@ function ManagerDashboard({ onLogout, username }: ManagerDashboardProps) {
                         Assessment
                       </BreadcrumbPage>
                     </BreadcrumbItem>
+                  )}
+                  {location.pathname === "/assessment" && assessmentSubPage && (
+                    <>
+                      <BreadcrumbItem>
+                        <BreadcrumbLink
+                          onClick={() => window.dispatchEvent(new CustomEvent("assessment:back"))}
+                          className="cursor-pointer"
+                          style={{ fontFamily: "Geometrica, sans-serif" }}
+                        >
+                          Assessment
+                        </BreadcrumbLink>
+                      </BreadcrumbItem>
+                      <BreadcrumbSeparator />
+                      <BreadcrumbItem>
+                        <BreadcrumbPage style={{ fontFamily: "Geometrica, sans-serif" }}>
+                          {assessmentSubPage}
+                        </BreadcrumbPage>
+                      </BreadcrumbItem>
+                    </>
                   )}
                   {location.pathname === "/competency-profile" && (
                     <BreadcrumbItem>

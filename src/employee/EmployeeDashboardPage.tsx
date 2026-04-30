@@ -1,5 +1,4 @@
-import { SidebarProvider, SidebarTrigger } from "../components/ui/sidebar";
-import { useSidebar } from "../hooks/use-sidebar";
+import { SidebarProvider } from "../components/ui/sidebar";
 import { AppSidebar } from "../app-sidebar";
 import LanguageSelector from "../components/LanguageSelector";
 import AppearanceSelector from "../components/AppearanceSelector";
@@ -1026,21 +1025,26 @@ interface EmployeeDashboardProps {
   username: string;
 }
 
-function CollapsedSidebarTrigger() {
-  const { state, isMobile } = useSidebar();
-  if (state !== "collapsed" || isMobile) return null;
-  return (
-    <SidebarTrigger className="h-9 w-9 rounded-full border border-gray-200 bg-white shadow-sm hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-gray-800 transition-all duration-200" />
-  );
-}
-
 function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
   const navigate = useNavigate();
   const location = useLocation();
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [language, setLanguage] = useState("EN");
   const [isScrolled, setIsScrolled] = useState(false);
+  const [assessmentSubPage, setAssessmentSubPage] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleSubPage = (e: Event) => {
+      setAssessmentSubPage((e as CustomEvent).detail.page);
+    };
+    window.addEventListener("assessment:subpage", handleSubPage);
+    return () => window.removeEventListener("assessment:subpage", handleSubPage);
+  }, []);
+
+  useEffect(() => {
+    if (location.pathname !== "/assessment") setAssessmentSubPage(null);
+  }, [location.pathname]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -1110,7 +1114,6 @@ function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
               `}
           >
             <div className="flex items-center gap-3">
-              <CollapsedSidebarTrigger />
               <Breadcrumb>
                 <BreadcrumbList>
                   {location.pathname === "/dashboard" && (
@@ -1122,7 +1125,7 @@ function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
                       </BreadcrumbPage>
                     </BreadcrumbItem>
                   )}
-                  {location.pathname === "/assessment" && (
+                  {location.pathname === "/assessment" && !assessmentSubPage && (
                     <BreadcrumbItem>
                       <BreadcrumbPage
                         style={{ fontFamily: "Geometrica, sans-serif" }}
@@ -1130,6 +1133,25 @@ function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
                         Assessment
                       </BreadcrumbPage>
                     </BreadcrumbItem>
+                  )}
+                  {location.pathname === "/assessment" && assessmentSubPage && (
+                    <>
+                      <BreadcrumbItem>
+                        <BreadcrumbLink
+                          onClick={() => window.dispatchEvent(new CustomEvent("assessment:back"))}
+                          className="cursor-pointer"
+                          style={{ fontFamily: "Geometrica, sans-serif" }}
+                        >
+                          Assessment
+                        </BreadcrumbLink>
+                      </BreadcrumbItem>
+                      <BreadcrumbSeparator />
+                      <BreadcrumbItem>
+                        <BreadcrumbPage style={{ fontFamily: "Geometrica, sans-serif" }}>
+                          {assessmentSubPage}
+                        </BreadcrumbPage>
+                      </BreadcrumbItem>
+                    </>
                   )}
                   {location.pathname === "/settings" && (
                     <BreadcrumbItem>
