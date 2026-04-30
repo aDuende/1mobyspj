@@ -166,15 +166,21 @@ export default function CompetencyProfilePage({ role = "employee" }: { role?: "e
           <div className="lg:col-span-4 space-y-6">
 
             {/* Profile */}
-            <Card className="border-none shadow-lg bg-gradient-to-br from-white to-blue-50/50 dark:from-gray-800 dark:to-gray-900 overflow-hidden relative hover:shadow-2xl transition-all duration-500 hover:-translate-y-1" style={fadeUp(400)}>
-              <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl -mr-32 -mt-32" />
+            <Card className="border-none overflow-hidden relative dark:bg-gray-800">
+              <div className="absolute top-0 right-0 w-64 h-64  rounded-full blur-3xl -mr-32 -mt-32" />
               <CardContent className="pt-4 pb-4 px-4 relative z-10">
                 <div className="flex items-center gap-3">
                   <div className="relative group shrink-0">
-                    <div className="absolute -inset-1 bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 rounded-lg opacity-75 blur group-hover:opacity-100 transition duration-500" />
-                    <Avatar className="h-14 w-14 rounded-lg relative ring-2 ring-white dark:ring-gray-800 group-hover:scale-105 transition-transform duration-500">
-                      <AvatarImage src="/placeholder-profile.jpg" alt="Tarin.Chon" className="rounded-lg" />
-                      <AvatarFallback className="text-lg bg-gradient-to-br from-pink-500 to-rose-500 text-white font-bold rounded-lg">TC</AvatarFallback>
+                    <div className="absolute -inset-1 rounded-lg opacity-75 blur group-hover:opacity-100 transition duration-500" />
+                    <Avatar className="h-14 w-14 !rounded-xl overflow-hidden after:!rounded-xl after:!border-0">
+                      <AvatarImage
+                        src="/placeholder-profile.jpg"
+                        alt="Tarin.Chon"
+                        className="!rounded-xl"
+                      />
+                      <AvatarFallback className="text-lg bg-gradient-to-br from-pink-500 to-rose-500 text-white font-bold !rounded-xl">
+                        TC
+                      </AvatarFallback>
                     </Avatar>
                   </div>
                   <div className="flex-1 min-w-0">
@@ -214,7 +220,7 @@ export default function CompetencyProfilePage({ role = "employee" }: { role?: "e
             <div className="grid gap-4 md:grid-cols-2">
 
               {/* Top Strengths */}
-              <Card className="p-4 rounded-2xl bg-white dark:bg-gray-800 border-none shadow-sm h-full text-left" style={fadeLeft(500)}>
+              <Card className="p-4 rounded-2xl bg-white dark:bg-gray-800 border-none text-left">
                 <div className="flex flex-col gap-4 items-start">
                   <section className="w-full text-left">
                     <h3 className="!text-[18px] font-medium !text-[#08060d] dark:!text-white mb-2.5 text-left leading-tight flex items-center gap-2"
@@ -224,7 +230,7 @@ export default function CompetencyProfilePage({ role = "employee" }: { role?: "e
                       </div>
                       Top Strengths
                     </h3>
-                    <div className="w-full rounded-2xl bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 cursor-pointer p-3 space-y-2.5">
+                    <div className="w-full rounded-2xl bg-white dark:bg-gray-800 dark:border-white/5 p-3 space-y-2.5">
                       {topStrengths.map((item, i) => (
                         <div
                           key={i}
@@ -247,7 +253,7 @@ export default function CompetencyProfilePage({ role = "employee" }: { role?: "e
               </Card>
 
               {/* Areas to Improve */}
-              <Card className="p-4 rounded-2xl bg-white dark:bg-gray-800 border-none shadow-sm h-full text-left" style={fadeRight(500)}>
+              <Card className="p-4 rounded-2xl bg-white dark:bg-gray-800 shadow-sm h-full text-left" style={fadeRight(500)}>
                 <div className="flex flex-col gap-4 items-start">
                   <section className="w-full text-left">
                     <h3 className="!text-[18px] font-medium !text-[#08060d] dark:!text-white mb-2.5 text-left leading-tight flex items-center gap-2"
@@ -257,7 +263,7 @@ export default function CompetencyProfilePage({ role = "employee" }: { role?: "e
                       </div>
                       Areas to Improve
                     </h3>
-                    <div className="w-full rounded-2xl bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 cursor-pointer p-3 space-y-2.5">
+                    <div className="w-full rounded-2xl bg-white dark:bg-gray-800 dark:border-white/5 p-3 space-y-2.5">
                       {areasToImprove.map((item, i) => (
                         <div
                           key={i}
@@ -305,7 +311,7 @@ export default function CompetencyProfilePage({ role = "employee" }: { role?: "e
                       transition-all duration-300 active:scale-[0.96] cursor-pointer text-[12px] font-normal
                       ${
                         isCategoryOpen
-                          ? "bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl border-gray-200/50 dark:border-transparent shadow-xl translate-y-[-1px] text-gray-700 dark:text-gray-300"
+                          ? "bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl border-gray-200/50 dark:border-transparent shadow-xl translate-y-[-1px] text-gray-700 dark:text-gray-200"
                           : "bg-transparent hover:bg-white dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white border-transparent hover:border-gray-200/60 dark:hover:border-transparent hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)]"
                       }
                     `}
@@ -363,9 +369,9 @@ export default function CompetencyProfilePage({ role = "employee" }: { role?: "e
                 </div>
               </div>
 
-              <div className="flex flex-col lg:flex-row gap-4 items-start relative z-10 -mt-4">
+              <div className="flex flex-col lg:flex-row gap-6 items-center justify-between relative z-10 -mt-4">
                 {/* Radar Chart */}
-                <div className="w-full lg:w-1/2 aspect-square flex items-center justify-start -mt-10">
+                <div className="w-full lg:w-1/2 aspect-square flex items-center justify-center -mt-6 radar-chart">
                   <ChartContainer
                     config={radarChartConfig}
                     className="w-full h-full max-h-[260px] outline-none focus:outline-none [&_*]:outline-none"
@@ -382,7 +388,6 @@ export default function CompetencyProfilePage({ role = "employee" }: { role?: "e
                       <PolarAngleAxis
                         dataKey="subject"
                         tick={{
-                          fill: "#4b5563",
                           fontSize: 11,
                           fontFamily: '"Geometrica", sans-serif',
                           fontWeight: 400,
@@ -413,41 +418,39 @@ export default function CompetencyProfilePage({ role = "employee" }: { role?: "e
                   </ChartContainer>
                 </div>
 
-                <div className="flex-1 w-full flex flex-col items-end">
-                  <div className="w-fit ml-auto space-y-2.5">
-                    <div className="py-3.5 px-3.5 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)]">
-                      <div className="flex items-center justify-between gap-6 mb-2">
-                        <span className="text-[11px] font-bold text-gray-600 dark:text-gray-400">
-                          Current Rating
-                        </span>
-                        <div className="flex items-center gap-1 text-emerald-500 font-bold text-[11px]">
-                          <TrendingUp className="w-3 h-3" />
-                          <AnimatedNumber value={isMounted ? 6 : 0} prefix="+" suffix="%" />
-                        </div>
+                <div className="w-full lg:w-1/2 flex items-center justify-center">
+                  <div className="text-center space-y-3">
+
+                    <div className="text-sm text-gray-500 dark:text-gray-400 font-medium">
+                      Current Rating
+                    </div>
+
+                    <div className="flex items-end justify-center gap-2">
+                      <span
+                        className="text-[64px] font-bold text-gray-900 dark:text-white leading-none"
+                        style={{ fontFamily: '"Geometrica", sans-serif' }}
+                      >
+                        <AnimatedNumber value={isMounted ? 3.2 : 0} decimals={1} />
+                      </span>
+                      <span className="text-[24px] text-gray-400 mb-2">/ 5.0</span>
+                    </div>
+
+                    <div className="flex items-center justify-center gap-2 text-emerald-500 font-semibold text-sm">
+                      <TrendingUp className="w-4 h-4" />
+                      <AnimatedNumber value={isMounted ? 6 : 0} prefix="+" suffix="%" />
+                    </div>
+
+                    <div className="flex justify-center gap-6 pt-2">
+                      <div className="flex items-center gap-2">
+                        <div className="w-3 h-3 rounded-full bg-[#fc4c02]"></div>
+                        <span className="text-sm text-gray-500">Actual</span>
                       </div>
-                      <div className="flex items-end gap-1.5">
-                        <span
-                          className="text-[24px] font-bold text-gray-700 dark:text-white leading-none tracking-tight"
-                          style={{ fontFamily: '"Geometrica", sans-serif' }}
-                        >
-                          <AnimatedNumber value={isMounted ? 3.2 : 0} decimals={1} />
-                        </span>
-                        <span className="text-[14px] font-bold text-gray-400 dark:text-gray-600 mb-0.5">
-                          / 4.0
-                        </span>
+                      <div className="flex items-center gap-2">
+                        <div className="w-3 h-3 rounded-full bg-[#3b82f6]"></div>
+                        <span className="text-sm text-gray-500">Target</span>
                       </div>
                     </div>
 
-                    <div className="flex flex-wrap gap-5 justify-start px-1">
-                      <div className="flex items-center gap-2">
-                        <div className="w-2.5 h-2.5 rounded-full bg-[#fc4c02]"></div>
-                        <span className="text-[12px] font-normal text-gray-500 dark:text-gray-400">Actual</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <div className="w-2.5 h-2.5 rounded-full bg-[#3b82f6]"></div>
-                        <span className="text-[12px] font-normal text-gray-500 dark:text-gray-400">Target</span>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -458,7 +461,7 @@ export default function CompetencyProfilePage({ role = "employee" }: { role?: "e
           <div className="lg:col-span-3 space-y-6">
 
             {/* Core Definition card */}
-            <Card className="border-none shadow-lg hover:shadow-xl transition-all duration-500 bg-white dark:bg-gray-800" style={fadeRight(600)}>
+            <Card className="border-none transition-all duration-500 bg-white dark:bg-gray-800">
               <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle className="flex items-center gap-2">
                   <div className="h-8 w-8 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center">
@@ -513,7 +516,7 @@ export default function CompetencyProfilePage({ role = "employee" }: { role?: "e
                     <h3 className="font-semibold text-left text-sm mb-1.5 text-gray-900 dark:text-gray-100 group-hover:text-purple-700 dark:group-hover:text-purple-300 transition-colors">
                       {def.title}
                     </h3>
-                    <p className="text-xs text-left text-gray-600 dark:text-gray-400 leading-relaxed">
+                    <p className="text-xs text-left text-gray-600 dark:text-gray-200 leading-relaxed">
                       {def.description}
                     </p>
                   </div>
@@ -522,7 +525,7 @@ export default function CompetencyProfilePage({ role = "employee" }: { role?: "e
             </Card>
 
             {/* Growth Timeline */}
-            <Card className="border-none shadow-lg hover:shadow-xl transition-all duration-500 bg-white dark:bg-gray-800 relative overflow-hidden" style={fadeRight(800)}>
+            <Card className="border-none relative overflow-hidden dark:bg-gray-800">
               <div className="absolute bottom-0 right-0 w-40 h-40 bg-gradient-to-tl from-blue-400/10 to-purple-400/10 rounded-full blur-3xl" />
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
