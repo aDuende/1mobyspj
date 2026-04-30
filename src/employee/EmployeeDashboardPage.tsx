@@ -1,4 +1,5 @@
 import { SidebarProvider, SidebarTrigger } from "../components/ui/sidebar";
+import { useSidebar } from "../hooks/use-sidebar";
 import { AppSidebar } from "../app-sidebar";
 import LanguageSelector from "../components/LanguageSelector";
 import AppearanceSelector from "../components/AppearanceSelector";
@@ -1025,6 +1026,14 @@ interface EmployeeDashboardProps {
   username: string;
 }
 
+function CollapsedSidebarTrigger() {
+  const { state, isMobile } = useSidebar();
+  if (state !== "collapsed" || isMobile) return null;
+  return (
+    <SidebarTrigger className="h-9 w-9 rounded-full border border-gray-200 bg-white shadow-sm hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-gray-800 transition-all duration-200" />
+  );
+}
+
 function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
   const navigate = useNavigate();
   const location = useLocation();
@@ -1101,7 +1110,7 @@ function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
               `}
           >
             <div className="flex items-center gap-3">
-              <SidebarTrigger />
+              <CollapsedSidebarTrigger />
               <Breadcrumb>
                 <BreadcrumbList>
                   {location.pathname === "/dashboard" && (
@@ -1166,6 +1175,45 @@ function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
                           style={{ fontFamily: "Geometrica, sans-serif" }}
                         >
                           History
+                        </BreadcrumbPage>
+                      </BreadcrumbItem>
+                    </>
+                  )}
+                  {location.pathname === "/help/history/detail" && (
+                    <>
+                      <BreadcrumbItem>
+                        <BreadcrumbLink
+                          onClick={() => {
+                            window.dispatchEvent(new CustomEvent("help:back-to-history"));
+                            navigate("/help");
+                          }}
+                          className="cursor-pointer hover:underline"
+                          style={{ fontFamily: '"Geometrica", sans-serif' }}
+                        >
+                          Help
+                        </BreadcrumbLink>
+                      </BreadcrumbItem>
+
+                      <BreadcrumbSeparator />
+
+                      <BreadcrumbItem>
+                        <BreadcrumbLink
+                          onClick={() => {
+                            window.dispatchEvent(new CustomEvent("help:back-to-history"));
+                            navigate("/help/history");
+                          }}
+                          className="cursor-pointer hover:underline"
+                          style={{ fontFamily: '"Geometrica", sans-serif' }}
+                        >
+                          History
+                        </BreadcrumbLink>
+                      </BreadcrumbItem>
+
+                      <BreadcrumbSeparator />
+
+                      <BreadcrumbItem>
+                        <BreadcrumbPage style={{ fontFamily: '"Geometrica", sans-serif' }}>
+                          Detail
                         </BreadcrumbPage>
                       </BreadcrumbItem>
                     </>

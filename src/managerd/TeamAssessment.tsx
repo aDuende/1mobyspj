@@ -189,7 +189,7 @@ function AssessmentForm({
   }
 
   return (
-    <div className="p-6 bg-[#f8fafc] dark:bg-transparent min-h-screen" style={GEO}>
+    <div className="p-6 bg-[#f8fafc] dark:bg-gray-900 min-h-screen" style={GEO}>
 
       {/* Back */}
       <button
