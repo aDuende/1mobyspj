@@ -230,7 +230,7 @@ function AssessmentForm({
           <span className="text-[22px] font-bold text-blue-600 dark:text-blue-400" style={GEO}>
             {member.competencyScore.toFixed(1)}
           </span>
-          <span className="text-[12px] text-gray-400" style={GEO}>/ 5.0</span>
+          <span className="text-[12px] text-gray-400" style={GEO}>/ 4.0</span>
         </div>
       </div>
 

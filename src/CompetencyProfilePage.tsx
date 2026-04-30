@@ -433,7 +433,7 @@ export default function CompetencyProfilePage({ role = "employee" }: { role?: "e
                           <AnimatedNumber value={isMounted ? 3.2 : 0} decimals={1} />
                         </span>
                         <span className="text-[14px] font-bold text-gray-400 dark:text-gray-600 mb-0.5">
-                          / 5.0
+                          / 4.0
                         </span>
                       </div>
                     </div>

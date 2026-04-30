@@ -261,7 +261,7 @@ function ManagerDashboardContent({ username }: { username: string }) {
                 </div>
                 <h3 className="text-[24px] font-bold text-gray-700 dark:text-white leading-none" style={GEO}>
                   {item.label === "Team Avg Score" ? (
-                    <><AnimatedNumber value={isMounted ? parseFloat(item.value) : 0} decimals={1} /><span className="text-gray-400 font-medium ml-1.5 text-[18px]">/ 5.0</span></>
+                    <><AnimatedNumber value={isMounted ? parseFloat(item.value) : 0} decimals={1} /><span className="text-gray-400 font-medium ml-1.5 text-[18px]">/ 4.0</span></>
                   ) : (
                     <AnimatedNumber value={isMounted ? parseInt(item.value) : 0} />
                   )}
@@ -336,7 +336,7 @@ function ManagerDashboardContent({ username }: { username: string }) {
                     <span className="text-[24px] font-bold text-gray-700 dark:text-white leading-none tracking-tight" style={GEO}>
                       <AnimatedNumber value={isMounted ? 3.6 : 0} decimals={1} />
                     </span>
-                    <span className="text-[14px] font-bold text-gray-400 dark:text-gray-600 mb-0.5">/ 5.0</span>
+                    <span className="text-[14px] font-bold text-gray-400 dark:text-gray-600 mb-0.5">/ 4.0</span>
                   </div>
                 </div>
                 <div className="flex flex-wrap gap-5 justify-start px-1">
@@ -525,7 +525,7 @@ function ManagerDashboardContent({ username }: { username: string }) {
                       <div className="flex flex-col gap-2">
                         {heatColumns.map(col => {
                           const score = member.scores[col.key];
-                          const pct = Math.round((score / 5) * 100);
+                          const pct = Math.round((score / 4) * 100);
                           return (
                             <div key={col.key} className="flex items-center gap-3">
                               <span className="text-[11px] text-gray-500 dark:text-gray-400 w-[120px] shrink-0" style={GEO}>{col.label}</span>

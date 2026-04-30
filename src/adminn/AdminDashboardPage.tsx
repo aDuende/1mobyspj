@@ -11,7 +11,9 @@ import ManageRolePage from "./ManageRolePage";
 import AnnouncementPage from "./AnnouncementPage";
 import AdminIDPPage from "./AdminIDPPage";
 import AdminAddCourse from "./AdminAddCourse";
-import CompetencyProfilePage from "../CompetencyProfilePage";
+import AdminCompetencyProfilePage from "./AdminCompetencyProfilePage";
+import AdminDashboardContent from "./AdminDashboardContent";
+import HomePage from "./HomePage";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import {
@@ -150,6 +152,15 @@ function AdminDashboard({ onLogout, username }: AdminDashboardProps) {
                     </BreadcrumbItem>
                   )}
                   
+                  {location.pathname === "/competency-profile" && (
+                    <BreadcrumbItem>
+                      <BreadcrumbPage
+                        style={{ fontFamily: "Geometrica, sans-serif" }}
+                      >
+                        Competency Profile
+                      </BreadcrumbPage>
+                    </BreadcrumbItem>
+                  )}
                   {location.pathname === "/my-idp-learning" && (
                     <BreadcrumbItem>
                       <BreadcrumbPage
@@ -206,26 +217,10 @@ function AdminDashboard({ onLogout, username }: AdminDashboardProps) {
               <Routes>
                 <Route
                   path="/home"
-                  element={
-                    <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-                      <h2
-                        className="text-2xl font-bold text-gray-900 dark:text-white mb-4"
-                        style={{ fontFamily: "Geometrica, sans-serif" }}
-                      >
-                        Admin Home
-                      </h2>
-                      <p
-                        className="text-gray-600 dark:text-gray-400"
-                        style={{ fontFamily: "Geometrica, sans-serif" }}
-                      >
-                        Welcome to the admin portal. Manage roles and
-                        announcements from the sidebar.
-                      </p>
-                    </div>
-                  }
+                  element={<HomePage />}
                 />
                 <Route path="/settings" element={<SettingPage />} />
-                <Route path="/competency-profile" element={<CompetencyProfilePage />} />
+                <Route path="/competency-profile" element={<AdminCompetencyProfilePage />} />
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/help" element={<AdminHelpPage />} />
                 <Route path="/manage-role" element={<ManageRolePage />} />
@@ -234,23 +229,7 @@ function AdminDashboard({ onLogout, username }: AdminDashboardProps) {
                 <Route path="/admin-add-course" element={<AdminAddCourse />} />
                 <Route
                   path="/dashboard"
-                  element={
-                    <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-                      <h2
-                        className="text-2xl font-bold text-gray-900 dark:text-white mb-4"
-                        style={{ fontFamily: "Geometrica, sans-serif" }}
-                      >
-                        Admin Portal
-                      </h2>
-                      <p
-                        className="text-gray-600 dark:text-gray-400"
-                        style={{ fontFamily: "Geometrica, sans-serif" }}
-                      >
-                        Manage the entire ConteX Skills platform, users,
-                        courses, and settings.
-                      </p>
-                    </div>
-                  }
+                  element={<AdminDashboardContent username={username} />}
                 />
               </Routes>
             </div>
