@@ -14,9 +14,13 @@ function HelpPage({ username, role }: HelpPageProps) {
   const navigate = useNavigate();
 
   const [activeTab, setActiveTab] = useState<"submit" | "history">(
-    location.pathname === "/help/history" ? "history" : "submit",
+    location.pathname.startsWith("/help/history") ? "history" : "submit",
   );
-  const [selectedComplaint, setSelectedComplaint] = useState<Complaint | null>(null);
+
+  const [selectedComplaint, setSelectedComplaint] = useState<Complaint | null>(
+    null,
+  );
+
   const [subject, setSubject] = useState("");
   const [details, setDetails] = useState("");
   const [files, setFiles] = useState<File[]>([]);
@@ -29,13 +33,27 @@ function HelpPage({ username, role }: HelpPageProps) {
   const [complaints, setComplaints] = useState<Complaint[]>([]);
 
   useEffect(() => {
-    setActiveTab(location.pathname === "/help/history" ? "history" : "submit");
+    setActiveTab(
+      location.pathname.startsWith("/help/history") ? "history" : "submit",
+    );
   }, [location.pathname]);
 
   useEffect(() => {
     const userComplaints = complaintsStore.getByUser(username);
     setComplaints(userComplaints);
   }, [username]);
+
+  useEffect(() => {
+    const handleBackToHistory = () => {
+      setSelectedComplaint(null);
+    };
+
+    window.addEventListener("help:back-to-history", handleBackToHistory);
+
+    return () => {
+      window.removeEventListener("help:back-to-history", handleBackToHistory);
+    };
+  }, []);
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
@@ -106,7 +124,9 @@ function HelpPage({ username, role }: HelpPageProps) {
     setDetails("");
     setFiles([]);
 
-    alert("Your complaint has been submitted. We will get back to you as soon as possible.");
+    alert(
+      "Your complaint has been submitted. We will get back to you as soon as possible.",
+    );
   };
 
   const handleClickUpload = () => {
@@ -162,25 +182,35 @@ function HelpPage({ username, role }: HelpPageProps) {
     }`;
 
   if (selectedComplaint) {
+    const goBackToHistory = () => {
+      setSelectedComplaint(null);
+      navigate("/help/history");
+    };
+
     return (
       <HistoryViewDetailsPage
         complaint={selectedComplaint}
-        onBack={() => setSelectedComplaint(null)}
+        onBack={goBackToHistory}
       />
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-white p-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 text-gray-900 dark:text-white p-8 transition-colors duration-300">
       <div className="max-w-4xl mx-auto relative">
         {activeTab === "submit" && (
           <div className="absolute top-0 right-0">
             <button
               onClick={() => navigate("/help/history")}
-              className="p-3 rounded-lg font-semibold transition-colors bg-white text-gray-600 hover:bg-gray-100 border border-gray-300 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:border-gray-700"
+              className="p-3 rounded-lg font-semibold transition-colors bg-white text-gray-600 hover:bg-gray-100 border border-gray-300 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700 dark:border-gray-700"
               title="View Complaint History"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -199,7 +229,12 @@ function HelpPage({ username, role }: HelpPageProps) {
               className="p-3 rounded-lg font-semibold transition-colors bg-white text-blue-600 hover:bg-gray-100 border-2 border-blue-600 dark:bg-gray-800 dark:text-blue-400 dark:hover:bg-gray-700 dark:border-blue-400"
               title="Back to Submit Complaint"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -214,10 +249,10 @@ function HelpPage({ username, role }: HelpPageProps) {
         {activeTab === "submit" && (
           <div>
             <div className="mb-8">
-              <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-3 text-left">
+              <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-50 mb-3 text-left">
                 How can we help you?
               </h1>
-              <p className="text-gray-500 dark:text-gray-400 text-base text-left">
+              <p className="text-gray-500 dark:text-gray-300 text-base text-left">
                 Please fill out the information below, and we will get back to
                 you as soon as possible.
               </p>
@@ -225,7 +260,7 @@ function HelpPage({ username, role }: HelpPageProps) {
 
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label className="block text-s text-left font-bold text-gray-900 dark:text-white mb-2">
+                <label className="block text-s text-left font-bold text-gray-900 dark:text-gray-100 mb-2">
                   Complaint Subject <span className="text-red-500">*</span>
                 </label>
 
@@ -233,7 +268,7 @@ function HelpPage({ username, role }: HelpPageProps) {
                   <select
                     value={subject}
                     onChange={(e) => setSubject(e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-700"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-800 dark:text-gray-100 dark:border-gray-700 dark:focus:ring-blue-400"
                     required
                   >
                     <option value="">--- Select Subject ---</option>
@@ -248,8 +283,18 @@ function HelpPage({ username, role }: HelpPageProps) {
                   </select>
 
                   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4">
-                    <svg className="h-5 w-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    <svg
+                      className="h-5 w-5 text-blue-400"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 9l-7 7-7-7"
+                      />
                     </svg>
                   </div>
                 </div>
@@ -264,14 +309,14 @@ function HelpPage({ username, role }: HelpPageProps) {
                   value={details}
                   onChange={(e) => setDetails(e.target.value)}
                   placeholder="Describe the issue you encountered..."
-                  className="w-full px-4 py-3 border bg-white text-gray-900 border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-gray-400 dark:bg-gray-800 dark:text-white dark:border-gray-700 dark:placeholder:text-gray-500"
+                  className="w-full px-4 py-3 border bg-white text-gray-900 border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-gray-400 dark:bg-gray-800 dark:text-gray-100 dark:border-gray-700 dark:placeholder:text-gray-500 dark:focus:ring-blue-400"
                   rows={6}
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-s font-bold text-gray-900 dark:text-white mb-2 text-left">
+                <label className="block text-s font-bold text-gray-900 dark:text-gray-100 mb-2 text-left">
                   Attach images (optional)
                 </label>
 
@@ -282,7 +327,7 @@ function HelpPage({ username, role }: HelpPageProps) {
                   onClick={handleClickUpload}
                   className={`border-2 border-dashed rounded-lg p-12 text-center cursor-pointer transition-colors ${
                     isDragging
-                      ? "border-blue-400 bg-blue-50 dark:bg-blue-900/20"
+                      ? "border-blue-400 bg-blue-50 dark:border-blue-400 dark:bg-blue-950/40"
                       : "border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
                   }`}
                 >
@@ -296,7 +341,12 @@ function HelpPage({ username, role }: HelpPageProps) {
                   />
 
                   <div className="flex flex-col items-center">
-                    <svg className="w-16 h-16 text-blue-300 dark:text-blue-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg
+                      className="w-16 h-16 text-blue-300 dark:text-blue-400 mb-3"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -319,7 +369,12 @@ function HelpPage({ username, role }: HelpPageProps) {
                         className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700"
                       >
                         <div className="flex items-center space-x-3">
-                          <svg className="w-5 h-5 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg
+                            className="w-5 h-5 text-gray-400 dark:text-gray-500"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
                             <path
                               strokeLinecap="round"
                               strokeLinejoin="round"
@@ -341,8 +396,18 @@ function HelpPage({ username, role }: HelpPageProps) {
                           onClick={() => handleRemoveFile(index)}
                           className="text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
                         >
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                          <svg
+                            className="w-5 h-5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M6 18L18 6M6 6l12 12"
+                            />
                           </svg>
                         </button>
                       </div>
@@ -376,16 +441,28 @@ function HelpPage({ username, role }: HelpPageProps) {
 
             <div className="mb-6 flex gap-3 items-center">
               <div className="flex gap-2 flex-wrap">
-                <button onClick={() => setStatusFilter("All")} className={filterButtonClass("All")}>
+                <button
+                  onClick={() => setStatusFilter("All")}
+                  className={filterButtonClass("All")}
+                >
                   All
                 </button>
-                <button onClick={() => setStatusFilter("Resolved")} className={filterButtonClass("Resolved")}>
+                <button
+                  onClick={() => setStatusFilter("Resolved")}
+                  className={filterButtonClass("Resolved")}
+                >
                   Resolved
                 </button>
-                <button onClick={() => setStatusFilter("In Progress")} className={filterButtonClass("In Progress")}>
+                <button
+                  onClick={() => setStatusFilter("In Progress")}
+                  className={filterButtonClass("In Progress")}
+                >
                   In Progress
                 </button>
-                <button onClick={() => setStatusFilter("Pending")} className={filterButtonClass("Pending")}>
+                <button
+                  onClick={() => setStatusFilter("Pending")}
+                  className={filterButtonClass("Pending")}
+                >
                   Pending
                 </button>
               </div>
@@ -397,11 +474,21 @@ function HelpPage({ username, role }: HelpPageProps) {
                     placeholder="Search complaints..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-lg bg-gray-50 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-gray-400 dark:bg-gray-800 dark:text-white dark:border-gray-700 dark:placeholder:text-gray-500"
+                    className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-lg bg-gray-50 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-gray-400 dark:bg-gray-800 dark:text-gray-100 dark:border-gray-700 dark:placeholder:text-gray-500 dark:focus:ring-blue-400"
                   />
 
-                  <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  <svg
+                    className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 dark:text-gray-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    />
                   </svg>
                 </div>
               </div>
@@ -409,7 +496,12 @@ function HelpPage({ username, role }: HelpPageProps) {
 
             {complaints.length === 0 ? (
               <div className="text-center py-12">
-                <svg className="mx-auto h-16 w-16 text-gray-300 dark:text-gray-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg
+                  className="mx-auto h-16 w-16 text-gray-300 dark:text-gray-600 mb-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -435,7 +527,12 @@ function HelpPage({ username, role }: HelpPageProps) {
 
                 {filteredComplaints.length === 0 ? (
                   <div className="text-center py-12 bg-white rounded-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-                    <svg className="mx-auto h-12 w-12 text-gray-300 dark:text-gray-600 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg
+                      className="mx-auto h-12 w-12 text-gray-300 dark:text-gray-600 mb-3"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -446,7 +543,9 @@ function HelpPage({ username, role }: HelpPageProps) {
 
                     <h3 className="text-base font-semibold text-gray-900 dark:text-white mb-1">
                       No{" "}
-                      {statusFilter === "All" ? "" : statusFilter.toLowerCase()}{" "}
+                      {statusFilter === "All"
+                        ? ""
+                        : statusFilter.toLowerCase()}{" "}
                       complaints found
                     </h3>
 
@@ -459,16 +558,23 @@ function HelpPage({ username, role }: HelpPageProps) {
                     {filteredComplaints.map((complaint) => (
                       <div
                         key={complaint.id}
-                        onClick={() => setSelectedComplaint(complaint)}
-                        className="bg-white border border-gray-200 rounded-lg p-5 hover:shadow-md hover:border-gray-300 transition-all duration-200 cursor-pointer dark:bg-gray-800 dark:border-gray-700 dark:hover:border-gray-600"
+                        onClick={() => {
+                          setSelectedComplaint(complaint);
+                          navigate("/help/history/detail");
+                        }}
+                        className="bg-white border border-gray-200 rounded-lg p-5 hover:shadow-md hover:border-gray-300 transition-all duration-200 cursor-pointer dark:bg-gray-800 dark:border-gray-700 dark:hover:border-gray-500"
                       >
                         <div className="flex gap-4 items-center">
                           <div className="flex-shrink-0">
-                            <div className={`w-3 h-3 rounded-full ${getStatusDotColor(complaint.status)}`} />
+                            <div
+                              className={`w-3 h-3 rounded-full ${getStatusDotColor(
+                                complaint.status,
+                              )}`}
+                            />
                           </div>
 
                           <div className="flex-1 min-w-0">
-                            <h3 className="text-base font-bold text-gray-900 dark:text-white mb-1 text-left">
+                            <h3 className="text-base font-bold text-gray-900 dark:text-gray-50 mb-1 text-left">
                               {complaint.subject}
                             </h3>
                             <p className="text-sm text-gray-600 dark:text-gray-300 text-left">
@@ -478,14 +584,21 @@ function HelpPage({ username, role }: HelpPageProps) {
 
                           <div className="flex flex-col items-end gap-2 flex-shrink-0">
                             <span className="text-sm text-gray-600 dark:text-gray-400">
-                              {new Date(complaint.date).toLocaleDateString("en-GB", {
-                                day: "numeric",
-                                month: "short",
-                                year: "numeric",
-                              })}
+                              {new Date(complaint.date).toLocaleDateString(
+                                "en-GB",
+                                {
+                                  day: "numeric",
+                                  month: "short",
+                                  year: "numeric",
+                                },
+                              )}
                             </span>
 
-                            <span className={`px-3 py-1 rounded-md text-xs font-semibold ${getStatusColor(complaint.status)}`}>
+                            <span
+                              className={`px-3 py-1 rounded-md text-xs font-semibold ${getStatusColor(
+                                complaint.status,
+                              )}`}
+                            >
                               {complaint.status}
                             </span>
 

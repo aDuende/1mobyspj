@@ -1101,7 +1101,6 @@ function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
               `}
           >
             <div className="flex items-center gap-3">
-              <SidebarTrigger />
               <Breadcrumb>
                 <BreadcrumbList>
                   {location.pathname === "/dashboard" && (
@@ -1166,6 +1165,45 @@ function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
                           style={{ fontFamily: "Geometrica, sans-serif" }}
                         >
                           History
+                        </BreadcrumbPage>
+                      </BreadcrumbItem>
+                    </>
+                  )}
+                  {location.pathname === "/help/history/detail" && (
+                    <>
+                      <BreadcrumbItem>
+                        <BreadcrumbLink
+                          onClick={() => {
+                            window.dispatchEvent(new CustomEvent("help:back-to-history"));
+                            navigate("/help");
+                          }}
+                          className="cursor-pointer hover:underline"
+                          style={{ fontFamily: '"Geometrica", sans-serif' }}
+                        >
+                          Help
+                        </BreadcrumbLink>
+                      </BreadcrumbItem>
+
+                      <BreadcrumbSeparator />
+
+                      <BreadcrumbItem>
+                        <BreadcrumbLink
+                          onClick={() => {
+                            window.dispatchEvent(new CustomEvent("help:back-to-history"));
+                            navigate("/help/history");
+                          }}
+                          className="cursor-pointer hover:underline"
+                          style={{ fontFamily: '"Geometrica", sans-serif' }}
+                        >
+                          History
+                        </BreadcrumbLink>
+                      </BreadcrumbItem>
+
+                      <BreadcrumbSeparator />
+
+                      <BreadcrumbItem>
+                        <BreadcrumbPage style={{ fontFamily: '"Geometrica", sans-serif' }}>
+                          Detail
                         </BreadcrumbPage>
                       </BreadcrumbItem>
                     </>

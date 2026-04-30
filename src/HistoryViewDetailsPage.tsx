@@ -94,165 +94,92 @@ function HistoryViewDetailsPage({
   ];
 
   return (
-    <div className="min-h-screen bg-white p-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 text-gray-900 dark:text-white p-8 transition-colors duration-300">
       <div className="max-w-4xl mx-auto">
 
         {/* Complaint ID */}
-        <p className="text-gray-500 text-sm mb-3">#{complaint.id}</p>
+        <p className="text-gray-500 dark:text-gray-400 text-sm mb-3">
+          #{complaint.id}
+        </p>
 
-        {/* Title and Badges */}
+        {/* Title */}
         <div className="mb-6">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-50 mb-4">
             {complaint.subject}
           </h1>
+
           <div className="flex gap-2 flex-wrap items-center">
-            <span className="px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-700 border border-gray-300">
+            <span className="px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-700 border border-gray-300 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700">
               {complaint.category || "Technical"}
             </span>
+
             <span
-              className={`px-3 py-1 rounded-full text-sm font-semibold ${getStatusColor(complaint.status)}`}
+              className={`px-3 py-1 rounded-full text-sm font-semibold ${getStatusColor(complaint.status)} dark:bg-opacity-20`}
             >
               {complaint.status}
             </span>
-            {isAdmin && (
-              <span className="px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-700 border border-blue-300">
-                By: {complaint.submittedBy} ({complaint.submittedByRole})
-              </span>
-            )}
           </div>
         </div>
 
-        {/* Information Grid */}
-        <div className="grid grid-cols-4 gap-6 mb-8 pb-8 border-b border-gray-200">
+        {/* Info Grid */}
+        <div className="grid grid-cols-4 gap-6 mb-8 pb-8 border-b border-gray-200 dark:border-gray-700">
           <div>
-            <p className="text-xs text-gray-500 uppercase tracking-wide mb-2 text-left">
+            <p className="text-xs text-gray-500 dark:text-gray-400 mb-2 text-left">
               SUBMITTED
             </p>
-            <p className="text-gray-900 font-medium text-left">
-              {new Date(complaint.date).toLocaleDateString("en-GB", {
-                day: "numeric",
-                month: "short",
-                year: "numeric",
-              })}
+            <p className="text-gray-900 dark:text-gray-100 text-left">
+              {complaint.date}
             </p>
-            <p className="text-sm text-gray-600 text-left">
-              {new Date(complaint.date).toLocaleTimeString("en-GB", {
-                hour: "2-digit",
-                minute: "2-digit",
-                hour12: false,
-              })}{" "}
-              {new Date(complaint.date)
-                .toLocaleTimeString("en-GB", {
-                  hour12: true,
-                })
-                .slice(-2)}
-            </p>
-          </div>
-          <div>
-            <p className="text-xs text-gray-500 uppercase tracking-wide mb-2 text-left">
-              RESOLVED
-            </p>
-            <p className="text-gray-900 font-medium text-left">
-              {complaint.resolvedDate
-                ? new Date(complaint.resolvedDate).toLocaleDateString("en-GB", {
-                    day: "numeric",
-                    month: "short",
-                    year: "numeric",
-                  })
-                : "17 Apr 2024"}
-            </p>
-            <p className="text-sm text-gray-600 text-left">
-              {complaint.resolvedDate
-                ? new Date(complaint.resolvedDate).toLocaleTimeString("en-GB", {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  }) + " PM"
-                : "14:32 PM"}
-            </p>
-          </div>
-          <div>
-            <p className="text-xs text-gray-500 uppercase tracking-wide mb-2 text-left">
-              RESPONSE TIME
-            </p>
-            <p className="text-gray-900 font-medium text-left">
-              {complaint.responseTime || "2 days"}
-            </p>
-            <p className="text-sm text-gray-500 text-left">Within SLA</p>
-          </div>
-          <div>
-            <p className="text-xs text-gray-500 uppercase tracking-wide mb-2 text-left">
-              HANDLED BY
-            </p>
-            <p className="text-gray-900 font-medium text-left">
-              {complaint.respondedBy || "Admin"}
-            </p>
-            <p className="text-sm text-gray-600 text-left">Team</p>
           </div>
         </div>
 
         {/* Description */}
-        <div className="mb-8 pb-8 border-b border-gray-200">
-          <h2 className="text-xs text-gray-500 uppercase tracking-wide mb-4 text-left">
+        <div className="mb-8 pb-8 border-b border-gray-200 dark:border-gray-700">
+          <h2 className="text-xs text-gray-500 dark:text-gray-400 mb-4 text-left">
             DESCRIPTION
           </h2>
-          <p className="text-gray-700 leading-relaxed text-left">
+          <p className="text-gray-700 dark:text-gray-300 text-left">
             {complaint.details}
           </p>
         </div>
 
         {/* Attachments */}
-        <div className="mb-8 pb-8 border-b border-gray-200">
-          <h2 className="text-xs text-gray-500 uppercase tracking-wide mb-4 text-left">
+        <div className="mb-8 pb-8 border-b border-gray-200 dark:border-gray-700">
+          <h2 className="text-xs text-gray-500 dark:text-gray-400 mb-4 text-left">
             ATTACHMENTS
           </h2>
+
           <div className="space-y-3">
             {mockAttachments.map((file, index) => (
               <div
                 key={index}
-                className="flex items-center justify-between bg-gray-50 rounded-lg p-4 hover:bg-gray-100 transition-colors border border-gray-200"
+                className="flex items-center justify-between bg-gray-50 rounded-lg p-4 border border-gray-200 hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-800 transition-colors"
               >
                 <div className="flex items-center gap-3">
-                  <div
-                    className={`w-10 h-10 rounded flex items-center justify-center text-xs font-bold ${
-                      file.type === "png"
-                        ? "bg-blue-500 text-white"
-                        : "bg-gray-600 text-white"
-                    }`}
-                  >
-                    {file.type.toUpperCase()}
+                  <div className="text-white bg-blue-500 px-2 py-1 rounded text-xs">
+                    {file.type}
                   </div>
+
                   <div>
-                    <p className="text-gray-900 font-medium text-sm">
+                    <p className="text-gray-900 dark:text-gray-100 text-sm">
                       {file.name}
                     </p>
-                    <p className="text-gray-500 text-xs">{file.size}</p>
+                    <p className="text-gray-500 dark:text-gray-400 text-xs">
+                      {file.size}
+                    </p>
                   </div>
                 </div>
-                <button className="text-gray-500 hover:text-gray-900 transition-colors">
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                    />
-                  </svg>
-                </button>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Activity Timeline */}
-        <div className="mb-8 pb-8 border-b border-gray-200">
-          <h2 className="text-xs text-gray-500 uppercase tracking-wide mb-6 text-left">
+        {/* Timeline */}
+        <div className="mb-8 pb-8 border-b border-gray-200 dark:border-gray-700">
+          <h2 className="text-xs text-gray-500 dark:text-gray-400 mb-6 text-left">
             ACTIVITY TIMELINE
           </h2>
+
           <div className="space-y-6">
             {timelineEvents.map((event, index) => (
               <div key={index} className="flex gap-4">
@@ -260,113 +187,25 @@ function HistoryViewDetailsPage({
                   <div
                     className={`w-2 h-2 rounded-full ${getTimelineDotColor(event.status)}`}
                   ></div>
-                  {index < timelineEvents.length - 1 && (
-                    <div className="w-0.5 h-full bg-gray-300 mt-2"></div>
-                  )}
+                  <div className="w-0.5 h-full bg-gray-300 dark:bg-gray-600 mt-2"></div>
                 </div>
+
                 <div className="flex-1 pb-6">
-                  <p className="font-semibold text-gray-900 mb-1 text-left">
+                  <p className="font-semibold text-gray-900 dark:text-gray-100 text-left">
                     {event.title}
                   </p>
-                  <p className="text-sm text-gray-600 mb-2 text-left">
+                  <p className="text-sm text-gray-600 dark:text-gray-300 text-left">
                     {event.description}
                   </p>
-                  <p className="text-xs text-gray-500">{event.timestamp}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                    {event.timestamp}
+                  </p>
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Admin Response Section */}
-        {isAdmin && (
-          <div className="mb-8 pb-8 border-b border-gray-200">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xs text-gray-500 uppercase tracking-wide text-left">
-                ADMIN RESPONSE
-              </h2>
-              {!isEditingResponse && (
-                <Button
-                  onClick={() => setIsEditingResponse(true)}
-                  className="text-sm bg-blue-600 hover:bg-blue-700 text-white"
-                >
-                  {complaint.response ? "Edit Response" : "Add Response"}
-                </Button>
-              )}
-            </div>
-            {isEditingResponse ? (
-              <div className="space-y-4">
-                <textarea
-                  value={response}
-                  onChange={(e) => setResponse(e.target.value)}
-                  placeholder="Enter your response to this complaint..."
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  rows={6}
-                />
-                <div className="flex gap-2">
-                  <Button
-                    onClick={handleSaveResponse}
-                    className="bg-blue-600 hover:bg-blue-700 text-white"
-                  >
-                    Save Response
-                  </Button>
-                  <Button
-                    onClick={() => {
-                      setIsEditingResponse(false);
-                      setResponse(complaint.response || "");
-                    }}
-                    className="bg-gray-200 hover:bg-gray-300 text-gray-700"
-                  >
-                    Cancel
-                  </Button>
-                </div>
-              </div>
-            ) : (
-              <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
-                <p className="text-gray-700 text-left">
-                  {complaint.response || "No response yet."}
-                </p>
-                {complaint.responseDate && (
-                  <p className="text-sm text-gray-500 mt-2 text-left">
-                    Responded on{" "}
-                    {new Date(complaint.responseDate).toLocaleDateString(
-                      "en-GB",
-                      {
-                        day: "numeric",
-                        month: "short",
-                        year: "numeric",
-                      },
-                    )}{" "}
-                    by {complaint.respondedBy}
-                  </p>
-                )}
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Status Update Section for Admin */}
-        {isAdmin && complaint.status !== "Resolved" && (
-          <div className="mb-8 pb-8 border-b border-gray-200">
-            <h2 className="text-xs text-gray-500 uppercase tracking-wide mb-4 text-left">
-              UPDATE STATUS
-            </h2>
-            <div className="flex gap-2 flex-wrap">
-              <button
-                onClick={() => handleStatusChange("In Progress")}
-                className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium transition-colors"
-              >
-                In Progress
-              </button>
-              <button
-                onClick={() => handleStatusChange("Resolved")}
-                className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg font-medium transition-colors"
-              >
-                Resolved
-              </button>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );

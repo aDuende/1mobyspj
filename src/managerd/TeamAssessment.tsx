@@ -189,12 +189,12 @@ function AssessmentForm({
   }
 
   return (
-    <div className="p-6 bg-[#f8fafc] dark:bg-transparent min-h-screen" style={GEO}>
+    <div className="p-6 bg-[#f8fafc] dark:bg-gray-900 min-h-screen" style={GEO}>
 
       {/* Back */}
       <button
         onClick={onBack}
-        className="flex items-center gap-2 w-fit px-4 py-2 mb-6 rounded-full bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-sm text-[13px] font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:shadow-md transition-all duration-200 cursor-pointer"
+        className="flex items-center gap-2 w-fit px-4 py-2 mb-6 rounded-full bg-card border border-gray-200/60 dark:border-white/5 shadow-sm text-[13px] font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:shadow-md transition-all duration-200 cursor-pointer"
         style={GEO}
       >
         <ArrowLeft className="w-4 h-4" />
@@ -202,7 +202,7 @@ function AssessmentForm({
       </button>
 
       {/* Profile card */}
-      <div className="flex items-center gap-4 p-5 mb-6 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)]">
+      <div className="flex items-center gap-4 p-5 mb-6 rounded-2xl bg-card border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)]">
         <div
           className="w-16 h-16 rounded-xl flex items-center justify-center text-white text-[22px] font-bold shrink-0"
           style={{ background: member.avatarColor }}
@@ -246,7 +246,7 @@ function AssessmentForm({
             </div>
 
             {/* Table */}
-            <div className="rounded-2xl bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] overflow-hidden">
+            <div className="rounded-2xl bg-card border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] overflow-hidden">
               {/* Header */}
               <div className="grid grid-cols-[1fr_160px_160px_70px_140px] gap-2 px-5 py-3 border-b border-gray-100 dark:border-white/5 bg-gray-50/60 dark:bg-gray-900/30">
                 {["Competency", "Expected", "Manager", "GAP", "Development"].map(h => (
@@ -332,7 +332,7 @@ function AssessmentForm({
           {comments.map((comment, i) => (
             <div
               key={i}
-              className="relative rounded-2xl bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] overflow-hidden"
+              className="relative rounded-2xl bg-card border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] overflow-hidden"
             >
               <div className="flex items-center justify-between px-4 py-2.5 border-b border-gray-100 dark:border-white/5">
                 <span className="text-[11px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wide" style={GEO}>
@@ -415,7 +415,7 @@ export default function TeamAssessment() {
       {/* Summary cards */}
       <div className="grid grid-cols-2 gap-4 mb-8">
         {/* Haven't evaluated */}
-        <div className="flex text-left items-center gap-4 p-5 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)]">
+        <div className="flex text-left items-center gap-4 p-5 rounded-2xl bg-card border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)]">
           <div className="w-12 h-12 rounded-xl bg-rose-50 dark:bg-rose-900/20 flex items-center justify-center shrink-0">
             <CheckCircle2 className="w-6 h-6 text-rose-400" />
           </div>
@@ -426,7 +426,7 @@ export default function TeamAssessment() {
         </div>
 
         {/* Total people */}
-        <div className="flex text-left items-center gap-4 p-5 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)]">
+        <div className="flex text-left items-center gap-4 p-5 rounded-2xl bg-card border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)]">
           <div className="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center shrink-0">
             <Users className="w-6 h-6 text-blue-400" />
           </div>
@@ -443,7 +443,7 @@ export default function TeamAssessment() {
           <button
             key={m.id}
             onClick={() => setSelected(m)}
-            className={`w-full text-left flex items-center gap-4 p-4 rounded-2xl bg-white dark:bg-gray-800 border shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 cursor-pointer group ${m.evaluated ? "border-emerald-200/60 dark:border-emerald-800/30" : "border-gray-200/60 dark:border-white/5"}`}
+            className={`w-full text-left flex items-center gap-4 p-4 rounded-2xl bg-card border shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 cursor-pointer group ${m.evaluated ? "border-emerald-200/60 dark:border-emerald-800/30" : "border-gray-200/60 dark:border-white/5"}`}
           >
             {/* Avatar */}
             <div
