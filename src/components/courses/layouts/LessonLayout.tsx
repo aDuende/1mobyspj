@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import {
   ThumbsUp,
   ThumbsDown,
@@ -75,7 +74,6 @@ function buildLessons(course: LessonLayoutProps["course"]): Lesson[] {
 }
 
 export default function LessonLayout({ course }: LessonLayoutProps) {
-  const navigate = useNavigate();
   const lessons = buildLessons(course);
   const [activeLesson, setActiveLesson] = useState(lessons[0]);
   const [showMore, setShowMore] = useState(false);

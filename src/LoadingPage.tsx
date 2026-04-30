@@ -6,7 +6,6 @@ interface LoadingPageProps {
 }
 
 function LoadingPage({ onLoadingComplete }: LoadingPageProps) {
-  const [hasEntered, setHasEntered] = useState(false);
   const [fadeOut, setFadeOut] = useState(false);
 
   useEffect(() => {

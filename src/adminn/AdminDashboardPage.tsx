@@ -1,4 +1,4 @@
-import { SidebarProvider, SidebarTrigger } from "../components/ui/sidebar";
+import { SidebarProvider } from "../components/ui/sidebar";
 import { AppSidebar } from "../app-sidebar";
 import LanguageSelector from "../components/LanguageSelector";
 import AppearanceSelector from "../components/AppearanceSelector";
@@ -35,7 +35,20 @@ function AdminDashboard({ onLogout, username }: AdminDashboardProps) {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [language, setLanguage] = useState("EN");
   const [isScrolled, setIsScrolled] = useState(false);
+  const [helpSubPage, setHelpSubPage] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleSubPage = (e: Event) => {
+      setHelpSubPage((e as CustomEvent).detail.page);
+    };
+    window.addEventListener("help:subpage", handleSubPage);
+    return () => window.removeEventListener("help:subpage", handleSubPage);
+  }, []);
+
+  useEffect(() => {
+    if (location.pathname !== "/help") setHelpSubPage(null);
+  }, [location.pathname]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -124,7 +137,7 @@ function AdminDashboard({ onLogout, username }: AdminDashboardProps) {
                       </BreadcrumbPage>
                     </BreadcrumbItem>
                   )}
-                  {location.pathname === "/help" && (
+                  {location.pathname === "/help" && !helpSubPage && (
                     <BreadcrumbItem>
                       <BreadcrumbPage
                         style={{ fontFamily: "Geometrica, sans-serif" }}
@@ -132,6 +145,25 @@ function AdminDashboard({ onLogout, username }: AdminDashboardProps) {
                         Help
                       </BreadcrumbPage>
                     </BreadcrumbItem>
+                  )}
+                  {location.pathname === "/help" && helpSubPage && (
+                    <>
+                      <BreadcrumbItem>
+                        <button
+                          onClick={() => window.dispatchEvent(new CustomEvent("help:back"))}
+                          className="text-sm text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+                          style={{ fontFamily: "Geometrica, sans-serif" }}
+                        >
+                          Help
+                        </button>
+                      </BreadcrumbItem>
+                      <BreadcrumbSeparator />
+                      <BreadcrumbItem>
+                        <BreadcrumbPage style={{ fontFamily: "Geometrica, sans-serif" }}>
+                          {helpSubPage}
+                        </BreadcrumbPage>
+                      </BreadcrumbItem>
+                    </>
                   )}
                   {location.pathname === "/manage-role" && (
                     <BreadcrumbItem>

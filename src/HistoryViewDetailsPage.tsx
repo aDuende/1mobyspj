@@ -1,4 +1,3 @@
-import { Button } from "./components/ui/button";
 import { useState } from "react";
 import { complaintsStore, type Complaint } from "./lib/complaintsStore";
 
@@ -17,26 +16,12 @@ interface TimelineEvent {
 
 function HistoryViewDetailsPage({
   complaint,
-  onBack,
-  isAdmin = false,
 }: HistoryViewDetailsPageProps) {
-  const [response, setResponse] = useState(complaint.response || "");
-  const [isEditingResponse, setIsEditingResponse] = useState(false);
-
-  const handleSaveResponse = () => {
-    complaintsStore.update(complaint.id, {
-      response,
-      responseDate: new Date().toISOString().split("T")[0],
-      respondedBy: "Admin",
-    });
-    setIsEditingResponse(false);
-    alert("Response saved successfully!");
-  };
+  const [currentStatus, setCurrentStatus] = useState<Complaint["status"]>(complaint.status);
 
   const handleStatusChange = (newStatus: Complaint["status"]) => {
     complaintsStore.update(complaint.id, { status: newStatus });
-    alert(`Status updated to ${newStatus}`);
-    onBack(); // Go back to refresh the list
+    setCurrentStatus(newStatus);
   };
   const getStatusColor = (status: Complaint["status"]) => {
     switch (status) {
@@ -114,9 +99,9 @@ function HistoryViewDetailsPage({
             </span>
 
             <span
-              className={`px-3 py-1 rounded-full text-sm font-semibold ${getStatusColor(complaint.status)} dark:bg-opacity-20`}
+              className={`px-3 py-1 rounded-full text-sm font-semibold ${getStatusColor(currentStatus)} dark:bg-opacity-20`}
             >
-              {complaint.status}
+              {currentStatus}
             </span>
           </div>
         </div>
@@ -205,6 +190,26 @@ function HistoryViewDetailsPage({
             ))}
           </div>
         </div>
+
+        {/* Action Buttons */}
+        {currentStatus !== "Resolved" && currentStatus !== "Closed" && (
+          <div className="flex gap-3 mt-2 mb-8">
+            {currentStatus === "Pending" && (
+              <button
+                onClick={() => handleStatusChange("In Progress")}
+                className="px-5 py-2 rounded-lg text-sm font-medium bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+              >
+                In Progress
+              </button>
+            )}
+            <button
+              onClick={() => handleStatusChange("Resolved")}
+              className="px-5 py-2 rounded-lg text-sm font-medium bg-green-600 text-white hover:bg-green-700 transition-colors"
+            >
+              Resolve
+            </button>
+          </div>
+        )}
 
       </div>
     </div>

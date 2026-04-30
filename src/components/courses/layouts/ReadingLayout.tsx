@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import {
   BookOpen,
   ChevronLeft,
@@ -36,7 +35,6 @@ interface ReadingLayoutProps {
 }
 
 export default function ReadingLayout({ item }: ReadingLayoutProps) {
-  const navigate = useNavigate();
   const [reading, setReading] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [bookmarked, setBookmarked] = useState(false);

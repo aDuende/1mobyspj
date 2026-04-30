@@ -18,6 +18,16 @@ function AdminHelpPage() {
     setComplaints(complaintsStore.getAll());
   }, []);
 
+  useEffect(() => {
+    window.dispatchEvent(new CustomEvent("help:subpage", { detail: { page: selectedComplaint ? "Details" : null } }));
+  }, [selectedComplaint]);
+
+  useEffect(() => {
+    const handleBack = () => setSelectedComplaint(null);
+    window.addEventListener("help:back", handleBack);
+    return () => window.removeEventListener("help:back", handleBack);
+  }, []);
+
   const getStatusColor = (status: Complaint["status"]) => {
     switch (status) {
       case "Pending":
@@ -97,20 +107,6 @@ function AdminHelpPage() {
     return (
       <div className="min-h-screen bg-[#f8fafc] px-6 pb-6 pt-3 text-foreground dark:bg-gray-900">
         <div className="mx-auto max-w-6xl space-y-4">
-          <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-            <button
-              type="button"
-              onClick={() => {
-                setSelectedComplaint(null);
-                setComplaints(complaintsStore.getAll());
-              }}
-              className="transition hover:text-foreground"
-            >
-              Help Requests
-            </button>
-            <span>{">"}</span>
-            <span className="text-foreground">Detail</span>
-          </div>
 
           <HistoryViewDetailsPage
             complaint={selectedComplaint}
@@ -128,10 +124,6 @@ function AdminHelpPage() {
   return (
     <div className="min-h-screen bg-[#f8fafc] px-6 pb-6 pt-3 text-foreground dark:bg-gray-900">
       <div className="mx-auto max-w-6xl space-y-4">
-        <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-          <span className="text-foreground">Help Requests</span>
-        </div>
-
         <div>
           <h1 className="text-left text-2xl font-semibold text-gray-900 dark:text-white">
             All Help Requests

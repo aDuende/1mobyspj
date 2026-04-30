@@ -129,7 +129,7 @@ export default function CompetencyProfilePage({ role = "employee" }: { role?: "e
   // ── Animation helpers ──
   const fadeUp    = (ms: number) => ({ opacity: isMounted ? 1 : 0, transform: isMounted ? "translateY(0)" : "translateY(20px)",  transition: `opacity .6s ease-out ${ms}ms, transform .6s ease-out ${ms}ms` });
   const fadeRight = (ms: number) => ({ opacity: isMounted ? 1 : 0, transform: isMounted ? "translateX(0)" : "translateX(20px)",  transition: `opacity .6s ease-out ${ms}ms, transform .6s ease-out ${ms}ms` });
-  const fadeLeft  = (ms: number) => ({ opacity: isMounted ? 1 : 0, transform: isMounted ? "translateX(0)" : "translateX(-20px)", transition: `opacity .6s ease-out ${ms}ms, transform .6s ease-out ${ms}ms` });
+  const _fadeLeft  = (ms: number) => ({ opacity: isMounted ? 1 : 0, transform: isMounted ? "translateX(0)" : "translateX(-20px)", transition: `opacity .6s ease-out ${ms}ms, transform .6s ease-out ${ms}ms` }); void _fadeLeft;
 
   return (
     <div className="flex min-h-screen w-full flex-col bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">

@@ -184,11 +184,7 @@ function ManagerAssessmentPage() {
             </button>
             <button
               onClick={() => setViewMode("team")}
-              className={`px-4 py-2 rounded-lg font-medium transition-all flex items-center gap-2 ${
-                viewMode === "team"
-                  ? "bg-blue-600 text-white"
-                  : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
-              }`}
+              className="px-4 py-2 rounded-lg font-medium transition-all flex items-center gap-2 bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-gray-700"
             >
               <Users className="w-4 h-4" />
               Team Assessments

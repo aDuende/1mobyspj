@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate, useLocation, Routes, Route } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import MyIDPPage from "./MyIDPPage";
 import LessonLayout from "./components/courses/layouts/LessonLayout";
 import SeriesLayout from "./components/courses/layouts/SeriesLayout";
@@ -12,7 +12,6 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "./components/ui/chart";
-import CourseDetailsPage from "./CourseDetailsPage";
 
 import {
   Clapperboard,
