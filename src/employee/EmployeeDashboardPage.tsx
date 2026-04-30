@@ -324,7 +324,7 @@ function DashboardContent({ username }: { username: string }) {
                         decimals={1}
                       />
                       <span className="text-gray-400 font-medium ml-1.5 text-[18px]">
-                        / 5.0
+                        / 4.0
                       </span>
                     </>
                   ) : item.label === "Learning Hours" ? (
@@ -515,7 +515,7 @@ function DashboardContent({ username }: { username: string }) {
                       />
                     </span>
                     <span className="text-[14px] font-bold text-gray-400 dark:text-gray-600 mb-0.5">
-                      / 5.0
+                      / 4.0
                     </span>
                   </div>
                 </div>
