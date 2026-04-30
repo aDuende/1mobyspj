@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import { Button } from "../components/ui/button";
-import { Input } from "../components/ui/input";
+import { Skeleton } from "../components/ui/skeleton";
 
 interface User {
   id: number;
@@ -15,10 +14,31 @@ interface User {
 
 const API_URL = "http://localhost:3000/api";
 
+const MOCK_USERS: User[] = [
+  {
+    id: 1,
+    name: "Tarin",
+    email: "tarin.chon@1moby.com",
+    role: "Employee",
+    department: "Engineering",
+    status: "active",
+    avatar: "",
+  },
+  {
+    id: 2,
+    name: "Sam",
+    email: "sam.Frea@1moby.com",
+    role: "Manager",
+    department: "Engineering",
+    status: "active",
+    avatar: "",
+  },
+];
+
 function ManageRolePage() {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery] = useState("");
 
   // Fetch users from backend
   useEffect(() => {
@@ -29,9 +49,10 @@ function ManageRolePage() {
     try {
       const response = await fetch(`${API_URL}/users`);
       const data = await response.json();
-      setUsers(data);
+      setUsers(data && data.length > 0 ? data : MOCK_USERS);
     } catch (error) {
       console.error("Error fetching users:", error);
+      setUsers(MOCK_USERS);
     } finally {
       setLoading(false);
     }
@@ -48,15 +69,7 @@ function ManageRolePage() {
       user.department.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
-  const handleResetPassword = async (userId: number) => {
-    try {
-      // You can implement password reset API later
-      console.log("Reset password for user:", userId);
-      alert("Password reset functionality will be implemented");
-    } catch (error) {
-      console.error("Error resetting password:", error);
-    }
-  };
+  
 
   const handleRemoveUser = async (userId: number) => {
     if (!confirm("Are you sure you want to remove this user?")) return;
@@ -85,13 +98,56 @@ function ManageRolePage() {
 
   if (loading) {
     return (
-      <div className="min-h-full p-6 bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
-        <p
-          className="text-gray-600 dark:text-gray-400"
-          style={{ fontFamily: "Geometrica, sans-serif" }}
-        >
-          Loading users...
-        </p>
+      <div className="min-h-full p-6 bg-gray-50 dark:bg-gray-900">
+        <div className="max-w-7xl mx-auto space-y-6">
+          {/* Header skeleton */}
+          <div className="flex items-center justify-between gap-16">
+            <div className="space-y-2">
+              <Skeleton className="h-8 w-32" />
+              <Skeleton className="h-4 w-24" />
+            </div>
+            {/* Stats Cards skeleton */}
+            <div className="flex gap-4 flex-1">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm flex-1 space-y-2">
+                  <Skeleton className="h-4 w-24" />
+                  <Skeleton className="h-8 w-12" />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Table skeleton */}
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 space-y-4">
+            {/* Search bar skeleton */}
+            <Skeleton className="h-9 w-64" />
+            {/* Table header */}
+            <div className="flex gap-4 border-b border-gray-200 dark:border-gray-700 pb-3">
+              {[2, 1, 1.5, 1, 1].map((w, i) => (
+                <Skeleton key={i} className="h-4" style={{ flex: w }} />
+              ))}
+            </div>
+            {/* Table rows */}
+            {Array.from({ length: 7 }).map((_, i) => (
+              <div key={i} className="flex gap-4 items-center py-2">
+                <div className="flex items-center gap-3" style={{ flex: 2 }}>
+                  <Skeleton className="h-9 w-9 rounded-full" />
+                  <div className="space-y-1 flex-1">
+                    <Skeleton className="h-4 w-32" />
+                    <Skeleton className="h-3 w-40" />
+                  </div>
+                </div>
+                <Skeleton className="h-5 w-20 rounded-full" style={{ flex: 1 }} />
+                <Skeleton className="h-4 w-24" style={{ flex: 1.5 }} />
+                <Skeleton className="h-5 w-16 rounded-full" style={{ flex: 1 }} />
+                <div className="flex gap-2" style={{ flex: 1 }}>
+                  <Skeleton className="h-8 w-8 rounded" />
+                  <Skeleton className="h-8 w-8 rounded" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     );
   }
@@ -176,25 +232,25 @@ function ManageRolePage() {
                     Name
                   </th>
                   <th
-                    className="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white"
+                    className="px-6 py-4 text-center text-sm font-semibold text-gray-900 dark:text-white"
                     style={{ fontFamily: "Geometrica, sans-serif" }}
                   >
                     ROLE
                   </th>
                   <th
-                    className="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white"
+                    className="px-6 py-4 text-center text-sm font-semibold text-gray-900 dark:text-white"
                     style={{ fontFamily: "Geometrica, sans-serif" }}
                   >
                     DEPARTMENT
                   </th>
                   <th
-                    className="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white"
+                    className="px-6 py-4 text-center text-sm font-semibold text-gray-900 dark:text-white"
                     style={{ fontFamily: "Geometrica, sans-serif" }}
                   >
                     STATUS
                   </th>
                   <th
-                    className="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white"
+                    className="px-6 py-4 text-center text-sm font-semibold text-gray-900 dark:text-white"
                     style={{ fontFamily: "Geometrica, sans-serif" }}
                   >
                     ACTION
@@ -209,36 +265,39 @@ function ManageRolePage() {
                   >
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
-                        <img
-                          src={user.avatar}
-                          alt={user.name}
-                          className="w-12 h-12 rounded-full object-cover"
-                        />
+                        {user.avatar ? (
+                          <img
+                            src={user.avatar}
+                            alt={user.name}
+                            className="w-12 h-12 rounded-full object-cover shrink-0"
+                          />
+                        ) : (
+                          <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center shrink-0">
+                            <span
+                              className="text-blue-600 dark:text-blue-400 font-semibold text-sm"
+                              style={{ fontFamily: "Geometrica, sans-serif" }}
+                            >
+                              {user.name.charAt(0).toUpperCase()}
+                            </span>
+                          </div>
+                        )}
                         <div>
                           <p
-                            className="font-semibold text-gray-900 dark:text-white"
+                            className="font-semibold text-left text-gray-900 dark:text-white"
                             style={{ fontFamily: "Geometrica, sans-serif" }}
                           >
                             {user.name}
                           </p>
                           <p
-                            className="text-sm text-gray-600 dark:text-gray-400"
+                            className="text-sm  text-gray-500 dark:text-gray-400 mt-0.5"
                             style={{ fontFamily: "Geometrica, sans-serif" }}
                           >
                             {user.email}
                           </p>
-                          {user.competencyScore && (
-                            <p
-                              className="text-xs text-gray-500 dark:text-gray-500 mt-1"
-                              style={{ fontFamily: "Geometrica, sans-serif" }}
-                            >
-                              {user.competencyScore}
-                            </p>
-                          )}
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-4 text-center">
                       <span
                         className={`px-3 py-1 rounded-full text-sm font-medium ${getRoleBadgeColor(user.role)}`}
                         style={{ fontFamily: "Geometrica, sans-serif" }}
@@ -246,7 +305,7 @@ function ManageRolePage() {
                         {user.role}
                       </span>
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-4 text-center">
                       <span
                         className="text-blue-600 dark:text-blue-400 hover:underline cursor-pointer font-medium"
                         style={{ fontFamily: "Geometrica, sans-serif" }}
@@ -255,7 +314,7 @@ function ManageRolePage() {
                       </span>
                     </td>
                     <td className="px-6 py-4">
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center justify-center gap-2">
                         <div
                           className={`w-2 h-2 rounded-full ${user.status === "active" ? "bg-green-500" : "bg-red-500"}`}
                         ></div>
@@ -268,27 +327,8 @@ function ManageRolePage() {
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      <div className="flex items-center gap-3">
-                        <button
-                          onClick={() => handleResetPassword(user.id)}
-                          className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 flex items-center gap-1"
-                          style={{ fontFamily: "Geometrica, sans-serif" }}
-                        >
-                          <svg
-                            className="w-4 h-4"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                            />
-                          </svg>
-                          Reset Password
-                        </button>
+                      <div className="flex items-center justify-center gap-3">
+                        
                         <button
                           onClick={() => handleRemoveUser(user.id)}
                           className="text-sm text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 flex items-center gap-1"

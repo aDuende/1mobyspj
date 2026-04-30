@@ -9,7 +9,11 @@ import ProfilePage from "../ProfilePage";
 import AdminHelpPage from "./AdminHelpPage";
 import ManageRolePage from "./ManageRolePage";
 import AnnouncementPage from "./AnnouncementPage";
-import CompetencyProfilePage from "../CompetencyProfilePage";
+import AdminIDPPage from "./AdminIDPPage";
+import AdminAddCourse from "./AdminAddCourse";
+import AdminCompetencyProfilePage from "./AdminCompetencyProfilePage";
+import AdminDashboardContent from "./AdminDashboardContent";
+import HomePage from "./HomePage";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import {
@@ -17,6 +21,7 @@ import {
   BreadcrumbItem,
   BreadcrumbList,
   BreadcrumbPage,
+  BreadcrumbSeparator,
 } from "../components/ui/breadcrumb";
 
 interface AdminDashboardProps {
@@ -146,6 +151,47 @@ function AdminDashboard({ onLogout, username }: AdminDashboardProps) {
                       </BreadcrumbPage>
                     </BreadcrumbItem>
                   )}
+                  
+                  {location.pathname === "/competency-profile" && (
+                    <BreadcrumbItem>
+                      <BreadcrumbPage
+                        style={{ fontFamily: "Geometrica, sans-serif" }}
+                      >
+                        Competency Profile
+                      </BreadcrumbPage>
+                    </BreadcrumbItem>
+                  )}
+                  {location.pathname === "/my-idp-learning" && (
+                    <BreadcrumbItem>
+                      <BreadcrumbPage
+                        style={{ fontFamily: "Geometrica, sans-serif" }}
+                      >
+                        My IDP &amp; Learning
+                      </BreadcrumbPage>
+                    </BreadcrumbItem>
+                  )}
+                  {location.pathname === "/admin-add-course" && (
+                    <>
+                      <BreadcrumbItem>
+                        <button
+                          onClick={() => navigate("/my-idp-learning")}
+                          className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                          style={{ fontFamily: "Geometrica, sans-serif" }}
+                        >
+                          My IDP &amp; Learning
+                        </button>
+                      </BreadcrumbItem>
+                      <BreadcrumbSeparator />
+                      <BreadcrumbItem>
+                        <BreadcrumbPage
+                          style={{ fontFamily: "Geometrica, sans-serif" }}
+                        >
+                          Add New Course
+                        </BreadcrumbPage>
+                      </BreadcrumbItem>
+                    </>
+                  )}
+                  
                 </BreadcrumbList>
               </Breadcrumb>
             </div>
@@ -171,49 +217,19 @@ function AdminDashboard({ onLogout, username }: AdminDashboardProps) {
               <Routes>
                 <Route
                   path="/home"
-                  element={
-                    <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-                      <h2
-                        className="text-2xl font-bold text-gray-900 dark:text-white mb-4"
-                        style={{ fontFamily: "Geometrica, sans-serif" }}
-                      >
-                        Admin Home
-                      </h2>
-                      <p
-                        className="text-gray-600 dark:text-gray-400"
-                        style={{ fontFamily: "Geometrica, sans-serif" }}
-                      >
-                        Welcome to the admin portal. Manage roles and
-                        announcements from the sidebar.
-                      </p>
-                    </div>
-                  }
+                  element={<HomePage />}
                 />
                 <Route path="/settings" element={<SettingPage />} />
-                <Route path="/competency-profile" element={<CompetencyProfilePage />} />
+                <Route path="/competency-profile" element={<AdminCompetencyProfilePage />} />
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/help" element={<AdminHelpPage />} />
                 <Route path="/manage-role" element={<ManageRolePage />} />
                 <Route path="/announcement" element={<AnnouncementPage />} />
+                <Route path="/my-idp-learning" element={<AdminIDPPage />} />
+                <Route path="/admin-add-course" element={<AdminAddCourse />} />
                 <Route
                   path="/dashboard"
-                  element={
-                    <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-                      <h2
-                        className="text-2xl font-bold text-gray-900 dark:text-white mb-4"
-                        style={{ fontFamily: "Geometrica, sans-serif" }}
-                      >
-                        Admin Portal
-                      </h2>
-                      <p
-                        className="text-gray-600 dark:text-gray-400"
-                        style={{ fontFamily: "Geometrica, sans-serif" }}
-                      >
-                        Manage the entire ConteX Skills platform, users,
-                        courses, and settings.
-                      </p>
-                    </div>
-                  }
+                  element={<AdminDashboardContent username={username} />}
                 />
               </Routes>
             </div>

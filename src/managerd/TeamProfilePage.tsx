@@ -609,7 +609,7 @@ function MemberDetail({ m, onBack }: { m: TeamMember; onBack: () => void }) {
                       <span className="text-[24px] font-bold text-gray-700 dark:text-white leading-none tracking-tight" style={GEO}>
                         <AnimatedNumber value={isMounted ? m.competencyScore : 0} decimals={1} />
                       </span>
-                      <span className="text-[14px] font-bold text-gray-400 dark:text-gray-600 mb-0.5">/ 5.0</span>
+                      <span className="text-[14px] font-bold text-gray-400 dark:text-gray-600 mb-0.5">/ 4.0</span>
                     </div>
                   </div>
                   <div className="flex flex-wrap gap-4 justify-start px-1">
@@ -818,7 +818,7 @@ export default function TeamProfilePage() {
             <h2 className="text-[16px] font-semibold text-[#08060d] dark:text-white mb-3" style={GEO}>Team Summary</h2>
             <div className="space-y-3">
               {[
-                { label: "Avg Competency Score", value: (TEAM.reduce((s, m) => s + m.competencyScore, 0) / TEAM.length).toFixed(1), sub: "/ 5.0", color: "text-blue-600 dark:text-blue-400"    },
+                { label: "Avg Competency Score", value: (TEAM.reduce((s, m) => s + m.competencyScore, 0) / TEAM.length).toFixed(1), sub: "/ 4.0", color: "text-blue-600 dark:text-blue-400"    },
                 { label: "Total Learning Hours",  value: TEAM.reduce((s, m) => s + m.learningHours, 0).toString(),                    sub: "hrs",   color: "text-emerald-600 dark:text-emerald-400" },
                 { label: "Active IDPs",           value: TEAM.reduce((s, m) => s + m.activeIDPs, 0).toString(),                       sub: "plans", color: "text-orange-500 dark:text-orange-400"  },
                 { label: "Pending Assessments",   value: TEAM.reduce((s, m) => s + m.pendingAssessments, 0).toString(),               sub: "due",   color: "text-rose-500 dark:text-rose-400"       },
