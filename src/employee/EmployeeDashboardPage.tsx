@@ -1179,6 +1179,29 @@ function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
                       </BreadcrumbItem>
                     </>
                   )}
+                  {location.pathname === "/my-idp-learning/my-certificated" && (
+                    <>
+                      <BreadcrumbItem>
+                        <BreadcrumbLink
+                          onClick={() => navigate("/my-idp-learning")}
+                          className="cursor-pointer"
+                          style={{ fontFamily: "Geometrica, sans-serif" }}
+                        >
+                          My IDP & Learning
+                        </BreadcrumbLink>
+                      </BreadcrumbItem>
+
+                      <BreadcrumbSeparator />
+
+                      <BreadcrumbItem>
+                        <BreadcrumbPage
+                          style={{ fontFamily: "Geometrica, sans-serif" }}
+                        >
+                          My Certificated
+                        </BreadcrumbPage>
+                      </BreadcrumbItem>
+                    </>
+                  )}
                   {location.pathname === "/help/history/detail" && (
                     <>
                       <BreadcrumbItem>

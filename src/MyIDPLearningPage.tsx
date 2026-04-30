@@ -4,6 +4,7 @@ import MyIDPPage from "./MyIDPPage";
 import LessonLayout from "./components/courses/layouts/LessonLayout";
 import SeriesLayout from "./components/courses/layouts/SeriesLayout";
 import ReadingLayout from "./components/courses/layouts/ReadingLayout";
+import MyCertificatedPage from "./MyCertificatedPage";
 import { Card } from "./components/ui/card";
 import { Area, AreaChart, XAxis } from "recharts";
 import {
@@ -67,6 +68,9 @@ const AnimatedNumber = ({
     requestAnimationFrame(animate);
   }, [value]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  if (location.pathname === "/my-idp-learning/my-certificated") {
+    return <MyCertificatedPage />;
+  }
   return (
     <>
       {prefix}
@@ -940,6 +944,10 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
     return <MyIDPPage role={role} />;
   }
 
+  if (location.pathname === "/my-idp-learning/my-certificated") {
+    return <MyCertificatedPage />;
+  }
+
   if (selectedCourse) {
     return <LessonLayout course={selectedCourse} />;
   }
@@ -958,6 +966,7 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
         {/* Header */}
         <div className="flex items-baseline justify-end mb-6">
           <button
+            onClick={() => navigate("/my-idp-learning/my-certificated")}
             className="group flex items-center gap-2 px-4 py-2 rounded-full border-transparent-transparent bg-transparent hover:bg-white dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] transition-all duration-300 active:scale-[0.96] cursor-pointer"
             style={{ fontFamily: '"Geometrica", sans-serif' }}
           >
