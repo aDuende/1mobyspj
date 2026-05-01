@@ -3,6 +3,10 @@
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/geist";
 
+html, body {
+  background: #0b3c9f;
+}
+
 @font-face {
   font-family: "Geometrica";
   src: url("/fonts/GeometricaEN/Geometrica-Regular.otf") format("opentype");

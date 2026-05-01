@@ -15,7 +15,7 @@ function LoadingPage({ onLoadingComplete }: LoadingPageProps) {
 
     const completeTimer = setTimeout(() => {
       onLoadingComplete();
-    }, 3500);
+    }, 3150);
 
     return () => {
       clearTimeout(fadeTimer);
@@ -25,7 +25,7 @@ function LoadingPage({ onLoadingComplete }: LoadingPageProps) {
 
   return (
     <div
-      className="fixed inset-0 w-screen h-screen flex items-center justify-center transition-all duration-800 ease-in-out z-[9999]"
+      className="fixed inset-0 w-screen h-screen flex items-center justify-center z-[9999]"
       style={{
         background: `
           linear-gradient(
@@ -40,7 +40,7 @@ function LoadingPage({ onLoadingComplete }: LoadingPageProps) {
         `,
         overflow: 'hidden',
         transform: fadeOut ? 'translateY(-100%)' : 'translateY(0)',
-        opacity: fadeOut ? 0 : 1
+        transition: fadeOut ? 'transform 0.9s cubic-bezier(0.76, 0, 0.24, 1)' : 'none',
       }}
     >
       {/* PNG ที่อยู่กับ background */}
