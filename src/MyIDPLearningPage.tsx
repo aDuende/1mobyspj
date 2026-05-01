@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import idpRoadmapImg from "./assets/IDP-roadmap.png";
 import { useNavigate, useLocation } from "react-router-dom";
 import MyIDPPage from "./MyIDPPage";
 import LessonLayout from "./components/courses/layouts/LessonLayout";
@@ -1784,7 +1785,7 @@ export default function MyIDPLearningPage({ role = "employee" }: { role?: "emplo
               {/* Course Image */}
               <div className="w-[180px] md:w-[237px] h-[133px] rounded-xl shrink-0 overflow-hidden relative bg-gray-100 dark:bg-gray-700 aspect-video">
                 <img
-                  src="/src/assets/IDP-roadmap.png"
+                  src={idpRoadmapImg}
                   alt="Design Thinking Course"
                   className="w-full h-full object-cover"
                 />

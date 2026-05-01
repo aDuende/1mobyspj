@@ -1,5 +1,7 @@
 import { SidebarProvider } from "../components/ui/sidebar";
 import { AppSidebar } from "../app-sidebar";
+import dashboardBannerImg from "../assets/dashboard_banner.png";
+import dashboardFoxImg from "../assets/dashboard_fox.png";
 import LanguageSelector from "../components/LanguageSelector";
 import AppearanceSelector from "../components/AppearanceSelector";
 import AlertSelector from "../components/AlertSelector";
@@ -233,7 +235,7 @@ function DashboardContent({ username }: { username: string }) {
         {/* Welcome Banner */}
         <div className="relative overflow-hidden w-full xl:w-[400px] h-[140px] shrink-0 group rounded-lg border-none shadow-none p-0">
           <img
-            src="/src/assets/dashboard_banner.png"
+            src={dashboardBannerImg}
             alt="Sunrise"
             className="absolute inset-0 w-full h-full object-cover rounded-lg opacity-100 transition-transform duration-700 group-hover:scale-105"
           />
@@ -984,7 +986,7 @@ function DashboardContent({ username }: { username: string }) {
             </div>
 
             <img
-              src="/src/assets/dashboard_fox.png"
+              src={dashboardFoxImg}
               alt="Lucy the Fox"
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
             />

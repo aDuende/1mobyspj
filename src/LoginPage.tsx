@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import w1Img from "./assets/w1.png";
 import { Button } from "./components/ui/button";
 import { Input } from "./components/ui/input";
 import { Separator } from "./components/ui/separator";
@@ -98,7 +99,7 @@ function LoginPage({ onLogin }: LoginPageProps) {
       <div className="relative w-full max-w-5xl h-[670px] rounded-[32px] overflow-visible shadow-2xl">
         {/* Background */}
         <div className="absolute inset-0 rounded-[32px] overflow-hidden shadow-[0_24px_48px_rgba(0,0,0,0.2)]">
-          <img src="src/assets/w1.png" className="w-full h-full object-cover" />
+          <img src={w1Img} className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-black/35" />
         </div>
 

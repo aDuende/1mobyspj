@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import dashboardBannerImg from "../assets/dashboard_banner.png";
 import {
   TrendingUp, TrendingDown, Users, BookOpen,
   AlertTriangle, CheckCircle2, ChevronDown, Check,
@@ -159,7 +160,7 @@ export default function AdminDashboardContent({ username }: { username: string }
         {/* Welcome Banner */}
         <div className="relative overflow-hidden w-full xl:w-100 h-35 shrink-0 group rounded-lg border-none shadow-none p-0">
           <img
-            src="/src/assets/dashboard_banner.png"
+            src={dashboardBannerImg}
             alt="Banner"
             className="absolute inset-0 w-full h-full object-cover rounded-lg transition-transform duration-700 group-hover:scale-105"
           />

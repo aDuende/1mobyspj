@@ -1,5 +1,6 @@
 import { SidebarProvider } from "../components/ui/sidebar";
 import { AppSidebar } from "../app-sidebar";
+import dashboardBannerImg from "../assets/dashboard_banner.png";
 import LanguageSelector from "../components/LanguageSelector";
 import AppearanceSelector from "../components/AppearanceSelector";
 import AlertSelector from "../components/AlertSelector";
@@ -230,7 +231,7 @@ function ManagerDashboardContent({ username }: { username: string }) {
         {/* Welcome Banner */}
         <div className="relative overflow-hidden w-full xl:w-[400px] h-[140px] shrink-0 group rounded-lg p-0">
           <img
-            src="/src/assets/dashboard_banner.png"
+            src={dashboardBannerImg}
             alt="Sunrise"
             className="absolute inset-0 w-full h-full object-cover rounded-lg transition-transform duration-700 group-hover:scale-105"
           />

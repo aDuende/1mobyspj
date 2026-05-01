@@ -32,7 +32,7 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-gray-900">
       {/* Black Banner */}
       <div
         className="w-full h-52 relative z-0"
@@ -102,14 +102,14 @@ export default function ProfilePage() {
               }}
             >
               {!avatarImage && (
-                <span className="text-4xl font-bold text-gray-900 group-hover:opacity-50 transition-opacity">
+                <span className="text-4xl font-bold text-gray-900 dark:text-black group-hover:opacity-50 transition-opacity">
                   TC
                 </span>
               )}
               {/* Hover Overlay with Pencil Icon */}
               <div className="absolute inset-0 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                 <svg
-                  className="w-8 h-8 text-gray-700"
+                  className="w-8 h-8 text-gray-700 dark:text-gray-200"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -127,10 +127,10 @@ export default function ProfilePage() {
             {/* Name and Role */}
             <div className="mt-6">
               <div className="flex items-center gap-3 mb-0">
-                <h1 className="text-m font-bold text-gray-900 text-left">
+                <h1 className="text-m font-bold text-gray-900 dark:text-white text-left">
                   Tarin Chongprajert
                 </h1>
-                <div className="flex items-center gap-1.5 px-2 py-1  text-gray-600 text-sm rounded">
+                <div className="flex items-center gap-1.5 px-2 py-1 text-gray-600 dark:text-gray-300 text-sm rounded">
                   <svg
                     className="w-4 h-4"
                     fill="none"
@@ -147,7 +147,7 @@ export default function ProfilePage() {
                   <span>24/0/2026</span>
                 </div>
               </div>
-              <p className="text-m text-left text-gray-600">
+              <p className="text-m text-left text-gray-600 dark:text-gray-300">
                 Fullstack Developer
               </p>
             </div>
@@ -155,7 +155,7 @@ export default function ProfilePage() {
 
           {/* Right Side - Active Badge */}
           <div className="mt-16">
-            <div className="px-4 py-2 bg-green-100 text-green-700 rounded-full flex items-center gap-2">
+            <div className="px-4 py-2 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-full flex items-center gap-2">
               <div className="w-2 h-2 bg-green-500 rounded-full"></div>
               <span className="font-medium">Active</span>
             </div>
@@ -171,10 +171,10 @@ export default function ProfilePage() {
           <div className="lg:col-span-2 space-y-8">
             {/* About Me */}
             <div>
-              <h2 className="text-xl font-bold text-gray-900 mb-4 text-left">
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4 text-left">
                 About Me
               </h2>
-              <p className="text-gray-700 leading-relaxed text-left">
+              <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-left">
                 Passionate Fullstack Developer with expertise in building
                 scalable web applications. Focused on creating efficient,
                 user-friendly solutions using modern technologies. Strong
@@ -185,7 +185,7 @@ export default function ProfilePage() {
 
             {/* Skills & Competencies */}
             <div>
-              <h2 className="text-xl font-bold text-gray-900 mb-4 text-left">
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4 text-left">
                 Skills & Competencies
               </h2>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
@@ -199,14 +199,14 @@ export default function ProfilePage() {
                 ].map((skill, index) => (
                   <div key={index} className="space-y-2">
                     <div className="flex justify-between items-center">
-                      <span className="text-sm font-medium text-gray-700">
+                      <span className="text-sm font-medium text-gray-700 dark:text-gray-200">
                         {skill.name}
                       </span>
-                      <span className="text-xs text-gray-500">
+                      <span className="text-xs text-gray-500 dark:text-gray-400">
                         {skill.level}%
                       </span>
                     </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                       <div
                         className="bg-blue-600 h-2 rounded-full transition-all"
                         style={{ width: `${skill.level}%` }}
@@ -219,7 +219,7 @@ export default function ProfilePage() {
 
             {/* Recent Projects */}
             <div>
-              <h2 className="text-xl font-bold text-gray-900 mb-4 text-left">
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4 text-left">
                 Recent Projects
               </h2>
               <div className="space-y-4">
@@ -251,27 +251,27 @@ export default function ProfilePage() {
                     className="border-l-4 border-blue-500 pl-4 py-2"
                   >
                     <div className="flex items-start justify-between mb-2">
-                      <h3 className="font-semibold text-gray-900">
+                      <h3 className="font-semibold text-gray-900 dark:text-white">
                         {project.title}
                       </h3>
                       <span
                         className={`text-xs px-2 py-1 rounded-full ${
                           project.status === "Completed"
-                            ? "bg-green-100 text-green-700"
-                            : "bg-yellow-100 text-yellow-700"
+                            ? "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400"
+                            : "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400"
                         }`}
                       >
                         {project.status}
                       </span>
                     </div>
-                    <p className="text-sm text-gray-600 mb-2">
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
                       {project.description}
                     </p>
                     <div className="flex gap-2 flex-wrap">
                       {project.tech.map((tech, i) => (
                         <span
                           key={i}
-                          className="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded"
+                          className="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded"
                         >
                           {tech}
                         </span>
@@ -284,7 +284,7 @@ export default function ProfilePage() {
 
             {/* Certifications & Badges */}
             <div>
-              <h2 className="text-xl font-bold text-gray-900 mb-4 text-left">
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4 text-left">
                 Certifications & Badges
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -317,11 +317,11 @@ export default function ProfilePage() {
                   <div key={index} className="flex items-start gap-3 p-3">
                     <div className="text-3xl">{cert.icon}</div>
                     <div className="flex-1">
-                      <h3 className="font-semibold text-gray-900 text-sm">
+                      <h3 className="font-semibold text-gray-900 dark:text-white text-sm">
                         {cert.title}
                       </h3>
-                      <p className="text-xs text-gray-600">{cert.issuer}</p>
-                      <p className="text-xs text-gray-500 mt-1">{cert.date}</p>
+                      <p className="text-xs text-gray-600 dark:text-gray-400">{cert.issuer}</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">{cert.date}</p>
                     </div>
                   </div>
                 ))}
@@ -331,16 +331,16 @@ export default function ProfilePage() {
 
           {/* Right Side - Calendar */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg p-6 border border-gray-200">
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-700">
               {/* Calendar Header */}
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg font-semibold text-gray-900">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                   April 2026
                 </h3>
                 <div className="flex gap-2">
-                  <button className="w-8 h-8 rounded border border-gray-300 flex items-center justify-center hover:bg-gray-100 transition-colors">
+                  <button className="w-8 h-8 rounded border border-gray-300 dark:border-gray-600 flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
                     <svg
-                      className="w-4 h-4 text-gray-600"
+                      className="w-4 h-4 text-gray-600 dark:text-gray-300"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -353,9 +353,9 @@ export default function ProfilePage() {
                       />
                     </svg>
                   </button>
-                  <button className="w-8 h-8 rounded border border-gray-300 flex items-center justify-center hover:bg-gray-100 transition-colors">
+                  <button className="w-8 h-8 rounded border border-gray-300 dark:border-gray-600 flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
                     <svg
-                      className="w-4 h-4 text-gray-600"
+                      className="w-4 h-4 text-gray-600 dark:text-gray-300"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -378,7 +378,7 @@ export default function ProfilePage() {
                   {["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"].map((day) => (
                     <div
                       key={day}
-                      className="text-center text-xs font-medium text-gray-500"
+                      className="text-center text-xs font-medium text-gray-500 dark:text-gray-400"
                     >
                       {day}
                     </div>
@@ -402,8 +402,8 @@ export default function ProfilePage() {
                           date === 24
                             ? "bg-blue-600 text-white font-bold"
                             : date < 24
-                              ? "text-gray-400"
-                              : "text-gray-900 hover:bg-gray-100 cursor-pointer"
+                              ? "text-gray-400 dark:text-gray-600"
+                              : "text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
                         }`}
                       >
                         {date}
