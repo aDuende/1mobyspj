@@ -3,8 +3,19 @@
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/geist";
 
-html, body {
-  background: #0b3c9f;
+@layer base {
+  :root {
+    --moby-blue: #006bff;
+    --moby-selection: #006bff;
+    --moby-selection-bg: rgba(0, 107, 255, 0.15);
+  }
+
+  /* Focus Override */
+  :focus-visible {
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(0, 107, 255, 0.25) !important;
+    border-color: #006bff !important;
+  }
 }
 
 @font-face {
@@ -159,8 +170,7 @@ html, body {
     --accent-border: rgba(192, 132, 252, 0.5);
     --social-bg: rgba(47, 48, 58, 0.5);
     --shadow:
-      rgba(0, 0, 0, 0.42) 0 10px 15px -3px,
-      rgba(0, 0, 0, 0.24) 0 4px 6px -2px;
+      rgba(0, 0, 0, 0.42) 0 10px 15px -3px, rgba(0, 0, 0, 0.24) 0 4px 6px -2px;
   }
 
   #social .button-icon {
@@ -427,4 +437,3 @@ body,
 .dark .radar-chart .recharts-polar-angle-axis text {
   fill: #ffffff;
 }
-

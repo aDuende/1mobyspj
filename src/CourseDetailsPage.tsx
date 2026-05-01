@@ -95,7 +95,10 @@ export default function CourseDetailsPage({
                       className="absolute inset-0 w-full h-full flex items-center justify-center bg-black/30 hover:bg-black/40 transition-all duration-300 group cursor-pointer"
                     >
                       <div className="w-20 h-20 rounded-full bg-white/90 flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform duration-300">
-                        <Play className="w-8 h-8 text-[#006bff] ml-1" fill="currentColor" />
+                        <Play
+                          className="w-8 h-8 text-[#006bff] ml-1"
+                          fill="currentColor"
+                        />
                       </div>
                     </button>
                   </div>
@@ -297,13 +300,15 @@ export default function CourseDetailsPage({
                 </div>
               </div>
 
-              <button className="w-full mt-6 py-3 px-4 rounded-xl bg-[#006bff] hover:bg-[#0056cc] text-white font-semibold text-[14px] transition-all duration-300 active:scale-95 shadow-lg shadow-blue-500/30"
+              <button
+                className="w-full mt-6 py-3 px-4 rounded-xl bg-[#006bff] hover:bg-[#0056cc] text-white font-semibold text-[14px] transition-all duration-300 active:scale-95 shadow-lg shadow-blue-500/30"
                 style={{ fontFamily: '"Geometrica", sans-serif' }}
               >
                 Start Learning
               </button>
 
-              <button className="w-full mt-3 py-3 px-4 rounded-xl bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-900 dark:text-white font-semibold text-[14px] transition-all duration-300 active:scale-95"
+              <button
+                className="w-full mt-3 py-3 px-4 rounded-xl bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-900 dark:text-white font-semibold text-[14px] transition-all duration-300 active:scale-95"
                 style={{ fontFamily: '"Geometrica", sans-serif' }}
               >
                 Add to Watchlist

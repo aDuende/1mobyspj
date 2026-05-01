@@ -13,7 +13,9 @@ interface Assessment {
 }
 
 function AssessmentPage() {
-  const [activeTab, setActiveTab] = useState<"upcoming" | "pastdue" | "completed">("upcoming");
+  const [activeTab, setActiveTab] = useState<
+    "upcoming" | "pastdue" | "completed"
+  >("upcoming");
 
   // Mock assessment data
   const assessments: Assessment[] = [
@@ -22,14 +24,14 @@ function AssessmentPage() {
       title: "Self Assessment",
       description: "Assign by jadi.vort",
       dueDate: "2026-05-06",
-      status: "pending"
+      status: "pending",
     },
     {
       id: "2",
       title: "February 2026 Test",
       description: "Assign 2 Feb by honkh.arc",
       dueDate: "2026-02-05",
-      status: "overdue"
+      status: "overdue",
     },
     {
       id: "3",
@@ -37,7 +39,7 @@ function AssessmentPage() {
       description: "Submitted on 4 Feb 2026 at 1:04 pm",
       dueDate: "2026-02-04",
       submittedDate: "2026-02-04",
-      status: "completed"
+      status: "completed",
     },
     {
       id: "4",
@@ -45,18 +47,18 @@ function AssessmentPage() {
       description: "Submitted on 15 Jan 2026 at 2:30 pm",
       dueDate: "2026-01-15",
       submittedDate: "2026-01-15",
-      status: "completed"
-    }
+      status: "completed",
+    },
   ];
 
   const getFilteredAssessments = () => {
     switch (activeTab) {
       case "upcoming":
-        return assessments.filter(a => a.status === "pending");
+        return assessments.filter((a) => a.status === "pending");
       case "pastdue":
-        return assessments.filter(a => a.status === "overdue");
+        return assessments.filter((a) => a.status === "overdue");
       case "completed":
-        return assessments.filter(a => a.status === "completed");
+        return assessments.filter((a) => a.status === "completed");
       default:
         return assessments;
     }
@@ -65,11 +67,11 @@ function AssessmentPage() {
   const getTabCount = (tab: "upcoming" | "pastdue" | "completed") => {
     switch (tab) {
       case "upcoming":
-        return assessments.filter(a => a.status === "pending").length;
+        return assessments.filter((a) => a.status === "pending").length;
       case "pastdue":
-        return assessments.filter(a => a.status === "overdue").length;
+        return assessments.filter((a) => a.status === "overdue").length;
       case "completed":
-        return assessments.filter(a => a.status === "completed").length;
+        return assessments.filter((a) => a.status === "completed").length;
       default:
         return 0;
     }
@@ -78,7 +80,7 @@ function AssessmentPage() {
   const filteredAssessments = getFilteredAssessments();
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-gray-50">
       <div className="w-full">
         <div className="mb-6 px-8">
           <div className="flex gap-1 border-b border-gray-200">
@@ -127,25 +129,36 @@ function AssessmentPage() {
                 <h3 className="text-base font-semibold text-gray-900 mb-1">
                   No upcoming assessments
                 </h3>
-                <p className="text-sm text-gray-500">
-                  You're all caught up!
-                </p>
+                <p className="text-sm text-gray-500">You're all caught up!</p>
               </div>
             ) : (
               <div className="space-y-6">
                 {filteredAssessments.map((assessment) => {
                   const dueDate = new Date(assessment.dueDate);
                   const day = dueDate.getDate();
-                  const month = dueDate.toLocaleDateString("en-US", { month: "short" });
-                  const weekday = dueDate.toLocaleDateString("en-US", { weekday: "long" });
-                  const ordinal = day === 1 || day === 21 || day === 31 ? "st" : 
-                                  day === 2 || day === 22 ? "nd" : 
-                                  day === 3 || day === 23 ? "rd" : "th";
-                  
+                  const month = dueDate.toLocaleDateString("en-US", {
+                    month: "short",
+                  });
+                  const weekday = dueDate.toLocaleDateString("en-US", {
+                    weekday: "long",
+                  });
+                  const ordinal =
+                    day === 1 || day === 21 || day === 31
+                      ? "st"
+                      : day === 2 || day === 22
+                        ? "nd"
+                        : day === 3 || day === 23
+                          ? "rd"
+                          : "th";
+
                   return (
                     <div key={assessment.id}>
                       <h3 className="text-lg font-semibold text-gray-900 mb-3 text-left">
-                        {month} {day}{ordinal} <span className="text-gray-500 font-normal">{weekday}</span>
+                        {month} {day}
+                        {ordinal}{" "}
+                        <span className="text-gray-500 font-normal">
+                          {weekday}
+                        </span>
                       </h3>
                       <Card className="p-6 hover:shadow-md transition-shadow">
                         <div className="flex items-start gap-4">
@@ -189,16 +202,29 @@ function AssessmentPage() {
                 {filteredAssessments.map((assessment) => {
                   const dueDate = new Date(assessment.dueDate);
                   const day = dueDate.getDate();
-                  const month = dueDate.toLocaleDateString("en-US", { month: "short" });
-                  const weekday = dueDate.toLocaleDateString("en-US", { weekday: "long" });
-                  const ordinal = day === 1 || day === 21 || day === 31 ? "st" : 
-                                  day === 2 || day === 22 ? "nd" : 
-                                  day === 3 || day === 23 ? "rd" : "th";
-                  
+                  const month = dueDate.toLocaleDateString("en-US", {
+                    month: "short",
+                  });
+                  const weekday = dueDate.toLocaleDateString("en-US", {
+                    weekday: "long",
+                  });
+                  const ordinal =
+                    day === 1 || day === 21 || day === 31
+                      ? "st"
+                      : day === 2 || day === 22
+                        ? "nd"
+                        : day === 3 || day === 23
+                          ? "rd"
+                          : "th";
+
                   return (
                     <div key={assessment.id}>
                       <h3 className="text-lg font-semibold text-gray-900 mb-3 text-left">
-                        {month} {day}{ordinal} <span className="text-gray-500 font-normal">{weekday}</span>
+                        {month} {day}
+                        {ordinal}{" "}
+                        <span className="text-gray-500 font-normal">
+                          {weekday}
+                        </span>
                       </h3>
                       <Card className="p-6 hover:shadow-md transition-shadow">
                         <div className="flex items-start gap-4">
@@ -240,18 +266,33 @@ function AssessmentPage() {
             ) : (
               <div className="space-y-6">
                 {filteredAssessments.map((assessment) => {
-                  const submittedDate = assessment.submittedDate ? new Date(assessment.submittedDate) : new Date(assessment.dueDate);
+                  const submittedDate = assessment.submittedDate
+                    ? new Date(assessment.submittedDate)
+                    : new Date(assessment.dueDate);
                   const day = submittedDate.getDate();
-                  const month = submittedDate.toLocaleDateString("en-US", { month: "short" });
-                  const weekday = submittedDate.toLocaleDateString("en-US", { weekday: "long" });
-                  const ordinal = day === 1 || day === 21 || day === 31 ? "st" : 
-                                  day === 2 || day === 22 ? "nd" : 
-                                  day === 3 || day === 23 ? "rd" : "th";
-                  
+                  const month = submittedDate.toLocaleDateString("en-US", {
+                    month: "short",
+                  });
+                  const weekday = submittedDate.toLocaleDateString("en-US", {
+                    weekday: "long",
+                  });
+                  const ordinal =
+                    day === 1 || day === 21 || day === 31
+                      ? "st"
+                      : day === 2 || day === 22
+                        ? "nd"
+                        : day === 3 || day === 23
+                          ? "rd"
+                          : "th";
+
                   return (
                     <div key={assessment.id}>
                       <h3 className="text-lg font-semibold text-gray-900 mb-3 text-left">
-                        {month} {day}{ordinal} <span className="text-gray-500 font-normal">{weekday}</span>
+                        {month} {day}
+                        {ordinal}{" "}
+                        <span className="text-gray-500 font-normal">
+                          {weekday}
+                        </span>
                       </h3>
                       <Card className="p-6 hover:shadow-md transition-shadow">
                         <div className="flex items-start gap-4">

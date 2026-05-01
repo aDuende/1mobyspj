@@ -22,10 +22,10 @@ const CORE_SECTION: CompetencySection = {
   label: "Core",
   badgeColor: "bg-purple-100 text-purple-600",
   rows: [
-    { name: "Create Impact",  selfScore: 0 },
+    { name: "Create Impact", selfScore: 0 },
     { name: "Take Ownership", selfScore: 0 },
-    { name: "Adaptive",       selfScore: 0 },
-    { name: "Collaboration",  selfScore: 0 },
+    { name: "Adaptive", selfScore: 0 },
+    { name: "Collaboration", selfScore: 0 },
   ],
 };
 
@@ -35,8 +35,8 @@ const MANAGERIAL_SECTION: CompetencySection = {
   rows: [
     { name: "Process", selfScore: 0 },
     { name: "Purpose", selfScore: 0 },
-    { name: "People",  selfScore: 0 },
-    { name: "Result",  selfScore: 0 },
+    { name: "People", selfScore: 0 },
+    { name: "Result", selfScore: 0 },
   ],
 };
 
@@ -44,20 +44,27 @@ const FUNCTIONAL_SECTION: CompetencySection = {
   label: "Functional",
   badgeColor: "bg-blue-100 text-blue-600",
   rows: [
-    { name: "FC01 · Data Analysis",             selfScore: 0 },
+    { name: "FC01 · Data Analysis", selfScore: 0 },
     { name: "FC02 · Stakeholder Communication", selfScore: 0 },
-    { name: "FC03 · Strategic Thinking",        selfScore: 0 },
-    { name: "FC04 · Project Execution",         selfScore: 0 },
-    { name: "FC05 · Process Improvement",       selfScore: 0 },
+    { name: "FC03 · Strategic Thinking", selfScore: 0 },
+    { name: "FC04 · Project Execution", selfScore: 0 },
+    { name: "FC05 · Process Improvement", selfScore: 0 },
   ],
 };
 
 // ─── Dot Rating ───────────────────────────────────────────────────────────────
 
 function DotRating({
-  value, max = 5, interactive = false, color = "#fc4c02", onClick,
+  value,
+  max = 5,
+  interactive = false,
+  color = "#fc4c02",
+  onClick,
 }: {
-  value: number; max?: number; interactive?: boolean; color?: string;
+  value: number;
+  max?: number;
+  interactive?: boolean;
+  color?: string;
   onClick?: (v: number) => void;
 }) {
   const [hovered, setHovered] = useState<number | null>(null);
@@ -76,7 +83,9 @@ function DotRating({
             background:
               i < display
                 ? interactive && hovered !== null
-                  ? i < hovered ? "#fc4c02" : "#e5e7eb"
+                  ? i < hovered
+                    ? "#fc4c02"
+                    : "#e5e7eb"
                   : color
                 : "#e5e7eb",
           }}
@@ -88,13 +97,23 @@ function DotRating({
 
 // ─── Sub-page effect (notifies dashboard breadcrumb) ─────────────────────────
 
-function SubPageEffect({ name, onBack }: { name: string; onBack?: () => void }) {
+function SubPageEffect({
+  name,
+  onBack,
+}: {
+  name: string;
+  onBack?: () => void;
+}) {
   useEffect(() => {
-    window.dispatchEvent(new CustomEvent("assessment:subpage", { detail: { page: name } }));
+    window.dispatchEvent(
+      new CustomEvent("assessment:subpage", { detail: { page: name } }),
+    );
     const handleBack = () => onBack?.();
     window.addEventListener("assessment:back", handleBack);
     return () => {
-      window.dispatchEvent(new CustomEvent("assessment:subpage", { detail: { page: null } }));
+      window.dispatchEvent(
+        new CustomEvent("assessment:subpage", { detail: { page: null } }),
+      );
       window.removeEventListener("assessment:back", handleBack);
     };
   }, [name]); // eslint-disable-line
@@ -120,41 +139,48 @@ export default function SelfAssessmentPage({
       return [CORE_SECTION, MANAGERIAL_SECTION, FUNCTIONAL_SECTION];
     }
     return base;
-  })().map(s => JSON.parse(JSON.stringify(s)));
+  })().map((s) => JSON.parse(JSON.stringify(s)));
 
-  const [sections, setSections] = useState<CompetencySection[]>(initialSections);
+  const [sections, setSections] =
+    useState<CompetencySection[]>(initialSections);
   const [comments, setComments] = useState<string[]>([""]);
   const [submitted, setSubmitted] = useState(false);
 
   const setScore = (sIdx: number, rIdx: number, score: number) => {
-    setSections(prev => {
+    setSections((prev) => {
       const next: CompetencySection[] = JSON.parse(JSON.stringify(prev));
       next[sIdx].rows[rIdx].selfScore = score;
       return next;
     });
   };
 
-  const addComment    = () => setComments(c => [...c, ""]);
-  const removeComment = (i: number) => setComments(c => c.filter((_, idx) => idx !== i));
+  const addComment = () => setComments((c) => [...c, ""]);
+  const removeComment = (i: number) =>
+    setComments((c) => c.filter((_, idx) => idx !== i));
   const updateComment = (i: number, val: string) =>
-    setComments(c => c.map((v, idx) => (idx === i ? val : v)));
+    setComments((c) => c.map((v, idx) => (idx === i ? val : v)));
 
   const handleSubmit = () => setSubmitted(true);
 
   // ── Submitted state ──
   if (submitted) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4" style={GEO}>
+      <div
+        className="flex flex-col items-center justify-center min-h-[60vh] gap-4"
+        style={GEO}
+      >
         <div className="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center animate-bounce">
           <CheckCircle2 className="w-9 h-9 text-emerald-500" />
         </div>
-        <p className="text-[18px] font-semibold text-gray-800 dark:text-white" style={GEO}>
+        <p
+          className="text-[18px] font-semibold text-gray-800 dark:text-white"
+          style={GEO}
+        >
           Self Assessment submitted!
         </p>
         <p className="text-[13px] text-gray-400" style={GEO}>
           Your responses have been recorded.
         </p>
-
       </div>
     );
   }
@@ -162,13 +188,15 @@ export default function SelfAssessmentPage({
   // ── Form ──
   return (
     <div className="p-6 bg-[#f8fafc] dark:bg-gray-900 min-h-screen" style={GEO}>
-
       {/* Notify dashboard of sub-page */}
       <SubPageEffect name={assessmentTitle} onBack={onBack} />
 
       {/* Header */}
       <div className="mb-6 text-left">
-        <h1 className="text-[20px] font-semibold text-[#08060d] dark:text-white mb-1" style={GEO}>
+        <h1
+          className="text-[20px] font-semibold text-[#08060d] dark:text-white mb-1"
+          style={GEO}
+        >
           {assessmentTitle}
         </h1>
         <p className="text-[13px] text-gray-400 dark:text-gray-500" style={GEO}>
@@ -213,7 +241,7 @@ export default function SelfAssessmentPage({
             <div className="rounded-2xl bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-white/5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] overflow-hidden">
               {/* Header */}
               <div className="grid grid-cols-[1fr_200px] gap-2 px-5 py-3 border-b border-gray-100 dark:border-white/5 bg-gray-50/60 dark:bg-gray-900/30">
-                {["Competency", "Self"].map(h => (
+                {["Competency", "Self"].map((h) => (
                   <span
                     key={h}
                     className="text-[11px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide text-left"
@@ -266,7 +294,10 @@ export default function SelfAssessmentPage({
       {/* Comments */}
       <div className="mb-8">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-[16px] font-semibold text-gray-900 dark:text-white" style={GEO}>
+          <h3
+            className="text-[16px] font-semibold text-gray-900 dark:text-white"
+            style={GEO}
+          >
             Self-Reflection Comments
           </h3>
           <button
@@ -303,7 +334,7 @@ export default function SelfAssessmentPage({
               </div>
               <textarea
                 value={comment}
-                onChange={e => updateComment(i, e.target.value)}
+                onChange={(e) => updateComment(i, e.target.value)}
                 placeholder="Write your self-reflection here…"
                 rows={3}
                 className="w-full px-4 py-3 text-[13px] text-gray-700 dark:text-gray-200 bg-transparent placeholder:text-gray-300 dark:placeholder:text-gray-600 resize-none focus:outline-none"

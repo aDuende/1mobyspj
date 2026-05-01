@@ -83,23 +83,27 @@ function Main() {
     };
   }, []);
 
-  // Render the destination page underneath so loading overlay slides away to reveal it
+  // Route to appropriate dashboard based on user role
   const renderContent = () => {
     if (userRole === "employee") {
       return <EmployeeDashboard onLogout={handleLogout} username={username} />;
     }
+
     if (userRole === "manager") {
       return <ManagerDashboard onLogout={handleLogout} username={username} />;
     }
+
     if (userRole === "admin") {
       return <AdminDashboard onLogout={handleLogout} username={username} />;
     }
+
     return <LoginPage onLogin={handleLogin} />;
   };
 
   return (
     <>
       {renderContent()}
+
       {isLoading && <LoadingPage onLoadingComplete={handleLoadingComplete} />}
     </>
   );

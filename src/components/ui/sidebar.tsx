@@ -236,7 +236,8 @@ function SidebarTrigger({
   onClick,
   ...props
 }: React.ComponentProps<typeof Button>) {
-  const { toggleSidebar } = useSidebar();
+  const { toggleSidebar, open, openMobile, isMobile } = useSidebar();
+  const isOpen = isMobile ? openMobile : open;
 
   return (
     <Button
@@ -245,11 +246,10 @@ function SidebarTrigger({
       variant="ghost"
       className={cn(
         "flex items-center justify-center w-11 h-11 rounded-full -ml-2",
-        "transition-all duration-300 active:scale-[0.96] cursor-pointer border",
+        "transition-all duration-300 active:scale-[0.96]",
+        isOpen ? "cursor-w-resize" : "cursor-e-resize",
         "bg-transparent hover:bg-white dark:hover:bg-gray-800",
         "text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white",
-        "border-transparent hover:border-gray-200/60 dark:hover:border-transparent",
-        "hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)]",
         className,
       )}
       onClick={(event) => {
@@ -454,7 +454,7 @@ function SidebarMenuItem({ className, ...props }: React.ComponentProps<"li">) {
 }
 
 const sidebarMenuButtonVariants = cva(
-  "peer/menu-button group/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm ring-sidebar-ring outline-hidden transition-[width,height,padding] group-has-data-[sidebar=menu-action]/menu-item:pr-8 group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2! hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-open:hover:bg-sidebar-accent data-open:hover:text-sidebar-accent-foreground data-active:bg-sidebar-accent data-active:font-medium data-active:text-sidebar-accent-foreground [&_svg]:size-4 [&_svg]:shrink-0 [&>span:last-child]:truncate",
+  "peer/menu-button group/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm ring-sidebar-ring outline-hidden transition-[width,height,padding] group-has-data-[sidebar=menu-action]/menu-item:pr-8 group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2! hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-open:hover:bg-sidebar-accent data-open:hover:text-sidebar-accent-foreground data-active:bg-sidebar-accent data-active:font-normal data-active:text-sidebar-accent-foreground [&_svg]:size-5 [&_svg]:shrink-0 [&>span:last-child]:truncate",
   {
     variants: {
       variant: {

@@ -8,18 +8,20 @@ type StatusFilter = "All" | "Pending" | "In Progress" | "Resolved";
 
 function AdminHelpPage() {
   const [selectedComplaint, setSelectedComplaint] = useState<Complaint | null>(
-    null
+    null,
   );
-  const [complaints, setComplaints] = useState<Complaint[]>([]);
+  const [complaints, setComplaints] = useState<Complaint[]>(() =>
+    complaintsStore.getAll(),
+  );
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("All");
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
-    setComplaints(complaintsStore.getAll());
-  }, []);
-
-  useEffect(() => {
-    window.dispatchEvent(new CustomEvent("help:subpage", { detail: { page: selectedComplaint ? "Details" : null } }));
+    window.dispatchEvent(
+      new CustomEvent("help:subpage", {
+        detail: { page: selectedComplaint ? "Details" : null },
+      }),
+    );
   }, [selectedComplaint]);
 
   useEffect(() => {
@@ -107,7 +109,6 @@ function AdminHelpPage() {
     return (
       <div className="min-h-screen bg-[#f8fafc] px-6 pb-6 pt-3 text-foreground dark:bg-gray-900">
         <div className="mx-auto max-w-6xl space-y-4">
-
           <HistoryViewDetailsPage
             complaint={selectedComplaint}
             onBack={() => {
@@ -191,7 +192,7 @@ function AdminHelpPage() {
                 <div className="flex items-center gap-4">
                   <div
                     className={`h-2.5 w-2.5 shrink-0 rounded-full ${getStatusDotColor(
-                      complaint.status
+                      complaint.status,
                     )}`}
                   />
 
@@ -217,7 +218,7 @@ function AdminHelpPage() {
                     </div>
                     <span
                       className={`inline-flex rounded-sm px-2 py-1 text-xs font-medium ${getStatusColor(
-                        complaint.status
+                        complaint.status,
                       )}`}
                     >
                       {complaint.status}

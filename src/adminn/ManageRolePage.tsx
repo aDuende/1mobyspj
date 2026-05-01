@@ -42,21 +42,19 @@ function ManageRolePage() {
 
   // Fetch users from backend
   useEffect(() => {
-    fetchUsers();
+    (async () => {
+      try {
+        const response = await fetch(`${API_URL}/users`);
+        const data = await response.json();
+        setUsers(data && data.length > 0 ? data : MOCK_USERS);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+        setUsers(MOCK_USERS);
+      } finally {
+        setLoading(false);
+      }
+    })();
   }, []);
-
-  const fetchUsers = async () => {
-    try {
-      const response = await fetch(`${API_URL}/users`);
-      const data = await response.json();
-      setUsers(data && data.length > 0 ? data : MOCK_USERS);
-    } catch (error) {
-      console.error("Error fetching users:", error);
-      setUsers(MOCK_USERS);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const totalUsers = users.length;
   const unassignedRole = users.filter((u) => !u.role || u.role === "").length;
@@ -68,8 +66,6 @@ function ManageRolePage() {
       user.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
       user.department.toLowerCase().includes(searchQuery.toLowerCase()),
   );
-
-  
 
   const handleRemoveUser = async (userId: number) => {
     if (!confirm("Are you sure you want to remove this user?")) return;
@@ -109,7 +105,10 @@ function ManageRolePage() {
             {/* Stats Cards skeleton */}
             <div className="flex gap-4 flex-1">
               {[1, 2, 3].map((i) => (
-                <div key={i} className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm flex-1 space-y-2">
+                <div
+                  key={i}
+                  className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm flex-1 space-y-2"
+                >
                   <Skeleton className="h-4 w-24" />
                   <Skeleton className="h-8 w-12" />
                 </div>
@@ -137,9 +136,15 @@ function ManageRolePage() {
                     <Skeleton className="h-3 w-40" />
                   </div>
                 </div>
-                <Skeleton className="h-5 w-20 rounded-full" style={{ flex: 1 }} />
+                <Skeleton
+                  className="h-5 w-20 rounded-full"
+                  style={{ flex: 1 }}
+                />
                 <Skeleton className="h-4 w-24" style={{ flex: 1.5 }} />
-                <Skeleton className="h-5 w-16 rounded-full" style={{ flex: 1 }} />
+                <Skeleton
+                  className="h-5 w-16 rounded-full"
+                  style={{ flex: 1 }}
+                />
                 <div className="flex gap-2" style={{ flex: 1 }}>
                   <Skeleton className="h-8 w-8 rounded" />
                   <Skeleton className="h-8 w-8 rounded" />
@@ -328,7 +333,6 @@ function ManageRolePage() {
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center justify-center gap-3">
-                        
                         <button
                           onClick={() => handleRemoveUser(user.id)}
                           className="text-sm text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 flex items-center gap-1"

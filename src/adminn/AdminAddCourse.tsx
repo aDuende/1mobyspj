@@ -1,5 +1,13 @@
 import { useState } from "react";
-import { Upload, Trash2, Plus, Film, AlignJustify, FileText, Play } from "lucide-react";
+import {
+  Upload,
+  Trash2,
+  Plus,
+  Film,
+  AlignJustify,
+  FileText,
+  Play,
+} from "lucide-react";
 
 // ── Types ──────────────────────────────────────────────────────────────────────
 type CourseType = "quick-bites" | "full-lesson" | "series" | "reading-hub";
@@ -51,7 +59,10 @@ const COMPETENCIES: Record<string, { code: string; name: string }[]> = {
   ],
 };
 
-const COURSE_TYPE_META: Record<CourseType, { label: string; sub: string; tab: string; placeholder: string }> = {
+const COURSE_TYPE_META: Record<
+  CourseType,
+  { label: string; sub: string; tab: string; placeholder: string }
+> = {
   "quick-bites": {
     label: "Quick Bites",
     sub: "≤ 60 SEC · 9:16 · SINGLE CLIP",
@@ -99,14 +110,24 @@ export default function AdminAddCourse() {
 
   // Quick Bites state
   const [qbFiles, setQbFiles] = useState<MockFile[]>([
-    { id: "qb1", name: "standup-tip-final.mp4", duration: "0:48", resolution: "1080×1920" },
+    {
+      id: "qb1",
+      name: "standup-tip-final.mp4",
+      duration: "0:48",
+      resolution: "1080×1920",
+    },
   ]);
   const [qbCoverFrame, setQbCoverFrame] = useState("Auto-pick from video");
   const [qbCaptions, setQbCaptions] = useState("Generate automatically");
 
   // Full Lesson state
   const [flFiles, setFlFiles] = useState<MockFile[]>([
-    { id: "fl1", name: "insight-to-recommendation.mp4", duration: "24:10", resolution: "1920×1080" },
+    {
+      id: "fl1",
+      name: "insight-to-recommendation.mp4",
+      duration: "24:10",
+      resolution: "1920×1080",
+    },
   ]);
   const [flCoverFrame, setFlCoverFrame] = useState("Auto-pick from video");
   const [flCaptions, setFlCaptions] = useState("Generate automatically");
@@ -119,7 +140,11 @@ export default function AdminAddCourse() {
       title: "Why stakeholders matter",
       videos: [
         { id: "v1", name: "Intro to stakeholder maps.mp4", duration: "6:12" },
-        { id: "v2", name: "Identifying primary stakeholders.mp4", duration: "8:01" },
+        {
+          id: "v2",
+          name: "Identifying primary stakeholders.mp4",
+          duration: "8:01",
+        },
       ],
     },
     {
@@ -144,9 +169,27 @@ export default function AdminAddCourse() {
 
   // Reading Hub state
   const [pdfFiles, setPdfFiles] = useState<MockFile[]>([
-    { id: "p1", name: "OKR Fundamentals.pdf", pages: 32, size: "1.4 MB", order: 1 },
-    { id: "p2", name: "Writing measurable key results.pdf", pages: 18, size: "820 KB", order: 2 },
-    { id: "p3", name: "Common OKR pitfalls.pdf", pages: 34, size: "2.1 MB", order: 3 },
+    {
+      id: "p1",
+      name: "OKR Fundamentals.pdf",
+      pages: 32,
+      size: "1.4 MB",
+      order: 1,
+    },
+    {
+      id: "p2",
+      name: "Writing measurable key results.pdf",
+      pages: 18,
+      size: "820 KB",
+      order: 2,
+    },
+    {
+      id: "p3",
+      name: "Common OKR pitfalls.pdf",
+      pages: 34,
+      size: "2.1 MB",
+      order: 3,
+    },
   ]);
 
   const meta = COURSE_TYPE_META[courseType];
@@ -155,48 +198,80 @@ export default function AdminAddCourse() {
   const estReadingMin = Math.round(totalPdfPages * 1.5);
 
   const toggleTag = (code: string) =>
-    setTagged((prev) => (prev.includes(code) ? prev.filter((c) => c !== code) : [...prev, code]));
+    setTagged((prev) =>
+      prev.includes(code) ? prev.filter((c) => c !== code) : [...prev, code],
+    );
 
   const addModule = () => {
     const idx = modules.length + 1;
     setModules((prev) => [
       ...prev,
-      { id: `m${Date.now()}`, label: `M0${idx}`, title: `Module ${idx}`, videos: [] },
+      {
+        id: `m${Date.now()}`,
+        label: `M0${idx}`,
+        title: `Module ${idx}`,
+        videos: [],
+      },
     ]);
   };
-  const removeModule = (id: string) => setModules((prev) => prev.filter((m) => m.id !== id));
+  const removeModule = (id: string) =>
+    setModules((prev) => prev.filter((m) => m.id !== id));
   const addVideo = (moduleId: string) =>
     setModules((prev) =>
       prev.map((m) =>
         m.id === moduleId
-          ? { ...m, videos: [...m.videos, { id: `v${Date.now()}`, name: "new-video.mp4", duration: "0:00" }] }
-          : m
-      )
+          ? {
+              ...m,
+              videos: [
+                ...m.videos,
+                {
+                  id: `v${Date.now()}`,
+                  name: "new-video.mp4",
+                  duration: "0:00",
+                },
+              ],
+            }
+          : m,
+      ),
     );
   const removeVideo = (moduleId: string, videoId: string) =>
     setModules((prev) =>
       prev.map((m) =>
-        m.id === moduleId ? { ...m, videos: m.videos.filter((v) => v.id !== videoId) } : m
-      )
+        m.id === moduleId
+          ? { ...m, videos: m.videos.filter((v) => v.id !== videoId) }
+          : m,
+      ),
     );
   const updateModuleTitle = (id: string, value: string) =>
-    setModules((prev) => prev.map((m) => (m.id === id ? { ...m, title: value } : m)));
+    setModules((prev) =>
+      prev.map((m) => (m.id === id ? { ...m, title: value } : m)),
+    );
 
   const audienceLabel =
-    audience === "everyone" ? "All" : audience === "managers" ? "Managers" : "Specific";
+    audience === "everyone"
+      ? "All"
+      : audience === "managers"
+        ? "Managers"
+        : "Specific";
 
   // ── Render ───────────────────────────────────────────────────────────────────
   return (
     <div style={fontGeo} className="min-h-full bg-gray-50 p-6">
       <div className="max-w-[1200px] mx-auto space-y-6">
-
         {/* ── Course Type ───────────────────────────────────────────────────── */}
         <div>
           <p className="text-[10px] tracking-widest text-gray-400 font-semibold uppercase mb-3">
             Course Type
           </p>
           <div className="grid grid-cols-4 gap-3">
-            {(["quick-bites", "full-lesson", "series", "reading-hub"] as CourseType[]).map((type) => {
+            {(
+              [
+                "quick-bites",
+                "full-lesson",
+                "series",
+                "reading-hub",
+              ] as CourseType[]
+            ).map((type) => {
               const m = COURSE_TYPE_META[type];
               const active = courseType === type;
               return (
@@ -204,12 +279,16 @@ export default function AdminAddCourse() {
                   key={type}
                   onClick={() => setCourseType(type)}
                   className={`flex items-center gap-3 px-4 py-3 rounded-xl border-2 text-left transition-all bg-white ${
-                    active ? "border-gray-800 shadow-sm" : "border-gray-200 hover:border-gray-300"
+                    active
+                      ? "border-gray-800 shadow-sm"
+                      : "border-gray-200 hover:border-gray-300"
                   }`}
                 >
                   <div
                     className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors ${
-                      active ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-500"
+                      active
+                        ? "bg-gray-900 text-white"
+                        : "bg-gray-100 text-gray-500"
                     }`}
                   >
                     {type === "quick-bites" && <Play size={15} />}
@@ -218,10 +297,14 @@ export default function AdminAddCourse() {
                     {type === "reading-hub" && <FileText size={15} />}
                   </div>
                   <div>
-                    <p className={`text-sm font-semibold ${active ? "text-gray-900" : "text-gray-700"}`}>
+                    <p
+                      className={`text-sm font-semibold ${active ? "text-gray-900" : "text-gray-700"}`}
+                    >
                       {m.label}
                     </p>
-                    <p className="text-[10px] text-gray-400 mt-0.5 leading-tight">{m.sub}</p>
+                    <p className="text-[10px] text-gray-400 mt-0.5 leading-tight">
+                      {m.sub}
+                    </p>
                   </div>
                 </button>
               );
@@ -231,10 +314,8 @@ export default function AdminAddCourse() {
 
         {/* ── Main layout ───────────────────────────────────────────────────── */}
         <div className="flex gap-6 items-start">
-
           {/* ── Left column ─────────────────────────────────────────────────── */}
           <div className="flex-1 min-w-0 space-y-4">
-
             {/* 01 Basics */}
             <section className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 space-y-5">
               <StepHeading step="01" title="Basics" />
@@ -282,7 +363,9 @@ export default function AdminAddCourse() {
                     <VideoFileRow
                       key={f.id}
                       file={f}
-                      onRemove={() => setQbFiles((prev) => prev.filter((x) => x.id !== f.id))}
+                      onRemove={() =>
+                        setQbFiles((prev) => prev.filter((x) => x.id !== f.id))
+                      }
                     />
                   ))}
                   <div className="grid grid-cols-2 gap-4 pt-1">
@@ -314,7 +397,9 @@ export default function AdminAddCourse() {
                     <VideoFileRow
                       key={f.id}
                       file={f}
-                      onRemove={() => setFlFiles((prev) => prev.filter((x) => x.id !== f.id))}
+                      onRemove={() =>
+                        setFlFiles((prev) => prev.filter((x) => x.id !== f.id))
+                      }
                     />
                   ))}
                   <div className="grid grid-cols-2 gap-4 pt-1">
@@ -358,35 +443,51 @@ export default function AdminAddCourse() {
                   {/* Stats row */}
                   <div className="grid grid-cols-3 divide-x divide-gray-100 border border-gray-100 rounded-xl overflow-hidden bg-gray-50">
                     <div className="px-5 py-3">
-                      <p className="text-2xl font-bold text-gray-900">{modules.length}</p>
-                      <p className="text-[10px] tracking-widest uppercase text-gray-400">Modules</p>
+                      <p className="text-2xl font-bold text-gray-900">
+                        {modules.length}
+                      </p>
+                      <p className="text-[10px] tracking-widest uppercase text-gray-400">
+                        Modules
+                      </p>
                     </div>
                     <div className="px-5 py-3">
-                      <p className="text-2xl font-bold text-gray-900">{totalVideos}</p>
-                      <p className="text-[10px] tracking-widest uppercase text-gray-400">Videos</p>
+                      <p className="text-2xl font-bold text-gray-900">
+                        {totalVideos}
+                      </p>
+                      <p className="text-[10px] tracking-widest uppercase text-gray-400">
+                        Videos
+                      </p>
                     </div>
                     <div className="px-5 py-3">
                       <p className="text-2xl font-bold text-gray-900">
                         ~42<span className="text-sm font-normal">min</span>
                       </p>
-                      <p className="text-[10px] tracking-widest uppercase text-gray-400">Est. Duration</p>
+                      <p className="text-[10px] tracking-widest uppercase text-gray-400">
+                        Est. Duration
+                      </p>
                     </div>
                   </div>
 
                   {/* Module blocks */}
                   {modules.map((mod) => (
-                    <div key={mod.id} className="border border-gray-200 rounded-xl overflow-hidden">
+                    <div
+                      key={mod.id}
+                      className="border border-gray-200 rounded-xl overflow-hidden"
+                    >
                       <div className="flex items-center gap-3 px-4 py-3 bg-gray-50 border-b border-gray-100">
                         <span className="text-[10px] font-bold bg-gray-200 text-gray-600 rounded px-1.5 py-0.5">
                           {mod.label}
                         </span>
                         <input
                           value={mod.title}
-                          onChange={(e) => updateModuleTitle(mod.id, e.target.value)}
+                          onChange={(e) =>
+                            updateModuleTitle(mod.id, e.target.value)
+                          }
                           className="flex-1 text-sm font-semibold text-gray-800 bg-transparent outline-none"
                         />
                         <span className="text-xs text-gray-400 whitespace-nowrap">
-                          {mod.videos.length} video{mod.videos.length !== 1 ? "s" : ""}
+                          {mod.videos.length} video
+                          {mod.videos.length !== 1 ? "s" : ""}
                         </span>
                         <button
                           onClick={() => removeModule(mod.id)}
@@ -397,8 +498,13 @@ export default function AdminAddCourse() {
                       </div>
                       <div className="divide-y divide-gray-50 bg-white">
                         {mod.videos.map((v) => (
-                          <div key={v.id} className="flex items-center gap-3 px-4 py-2.5">
-                            <span className="flex-1 text-sm text-gray-700">{v.name}</span>
+                          <div
+                            key={v.id}
+                            className="flex items-center gap-3 px-4 py-2.5"
+                          >
+                            <span className="flex-1 text-sm text-gray-700">
+                              {v.name}
+                            </span>
                             <span className="text-xs text-gray-400 w-10 text-right tabular-nums">
                               {v.duration}
                             </span>
@@ -448,7 +554,9 @@ export default function AdminAddCourse() {
                         <FileText size={14} className="text-orange-500" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-gray-800">{f.name}</p>
+                        <p className="text-sm font-medium text-gray-800">
+                          {f.name}
+                        </p>
                         <p className="text-xs text-gray-400">
                           {f.pages} pages · {f.size}
                         </p>
@@ -458,8 +566,10 @@ export default function AdminAddCourse() {
                         onChange={(e) =>
                           setPdfFiles((prev) =>
                             prev.map((p, idx) =>
-                              idx === i ? { ...p, order: Number(e.target.value) } : p
-                            )
+                              idx === i
+                                ? { ...p, order: Number(e.target.value) }
+                                : p,
+                            ),
                           )
                         }
                         className="text-xs border border-gray-200 rounded-lg px-2 py-1.5 outline-none text-gray-700 bg-white"
@@ -471,7 +581,11 @@ export default function AdminAddCourse() {
                         ))}
                       </select>
                       <button
-                        onClick={() => setPdfFiles((prev) => prev.filter((_, idx) => idx !== i))}
+                        onClick={() =>
+                          setPdfFiles((prev) =>
+                            prev.filter((_, idx) => idx !== i),
+                          )
+                        }
                         className="text-gray-300 hover:text-red-400 transition-colors"
                       >
                         <Trash2 size={14} />
@@ -480,8 +594,8 @@ export default function AdminAddCourse() {
                   ))}
                   {pdfFiles.length > 0 && (
                     <p className="text-xs text-gray-500">
-                      {pdfFiles.length} files · {totalPdfPages} pages total · est.{" "}
-                      {estReadingMin} min reading
+                      {pdfFiles.length} files · {totalPdfPages} pages total ·
+                      est. {estReadingMin} min reading
                     </p>
                   )}
                 </div>
@@ -499,7 +613,9 @@ export default function AdminAddCourse() {
                 </p>
                 {Object.entries(COMPETENCIES).map(([track, comps]) => (
                   <div key={track} className="space-y-2">
-                    <p className="text-[10px] tracking-widest uppercase text-gray-400">{track}</p>
+                    <p className="text-[10px] tracking-widest uppercase text-gray-400">
+                      {track}
+                    </p>
                     <div className="flex flex-wrap gap-2">
                       {comps.map((c) => {
                         const active = tagged.includes(c.code);
@@ -515,7 +631,9 @@ export default function AdminAddCourse() {
                           >
                             <span
                               className={`text-[10px] font-bold ${
-                                active ? "text-gray-300" : TRACK_CODE_COLOR[track]
+                                active
+                                  ? "text-gray-300"
+                                  : TRACK_CODE_COLOR[track]
                               }`}
                             >
                               {c.code}
@@ -537,9 +655,21 @@ export default function AdminAddCourse() {
                 <FieldLabel>Audience</FieldLabel>
                 {(
                   [
-                    { value: "everyone", label: "Everyone", sub: "All employees and managers see it in Learning." },
-                    { value: "specific", label: "Specific roles", sub: "Pick roles or teams." },
-                    { value: "managers", label: "Managers only", sub: "Only people with direct reports." },
+                    {
+                      value: "everyone",
+                      label: "Everyone",
+                      sub: "All employees and managers see it in Learning.",
+                    },
+                    {
+                      value: "specific",
+                      label: "Specific roles",
+                      sub: "Pick roles or teams.",
+                    },
+                    {
+                      value: "managers",
+                      label: "Managers only",
+                      sub: "Only people with direct reports.",
+                    },
                   ] as { value: AudienceType; label: string; sub: string }[]
                 ).map((opt) => (
                   <label
@@ -559,10 +689,14 @@ export default function AdminAddCourse() {
                       className="mt-0.5 accent-gray-900"
                     />
                     <div>
-                      <p className="text-sm font-semibold text-gray-800">{opt.label}</p>
+                      <p className="text-sm font-semibold text-gray-800">
+                        {opt.label}
+                      </p>
                       <p
                         className={`text-xs ${
-                          opt.value === "specific" ? "text-orange-500" : "text-gray-400"
+                          opt.value === "specific"
+                            ? "text-orange-500"
+                            : "text-gray-400"
                         }`}
                       >
                         {opt.sub}
@@ -601,7 +735,11 @@ export default function AdminAddCourse() {
               </p>
               <div className="space-y-2">
                 <SummaryRow label="Type" value={meta.label} />
-                <SummaryRow label="Title" value={title || "UNTITLED"} muted={!title} />
+                <SummaryRow
+                  label="Title"
+                  value={title || "UNTITLED"}
+                  muted={!title}
+                />
                 <SummaryRow label="Audience" value={audienceLabel} />
                 <SummaryRow label="Level" value={difficulty} />
                 <SummaryRow
@@ -649,7 +787,9 @@ function StepHeading({ step, title }: { step: string; title: string }) {
 
 function FieldLabel({ children }: { children: React.ReactNode }) {
   return (
-    <p className="text-[10px] tracking-widest uppercase text-gray-400 font-semibold">{children}</p>
+    <p className="text-[10px] tracking-widest uppercase text-gray-400 font-semibold">
+      {children}
+    </p>
   );
 }
 
@@ -669,13 +809,25 @@ function DropZone({
       }`}
     >
       <Upload size={small ? 18 : 22} className="text-gray-400" />
-      <p className={`font-semibold text-gray-500 ${small ? "text-xs" : "text-sm"}`}>{primary}</p>
-      <p className={`text-gray-400 ${small ? "text-[10px]" : "text-xs"}`}>{secondary}</p>
+      <p
+        className={`font-semibold text-gray-500 ${small ? "text-xs" : "text-sm"}`}
+      >
+        {primary}
+      </p>
+      <p className={`text-gray-400 ${small ? "text-[10px]" : "text-xs"}`}>
+        {secondary}
+      </p>
     </div>
   );
 }
 
-function VideoFileRow({ file, onRemove }: { file: MockFile; onRemove: () => void }) {
+function VideoFileRow({
+  file,
+  onRemove,
+}: {
+  file: MockFile;
+  onRemove: () => void;
+}) {
   return (
     <div className="flex items-center gap-3 border border-gray-100 rounded-xl px-4 py-3 bg-white">
       <div className="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center flex-shrink-0">

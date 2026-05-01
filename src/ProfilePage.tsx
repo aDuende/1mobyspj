@@ -320,8 +320,12 @@ export default function ProfilePage() {
                       <h3 className="font-semibold text-gray-900 dark:text-white text-sm">
                         {cert.title}
                       </h3>
-                      <p className="text-xs text-gray-600 dark:text-gray-400">{cert.issuer}</p>
-                      <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">{cert.date}</p>
+                      <p className="text-xs text-gray-600 dark:text-gray-400">
+                        {cert.issuer}
+                      </p>
+                      <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">
+                        {cert.date}
+                      </p>
                     </div>
                   </div>
                 ))}

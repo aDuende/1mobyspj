@@ -15,7 +15,9 @@ interface Assessment {
 }
 
 function EmployeeAssessmentPage() {
-  const [activeTab, setActiveTab] = useState<"upcoming" | "pastdue" | "completed">("upcoming");
+  const [activeTab, setActiveTab] = useState<
+    "upcoming" | "pastdue" | "completed"
+  >("upcoming");
   const [openSelfAssessment, setOpenSelfAssessment] = useState(false);
 
   if (openSelfAssessment) {
@@ -146,10 +148,16 @@ function EmployeeAssessmentPage() {
 
             <Card
               className={`${cardClass} ${assessment.type === "self" ? "cursor-pointer hover:border-teal-400" : ""}`}
-              onClick={assessment.type === "self" ? () => setOpenSelfAssessment(true) : undefined}
+              onClick={
+                assessment.type === "self"
+                  ? () => setOpenSelfAssessment(true)
+                  : undefined
+              }
             >
               <div className="flex items-start gap-4">
-                <div className={`w-12 h-12 ${colorClass} rounded flex items-center justify-center shrink-0`}>
+                <div
+                  className={`w-12 h-12 ${colorClass} rounded flex items-center justify-center shrink-0`}
+                >
                   <span className="text-white font-bold text-lg">{day}</span>
                 </div>
 
@@ -174,18 +182,27 @@ function EmployeeAssessmentPage() {
       <div className="w-full">
         <div className="mb-6 px-8 pt-8">
           <div className="flex gap-1 border-b border-gray-200 dark:border-gray-700">
-            <button onClick={() => setActiveTab("upcoming")} className={tabClass("upcoming")}>
+            <button
+              onClick={() => setActiveTab("upcoming")}
+              className={tabClass("upcoming")}
+            >
               Upcoming
             </button>
 
-            <button onClick={() => setActiveTab("pastdue")} className={`${tabClass("pastdue")} flex items-center gap-2`}>
+            <button
+              onClick={() => setActiveTab("pastdue")}
+              className={`${tabClass("pastdue")} flex items-center gap-2`}
+            >
               Past due
               {getTabCount("pastdue") > 0 && (
                 <span className="w-2 h-2 bg-red-500 rounded-full" />
               )}
             </button>
 
-            <button onClick={() => setActiveTab("completed")} className={tabClass("completed")}>
+            <button
+              onClick={() => setActiveTab("completed")}
+              className={tabClass("completed")}
+            >
               Completed
             </button>
           </div>

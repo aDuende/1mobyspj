@@ -1,6 +1,7 @@
 "use client";
 
 import { type LucideIcon } from "lucide-react";
+import { cn } from "./lib/utils";
 
 import {
   SidebarGroup,
@@ -12,6 +13,7 @@ import {
 
 export function NavAdmin({
   items,
+  className,
 }: {
   items: {
     title: string;
@@ -20,31 +22,37 @@ export function NavAdmin({
     isActive?: boolean;
     onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
   }[];
+  className?: string;
 }) {
   return (
-    <SidebarGroup>
+    <SidebarGroup className={cn("px-4 group-data-[collapsible=icon]:px-0 transition-all duration-300", className)}>
       <SidebarGroupLabel
-        className="px-6 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+        className="px-3 py-2 text-xs font-normal text-gray-500 dark:text-gray-400 tracking-wider"
         style={{ fontFamily: "Geometrica, sans-serif" }}
       >
         Admin
       </SidebarGroupLabel>
-      <SidebarMenu>
+      <SidebarMenu className="gap-1 group-data-[collapsible=icon]:items-center">
         {items.map((item) => (
           <SidebarMenuItem key={item.title}>
             <SidebarMenuButton
               asChild
               isActive={item.isActive}
-              className="px-6 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 data-[active=true]:bg-blue-50 dark:data-[active=true]:bg-blue-900/20 data-[active=true]:text-blue-600 dark:data-[active=true]:text-blue-400"
+              className="px-3 py-2.5 text-[13px] text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 data-[active=true]:bg-blue-50 dark:data-[active=true]:bg-blue-900/20 data-[active=true]:text-blue-600 dark:data-[active=true]:text-blue-400"
             >
               <a
                 href={item.url}
                 onClick={item.onClick}
-                className="flex items-center gap-3"
+                className="flex items-center gap-2 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:gap-0"
                 style={{ fontFamily: "Geometrica, sans-serif" }}
               >
-                <item.icon className="w-5 h-5" />
-                <span>{item.title}</span>
+                <item.icon
+                  className="!w-[18px] !h-[18px]"
+                  strokeWidth={2.0}
+                />
+                <span className="font-normal group-data-[collapsible=icon]:hidden">
+                  {item.title}
+                </span>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>

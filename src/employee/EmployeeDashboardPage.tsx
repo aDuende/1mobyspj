@@ -1,4 +1,4 @@
-import { SidebarProvider } from "../components/ui/sidebar";
+import { SidebarProvider, SidebarTrigger } from "../components/ui/sidebar";
 import { AppSidebar } from "../app-sidebar";
 import dashboardBannerImg from "../assets/dashboard_banner.png";
 import dashboardFoxImg from "../assets/dashboard_fox.png";
@@ -47,10 +47,10 @@ import {
 } from "../components/ui/chart";
 
 const coreRadarData = [
-  { subject: "Create Impact",  actual: 85, expected: 80 },
+  { subject: "Create Impact", actual: 85, expected: 80 },
   { subject: "Take Ownership", actual: 70, expected: 90 },
-  { subject: "Adaptive",       actual: 80, expected: 75 },
-  { subject: "Collaboration",  actual: 90, expected: 85 },
+  { subject: "Adaptive", actual: 80, expected: 75 },
+  { subject: "Collaboration", actual: 90, expected: 85 },
 ];
 
 const functionalRadarData = [
@@ -326,7 +326,7 @@ function DashboardContent({ username }: { username: string }) {
                         decimals={1}
                       />
                       <span className="text-gray-400 font-medium ml-1.5 text-[18px]">
-                        / 4.0
+                        / 5.0
                       </span>
                     </>
                   ) : item.label === "Learning Hours" ? (
@@ -407,15 +407,14 @@ function DashboardContent({ username }: { username: string }) {
                 `}
               >
                 <div className="flex flex-col gap-1">
-                  {["Core", "Functional"].map(
-                    (cat) => (
-                      <button
-                        key={cat}
-                        onClick={() => {
-                          setSelectedCategory(cat);
-                          setIsCategoryOpen(false);
-                        }}
-                        className={`
+                  {["Core", "Functional"].map((cat) => (
+                    <button
+                      key={cat}
+                      onClick={() => {
+                        setSelectedCategory(cat);
+                        setIsCategoryOpen(false);
+                      }}
+                      className={`
                         flex items-center gap-3 w-full px-3 py-1.5 rounded-lg text-[12px] font-normal 
                         transition-all duration-200 cursor-pointer
                         ${
@@ -424,15 +423,14 @@ function DashboardContent({ username }: { username: string }) {
                             : "text-gray-700 dark:text-gray-300 hover:bg-gray-100/60 dark:hover:bg-gray-700/60 hover:text-gray-900 dark:hover:text-white"
                         }
                       `}
-                        style={{ fontFamily: '"Geometrica", sans-serif' }}
-                      >
-                        <span className="flex-1 text-left">{cat}</span>
-                        {selectedCategory === cat && (
-                          <Check className="w-4 h-4 text-orange-600" />
-                        )}
-                      </button>
-                    ),
-                  )}
+                      style={{ fontFamily: '"Geometrica", sans-serif' }}
+                    >
+                      <span className="flex-1 text-left">{cat}</span>
+                      {selectedCategory === cat && (
+                        <Check className="w-4 h-4 text-orange-600" />
+                      )}
+                    </button>
+                  ))}
                 </div>
               </div>
             </div>
@@ -446,7 +444,11 @@ function DashboardContent({ username }: { username: string }) {
                 className="w-full h-full max-h-[260px] outline-none focus:outline-none [&_*]:outline-none"
               >
                 <RadarChart
-                  data={selectedCategory === "Functional" ? functionalRadarData : coreRadarData}
+                  data={
+                    selectedCategory === "Functional"
+                      ? functionalRadarData
+                      : coreRadarData
+                  }
                   margin={{ top: 0, right: 40, bottom: 10, left: 30 }}
                   outerRadius="70%"
                 >
@@ -517,7 +519,7 @@ function DashboardContent({ username }: { username: string }) {
                       />
                     </span>
                     <span className="text-[14px] font-bold text-gray-400 dark:text-gray-600 mb-0.5">
-                      / 4.0
+                      / 5.0
                     </span>
                   </div>
                 </div>
@@ -1033,7 +1035,9 @@ function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [language, setLanguage] = useState("EN");
   const [isScrolled, setIsScrolled] = useState(false);
-  const [assessmentSubPage, setAssessmentSubPage] = useState<string | null>(null);
+  const [assessmentSubPage, setAssessmentSubPage] = useState<string | null>(
+    null,
+  );
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -1041,11 +1045,14 @@ function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
       setAssessmentSubPage((e as CustomEvent).detail.page);
     };
     window.addEventListener("assessment:subpage", handleSubPage);
-    return () => window.removeEventListener("assessment:subpage", handleSubPage);
+    return () =>
+      window.removeEventListener("assessment:subpage", handleSubPage);
   }, []);
 
   useEffect(() => {
-    if (location.pathname !== "/assessment") setAssessmentSubPage(null);
+    if (location.pathname !== "/assessment") {
+      queueMicrotask(() => setAssessmentSubPage(null));
+    }
   }, [location.pathname]);
 
   useEffect(() => {
@@ -1116,6 +1123,7 @@ function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
               `}
           >
             <div className="flex items-center gap-3">
+              <SidebarTrigger className="md:hidden" />
               <Breadcrumb>
                 <BreadcrumbList>
                   {location.pathname === "/dashboard" && (
@@ -1127,20 +1135,25 @@ function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
                       </BreadcrumbPage>
                     </BreadcrumbItem>
                   )}
-                  {location.pathname === "/assessment" && !assessmentSubPage && (
-                    <BreadcrumbItem>
-                      <BreadcrumbPage
-                        style={{ fontFamily: "Geometrica, sans-serif" }}
-                      >
-                        Assessment
-                      </BreadcrumbPage>
-                    </BreadcrumbItem>
-                  )}
+                  {location.pathname === "/assessment" &&
+                    !assessmentSubPage && (
+                      <BreadcrumbItem>
+                        <BreadcrumbPage
+                          style={{ fontFamily: "Geometrica, sans-serif" }}
+                        >
+                          Assessment
+                        </BreadcrumbPage>
+                      </BreadcrumbItem>
+                    )}
                   {location.pathname === "/assessment" && assessmentSubPage && (
                     <>
                       <BreadcrumbItem>
                         <BreadcrumbLink
-                          onClick={() => window.dispatchEvent(new CustomEvent("assessment:back"))}
+                          onClick={() =>
+                            window.dispatchEvent(
+                              new CustomEvent("assessment:back"),
+                            )
+                          }
                           className="cursor-pointer"
                           style={{ fontFamily: "Geometrica, sans-serif" }}
                         >
@@ -1149,7 +1162,9 @@ function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
                       </BreadcrumbItem>
                       <BreadcrumbSeparator />
                       <BreadcrumbItem>
-                        <BreadcrumbPage style={{ fontFamily: "Geometrica, sans-serif" }}>
+                        <BreadcrumbPage
+                          style={{ fontFamily: "Geometrica, sans-serif" }}
+                        >
                           {assessmentSubPage}
                         </BreadcrumbPage>
                       </BreadcrumbItem>
@@ -1231,7 +1246,9 @@ function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
                       <BreadcrumbItem>
                         <BreadcrumbLink
                           onClick={() => {
-                            window.dispatchEvent(new CustomEvent("help:back-to-history"));
+                            window.dispatchEvent(
+                              new CustomEvent("help:back-to-history"),
+                            );
                             navigate("/help");
                           }}
                           className="cursor-pointer hover:underline"
@@ -1246,7 +1263,9 @@ function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
                       <BreadcrumbItem>
                         <BreadcrumbLink
                           onClick={() => {
-                            window.dispatchEvent(new CustomEvent("help:back-to-history"));
+                            window.dispatchEvent(
+                              new CustomEvent("help:back-to-history"),
+                            );
                             navigate("/help/history");
                           }}
                           className="cursor-pointer hover:underline"
@@ -1259,7 +1278,9 @@ function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
                       <BreadcrumbSeparator />
 
                       <BreadcrumbItem>
-                        <BreadcrumbPage style={{ fontFamily: '"Geometrica", sans-serif' }}>
+                        <BreadcrumbPage
+                          style={{ fontFamily: '"Geometrica", sans-serif' }}
+                        >
                           Detail
                         </BreadcrumbPage>
                       </BreadcrumbItem>
@@ -1316,7 +1337,9 @@ function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
                       </BreadcrumbItem>
                     </>
                   )}
-                  {location.pathname.startsWith("/my-idp-learning/reading/") && (
+                  {location.pathname.startsWith(
+                    "/my-idp-learning/reading/",
+                  ) && (
                     <>
                       <BreadcrumbItem>
                         <BreadcrumbLink
@@ -1358,7 +1381,7 @@ function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
                       </BreadcrumbItem>
                     </>
                   )}
-                   {location.pathname === "/competency-profile" && (
+                  {location.pathname === "/competency-profile" && (
                     <BreadcrumbItem>
                       <BreadcrumbPage
                         style={{ fontFamily: "Geometrica, sans-serif" }}
@@ -1395,11 +1418,20 @@ function EmployeeDashboard({ onLogout, username }: EmployeeDashboardProps) {
                   path="/my-idp-learning/*"
                   element={<MyIDPLearningPage role="employee" />}
                 />
-                <Route path="/assessment" element={<EmployeeAssessmentPage />} />
-                <Route path="/competency-profile" element={<CompetencyProfilePage />} />
+                <Route
+                  path="/assessment"
+                  element={<EmployeeAssessmentPage />}
+                />
+                <Route
+                  path="/competency-profile"
+                  element={<CompetencyProfilePage />}
+                />
                 <Route path="/settings" element={<SettingPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
-                <Route path="/help/*" element={<HelpPage username={username} role="employee" />} />
+                <Route
+                  path="/help/*"
+                  element={<HelpPage username={username} role="employee" />}
+                />
                 <Route
                   path="/dashboard"
                   element={<DashboardContent username={username} />}

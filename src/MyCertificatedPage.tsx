@@ -50,13 +50,12 @@ export default function MyCertificatedPage() {
   const [search, setSearch] = useState("");
 
   const filteredCertificates = certificates.filter((cert) =>
-    cert.title.toLowerCase().includes(search.toLowerCase())
+    cert.title.toLowerCase().includes(search.toLowerCase()),
   );
 
   return (
     <div className="flex-1 overflow-auto bg-[#f8fafc] dark:bg-transparent">
       <div className="mx-auto max-w-6xl p-6">
-
         {/* Header */}
         <div className="mb-8 overflow-hidden rounded-[28px] bg-white shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] dark:bg-gray-800">
           <div className="relative min-h-[220px] p-6 md:p-8">
@@ -80,8 +79,8 @@ export default function MyCertificatedPage() {
                   className="mt-2 max-w-xl text-[13px] leading-6 text-gray-500 dark:text-gray-400"
                   style={{ fontFamily: '"Geometrica", sans-serif' }}
                 >
-                  View your completed learning certificates, verify credential IDs,
-                  and download official achievement documents.
+                  View your completed learning certificates, verify credential
+                  IDs, and download official achievement documents.
                 </p>
               </div>
 
@@ -139,7 +138,9 @@ export default function MyCertificatedPage() {
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
 
-                <div className={`absolute inset-0 bg-linear-to-br ${cert.gradient} opacity-75`} />
+                <div
+                  className={`absolute inset-0 bg-linear-to-br ${cert.gradient} opacity-75`}
+                />
 
                 <div className="absolute left-5 top-5 flex h-11 w-11 items-center justify-center rounded-2xl bg-white/20 text-white backdrop-blur">
                   <Award className="h-5 w-5" />
@@ -219,7 +220,6 @@ export default function MyCertificatedPage() {
             </div>
           ))}
         </div>
-
       </div>
     </div>
   );

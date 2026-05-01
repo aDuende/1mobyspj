@@ -13,10 +13,6 @@ function HelpPage({ username, role }: HelpPageProps) {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const [activeTab, setActiveTab] = useState<"submit" | "history">(
-    location.pathname.startsWith("/help/history") ? "history" : "submit",
-  );
-
   const [selectedComplaint, setSelectedComplaint] = useState<Complaint | null>(
     null,
   );
@@ -30,18 +26,12 @@ function HelpPage({ username, role }: HelpPageProps) {
   >("All");
   const [searchQuery, setSearchQuery] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [complaints, setComplaints] = useState<Complaint[]>([]);
-
-  useEffect(() => {
-    setActiveTab(
-      location.pathname.startsWith("/help/history") ? "history" : "submit",
-    );
-  }, [location.pathname]);
-
-  useEffect(() => {
-    const userComplaints = complaintsStore.getByUser(username);
-    setComplaints(userComplaints);
-  }, [username]);
+  const [complaints, setComplaints] = useState<Complaint[]>(() =>
+    complaintsStore.getByUser(username),
+  );
+  const activeTab = location.pathname.startsWith("/help/history")
+    ? "history"
+    : "submit";
 
   useEffect(() => {
     const handleBackToHistory = () => {
@@ -543,9 +533,7 @@ function HelpPage({ username, role }: HelpPageProps) {
 
                     <h3 className="text-base font-semibold text-gray-900 dark:text-white mb-1">
                       No{" "}
-                      {statusFilter === "All"
-                        ? ""
-                        : statusFilter.toLowerCase()}{" "}
+                      {statusFilter === "All" ? "" : statusFilter.toLowerCase()}{" "}
                       complaints found
                     </h3>
 

@@ -100,8 +100,7 @@ const TARIN_GAPS: CompetencyGap[] = [
     code: "FC05",
     track: "Functional",
     name: "Process Improvement",
-    description:
-      "Identifies and implements meaningful workflow improvements.",
+    description: "Identifies and implements meaningful workflow improvements.",
     actual: 2,
     expected: 3,
   },
@@ -180,7 +179,8 @@ const JESS_GAPS: CompetencyGap[] = [
     code: "CC01",
     track: "Core",
     name: "Create Impact",
-    description: "Drives meaningful work for the team and organization; clear ownership of role.",
+    description:
+      "Drives meaningful work for the team and organization; clear ownership of role.",
     actual: 2,
     expected: 3,
   },
@@ -188,7 +188,8 @@ const JESS_GAPS: CompetencyGap[] = [
     code: "CC02",
     track: "Core",
     name: "Take Ownership",
-    description: "Owns work end-to-end; solves problems instead of escalating prematurely.",
+    description:
+      "Owns work end-to-end; solves problems instead of escalating prematurely.",
     actual: 2,
     expected: 3,
   },
@@ -220,7 +221,8 @@ const JESS_GAPS: CompetencyGap[] = [
     code: "MC01",
     track: "Managerial",
     name: "Process",
-    description: "Designs workflows and improves process efficiency across the team.",
+    description:
+      "Designs workflows and improves process efficiency across the team.",
     actual: 2,
     expected: 3,
   },
@@ -228,26 +230,118 @@ const JESS_GAPS: CompetencyGap[] = [
     code: "MC03",
     track: "Managerial",
     name: "People",
-    description: "Develops talent, manages performance, and builds team culture.",
+    description:
+      "Develops talent, manages performance, and builds team culture.",
     actual: 2,
     expected: 3,
   },
 ];
 
 const JESS_COURSES: SuggestedCourse[] = [
-  { id: "CRS-118", forCode: "CC01", forName: "CREATE IMPACT", title: "Outcome-driven planning", hours: 4, track: "Core" },
-  { id: "CRS-204", forCode: "CC01", forName: "CREATE IMPACT", title: "Defining team-level impact", hours: 3, track: "Core" },
-  { id: "CRS-077", forCode: "CC02", forName: "TAKE OWNERSHIP", title: "Owning the problem, not the task", hours: 3, track: "Core" },
-  { id: "CRS-091", forCode: "CC02", forName: "TAKE OWNERSHIP", title: "Decision frameworks under ambiguity", hours: 5, track: "Core" },
-  { id: "CRS-301", forCode: "FC01", forName: "DATA ANALYSIS", title: "Data analysis foundations", hours: 8, track: "Functional" },
-  { id: "CRS-322", forCode: "FC01", forName: "DATA ANALYSIS", title: "Insight to recommendation", hours: 5, track: "Functional" },
-  { id: "CRS-340", forCode: "FC03", forName: "STRATEGIC THINKING", title: "Thinking strategically", hours: 6, track: "Functional" },
-  { id: "CRS-345", forCode: "FC03", forName: "STRATEGIC THINKING", title: "From OKRs to weekly work", hours: 4, track: "Functional" },
-  { id: "CRS-411", forCode: "FC05", forName: "PROCESS IMPROVEMENT", title: "Process mapping fundamentals", hours: 4, track: "Functional" },
-  { id: "CRS-415", forCode: "FC05", forName: "PROCESS IMPROVEMENT", title: "Lean workflow design", hours: 3, track: "Functional" },
-  { id: "CRS-501", forCode: "MC01", forName: "PROCESS", title: "Operating rhythm for managers", hours: 3, track: "Managerial" },
-  { id: "CRS-521", forCode: "MC03", forName: "PEOPLE", title: "Coaching conversations", hours: 4, track: "Managerial" },
-  { id: "CRS-525", forCode: "MC03", forName: "PEOPLE", title: "Building high-performance teams", hours: 5, track: "Managerial" },
+  {
+    id: "CRS-118",
+    forCode: "CC01",
+    forName: "CREATE IMPACT",
+    title: "Outcome-driven planning",
+    hours: 4,
+    track: "Core",
+  },
+  {
+    id: "CRS-204",
+    forCode: "CC01",
+    forName: "CREATE IMPACT",
+    title: "Defining team-level impact",
+    hours: 3,
+    track: "Core",
+  },
+  {
+    id: "CRS-077",
+    forCode: "CC02",
+    forName: "TAKE OWNERSHIP",
+    title: "Owning the problem, not the task",
+    hours: 3,
+    track: "Core",
+  },
+  {
+    id: "CRS-091",
+    forCode: "CC02",
+    forName: "TAKE OWNERSHIP",
+    title: "Decision frameworks under ambiguity",
+    hours: 5,
+    track: "Core",
+  },
+  {
+    id: "CRS-301",
+    forCode: "FC01",
+    forName: "DATA ANALYSIS",
+    title: "Data analysis foundations",
+    hours: 8,
+    track: "Functional",
+  },
+  {
+    id: "CRS-322",
+    forCode: "FC01",
+    forName: "DATA ANALYSIS",
+    title: "Insight to recommendation",
+    hours: 5,
+    track: "Functional",
+  },
+  {
+    id: "CRS-340",
+    forCode: "FC03",
+    forName: "STRATEGIC THINKING",
+    title: "Thinking strategically",
+    hours: 6,
+    track: "Functional",
+  },
+  {
+    id: "CRS-345",
+    forCode: "FC03",
+    forName: "STRATEGIC THINKING",
+    title: "From OKRs to weekly work",
+    hours: 4,
+    track: "Functional",
+  },
+  {
+    id: "CRS-411",
+    forCode: "FC05",
+    forName: "PROCESS IMPROVEMENT",
+    title: "Process mapping fundamentals",
+    hours: 4,
+    track: "Functional",
+  },
+  {
+    id: "CRS-415",
+    forCode: "FC05",
+    forName: "PROCESS IMPROVEMENT",
+    title: "Lean workflow design",
+    hours: 3,
+    track: "Functional",
+  },
+  {
+    id: "CRS-501",
+    forCode: "MC01",
+    forName: "PROCESS",
+    title: "Operating rhythm for managers",
+    hours: 3,
+    track: "Managerial",
+  },
+  {
+    id: "CRS-521",
+    forCode: "MC03",
+    forName: "PEOPLE",
+    title: "Coaching conversations",
+    hours: 4,
+    track: "Managerial",
+  },
+  {
+    id: "CRS-525",
+    forCode: "MC03",
+    forName: "PEOPLE",
+    title: "Building high-performance teams",
+    hours: 5,
+    track: "Managerial",
+  },
 ];
 
 // ── Leon Vu ───────────────────────────────────────────────────────────────────
@@ -256,7 +350,8 @@ const LEON_GAPS: CompetencyGap[] = [
     code: "CC01",
     track: "Core",
     name: "Create Impact",
-    description: "Drives meaningful work for the team and organization; clear ownership of role.",
+    description:
+      "Drives meaningful work for the team and organization; clear ownership of role.",
     actual: 2,
     expected: 3,
   },
@@ -303,15 +398,78 @@ const LEON_GAPS: CompetencyGap[] = [
 ];
 
 const LEON_COURSES: SuggestedCourse[] = [
-  { id: "CRS-118", forCode: "CC01", forName: "CREATE IMPACT", title: "Outcome-driven planning", hours: 4, track: "Core" },
-  { id: "CRS-204", forCode: "CC01", forName: "CREATE IMPACT", title: "Defining team-level impact", hours: 3, track: "Core" },
-  { id: "CRS-156", forCode: "CC03", forName: "ADAPTIVE", title: "Learning agility in practice", hours: 4, track: "Core" },
-  { id: "CRS-188", forCode: "CC03", forName: "ADAPTIVE", title: "Navigating organizational change", hours: 3, track: "Core" },
-  { id: "CRS-310", forCode: "FC02", forName: "STAKEHOLDER COMMUNICATION", title: "Communicating with stakeholders", hours: 4, track: "Functional" },
-  { id: "CRS-318", forCode: "FC02", forName: "STAKEHOLDER COMMUNICATION", title: "Executive presence on calls", hours: 3, track: "Functional" },
-  { id: "CRS-360", forCode: "FC04", forName: "PROJECT EXECUTION", title: "Project execution playbook", hours: 6, track: "Functional" },
-  { id: "CRS-540", forCode: "MC02", forName: "PURPOSE", title: "Strategic vision for leaders", hours: 4, track: "Managerial" },
-  { id: "CRS-555", forCode: "MC04", forName: "RESULT", title: "Driving results with accountability", hours: 3, track: "Managerial" },
+  {
+    id: "CRS-118",
+    forCode: "CC01",
+    forName: "CREATE IMPACT",
+    title: "Outcome-driven planning",
+    hours: 4,
+    track: "Core",
+  },
+  {
+    id: "CRS-204",
+    forCode: "CC01",
+    forName: "CREATE IMPACT",
+    title: "Defining team-level impact",
+    hours: 3,
+    track: "Core",
+  },
+  {
+    id: "CRS-156",
+    forCode: "CC03",
+    forName: "ADAPTIVE",
+    title: "Learning agility in practice",
+    hours: 4,
+    track: "Core",
+  },
+  {
+    id: "CRS-188",
+    forCode: "CC03",
+    forName: "ADAPTIVE",
+    title: "Navigating organizational change",
+    hours: 3,
+    track: "Core",
+  },
+  {
+    id: "CRS-310",
+    forCode: "FC02",
+    forName: "STAKEHOLDER COMMUNICATION",
+    title: "Communicating with stakeholders",
+    hours: 4,
+    track: "Functional",
+  },
+  {
+    id: "CRS-318",
+    forCode: "FC02",
+    forName: "STAKEHOLDER COMMUNICATION",
+    title: "Executive presence on calls",
+    hours: 3,
+    track: "Functional",
+  },
+  {
+    id: "CRS-360",
+    forCode: "FC04",
+    forName: "PROJECT EXECUTION",
+    title: "Project execution playbook",
+    hours: 6,
+    track: "Functional",
+  },
+  {
+    id: "CRS-540",
+    forCode: "MC02",
+    forName: "PURPOSE",
+    title: "Strategic vision for leaders",
+    hours: 4,
+    track: "Managerial",
+  },
+  {
+    id: "CRS-555",
+    forCode: "MC04",
+    forName: "RESULT",
+    title: "Driving results with accountability",
+    hours: 3,
+    track: "Managerial",
+  },
 ];
 
 const USERS_IDP: UserIDP[] = [
@@ -525,10 +683,17 @@ const TRACK_TAG: Record<Track, string> = {
 const fontGeo = { fontFamily: "Geometrica, sans-serif" } as const;
 
 // ── Animated Number ───────────────────────────────────────────────────────────
-const AnimatedNumber = ({ value, decimals = 0 }: { value: number; decimals?: number }) => {
+const AnimatedNumber = ({
+  value,
+  decimals = 0,
+}: {
+  value: number;
+  decimals?: number;
+}) => {
   const [display, setDisplay] = useState(0);
   useEffect(() => {
-    const start = display, end = value;
+    const start = display,
+      end = value;
     if (start === end) return;
     const t0 = performance.now();
     const tick = (now: number) => {
@@ -645,7 +810,10 @@ function CoverageBar({ level, max }: { level: number; max: number }) {
 function AdminIDPPage() {
   const navigate = useNavigate();
   const [isMounted, setIsMounted] = useState(false);
-  useEffect(() => { const t = setTimeout(() => setIsMounted(true), 50); return () => clearTimeout(t); }, []);
+  useEffect(() => {
+    const t = setTimeout(() => setIsMounted(true), 50);
+    return () => clearTimeout(t);
+  }, []);
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<FilterKey>("all");
   const [team, setTeam] = useState<string>("All teams");
@@ -715,666 +883,691 @@ function AdminIDPPage() {
     [],
   );
 
-  const selected =
-    USERS_IDP.find((u) => u.id === selectedId) ?? USERS_IDP[2];
+  const selected = USERS_IDP.find((u) => u.id === selectedId) ?? USERS_IDP[2];
 
   return (
     <>
-    {assignTarget && (
-      <AssignCourseModal
-        user={assignTarget.user}
-        course={assignTarget.course}
-        gap={assignTarget.gap}
-        onClose={() => setAssignTarget(null)}
-      />
-    )}
-    <div className="min-h-screen p-6 bg-[#f8fafc] dark:bg-transparent">
-      <div className="max-w-350 mx-auto space-y-6">
-        {/* ───── Header ───── */}
-        <div className="space-y-3">
-          {/* Metric cards full width */}
-          <div className="grid grid-cols-3 gap-3">
-            <MetricCard
-              label="Needs attention"
-              hint="3+ critical gaps"
-              icon={<TrendingDown className="w-4 h-4" />}
-              value={counts.needs}
-              total={counts.all}
-              iconColor="text-[#006BFF] dark:text-blue-400"
-              hintColor="text-[#006BFF] dark:text-blue-400"
-              isMounted={isMounted}
-              index={0}
-            />
-            <MetricCard
-              label="On track"
-              hint="Meeting expectations"
-              icon={<Minus className="w-4 h-4" />}
-              value={counts.track}
-              total={counts.all}
-              iconColor="text-gray-400 dark:text-gray-500"
-              hintColor="text-gray-500 dark:text-gray-400"
-              isMounted={isMounted}
-              index={1}
-            />
-            <MetricCard
-              label="High performers"
-              hint="4+ strengths"
-              icon={<TrendingUp className="w-4 h-4" />}
-              value={counts.high}
-              total={counts.all}
-              iconColor="text-emerald-500 dark:text-emerald-400"
-              hintColor="text-emerald-600 dark:text-emerald-400"
-              isMounted={isMounted}
-              index={2}
-            />
+      {assignTarget && (
+        <AssignCourseModal
+          user={assignTarget.user}
+          course={assignTarget.course}
+          gap={assignTarget.gap}
+          onClose={() => setAssignTarget(null)}
+        />
+      )}
+      <div className="min-h-screen p-6 bg-[#f8fafc] dark:bg-transparent">
+        <div className="max-w-350 mx-auto space-y-6">
+          {/* ───── Header ───── */}
+          <div className="space-y-3">
+            {/* Metric cards full width */}
+            <div className="grid grid-cols-3 gap-3">
+              <MetricCard
+                label="Needs attention"
+                hint="3+ critical gaps"
+                icon={<TrendingDown className="w-4 h-4" />}
+                value={counts.needs}
+                total={counts.all}
+                iconColor="text-[#006BFF] dark:text-blue-400"
+                hintColor="text-[#006BFF] dark:text-blue-400"
+                isMounted={isMounted}
+                index={0}
+              />
+              <MetricCard
+                label="On track"
+                hint="Meeting expectations"
+                icon={<Minus className="w-4 h-4" />}
+                value={counts.track}
+                total={counts.all}
+                iconColor="text-gray-400 dark:text-gray-500"
+                hintColor="text-gray-500 dark:text-gray-400"
+                isMounted={isMounted}
+                index={1}
+              />
+              <MetricCard
+                label="High performers"
+                hint="4+ strengths"
+                icon={<TrendingUp className="w-4 h-4" />}
+                value={counts.high}
+                total={counts.all}
+                iconColor="text-emerald-500 dark:text-emerald-400"
+                hintColor="text-emerald-600 dark:text-emerald-400"
+                isMounted={isMounted}
+                index={2}
+              />
+            </div>
+
+            {/* Action buttons below cards */}
+            <div className="flex items-center gap-2">
+              <Button
+                onClick={() => navigate("/admin-add-course")}
+                className="bg-[#006BFF] hover:bg-[#0057d9] text-white dark:bg-[#006BFF] dark:text-white dark:hover:bg-[#0057d9] h-9"
+                style={fontGeo}
+              >
+                <Plus className="w-4 h-4 mr-1.5" />
+                New course
+              </Button>
+              <Button
+                variant="outline"
+                className="h-9 border-gray-300 dark:border-gray-600"
+                style={fontGeo}
+              >
+                <Download className="w-4 h-4 mr-1.5" />
+                Export cycle report
+              </Button>
+            </div>
           </div>
 
-          {/* Action buttons below cards */}
-          <div className="flex items-center gap-2">
-            <Button
-              onClick={() => navigate("/admin-add-course")}
-              className="bg-[#006BFF] hover:bg-[#0057d9] text-white dark:bg-[#006BFF] dark:text-white dark:hover:bg-[#0057d9] h-9"
-              style={fontGeo}
-            >
-              <Plus className="w-4 h-4 mr-1.5" />
-              New course
-            </Button>
-            <Button
-              variant="outline"
-              className="h-9 border-gray-300 dark:border-gray-600"
-              style={fontGeo}
-            >
-              <Download className="w-4 h-4 mr-1.5" />
-              Export cycle report
-            </Button>
-          </div>
-        </div>
+          {/* ───── Toolbar ───── */}
+          <div className="rounded-2xl bg-white dark:bg-gray-800/60 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] border-none px-4 py-3 flex flex-wrap items-center gap-3">
+            <div className="relative flex-1 min-w-65 max-w-md">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <Input
+                placeholder="Search people, teams, courses..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="pl-9 h-9 text-sm"
+                style={fontGeo}
+              />
+            </div>
 
-        {/* ───── Toolbar ───── */}
-        <div className="rounded-2xl bg-white dark:bg-gray-800/60 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] border-none px-4 py-3 flex flex-wrap items-center gap-3">
-          <div className="relative flex-1 min-w-65 max-w-md">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-            <Input
-              placeholder="Search people, teams, courses..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="pl-9 h-9 text-sm"
-              style={fontGeo}
-            />
-            
+            <div className="flex items-center gap-1.5 flex-wrap">
+              <FilterPill
+                active={filter === "all"}
+                onClick={() => setFilter("all")}
+                label="All"
+                count={counts.all}
+              />
+              <FilterPill
+                active={filter === "needs-attention"}
+                onClick={() => setFilter("needs-attention")}
+                label="Needs attention"
+                count={counts.needs}
+              />
+              <FilterPill
+                active={filter === "on-track"}
+                onClick={() => setFilter("on-track")}
+                label="On track"
+                count={counts.track}
+              />
+              <FilterPill
+                active={filter === "high-performer"}
+                onClick={() => setFilter("high-performer")}
+                label="High performer"
+                count={counts.high}
+              />
+            </div>
+
+            <div className="ml-auto flex items-center gap-2">
+              <select
+                value={team}
+                onChange={(e) => setTeam(e.target.value)}
+                className="h-8 text-xs border border-gray-200 dark:border-gray-600 rounded-md px-2 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200"
+                style={fontGeo}
+              >
+                {teams.map((t) => (
+                  <option key={t} value={t}>
+                    {t}
+                  </option>
+                ))}
+              </select>
+              <SortPill
+                active={sort === "worst"}
+                onClick={() => setSort("worst")}
+                label="Worst first"
+              />
+              <SortPill
+                active={sort === "az"}
+                onClick={() => setSort("az")}
+                label="A-Z"
+              />
+              <SortPill
+                active={sort === "team"}
+                onClick={() => setSort("team")}
+                label="By team"
+              />
+            </div>
           </div>
 
-          <div className="flex items-center gap-1.5 flex-wrap">
-            <FilterPill
-              active={filter === "all"}
-              onClick={() => setFilter("all")}
-              label="All"
-              count={counts.all}
-            />
-            <FilterPill
-              active={filter === "needs-attention"}
-              onClick={() => setFilter("needs-attention")}
-              label="Needs attention"
-              count={counts.needs}
-            />
-            <FilterPill
-              active={filter === "on-track"}
-              onClick={() => setFilter("on-track")}
-              label="On track"
-              count={counts.track}
-            />
-            <FilterPill
-              active={filter === "high-performer"}
-              onClick={() => setFilter("high-performer")}
-              label="High performer"
-              count={counts.high}
-            />
-          </div>
-
-          <div className="ml-auto flex items-center gap-2">
-            <select
-              value={team}
-              onChange={(e) => setTeam(e.target.value)}
-              className="h-8 text-xs border border-gray-200 dark:border-gray-600 rounded-md px-2 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200"
-              style={fontGeo}
-            >
-              {teams.map((t) => (
-                <option key={t} value={t}>
-                  {t}
-                </option>
-              ))}
-            </select>
-            <SortPill
-              active={sort === "worst"}
-              onClick={() => setSort("worst")}
-              label="Worst first"
-            />
-            <SortPill
-              active={sort === "az"}
-              onClick={() => setSort("az")}
-              label="A-Z"
-            />
-            <SortPill
-              active={sort === "team"}
-              onClick={() => setSort("team")}
-              label="By team"
-            />
-          </div>
-        </div>
-
-        {/* ───── Main grid: table + right rail ───── */}
-        <div className="grid grid-cols-1 xl:grid-cols-[1fr_320px] gap-6">
-          {/* Left column */}
-          <div className="space-y-6">
-            <div className="rounded-2xl bg-white dark:bg-gray-800/60 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] border-none overflow-hidden">
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b border-gray-100 dark:border-gray-700 text-[10px] uppercase tracking-wider text-gray-400 dark:text-gray-500">
-                      <th className="px-4 py-3 text-left font-semibold" style={fontGeo}>
-                        Person
-                      </th>
-                      <th className="px-4 py-3 text-left font-semibold" style={fontGeo}>
-                        Team
-                      </th>
-                      <th className="px-4 py-3 text-center font-semibold" style={fontGeo}>
-                        Crit
-                      </th>
-                      <th className="px-4 py-3 text-center font-semibold" style={fontGeo}>
-                        Strg
-                      </th>
-                      <th className="px-4 py-3 text-center font-semibold" style={fontGeo}>
-                        Fit
-                      </th>
-                      <th className="px-4 py-3 text-left font-semibold" style={fontGeo}>
-                        Distribution
-                      </th>
-                      <th className="px-4 py-3 text-left font-semibold" style={fontGeo}>
-                        6-cycle trend
-                      </th>
-                      <th className="px-4 py-3 text-left font-semibold" style={fontGeo}>
-                        Status
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filtered.map((u) => {
-                      const s = getStatus(u);
-                      const isSelected = u.id === selectedId;
-                      return (
-                        <tr
-                          key={u.id}
-                          onClick={() => setSelectedId(u.id)}
-                          className={`border-b border-gray-50 dark:border-gray-700/60 cursor-pointer transition-colors ${
-                            isSelected
-                              ? "bg-blue-50/50 dark:bg-blue-900/10"
-                              : "hover:bg-gray-50 dark:hover:bg-gray-700/30"
-                          }`}
+          {/* ───── Main grid: table + right rail ───── */}
+          <div className="grid grid-cols-1 xl:grid-cols-[1fr_320px] gap-6">
+            {/* Left column */}
+            <div className="space-y-6">
+              <div className="rounded-2xl bg-white dark:bg-gray-800/60 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] border-none overflow-hidden">
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b border-gray-100 dark:border-gray-700 text-[10px] uppercase tracking-wider text-gray-400 dark:text-gray-500">
+                        <th
+                          className="px-4 py-3 text-left font-semibold"
+                          style={fontGeo}
                         >
-                          <td className="px-4 py-3">
-                            <div className="flex items-center gap-3">
-                              <div className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center shrink-0">
-                                <span
-                                  className="text-xs font-semibold text-gray-700 dark:text-gray-200"
-                                  style={fontGeo}
-                                >
-                                  {u.name.charAt(0)}
-                                </span>
-                              </div>
-                              <div className="min-w-0">
-                                <div className="flex items-center gap-1.5">
-                                  <p
-                                    className="font-semibold text-gray-900 dark:text-white text-sm truncate"
+                          Person
+                        </th>
+                        <th
+                          className="px-4 py-3 text-left font-semibold"
+                          style={fontGeo}
+                        >
+                          Team
+                        </th>
+                        <th
+                          className="px-4 py-3 text-center font-semibold"
+                          style={fontGeo}
+                        >
+                          Crit
+                        </th>
+                        <th
+                          className="px-4 py-3 text-center font-semibold"
+                          style={fontGeo}
+                        >
+                          Strg
+                        </th>
+                        <th
+                          className="px-4 py-3 text-center font-semibold"
+                          style={fontGeo}
+                        >
+                          Fit
+                        </th>
+                        <th
+                          className="px-4 py-3 text-left font-semibold"
+                          style={fontGeo}
+                        >
+                          Distribution
+                        </th>
+                        <th
+                          className="px-4 py-3 text-left font-semibold"
+                          style={fontGeo}
+                        >
+                          6-cycle trend
+                        </th>
+                        <th
+                          className="px-4 py-3 text-left font-semibold"
+                          style={fontGeo}
+                        >
+                          Status
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filtered.map((u) => {
+                        const s = getStatus(u);
+                        const isSelected = u.id === selectedId;
+                        return (
+                          <tr
+                            key={u.id}
+                            onClick={() => setSelectedId(u.id)}
+                            className={`border-b border-gray-50 dark:border-gray-700/60 cursor-pointer transition-colors ${
+                              isSelected
+                                ? "bg-blue-50/50 dark:bg-blue-900/10"
+                                : "hover:bg-gray-50 dark:hover:bg-gray-700/30"
+                            }`}
+                          >
+                            <td className="px-4 py-3">
+                              <div className="flex items-center gap-3">
+                                <div className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center shrink-0">
+                                  <span
+                                    className="text-xs font-semibold text-gray-700 dark:text-gray-200"
                                     style={fontGeo}
                                   >
-                                    {u.name}
-                                  </p>
-                                  {u.isManager && (
-                                    <span
-                                      className="text-[9px] uppercase tracking-wider border border-gray-300 dark:border-gray-600 text-gray-500 dark:text-gray-400 rounded px-1 py-0.5"
+                                    {u.name.charAt(0)}
+                                  </span>
+                                </div>
+                                <div className="min-w-0">
+                                  <div className="flex items-center gap-1.5">
+                                    <p
+                                      className="font-semibold text-gray-900 dark:text-white text-sm truncate"
                                       style={fontGeo}
                                     >
-                                      Manager
-                                    </span>
-                                  )}
+                                      {u.name}
+                                    </p>
+                                    {u.isManager && (
+                                      <span
+                                        className="text-[9px] uppercase tracking-wider border border-gray-300 dark:border-gray-600 text-gray-500 dark:text-gray-400 rounded px-1 py-0.5"
+                                        style={fontGeo}
+                                      >
+                                        Manager
+                                      </span>
+                                    )}
+                                  </div>
+                                  <p
+                                    className="text-xs text-gray-400 dark:text-gray-500 truncate"
+                                    style={fontGeo}
+                                  >
+                                    {u.email}
+                                  </p>
                                 </div>
-                                <p
-                                  className="text-xs text-gray-400 dark:text-gray-500 truncate"
+                              </div>
+                            </td>
+                            <td
+                              className="px-4 py-3 text-gray-600 dark:text-gray-300"
+                              style={fontGeo}
+                            >
+                              {u.team}
+                            </td>
+                            <td
+                              className="px-4 py-3 text-center font-semibold text-gray-900 dark:text-white tabular-nums"
+                              style={fontGeo}
+                            >
+                              {u.critical || "·"}
+                            </td>
+                            <td
+                              className="px-4 py-3 text-center font-semibold text-gray-900 dark:text-white tabular-nums"
+                              style={fontGeo}
+                            >
+                              {u.strength || "·"}
+                            </td>
+                            <td
+                              className="px-4 py-3 text-center font-semibold text-gray-900 dark:text-white tabular-nums"
+                              style={fontGeo}
+                            >
+                              {u.fit || "·"}
+                            </td>
+                            <td className="px-4 py-3">
+                              <GapBar
+                                critical={u.critical}
+                                fit={u.fit}
+                                strength={u.strength}
+                                total={u.totalCompetencies}
+                              />
+                            </td>
+                            <td className="px-4 py-3">
+                              <TrendSpark trend={u.trend} />
+                            </td>
+                            <td className="px-4 py-3">
+                              <span
+                                className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium border bg-white dark:bg-gray-800 ${STATUS_PILL[s]}`}
+                                style={fontGeo}
+                              >
+                                <span
+                                  className={`w-1.5 h-1.5 rounded-full ${
+                                    s === "needs-attention"
+                                      ? "bg-[#006BFF]"
+                                      : s === "high-performer"
+                                        ? "bg-emerald-500"
+                                        : "bg-gray-400"
+                                  }`}
+                                />
+                                {STATUS_LABEL[s]}
+                              </span>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                  {filtered.length === 0 && (
+                    <div
+                      className="py-12 text-center text-sm text-gray-400"
+                      style={fontGeo}
+                    >
+                      No people match these filters.
+                    </div>
+                  )}
+                </div>
+
+                {/* ───── Selected detail panel ───── */}
+                {selected && (
+                  <div className="border-t border-gray-100 dark:border-gray-700 grid grid-cols-1 lg:grid-cols-3 gap-0">
+                    {/* Critical gaps */}
+                    <div className="p-5 border-r border-gray-100 dark:border-gray-700">
+                      <div className="flex items-baseline gap-2 mb-4">
+                        <h3
+                          className="text-sm font-semibold text-gray-900 dark:text-white"
+                          style={fontGeo}
+                        >
+                          Critical gaps
+                        </h3>
+                        <span className="text-xs text-gray-400" style={fontGeo}>
+                          {selected.gaps.length}
+                        </span>
+                      </div>
+                      {selected.gaps.length === 0 ? (
+                        <p className="text-xs text-gray-400" style={fontGeo}>
+                          No critical gaps for this person.
+                        </p>
+                      ) : (
+                        <div className="space-y-4">
+                          {selected.gaps.map((g) => (
+                            <div key={g.code}>
+                              <div className="flex items-center gap-2 mb-1">
+                                <span
+                                  className="text-[10px] font-mono text-gray-500 dark:text-gray-400"
                                   style={fontGeo}
                                 >
-                                  {u.email}
-                                </p>
-                              </div>
-                            </div>
-                          </td>
-                          <td
-                            className="px-4 py-3 text-gray-600 dark:text-gray-300"
-                            style={fontGeo}
-                          >
-                            {u.team}
-                          </td>
-                          <td
-                            className="px-4 py-3 text-center font-semibold text-gray-900 dark:text-white tabular-nums"
-                            style={fontGeo}
-                          >
-                            {u.critical || "·"}
-                          </td>
-                          <td
-                            className="px-4 py-3 text-center font-semibold text-gray-900 dark:text-white tabular-nums"
-                            style={fontGeo}
-                          >
-                            {u.strength || "·"}
-                          </td>
-                          <td
-                            className="px-4 py-3 text-center font-semibold text-gray-900 dark:text-white tabular-nums"
-                            style={fontGeo}
-                          >
-                            {u.fit || "·"}
-                          </td>
-                          <td className="px-4 py-3">
-                            <GapBar
-                              critical={u.critical}
-                              fit={u.fit}
-                              strength={u.strength}
-                              total={u.totalCompetencies}
-                            />
-                          </td>
-                          <td className="px-4 py-3">
-                            <TrendSpark trend={u.trend} />
-                          </td>
-                          <td className="px-4 py-3">
-                            <span
-                              className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium border bg-white dark:bg-gray-800 ${STATUS_PILL[s]}`}
-                              style={fontGeo}
-                            >
-                              <span
-                                className={`w-1.5 h-1.5 rounded-full ${
-                                  s === "needs-attention"
-                                    ? "bg-[#006BFF]"
-                                    : s === "high-performer"
-                                      ? "bg-emerald-500"
-                                      : "bg-gray-400"
-                                }`}
-                              />
-                              {STATUS_LABEL[s]}
-                            </span>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-                {filtered.length === 0 && (
-                  <div
-                    className="py-12 text-center text-sm text-gray-400"
-                    style={fontGeo}
-                  >
-                    No people match these filters.
-                  </div>
-                )}
-              </div>
-
-              {/* ───── Selected detail panel ───── */}
-              {selected && (
-                <div className="border-t border-gray-100 dark:border-gray-700 grid grid-cols-1 lg:grid-cols-3 gap-0">
-                  {/* Critical gaps */}
-                  <div className="p-5 border-r border-gray-100 dark:border-gray-700">
-                    <div className="flex items-baseline gap-2 mb-4">
-                      <h3
-                        className="text-sm font-semibold text-gray-900 dark:text-white"
-                        style={fontGeo}
-                      >
-                        Critical gaps
-                      </h3>
-                      <span className="text-xs text-gray-400" style={fontGeo}>
-                        {selected.gaps.length}
-                      </span>
-                    </div>
-                    {selected.gaps.length === 0 ? (
-                      <p className="text-xs text-gray-400" style={fontGeo}>
-                        No critical gaps for this person.
-                      </p>
-                    ) : (
-                      <div className="space-y-4">
-                        {selected.gaps.map((g) => (
-                          <div key={g.code}>
-                            <div className="flex items-center gap-2 mb-1">
-                              <span
-                                className="text-[10px] font-mono text-gray-500 dark:text-gray-400"
-                                style={fontGeo}
-                              >
-                                {g.code}
-                              </span>
-                              <span
-                                className={`text-[10px] uppercase tracking-wider ${TRACK_TAG[g.track]}`}
-                                style={fontGeo}
-                              >
-                                {g.track}
-                              </span>
-                            </div>
-                            <p
-                              className="text-sm font-semibold text-gray-900 dark:text-white"
-                              style={fontGeo}
-                            >
-                              {g.name}
-                            </p>
-                            <p
-                              className="text-xs text-gray-500 dark:text-gray-400 mt-0.5"
-                              style={fontGeo}
-                            >
-                              {g.description}
-                            </p>
-                            <div className="flex items-center justify-between mt-2">
-                              <MiniGapDots
-                                actual={g.actual}
-                                expected={g.expected}
-                              />
-                              <div
-                                className="flex items-center gap-2 text-[10px] text-gray-500 dark:text-gray-400"
-                                style={fontGeo}
-                              >
-                                <span>
-                                  {g.actual} vs expected {g.expected}
+                                  {g.code}
                                 </span>
-                                <span className="px-1.5 py-0.5 rounded bg-blue-100 text-[#006BFF] dark:bg-blue-900/30 dark:text-blue-300 font-mono">
-                                  GAP {g.actual - g.expected}
+                                <span
+                                  className={`text-[10px] uppercase tracking-wider ${TRACK_TAG[g.track]}`}
+                                  style={fontGeo}
+                                >
+                                  {g.track}
                                 </span>
                               </div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Suggested courses */}
-                  <div className="p-5 border-r border-gray-100 dark:border-gray-700">
-                    <div className="flex items-baseline gap-2 mb-4">
-                      <h3
-                        className="text-sm font-semibold text-gray-900 dark:text-white"
-                        style={fontGeo}
-                      >
-                        Suggested courses
-                      </h3>
-                      <span className="text-xs text-gray-400" style={fontGeo}>
-                        {selected.courses.length}
-                      </span>
-                    </div>
-                    {selected.courses.length === 0 ? (
-                      <p className="text-xs text-gray-400" style={fontGeo}>
-                        Nothing to assign right now.
-                      </p>
-                    ) : (
-                      <div className="space-y-3">
-                        {selected.courses.map((c) => (
-                          <div
-                            key={c.id}
-                            className="flex items-start justify-between gap-3"
-                          >
-                            <div className="min-w-0 flex-1">
-                              <p
-                                className="text-[10px] uppercase tracking-wider text-gray-400 dark:text-gray-500"
-                                style={fontGeo}
-                              >
-                                For {c.forCode} · {c.forName}
-                              </p>
                               <p
                                 className="text-sm font-semibold text-gray-900 dark:text-white"
                                 style={fontGeo}
                               >
-                                {c.title}
+                                {g.name}
                               </p>
                               <p
-                                className="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5"
+                                className="text-xs text-gray-500 dark:text-gray-400 mt-0.5"
                                 style={fontGeo}
                               >
-                                {c.id} · {c.hours}h · {c.track}
+                                {g.description}
                               </p>
-                            </div>
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              onClick={() => openAssign(selected, c)}
-                              className="h-7 text-xs"
-                              style={fontGeo}
-                            >
-                              Assign
-                            </Button>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Profile */}
-                  <div className="p-5">
-                    <h3
-                      className="text-sm font-semibold text-gray-900 dark:text-white mb-4"
-                      style={fontGeo}
-                    >
-                      Profile
-                    </h3>
-                    <dl className="space-y-2.5 text-xs" style={fontGeo}>
-                      <ProfileRow label="Role" value={selected.role} />
-                      <ProfileRow label="Team" value={selected.team} />
-                      <ProfileRow label="Tenure" value={selected.tenure} />
-                      <ProfileRow
-                        label="Tracks"
-                        value={`${selected.tracks.length} (${selected.tracks.join(" · ")})`}
-                      />
-                      <ProfileRow
-                        label="Total competencies"
-                        value={String(selected.totalCompetencies)}
-                      />
-                    </dl>
-                    {selected.strengths.length > 0 && (
-                      <div className="mt-5">
-                        <p
-                          className="text-[10px] uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-2"
-                          style={fontGeo}
-                        >
-                          Strengths ({selected.strengths.length})
-                        </p>
-                        <div className="space-y-1.5">
-                          {selected.strengths.map((st) => (
-                            <div
-                              key={st.code}
-                              className="flex items-center justify-between text-xs"
-                              style={fontGeo}
-                            >
-                              <div className="flex items-center gap-2">
-                                <span className="text-[10px] font-mono text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-gray-600 rounded px-1.5 py-0.5">
-                                  {st.code}
-                                </span>
-                                <span className="text-gray-700 dark:text-gray-200">
-                                  {st.name}
-                                </span>
+                              <div className="flex items-center justify-between mt-2">
+                                <MiniGapDots
+                                  actual={g.actual}
+                                  expected={g.expected}
+                                />
+                                <div
+                                  className="flex items-center gap-2 text-[10px] text-gray-500 dark:text-gray-400"
+                                  style={fontGeo}
+                                >
+                                  <span>
+                                    {g.actual} vs expected {g.expected}
+                                  </span>
+                                  <span className="px-1.5 py-0.5 rounded bg-blue-100 text-[#006BFF] dark:bg-blue-900/30 dark:text-blue-300 font-mono">
+                                    GAP {g.actual - g.expected}
+                                  </span>
+                                </div>
                               </div>
-                              <span className="text-gray-400">+1</span>
                             </div>
                           ))}
                         </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
+                      )}
+                    </div>
 
-          {/* Right rail */}
-          <aside className="space-y-4">
-            <div className="rounded-2xl bg-white dark:bg-gray-800/60 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] border-none p-4">
-              <div className="flex items-baseline justify-between mb-3">
-                <h3
-                  className="text-[11px] uppercase tracking-wider font-semibold text-gray-500 dark:text-gray-400"
-                  style={fontGeo}
-                >
-                  Attention queue
-                </h3>
-                <span className="text-xs text-gray-400" style={fontGeo}>
-                  {attentionQueue.length}
-                </span>
-              </div>
-              <ul className="space-y-3">
-                {attentionQueue.map((u) => (
-                  <li
-                    key={u.id}
-                    onClick={() => setSelectedId(u.id)}
-                    className={`flex items-center gap-3 cursor-pointer rounded-lg p-1 -mx-1 transition-colors ${
-                      u.id === selectedId
-                        ? "bg-blue-50 dark:bg-blue-900/20"
-                        : "hover:bg-gray-50 dark:hover:bg-gray-700/40"
-                    }`}
-                  >
-                    <div className="w-7 h-7 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center shrink-0">
-                      <span
-                        className="text-[11px] font-semibold text-gray-700 dark:text-gray-200"
-                        style={fontGeo}
-                      >
-                        {u.name.charAt(0)}
-                      </span>
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p
-                        className="text-sm font-semibold text-gray-900 dark:text-white truncate"
-                        style={fontGeo}
-                      >
-                        {u.name}
-                      </p>
-                      <p
-                        className="text-[11px] text-gray-500 dark:text-gray-400 truncate"
-                        style={fontGeo}
-                      >
-                        {u.team} · worst gap {u.worstGap}
-                      </p>
-                    </div>
-                    <span
-                      className="text-[11px] font-semibold text-[#006BFF] dark:text-blue-400 tabular-nums"
-                      style={fontGeo}
-                    >
-                      {u.critical} crit
-                    </span>
-                  </li>
-                ))}
-                {attentionQueue.length === 0 && (
-                  <li
-                    className="text-xs text-gray-400 py-4 text-center"
-                    style={fontGeo}
-                  >
-                    No one needs attention.
-                  </li>
-                )}
-              </ul>
-            </div>
-
-            <div className="rounded-2xl bg-white dark:bg-gray-800/60 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] border-none p-4">
-              <div className="flex items-baseline justify-between mb-3">
-                <h3
-                  className="text-[11px] uppercase tracking-wider font-semibold text-gray-500 dark:text-gray-400"
-                  style={fontGeo}
-                >
-                  Org coverage
-                </h3>
-                <span
-                  className="text-[10px] text-gray-400 uppercase tracking-wider"
-                  style={fontGeo}
-                >
-                  13 competencies
-                </span>
-              </div>
-              <div className="space-y-4">
-                {ORG_COVERAGE.map((group) => (
-                  <div key={group.track}>
-                    <div className="flex items-center justify-between mb-1.5">
-                      <p
-                        className="text-xs font-semibold text-gray-900 dark:text-white"
-                        style={fontGeo}
-                      >
-                        {group.track}
-                      </p>
-                      <p className="text-[10px] text-gray-400" style={fontGeo}>
-                        {group.critical} crit · {group.fit} fit ·{" "}
-                        {group.strength} str
-                      </p>
-                    </div>
-                    <ul className="space-y-1">
-                      {group.items.map((it) => (
-                        <li
-                          key={it.code}
-                          className="flex items-center justify-between text-xs gap-2"
+                    {/* Suggested courses */}
+                    <div className="p-5 border-r border-gray-100 dark:border-gray-700">
+                      <div className="flex items-baseline gap-2 mb-4">
+                        <h3
+                          className="text-sm font-semibold text-gray-900 dark:text-white"
                           style={fontGeo}
                         >
-                          <span className="text-[10px] font-mono text-gray-400 dark:text-gray-500 w-10 shrink-0">
-                            {it.code}
-                          </span>
-                          <span className="text-gray-700 dark:text-gray-200 flex-1 truncate">
-                            {it.name}
-                          </span>
-                          <CoverageBar level={it.level} max={it.max} />
-                          <span className="text-[10px] text-gray-400 w-3 text-right tabular-nums">
-                            {it.max}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
+                          Suggested courses
+                        </h3>
+                        <span className="text-xs text-gray-400" style={fontGeo}>
+                          {selected.courses.length}
+                        </span>
+                      </div>
+                      {selected.courses.length === 0 ? (
+                        <p className="text-xs text-gray-400" style={fontGeo}>
+                          Nothing to assign right now.
+                        </p>
+                      ) : (
+                        <div className="space-y-3">
+                          {selected.courses.map((c) => (
+                            <div
+                              key={c.id}
+                              className="flex items-start justify-between gap-3"
+                            >
+                              <div className="min-w-0 flex-1">
+                                <p
+                                  className="text-[10px] uppercase tracking-wider text-gray-400 dark:text-gray-500"
+                                  style={fontGeo}
+                                >
+                                  For {c.forCode} · {c.forName}
+                                </p>
+                                <p
+                                  className="text-sm font-semibold text-gray-900 dark:text-white"
+                                  style={fontGeo}
+                                >
+                                  {c.title}
+                                </p>
+                                <p
+                                  className="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5"
+                                  style={fontGeo}
+                                >
+                                  {c.id} · {c.hours}h · {c.track}
+                                </p>
+                              </div>
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => openAssign(selected, c)}
+                                className="h-7 text-xs"
+                                style={fontGeo}
+                              >
+                                Assign
+                              </Button>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Profile */}
+                    <div className="p-5">
+                      <h3
+                        className="text-sm font-semibold text-gray-900 dark:text-white mb-4"
+                        style={fontGeo}
+                      >
+                        Profile
+                      </h3>
+                      <dl className="space-y-2.5 text-xs" style={fontGeo}>
+                        <ProfileRow label="Role" value={selected.role} />
+                        <ProfileRow label="Team" value={selected.team} />
+                        <ProfileRow label="Tenure" value={selected.tenure} />
+                        <ProfileRow
+                          label="Tracks"
+                          value={`${selected.tracks.length} (${selected.tracks.join(" · ")})`}
+                        />
+                        <ProfileRow
+                          label="Total competencies"
+                          value={String(selected.totalCompetencies)}
+                        />
+                      </dl>
+                      {selected.strengths.length > 0 && (
+                        <div className="mt-5">
+                          <p
+                            className="text-[10px] uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-2"
+                            style={fontGeo}
+                          >
+                            Strengths ({selected.strengths.length})
+                          </p>
+                          <div className="space-y-1.5">
+                            {selected.strengths.map((st) => (
+                              <div
+                                key={st.code}
+                                className="flex items-center justify-between text-xs"
+                                style={fontGeo}
+                              >
+                                <div className="flex items-center gap-2">
+                                  <span className="text-[10px] font-mono text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-gray-600 rounded px-1.5 py-0.5">
+                                    {st.code}
+                                  </span>
+                                  <span className="text-gray-700 dark:text-gray-200">
+                                    {st.name}
+                                  </span>
+                                </div>
+                                <span className="text-gray-400">+1</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   </div>
-                ))}
+                )}
               </div>
             </div>
 
-            <div className="rounded-2xl bg-white dark:bg-gray-800/60 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] border-none p-4">
-              <h3
-                className="text-[11px] uppercase tracking-wider font-semibold text-gray-500 dark:text-gray-400 mb-3"
-                style={fontGeo}
-              >
-                How to read
-              </h3>
-              <div className="space-y-2 text-xs" style={fontGeo}>
-                <div className="flex items-center gap-2">
-                  <div className="flex h-2 w-20 rounded-full overflow-hidden">
-                    <div className="bg-[#006BFF] w-1/3" />
-                    <div className="bg-gray-300 dark:bg-gray-600 w-1/3" />
-                    <div className="bg-emerald-500 w-1/3" />
-                  </div>
-                  <span className="text-gray-600 dark:text-gray-300">
-                    Gap distribution per person
+            {/* Right rail */}
+            <aside className="space-y-4">
+              <div className="rounded-2xl bg-white dark:bg-gray-800/60 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] border-none p-4">
+                <div className="flex items-baseline justify-between mb-3">
+                  <h3
+                    className="text-[11px] uppercase tracking-wider font-semibold text-gray-500 dark:text-gray-400"
+                    style={fontGeo}
+                  >
+                    Attention queue
+                  </h3>
+                  <span className="text-xs text-gray-400" style={fontGeo}>
+                    {attentionQueue.length}
                   </span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#006BFF]" />
-                  <span className="text-gray-600 dark:text-gray-300">
-                    <span className="font-semibold">Critical</span> — evaluated
-                    below expected (gap &lt; 0)
+                <ul className="space-y-3">
+                  {attentionQueue.map((u) => (
+                    <li
+                      key={u.id}
+                      onClick={() => setSelectedId(u.id)}
+                      className={`flex items-center gap-3 cursor-pointer rounded-lg p-1 -mx-1 transition-colors ${
+                        u.id === selectedId
+                          ? "bg-blue-50 dark:bg-blue-900/20"
+                          : "hover:bg-gray-50 dark:hover:bg-gray-700/40"
+                      }`}
+                    >
+                      <div className="w-7 h-7 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center shrink-0">
+                        <span
+                          className="text-[11px] font-semibold text-gray-700 dark:text-gray-200"
+                          style={fontGeo}
+                        >
+                          {u.name.charAt(0)}
+                        </span>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p
+                          className="text-sm font-semibold text-gray-900 dark:text-white truncate"
+                          style={fontGeo}
+                        >
+                          {u.name}
+                        </p>
+                        <p
+                          className="text-[11px] text-gray-500 dark:text-gray-400 truncate"
+                          style={fontGeo}
+                        >
+                          {u.team} · worst gap {u.worstGap}
+                        </p>
+                      </div>
+                      <span
+                        className="text-[11px] font-semibold text-[#006BFF] dark:text-blue-400 tabular-nums"
+                        style={fontGeo}
+                      >
+                        {u.critical} crit
+                      </span>
+                    </li>
+                  ))}
+                  {attentionQueue.length === 0 && (
+                    <li
+                      className="text-xs text-gray-400 py-4 text-center"
+                      style={fontGeo}
+                    >
+                      No one needs attention.
+                    </li>
+                  )}
+                </ul>
+              </div>
+
+              <div className="rounded-2xl bg-white dark:bg-gray-800/60 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] border-none p-4">
+                <div className="flex items-baseline justify-between mb-3">
+                  <h3
+                    className="text-[11px] uppercase tracking-wider font-semibold text-gray-500 dark:text-gray-400"
+                    style={fontGeo}
+                  >
+                    Org coverage
+                  </h3>
+                  <span
+                    className="text-[10px] text-gray-400 uppercase tracking-wider"
+                    style={fontGeo}
+                  >
+                    13 competencies
                   </span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-gray-400" />
-                  <span className="text-gray-600 dark:text-gray-300">
-                    <span className="font-semibold">Fit</span> — meeting
-                    expected (gap = 0)
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                  <span className="text-gray-600 dark:text-gray-300">
-                    <span className="font-semibold">Strength</span> — exceeding
-                    expected (gap &gt; 0)
-                  </span>
+                <div className="space-y-4">
+                  {ORG_COVERAGE.map((group) => (
+                    <div key={group.track}>
+                      <div className="flex items-center justify-between mb-1.5">
+                        <p
+                          className="text-xs font-semibold text-gray-900 dark:text-white"
+                          style={fontGeo}
+                        >
+                          {group.track}
+                        </p>
+                        <p
+                          className="text-[10px] text-gray-400"
+                          style={fontGeo}
+                        >
+                          {group.critical} crit · {group.fit} fit ·{" "}
+                          {group.strength} str
+                        </p>
+                      </div>
+                      <ul className="space-y-1">
+                        {group.items.map((it) => (
+                          <li
+                            key={it.code}
+                            className="flex items-center justify-between text-xs gap-2"
+                            style={fontGeo}
+                          >
+                            <span className="text-[10px] font-mono text-gray-400 dark:text-gray-500 w-10 shrink-0">
+                              {it.code}
+                            </span>
+                            <span className="text-gray-700 dark:text-gray-200 flex-1 truncate">
+                              {it.name}
+                            </span>
+                            <CoverageBar level={it.level} max={it.max} />
+                            <span className="text-[10px] text-gray-400 w-3 text-right tabular-nums">
+                              {it.max}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
                 </div>
               </div>
-              <p
-                className="text-[10px] text-gray-400 dark:text-gray-500 mt-3 leading-relaxed"
-                style={fontGeo}
-              >
-                GAP = manager evaluation − admin expected. Scored 1–4. Managers
-                also evaluated on the Managerial track.
-              </p>
-            </div>
-          </aside>
+
+              <div className="rounded-2xl bg-white dark:bg-gray-800/60 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] border-none p-4">
+                <h3
+                  className="text-[11px] uppercase tracking-wider font-semibold text-gray-500 dark:text-gray-400 mb-3"
+                  style={fontGeo}
+                >
+                  How to read
+                </h3>
+                <div className="space-y-2 text-xs" style={fontGeo}>
+                  <div className="flex items-center gap-2">
+                    <div className="flex h-2 w-20 rounded-full overflow-hidden">
+                      <div className="bg-[#006BFF] w-1/3" />
+                      <div className="bg-gray-300 dark:bg-gray-600 w-1/3" />
+                      <div className="bg-emerald-500 w-1/3" />
+                    </div>
+                    <span className="text-gray-600 dark:text-gray-300">
+                      Gap distribution per person
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#006BFF]" />
+                    <span className="text-gray-600 dark:text-gray-300">
+                      <span className="font-semibold">Critical</span> —
+                      evaluated below expected (gap &lt; 0)
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-gray-400" />
+                    <span className="text-gray-600 dark:text-gray-300">
+                      <span className="font-semibold">Fit</span> — meeting
+                      expected (gap = 0)
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                    <span className="text-gray-600 dark:text-gray-300">
+                      <span className="font-semibold">Strength</span> —
+                      exceeding expected (gap &gt; 0)
+                    </span>
+                  </div>
+                </div>
+                <p
+                  className="text-[10px] text-gray-400 dark:text-gray-500 mt-3 leading-relaxed"
+                  style={fontGeo}
+                >
+                  GAP = manager evaluation − admin expected. Scored 1–4.
+                  Managers also evaluated on the Managerial track.
+                </p>
+              </div>
+            </aside>
+          </div>
         </div>
       </div>
-    </div>
     </>
   );
 }
@@ -1612,12 +1805,16 @@ function MetricCard({
     >
       <div className="space-y-1">
         <div className="flex justify-between items-start w-full">
-          <p className="text-[11px] text-gray-600 dark:text-gray-400 font-normal leading-tight">{label}</p>
+          <p className="text-[11px] text-gray-600 dark:text-gray-400 font-normal leading-tight">
+            {label}
+          </p>
           <span className={`${iconColor} shrink-0 ml-2`}>{icon}</span>
         </div>
         <h3 className="text-[24px] font-bold text-gray-700 dark:text-white leading-none">
           <AnimatedNumber value={isMounted ? value : 0} />
-          <span className="text-gray-400 font-medium ml-1 text-[16px]">/ {total}</span>
+          <span className="text-gray-400 font-medium ml-1 text-[16px]">
+            / {total}
+          </span>
         </h3>
       </div>
       <p className={`text-[11px] font-normal ${hintColor}`}>{hint}</p>

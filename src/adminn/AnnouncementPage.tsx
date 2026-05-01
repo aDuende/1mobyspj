@@ -254,7 +254,10 @@ export default function AnnouncementPage() {
               >
                 Cancel
               </Button>
-              <Button type="submit" className="bg-[#006BFF] text-white hover:bg-[#0057d9]">
+              <Button
+                type="submit"
+                className="bg-[#006BFF] text-white hover:bg-[#0057d9]"
+              >
                 Publish
               </Button>
             </div>

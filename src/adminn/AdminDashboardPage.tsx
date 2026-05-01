@@ -1,4 +1,4 @@
-import { SidebarProvider } from "../components/ui/sidebar";
+import { SidebarProvider, SidebarTrigger } from "../components/ui/sidebar";
 import { AppSidebar } from "../app-sidebar";
 import LanguageSelector from "../components/LanguageSelector";
 import AppearanceSelector from "../components/AppearanceSelector";
@@ -14,6 +14,7 @@ import AdminAddCourse from "./AdminAddCourse";
 import AdminCompetencyProfilePage from "./AdminCompetencyProfilePage";
 import AdminDashboardContent from "./AdminDashboardContent";
 import HomePage from "./HomePage";
+import BackToTop from "../components/smoothui/back-to-top";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import {
@@ -47,7 +48,10 @@ function AdminDashboard({ onLogout, username }: AdminDashboardProps) {
   }, []);
 
   useEffect(() => {
-    if (location.pathname !== "/help") setHelpSubPage(null);
+    if (location.pathname !== "/help") {
+      // Use a microtask to avoid synchronous setState in effect body
+      queueMicrotask(() => setHelpSubPage(null));
+    }
   }, [location.pathname]);
 
   useEffect(() => {
@@ -92,13 +96,13 @@ function AdminDashboard({ onLogout, username }: AdminDashboardProps) {
                 absolute top-0 left-0 right-0 z-50 transition-all duration-200 flex items-center justify-between px-6 py-4 shrink-0
                 ${
                   isScrolled
-                    ? "bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl backdrop-saturate-150  dark:border-transparent shadow-sm surface-glass"
-                    : "bg-transparent border-b border-transparent shadow-none"
+                    ? "bg-[#fcfcfd]/80 dark:bg-[#0c0e12]/80 backdrop-blur-xl backdrop-saturate-150 surface-glass border-none"
+                    : "bg-transparent border-none shadow-none"
                 }
               `}
           >
             <div className="flex items-center gap-3">
-              
+              <SidebarTrigger className="md:hidden" />
               <Breadcrumb>
                 <BreadcrumbList>
                   {location.pathname === "/home" && (
@@ -150,7 +154,9 @@ function AdminDashboard({ onLogout, username }: AdminDashboardProps) {
                     <>
                       <BreadcrumbItem>
                         <button
-                          onClick={() => window.dispatchEvent(new CustomEvent("help:back"))}
+                          onClick={() =>
+                            window.dispatchEvent(new CustomEvent("help:back"))
+                          }
                           className="text-sm text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
                           style={{ fontFamily: "Geometrica, sans-serif" }}
                         >
@@ -159,7 +165,9 @@ function AdminDashboard({ onLogout, username }: AdminDashboardProps) {
                       </BreadcrumbItem>
                       <BreadcrumbSeparator />
                       <BreadcrumbItem>
-                        <BreadcrumbPage style={{ fontFamily: "Geometrica, sans-serif" }}>
+                        <BreadcrumbPage
+                          style={{ fontFamily: "Geometrica, sans-serif" }}
+                        >
                           {helpSubPage}
                         </BreadcrumbPage>
                       </BreadcrumbItem>
@@ -183,7 +191,7 @@ function AdminDashboard({ onLogout, username }: AdminDashboardProps) {
                       </BreadcrumbPage>
                     </BreadcrumbItem>
                   )}
-                  
+
                   {location.pathname === "/competency-profile" && (
                     <BreadcrumbItem>
                       <BreadcrumbPage
@@ -223,7 +231,6 @@ function AdminDashboard({ onLogout, username }: AdminDashboardProps) {
                       </BreadcrumbItem>
                     </>
                   )}
-                  
                 </BreadcrumbList>
               </Breadcrumb>
             </div>
@@ -245,14 +252,14 @@ function AdminDashboard({ onLogout, username }: AdminDashboardProps) {
             ref={scrollRef}
             className="h-full w-full overflow-y-auto relative"
           >
-            <div className="pt-16 p-6">
+            <div className="pt-16">
               <Routes>
-                <Route
-                  path="/home"
-                  element={<HomePage />}
-                />
+                <Route path="/home" element={<HomePage />} />
                 <Route path="/settings" element={<SettingPage />} />
-                <Route path="/competency-profile" element={<AdminCompetencyProfilePage />} />
+                <Route
+                  path="/competency-profile"
+                  element={<AdminCompetencyProfilePage />}
+                />
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/help" element={<AdminHelpPage />} />
                 <Route path="/manage-role" element={<ManageRolePage />} />
@@ -267,6 +274,7 @@ function AdminDashboard({ onLogout, username }: AdminDashboardProps) {
             </div>
           </div>
         </main>
+        <BackToTop />
       </div>
     </SidebarProvider>
   );

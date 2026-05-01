@@ -67,7 +67,8 @@ export default function SettingPage() {
     setTimeout(() => setSaved(false), 3000);
   };
 
-  const pageTitleClass = "text-4xl font-bold text-gray-900 dark:text-white mb-2";
+  const pageTitleClass =
+    "text-4xl font-bold text-gray-900 dark:text-white mb-2";
   const pageSubtitleClass = "text-gray-600 dark:text-gray-300";
 
   const tabClass = (tab: "security" | "notifications" | "privacy" | "pet") =>
@@ -80,8 +81,7 @@ export default function SettingPage() {
   const sectionCardClass =
     "bg-white rounded-lg border border-gray-200 p-8 dark:bg-gray-800 dark:border-gray-700";
 
-  const innerCardClass =
-    "bg-gray-50 rounded-lg dark:bg-gray-900/60";
+  const innerCardClass = "bg-gray-50 rounded-lg dark:bg-gray-900/60";
 
   const innerBorderCardClass =
     "border border-gray-200 rounded-lg bg-gray-50 dark:border-gray-700 dark:bg-gray-900/60";
@@ -92,11 +92,9 @@ export default function SettingPage() {
   const labelClass =
     "block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 text-left";
 
-  const itemTitleClass =
-    "font-semibold text-gray-900 dark:text-white mb-1";
+  const itemTitleClass = "font-semibold text-gray-900 dark:text-white mb-1";
 
-  const itemDescClass =
-    "text-sm text-gray-600 dark:text-gray-300";
+  const itemDescClass = "text-sm text-gray-600 dark:text-gray-300";
 
   const inputClass =
     "w-full bg-white text-gray-900 border-gray-200 dark:bg-gray-900 dark:text-white dark:border-gray-700 dark:placeholder:text-gray-500";
@@ -115,16 +113,28 @@ export default function SettingPage() {
         </div>
 
         <div className="flex gap-6 mb-8 border-b-2 border-gray-200 dark:border-gray-700 justify-center">
-          <button onClick={() => setActiveTab("security")} className={tabClass("security")}>
+          <button
+            onClick={() => setActiveTab("security")}
+            className={tabClass("security")}
+          >
             Security
           </button>
-          <button onClick={() => setActiveTab("notifications")} className={tabClass("notifications")}>
+          <button
+            onClick={() => setActiveTab("notifications")}
+            className={tabClass("notifications")}
+          >
             Notifications
           </button>
-          <button onClick={() => setActiveTab("privacy")} className={tabClass("privacy")}>
+          <button
+            onClick={() => setActiveTab("privacy")}
+            className={tabClass("privacy")}
+          >
             Privacy
           </button>
-          <button onClick={() => setActiveTab("pet")} className={tabClass("pet")}>
+          <button
+            onClick={() => setActiveTab("pet")}
+            className={tabClass("pet")}
+          >
             Digital Pet
           </button>
         </div>
@@ -174,9 +184,13 @@ export default function SettingPage() {
               <div className={sectionCardClass}>
                 <h2 className={headingClass}>Two-Factor Authentication</h2>
 
-                <div className={`flex items-center justify-between p-5 ${innerCardClass}`}>
+                <div
+                  className={`flex items-center justify-between p-5 ${innerCardClass}`}
+                >
                   <div>
-                    <p className={itemTitleClass}>Enable Two-Factor Authentication</p>
+                    <p className={itemTitleClass}>
+                      Enable Two-Factor Authentication
+                    </p>
                     <p className={itemDescClass}>
                       Add an extra layer of security to your account with 2FA
                     </p>
@@ -198,7 +212,9 @@ export default function SettingPage() {
                 <h2 className={headingClass}>Active Sessions</h2>
 
                 <div className="space-y-3">
-                  <div className={`flex items-center justify-between p-4 ${innerBorderCardClass}`}>
+                  <div
+                    className={`flex items-center justify-between p-4 ${innerBorderCardClass}`}
+                  >
                     <div className="flex items-center gap-4">
                       <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/40 rounded-lg flex items-center justify-center">
                         <svg
@@ -241,7 +257,9 @@ export default function SettingPage() {
                 <h2 className={headingClass}>Email Notifications</h2>
 
                 <div className="space-y-4">
-                  <div className={`flex items-center justify-between p-5 ${innerCardClass}`}>
+                  <div
+                    className={`flex items-center justify-between p-5 ${innerCardClass}`}
+                  >
                     <div>
                       <p className={itemTitleClass}>Activity Notifications</p>
                       <p className={itemDescClass}>
@@ -253,14 +271,18 @@ export default function SettingPage() {
                       <input
                         type="checkbox"
                         checked={emailNotifications}
-                        onChange={(e) => setEmailNotifications(e.target.checked)}
+                        onChange={(e) =>
+                          setEmailNotifications(e.target.checked)
+                        }
                         className="sr-only peer"
                       />
                       <div className={toggleClass}></div>
                     </label>
                   </div>
 
-                  <div className={`flex items-center justify-between p-5 ${innerCardClass}`}>
+                  <div
+                    className={`flex items-center justify-between p-5 ${innerCardClass}`}
+                  >
                     <div>
                       <p className={itemTitleClass}>Marketing Emails</p>
                       <p className={itemDescClass}>
@@ -285,7 +307,9 @@ export default function SettingPage() {
                 <h2 className={headingClass}>Push Notifications</h2>
 
                 <div className="space-y-4">
-                  <div className={`flex items-center justify-between p-5 ${innerCardClass}`}>
+                  <div
+                    className={`flex items-center justify-between p-5 ${innerCardClass}`}
+                  >
                     <div>
                       <p className={itemTitleClass}>Browser Notifications</p>
                       <p className={itemDescClass}>
@@ -425,7 +449,9 @@ export default function SettingPage() {
                 <h2 className={headingClass}>Digital Pet Control</h2>
 
                 <div className="space-y-4">
-                  <div className={`flex items-center justify-between p-5 ${innerCardClass}`}>
+                  <div
+                    className={`flex items-center justify-between p-5 ${innerCardClass}`}
+                  >
                     <div>
                       <p className={itemTitleClass}>Enable Digital Pet</p>
                       <p className={itemDescClass}>
